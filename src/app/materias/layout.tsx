@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import {
   TbTools,
   TbRulerMeasure,
@@ -7,6 +8,12 @@ import {
   TbMathFunction,
   TbMathIntegral,
 } from 'react-icons/tb';
+
+export const metadata: Metadata = {
+  title: 'Tu amigo FI - Materias',
+  description:
+    'Creada para ayudar a ingresantes y avanzados alumnos, en la Facultad de Ingenieria de Mar del Plata, con su desafiante carrera.',
+};
 
 export default function Layout({
   children,
