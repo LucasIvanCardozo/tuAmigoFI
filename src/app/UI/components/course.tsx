@@ -1,0 +1,48 @@
+import { fetchCorrelatives, fetchEnabler } from '@/app/lib/data';
+import { CgArrowRightO } from 'react-icons/cg';
+import CorrelativeTable from './correlativeTable';
+import Link from 'next/link';
+
+export default async function Course({
+  id_materias,
+  id_carreras,
+  name,
+  cg,
+  hs,
+  plan,
+}: {
+  id_materias: number;
+  id_carreras: string;
+  name: string;
+  cg: number | null;
+  hs: number | null;
+  plan: string;
+}) {
+  return (
+    <li className="relative flex flex-col w-full h-min bg-[--white] drop-shadow-md p-2 sm:w-11/12">
+      <div className="absolute top-0 right-0 flex flex-col text-center py-1 px-2">
+        <span>{`Plan ${plan}`}</span>
+        <span className="text-[0.67rem] -m-2">{`${cg}CG / ${hs}Hs`}</span>
+      </div>
+      <h2 className="bg-[--dark-cyan] w-max text-[--white]">{name}</h2>
+      <CorrelativeTable
+        id_materias={id_materias}
+        id_carreras={id_carreras}
+        type="correlative"
+        title="Necesitas"
+      />
+      <CorrelativeTable
+        id_materias={id_materias}
+        id_carreras={id_carreras}
+        type="enabler"
+        title="Habilita"
+      />
+      <Link
+        href={`./materias/${id_materias}`}
+        className="w-max self-end py-1 px-2 text-sm rounded-sm bg-[--midnight-green] text-[--white]"
+      >
+        Ir a la práctica
+      </Link>
+    </li>
+  );
+}

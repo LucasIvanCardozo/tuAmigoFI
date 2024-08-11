@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --black-olive: rgb(38, 44, 30);
+  --dark-cyan: rgb(49, 150, 156);
+  --silver: rgb(169, 172, 169);
+  --platinum: rgb(212, 215, 222);
+  --midnight-green: rgb(33, 62, 67);
+  --white: rgb(246, 247, 248);
+  --black: rgb(19, 21, 24);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /*--silver: rgb(218, 224, 209);
+    --dark-cyan: rgb(100, 201, 206);
+    --black-olive: rgb(82, 86, 82);
+    --platinum: rgb(33, 36, 43);
+    --midnight-green: rgb(187, 216, 221);
+    --white: rgb(19, 21, 24);
+    --black: rgb(246, 247, 248);*/
+  }
+}
+
+body {
+  color: var(--white);
+  background: var(--platinum);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

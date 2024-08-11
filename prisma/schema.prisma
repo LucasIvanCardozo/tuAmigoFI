@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model carreras {
+  id_carreras             Int                       @id @default(autoincrement())
+  name                    String                    @unique(map: "sqlite_autoindex_carreras_1")
+  carreras_materias_anios carreras_materias_anios[]
+}
+
+model materia_correlativa {
+  id_materias                                           Int
+  id_correlativa                                        Int
+  materias_materia_correlativa_id_materiasTomaterias    materias @relation("materia_correlativa_id_materiasTomaterias", fields: [id_materias], references: [id_materias], onDelete: NoAction, onUpdate: NoAction)
+  materias_materia_correlativa_id_correlativaTomaterias materias @relation("materia_correlativa_id_correlativaTomaterias", fields: [id_correlativa], references: [id_materias], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([id_materias, id_correlativa])
+}
+
+model materias {
+  id_materias                                                      Int                       @id @default(autoincrement())
+  name                                                             String                    @unique(map: "sqlite_autoindex_materias_1")
+  name_normalized                                                  String                    @unique(map: "sqlite_autoindex_materias_2")
+  cg                                                               Int?
+  hs                                                               Int?
+  plan                                                             String
+  carreras_materias_anios                                          carreras_materias_anios[]
+  materia_correlativa_materia_correlativa_id_materiasTomaterias    materia_correlativa[]     @relation("materia_correlativa_id_materiasTomaterias")
+  materia_correlativa_materia_correlativa_id_correlativaTomaterias materia_correlativa[]     @relation("materia_correlativa_id_correlativaTomaterias")
+  tps_materias                                                     tps_materias[]
+}
+
+model problemas {
+  id_problemas    Int             @id @default(autoincrement())
+  text            String
+  response        String
+  text_normalized String
+  type            String
+  response_plus   String?
+  type_plus       String?
+  tps_problemas   tps_problemas[]
+}
+
+model tps {
+  id_tps        Int             @id @default(autoincrement())
+  name          String
+  number        Int
+  year          Int
+  tps_materias  tps_materias[]
+  tps_problemas tps_problemas[]
+}
+
+model tps_materias {
+  id_tps      Int
+  id_materias Int
+  tps         tps      @relation(fields: [id_tps], references: [id_tps], onDelete: NoAction, onUpdate: NoAction)
+  materias    materias @relation(fields: [id_materias], references: [id_materias], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([id_tps, id_materias])
+}
+
+model anios {
+  id_anios Int    @id @default(autoincrement())
+  name     String
+}
+
+model carreras_materias_anios {
+  id_carreras Int
+  id_materias Int
+  id_anios    Int
+  materias    materias @relation(fields: [id_materias], references: [id_materias], onDelete: NoAction, onUpdate: NoAction)
+  carreras    carreras @relation(fields: [id_carreras], references: [id_carreras], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([id_carreras, id_materias, id_anios])
+}
+
+model tps_problemas {
+  id_tps       Int
+  id_problemas Int
+  tps          tps       @relation(fields: [id_tps], references: [id_tps], onDelete: NoAction, onUpdate: NoAction)
+  problemas    problemas @relation(fields: [id_problemas], references: [id_problemas], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([id_tps, id_problemas])
+}
