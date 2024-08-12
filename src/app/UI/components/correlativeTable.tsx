@@ -9,7 +9,7 @@ export default async function CorrelativeTable({
   title,
 }: {
   id_materias: number;
-  id_carreras: string;
+  id_carreras?: number;
   type: 'correlative' | 'enabler';
   title: string;
 }) {
@@ -18,11 +18,13 @@ export default async function CorrelativeTable({
     name: string;
     name_normalized: string;
   }[] = [];
+
   if (type == 'correlative') {
     data = await fetchCorrelatives({ id_materias, id_carreras });
   } else if ('enabler') {
     data = await fetchEnabler({ id_materias, id_carreras });
   }
+
   return (
     <div className="flex gap-1 text-sm text-[--black-olive] pl-2 my-1">
       <div className="flex justify-between gap-1 self-start w-19">

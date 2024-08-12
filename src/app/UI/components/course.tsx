@@ -4,15 +4,15 @@ import CorrelativeTable from './correlativeTable';
 import Link from 'next/link';
 
 export default async function Course({
-  id_materias,
-  id_carreras,
+  id_materia,
+  id_carrera,
   name,
   cg,
   hs,
   plan,
 }: {
-  id_materias: number;
-  id_carreras: string;
+  id_materia: number;
+  id_carrera?: number;
   name: string;
   cg: number | null;
   hs: number | null;
@@ -26,19 +26,19 @@ export default async function Course({
       </div>
       <h2 className="bg-[--dark-cyan] w-max text-[--white]">{name}</h2>
       <CorrelativeTable
-        id_materias={id_materias}
-        id_carreras={id_carreras}
+        id_materias={id_materia}
+        id_carreras={id_carrera}
         type="correlative"
         title="Necesitas"
       />
       <CorrelativeTable
-        id_materias={id_materias}
-        id_carreras={id_carreras}
+        id_materias={id_materia}
+        id_carreras={id_carrera}
         type="enabler"
         title="Habilita"
       />
       <Link
-        href={`./materias/${id_materias}`}
+        href={`./materias/${id_materia}`}
         className="w-max self-end py-1 px-2 text-sm rounded-sm bg-[--midnight-green] text-[--white]"
       >
         Ir a la práctica

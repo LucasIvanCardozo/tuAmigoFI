@@ -37,7 +37,7 @@ export default function YearCourse({
       onChange={(e) => handleYears(e.target.value)}
     >
       <option hidden>Año</option>
-      <option value="0">Todos</option>
+      <option value={0}>Todos</option>
       {years?.map((year) => (
         <option key={year.id_anios} value={year.id_anios}>
           {year.name}

@@ -56,7 +56,7 @@ export default function AsideProblems({
     }
     replace(`${pathname}?${params.toString()}`);
   };
-  
+
   return (
     <>
       <button
@@ -79,7 +79,7 @@ export default function AsideProblems({
       <aside
         className={
           (tpsState ? 'translate-x-full' : 'translate-x-0') +
-          ' fixed z-40 top-0 right-full  transform-gpu transition-transform bg-[--black-olive] w-max min-w-40  rounded-md mt-10 py-4 px-4 flex flex-col gap-3 sm:relative sm:h-full sm:m-0 sm:max-w-48 sm:translate-x-0 sm:right-auto'
+          ' fixed z-40 top-0 right-full  transform-gpu transition-transform bg-[--black-olive] w-max min-w-40  rounded-md mt-10 py-4 px-3 flex flex-col gap-3 sm:relative sm:h-full sm:m-0 sm:max-w-52 sm:translate-x-0 sm:right-auto '
         }
       >
         <h1 className="text-xl">
@@ -92,12 +92,13 @@ export default function AsideProblems({
               className={
                 (searchParams.get('tps') == id_tps.toString()
                   ? 'bg-[#3D4731]'
-                  : '') + ' flex gap-1 p-1 rounded-md'
+                  : '') +
+                ' grid grid-cols-[1.2rem,1fr] gap-1 p-1 rounded-md [&>svg]:self-start [&>svg]:h-max [&>svg]:w-full'
               }
             >
-              {numberIcons[number]}
+              {numberIcons[number] ? numberIcons[number] : numberIcons[0]}
               <button
-                className="grow text-start"
+                className="text-start"
                 onClick={() => handleTps(id_tps.toString())}
               >
                 <h3 className="text-base leading-4">{name}</h3>

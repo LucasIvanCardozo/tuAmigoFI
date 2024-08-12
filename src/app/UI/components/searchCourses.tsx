@@ -9,24 +9,24 @@ export default function SearchCourses() {
   const { replace } = useRouter();
 
   const [isHandleSearch, setIsHandleSearch] = useState(false);
-  const [name, setName] = useState<string>(
+  const [search, setSearch] = useState<string>(
     searchParams.get('name')?.toString() || ''
   );
 
   useEffect(() => {
     if (!isHandleSearch) {
-      setName(searchParams.get('name')?.toString() || '');
+      setSearch(searchParams.get('search')?.toString() || '');
     }
     setIsHandleSearch(false);
   }, [searchParams]);
 
-  const handleSearch = useDebouncedCallback((name: string) => {
+  const handleSearch = useDebouncedCallback((search: string) => {
     setIsHandleSearch(true);
     const params = new URLSearchParams(searchParams);
-    if (name) {
-      params.set('name', name);
+    if (search) {
+      params.set('search', search);
     } else {
-      params.delete('name');
+      params.delete('search');
     }
     replace(`${pathname}?${params.toString()}`);
   }, 300);
@@ -39,8 +39,10 @@ export default function SearchCourses() {
       autoComplete="off"
       placeholder="Ingresar tu materia"
       className="p-1 grow"
-      value={name}
-      onChange={(e) => (setName(e.target.value), handleSearch(e.target.value))}
+      value={search}
+      onChange={(e) => (
+        setSearch(e.target.value), handleSearch(e.target.value)
+      )}
     />
   );
 }

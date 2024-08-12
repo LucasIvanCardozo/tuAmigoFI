@@ -4,7 +4,7 @@ import Course from './course';
 export default async function CoursesTable({
   query,
 }: {
-  query: { name?: string; year?: string; degree?: string };
+  query: { search?: string; year?: number; degree?: number };
 }) {
   const courses = await fetchCourses(query);
   return (
@@ -12,8 +12,8 @@ export default async function CoursesTable({
       {courses?.map(({ id_materias, name, cg, hs, plan }) => (
         <Course
           key={id_materias}
-          id_materias={id_materias}
-          id_carreras={query.degree ?? ''}
+          id_materia={id_materias}
+          id_carrera={query.degree}
           name={name}
           cg={cg}
           hs={hs}

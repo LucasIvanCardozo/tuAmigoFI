@@ -29,7 +29,7 @@ export default function SearchProblems() {
       params.delete('text');
     }
     replace(`${pathname}?${params.toString()}`);
-  }, 300);
+  }, 500);
 
   return (
     <input

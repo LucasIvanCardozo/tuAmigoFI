@@ -1,7 +1,7 @@
 import CoursesTable from '../UI/components/coursesTable';
 import { Suspense } from 'react';
 import SearchCourses from '../UI/components/searchCourses';
-import { fetchYearsDegree } from '../lib/data';
+import { fetchDegree, fetchYears } from '../lib/data';
 import DegreeCourse from '../UI/components/degreeCourse';
 import YearCourse from '../UI/components/yearCourse';
 
@@ -9,13 +9,18 @@ export default async function Materias({
   searchParams,
 }: {
   searchParams?: {
-    name?: string;
+    search?: string;
     year?: string;
     degree?: string;
   };
 }) {
-  const query = searchParams || {};
-  const { years, degrees } = await fetchYearsDegree();
+  const query = {
+    search: searchParams?.search,
+    year: searchParams?.year ? Number(searchParams.year) : undefined,
+    degree: searchParams?.degree ? Number(searchParams.degree) : undefined,
+  };
+  const degrees = await fetchDegree();
+  const years = await fetchYears();
 
   return (
     <>
