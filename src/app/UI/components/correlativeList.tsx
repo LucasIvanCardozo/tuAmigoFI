@@ -14,12 +14,12 @@ export default function CorrelativeList({
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const handleClick = (name: string) => {
+  const handleClick = (search: string) => {
     const params = new URLSearchParams(searchParams);
-    if (name) {
-      params.set('name', name);
+    if (search) {
+      params.set('search', search);
     } else {
-      params.delete('name');
+      params.delete('search');
     }
     replace(`${pathname}?${params.toString()}`);
   };
