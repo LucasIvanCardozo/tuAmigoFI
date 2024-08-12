@@ -21,7 +21,7 @@ export default async function Materias({
   };
   const degrees = await fetchDegree();
   const years = await fetchYears();
-
+  console.log(years);
   return (
     <>
       <main className="w-full h-40"></main>
