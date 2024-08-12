@@ -8,10 +8,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate --no-engine"
   },
   "dependencies": {
     "@prisma/client": "5.18.0",
+    "@prisma/extension-accelerate": "1.1.0",
     "next": "14.2.5",
     "react": "18",
     "react-dom": "18",

@@ -30,10 +30,20 @@ export default async function ProblemsTable({
     <TbSquareRoundedNumber8Filled />,
     <TbSquareRoundedNumber9Filled />,
   ];
-  const problems = await fetchTpsWithProblemsIn(query);
+  let tps = await fetchTpsWithProblemsIn(query);
+  if (query.text) {
+    const text: string = query.text;
+    tps = tps.map((tp) => ({
+      ...tp,
+      materias_tps_problemas: tp.materias_tps_problemas.filter((mp) =>
+        mp.problemas.text_normalized.includes(text)
+      ),
+    }));
+  }
+
   return (
     <ul className="flex flex-col gap-1 grow relative overflow-y-auto">
-      {problems.map(
+      {tps.map(
         ({ id_tps, materias_tps_problemas, name, number, year }, index) => (
           <li key={index} className="relative">
             <div className="flex items-center text-xl sticky top-0 z-20 bg-[--platinum] py-1">

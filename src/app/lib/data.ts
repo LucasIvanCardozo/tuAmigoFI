@@ -25,6 +25,10 @@ export async function fetchCourses({
           }
         : {}),
     },
+    cacheStrategy: {
+      ttl: 7200,
+      swr: 300,
+    },
     //take: 5,
   });
   return courses;
@@ -59,6 +63,10 @@ export async function fetchCorrelatives({
       name: true,
       name_normalized: true,
     },
+    cacheStrategy: {
+      ttl: 7200,
+      swr: 300,
+    },
   });
   return correlatives;
 }
@@ -92,6 +100,10 @@ export async function fetchEnabler({
       name: true,
       name_normalized: true,
     },
+    cacheStrategy: {
+      ttl: 7200,
+      swr: 300,
+    },
   });
   return enabler;
 }
@@ -100,6 +112,10 @@ export async function fetchCoursesWhitId(id: number) {
   const materia = await prisma.materias.findUniqueOrThrow({
     where: {
       id_materias: id,
+    },
+    cacheStrategy: {
+      ttl: 7200,
+      swr: 300,
     },
   });
   return materia;
@@ -115,19 +131,34 @@ export async function fetchTpsWhitCourse(id_materias: number) {
         },
       },
     },
+    cacheStrategy: {
+      ttl: 7200,
+      swr: 300,
+    },
   });
   return tps;
 }
 
 //fetch de carreras
 export async function fetchDegree() {
-  const degrees = await prisma.carreras.findMany();
+  const degrees = await prisma.carreras.findMany({
+    cacheStrategy: {
+      ttl: 7200,
+      swr: 300,
+    },
+  });
+
   return degrees;
 }
 
 //fetch de años -- 1°, 2°, etc
 export async function fetchYears() {
-  const years = await prisma.anios.findMany();
+  const years = await prisma.anios.findMany({
+    cacheStrategy: {
+      ttl: 7200,
+      swr: 300,
+    },
+  });
   return years;
 }
 
@@ -167,14 +198,10 @@ export async function fetchTpsWithProblemsIn({
     orderBy: {
       id_tps: 'asc',
     },
+    cacheStrategy: {
+      ttl: 7200,
+      swr: 300,
+    },
   });
-  const tpsFilter = text
-    ? tps.map((tp) => ({
-        ...tp,
-        materias_tps_problemas: tp.materias_tps_problemas.filter((mp) =>
-          mp.problemas.text_normalized.includes(text)
-        ),
-      }))
-    : tps;
-  return tpsFilter;
+  return tps;
 }
