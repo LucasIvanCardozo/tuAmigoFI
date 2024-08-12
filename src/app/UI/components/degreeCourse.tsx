@@ -20,7 +20,7 @@ export default function DegreeCourse({
 
   const handleDegree = (degree: string) => {
     const params = new URLSearchParams(searchParams);
-    if (degree) {
+    if (degree && degree != '0') {
       params.set('degree', degree);
     } else {
       params.delete('degree');

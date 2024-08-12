@@ -20,7 +20,7 @@ export default function YearCourse({
 
   const handleYears = (year: string) => {
     const params = new URLSearchParams(searchParams);
-    if (year) {
+    if (year && year != '0') {
       params.set('year', year);
     } else {
       params.delete('year');
@@ -37,7 +37,7 @@ export default function YearCourse({
       onChange={(e) => handleYears(e.target.value)}
     >
       <option hidden>Año</option>
-      <option value={0}>Todos</option>
+      <option value="0">Todos</option>
       {years?.map((year) => (
         <option key={year.id} value={year.id}>
           {year.name}

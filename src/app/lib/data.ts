@@ -1,5 +1,6 @@
 import prisma from './db';
 
+
 // fetching de materias
 export async function fetchCourses({
   search,
@@ -22,7 +23,7 @@ export async function fetchCourses({
         ? {
             courses_years: {
               some: {
-                years_id: year != 0 ? year : undefined,
+                years_id: year,
               },
             },
           }
@@ -31,15 +32,15 @@ export async function fetchCourses({
         ? {
             courses_degrees: {
               some: {
-                degrees_id: degree != 0 ? degree : undefined,
+                degrees_id: degree,
               },
             },
           }
         : {}),
     },
     cacheStrategy: {
-      ttl: 7200,
-      swr: 300,
+      ttl: 60,
+      swr: 60,
     },
     //take: 5,
   });
@@ -76,8 +77,8 @@ export async function fetchCorrelatives({
       name_normalized: true,
     },
     cacheStrategy: {
-      ttl: 7200,
-      swr: 300,
+      ttl: 60,
+      swr: 60,
     },
   });
   return correlatives;
@@ -113,8 +114,8 @@ export async function fetchEnabler({
       name_normalized: true,
     },
     cacheStrategy: {
-      ttl: 7200,
-      swr: 300,
+      ttl: 60,
+      swr: 60,
     },
   });
   return enabler;
@@ -163,8 +164,8 @@ export async function fetchTps({
       id: 'asc',
     },
     cacheStrategy: {
-      ttl: 7200,
-      swr: 300,
+      ttl: 60,
+      swr: 60,
     },
   });
   return tps;
@@ -174,8 +175,8 @@ export async function fetchTps({
 export async function fetchDegree() {
   const degrees = await prisma.degrees.findMany({
     cacheStrategy: {
-      ttl: 7200,
-      swr: 300,
+      ttl: 60,
+      swr: 60,
     },
   });
 
@@ -184,6 +185,11 @@ export async function fetchDegree() {
 
 //fetch de años -- 1°, 2°, etc
 export async function fetchYears() {
-  const years = await prisma.years.findMany({});
+  const years = await prisma.years.findMany({
+    cacheStrategy: {
+      ttl: 60,
+      swr: 60,
+    },
+  });
   return years;
 }
