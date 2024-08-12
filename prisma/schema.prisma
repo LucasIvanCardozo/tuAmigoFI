@@ -8,76 +8,98 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-model carreras {
-  id_carreras             Int                       @id @default(autoincrement())
-  name                    String                    @unique(map: "sqlite_autoindex_carreras_1")
-  carreras_materias_anios carreras_materias_anios[]
+model correlatives {
+  id                                           Int
+  id_correlative                               Int
+  courses_correlatives_id_correlativeTocourses courses @relation("correlatives_id_correlativeTocourses", fields: [id_correlative], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  courses_correlatives_idTocourses             courses @relation("correlatives_idTocourses", fields: [id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([id, id_correlative])
 }
 
-model materia_correlativa {
-  id_materias                                           Int
-  id_correlativa                                        Int
-  materias_materia_correlativa_id_correlativaTomaterias materias @relation("materia_correlativa_id_correlativaTomaterias", fields: [id_correlativa], references: [id_materias], onDelete: NoAction, onUpdate: NoAction)
-  materias_materia_correlativa_id_materiasTomaterias    materias @relation("materia_correlativa_id_materiasTomaterias", fields: [id_materias], references: [id_materias], onDelete: NoAction, onUpdate: NoAction)
+model courses {
+  id                                                Int               @id @default(autoincrement())
+  name                                              String            @unique @db.VarChar
+  name_normalized                                   String            @db.VarChar
+  cg                                                Int?
+  hs                                                Int?
+  plan                                              Int
+  correlatives_correlatives_id_correlativeTocourses correlatives[]    @relation("correlatives_id_correlativeTocourses")
+  correlatives_correlatives_idTocourses             correlatives[]    @relation("correlatives_idTocourses")
+  courses_degrees                                   courses_degrees[]
+  courses_years                                     courses_years[]
+  tps_courses                                       tps_courses[]
 
-  @@id([id_materias, id_correlativa])
+  @@index([name_normalized])
 }
 
-model materias {
-  id_materias                                                      Int                       @id @default(autoincrement())
-  name                                                             String                    @unique(map: "sqlite_autoindex_materias_1")
-  name_normalized                                                  String                    @unique(map: "sqlite_autoindex_materias_2")
-  cg                                                               Int?
-  hs                                                               Int?
-  plan                                                             String
-  carreras_materias_anios                                          carreras_materias_anios[]
-  materia_correlativa_materia_correlativa_id_correlativaTomaterias materia_correlativa[]     @relation("materia_correlativa_id_correlativaTomaterias")
-  materia_correlativa_materia_correlativa_id_materiasTomaterias    materia_correlativa[]     @relation("materia_correlativa_id_materiasTomaterias")
-  materias_tps_problemas                                           materias_tps_problemas[]
+model courses_degrees {
+  courses_id Int
+  degrees_id Int
+  courses    courses @relation(fields: [courses_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  degrees    degrees @relation(fields: [degrees_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([courses_id, degrees_id])
 }
 
-model problemas {
-  id_problemas           Int                      @id @default(autoincrement())
-  text                   String
-  response               String?
-  text_normalized        String
-  type                   String?
-  response_plus          String?
-  type_plus              String?
-  materias_tps_problemas materias_tps_problemas[]
+model courses_years {
+  courses_id Int
+  years_id   Int
+  courses    courses @relation(fields: [courses_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  years      years   @relation(fields: [years_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([courses_id, years_id])
+}
+
+model degrees {
+  id              Int               @id @default(autoincrement())
+  name            String            @unique @db.VarChar
+  courses_degrees courses_degrees[]
+}
+
+model problems {
+  id              Int            @id @default(autoincrement())
+  number          Int?
+  text            String         @db.VarChar
+  text_normalized String         @db.VarChar
+  response        String?        @db.VarChar
+  type            String?        @db.VarChar(5)
+  response_plus   String?        @db.VarChar
+  type_plus       String?        @db.VarChar(5)
+  tps_problems    tps_problems[]
+
+  @@index([text_normalized])
 }
 
 model tps {
-  id_tps                 Int                      @id @default(autoincrement())
-  name                   String
-  number                 Int
-  year                   Int
-  materias_tps_problemas materias_tps_problemas[]
+  id           Int            @id @default(autoincrement())
+  name         String         @db.VarChar
+  number       Int?
+  year         Int
+  tps_courses  tps_courses[]
+  tps_problems tps_problems[]
 }
 
-model anios {
-  id_anios Int    @id @default(autoincrement())
-  name     String
+model tps_courses {
+  tps_id     Int
+  courses_id Int
+  courses    courses @relation(fields: [courses_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tps        tps     @relation(fields: [tps_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([tps_id, courses_id])
 }
 
-model carreras_materias_anios {
-  id_carreras Int
-  id_materias Int
-  id_anios    Int
-  carreras    carreras @relation(fields: [id_carreras], references: [id_carreras], onDelete: NoAction, onUpdate: NoAction)
-  materias    materias @relation(fields: [id_materias], references: [id_materias], onDelete: NoAction, onUpdate: NoAction)
-
-  @@id([id_carreras, id_materias, id_anios])
+model years {
+  id            Int             @id @default(autoincrement())
+  name          String          @unique @db.VarChar
+  courses_years courses_years[]
 }
 
-model materias_tps_problemas {
-  id_materias  Int
-  id_tps       Int
-  id_problemas Int
-  number       Int
-  materias     materias  @relation(fields: [id_materias], references: [id_materias], onDelete: NoAction, onUpdate: NoAction)
-  problemas    problemas @relation(fields: [id_problemas], references: [id_problemas], onDelete: NoAction, onUpdate: NoAction)
-  tps          tps       @relation(fields: [id_tps], references: [id_tps], onDelete: NoAction, onUpdate: NoAction)
+model tps_problems {
+  tps_id      Int
+  problems_id Int
+  problems    problems @relation(fields: [problems_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tps         tps      @relation(fields: [tps_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  @@id([id_materias, id_tps, id_problemas])
+  @@id([tps_id, problems_id])
 }

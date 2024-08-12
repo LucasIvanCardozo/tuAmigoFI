@@ -3,26 +3,26 @@ import { CgArrowRightO } from 'react-icons/cg';
 import CorrelativeList from './correlativeList';
 
 export default async function CorrelativeTable({
-  id_materias,
+  id,
   id_carreras,
   type,
   title,
 }: {
-  id_materias: number;
+  id: number;
   id_carreras?: number;
   type: 'correlative' | 'enabler';
   title: string;
 }) {
   let data: {
-    id_materias: number;
+    id: number;
     name: string;
     name_normalized: string;
   }[] = [];
 
   if (type == 'correlative') {
-    data = await fetchCorrelatives({ id_materias, id_carreras });
+    data = await fetchCorrelatives({ id, id_carreras });
   } else if ('enabler') {
-    data = await fetchEnabler({ id_materias, id_carreras });
+    data = await fetchEnabler({ id, id_carreras });
   }
 
   return (
@@ -33,9 +33,9 @@ export default async function CorrelativeTable({
       </div>
       <div className="flex flex-wrap">
         {data.length != 0 ? (
-          data.map(({ id_materias, name, name_normalized }, index) => (
+          data.map(({ id, name, name_normalized }, index) => (
             <CorrelativeList
-              key={id_materias}
+              key={id}
               index={index}
               name={name}
               name_normalized={name_normalized}

@@ -9,10 +9,10 @@ export default async function CoursesTable({
   const courses = await fetchCourses(query);
   return (
     <ul className="w-full flex flex-col gap-3 items-center my-5 text-[--black]">
-      {courses?.map(({ id_materias, name, cg, hs, plan }) => (
+      {courses?.map(({ id, name, cg, hs, plan }) => (
         <Course
-          key={id_materias}
-          id_materia={id_materias}
+          key={id}
+          id_materia={id}
           id_carrera={query.degree}
           name={name}
           cg={cg}

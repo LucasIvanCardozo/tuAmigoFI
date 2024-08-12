@@ -16,7 +16,7 @@ export default async function Course({
   name: string;
   cg: number | null;
   hs: number | null;
-  plan: string;
+  plan: number;
 }) {
   return (
     <li className="relative flex flex-col w-full h-min bg-[--white] drop-shadow-md p-2 sm:w-11/12">
@@ -26,13 +26,13 @@ export default async function Course({
       </div>
       <h2 className="bg-[--dark-cyan] w-max text-[--white]">{name}</h2>
       <CorrelativeTable
-        id_materias={id_materia}
+        id={id_materia}
         id_carreras={id_carrera}
         type="correlative"
         title="Necesitas"
       />
       <CorrelativeTable
-        id_materias={id_materia}
+        id={id_materia}
         id_carreras={id_carrera}
         type="enabler"
         title="Habilita"

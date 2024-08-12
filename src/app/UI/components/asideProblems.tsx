@@ -19,9 +19,9 @@ export default function AsideProblems({
   tpList,
 }: {
   tpList: {
-    id_tps: number;
+    id: number;
     name: string;
-    number: number;
+    number: number | null;
     year: number;
   }[];
 }) {
@@ -86,20 +86,22 @@ export default function AsideProblems({
           <b>Busca tu TP</b>
         </h1>
         <ul className="flex flex-col gap-3">
-          {tpList.map(({ id_tps, name, number, year }) => (
+          {tpList.map(({ id, name, number, year }) => (
             <li
-              key={id_tps}
+              key={id}
               className={
-                (searchParams.get('tps') == id_tps.toString()
+                (searchParams.get('tps') == id.toString()
                   ? 'bg-[#3D4731]'
                   : '') +
                 ' grid grid-cols-[1.2rem,1fr] gap-1 p-1 rounded-md [&>svg]:self-start [&>svg]:h-max [&>svg]:w-full'
               }
             >
-              {numberIcons[number] ? numberIcons[number] : numberIcons[0]}
+              {number && numberIcons[number]
+                ? numberIcons[number]
+                : numberIcons[0]}
               <button
                 className="text-start"
-                onClick={() => handleTps(id_tps.toString())}
+                onClick={() => handleTps(id.toString())}
               >
                 <h3 className="text-base leading-4">{name}</h3>
                 <p className="text-xs text-[--silver]">{`Del año ${year}`} </p>

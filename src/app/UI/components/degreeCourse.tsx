@@ -6,7 +6,7 @@ export default function DegreeCourse({
   degrees,
 }: {
   degrees: {
-    id_carreras: number;
+    id: number;
     name: string;
   }[];
 }) {
@@ -40,7 +40,7 @@ export default function DegreeCourse({
       <option hidden>Carrera</option>
       <option value="0">Todas</option>
       {degrees?.map((degree) => (
-        <option key={degree.id_carreras} value={degree.id_carreras}>
+        <option key={degree.id} value={degree.id}>
           {degree.name}
         </option>
       ))}

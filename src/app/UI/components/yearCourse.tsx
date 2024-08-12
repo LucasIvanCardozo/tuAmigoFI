@@ -6,7 +6,7 @@ export default function YearCourse({
   years,
 }: {
   years: {
-    id_anios: number;
+    id: number;
     name: string;
   }[];
 }) {
@@ -39,7 +39,7 @@ export default function YearCourse({
       <option hidden>Año</option>
       <option value={0}>Todos</option>
       {years?.map((year) => (
-        <option key={year.id_anios} value={year.id_anios}>
+        <option key={year.id} value={year.id}>
           {year.name}
         </option>
       ))}

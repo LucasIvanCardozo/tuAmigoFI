@@ -1,4 +1,4 @@
-import { fetchCoursesWhitId, fetchTpsWhitCourse } from '@/app/lib/data';
+import { fetchCourses, fetchTps } from '@/app/lib/data';
 import ProblemsTable from '@/app/UI/components/problemsTable';
 import SearchProblems from '@/app/UI/components/searchProblems';
 import AsideProblems from '@/app/UI/components/asideProblems';
@@ -17,8 +17,8 @@ export default async function Practica({
     text: searchParams?.text,
     id_materias: id_materia,
   };
-  const course = await fetchCoursesWhitId(id_materia);
-  const tpList = await fetchTpsWhitCourse(id_materia);
+  const course = await fetchCourses({ id: id_materia });
+  const tpList = await fetchTps({ id_materias: id_materia });
 
   return (
     <>
@@ -30,9 +30,9 @@ export default async function Practica({
           <div>
             <div className="flex justify-between items-end">
               <h1 className="text-2xl sm:text-3xl">
-                <b>{course.name}</b>
+                <b>{course[0].name}</b>
               </h1>
-              <span className="text-lg">{`Plan ${course.plan}`}</span>
+              <span className="text-lg">{`Plan ${course[0].plan}`}</span>
             </div>
             <Suspense>
               <SearchProblems />
