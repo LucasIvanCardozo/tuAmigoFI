@@ -184,11 +184,6 @@ export async function fetchDegree() {
 
 //fetch de años -- 1°, 2°, etc
 export async function fetchYears() {
-  const years = await prisma.years.findMany({
-    cacheStrategy: {
-      ttl: 7200,
-      swr: 300,
-    },
-  });
+  const years = await prisma.years.findMany({});
   return years;
 }
