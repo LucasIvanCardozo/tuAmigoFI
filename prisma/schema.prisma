@@ -3,10 +3,11 @@ generator client {
 }
 
 datasource db {
-   provider = "postgresql"
-   url = env("DATABASE_URL") // uses connection pooling
-   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
+
 model carreras {
   id_carreras             Int                       @id @default(autoincrement())
   name                    String                    @unique(map: "sqlite_autoindex_carreras_1")
@@ -38,9 +39,9 @@ model materias {
 model problemas {
   id_problemas           Int                      @id @default(autoincrement())
   text                   String
-  response               String
+  response               String?
   text_normalized        String
-  type                   String
+  type                   String?
   response_plus          String?
   type_plus              String?
   materias_tps_problemas materias_tps_problemas[]
