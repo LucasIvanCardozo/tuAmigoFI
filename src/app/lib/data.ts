@@ -38,8 +38,8 @@ export async function fetchCourses({
         : {}),
     },
     cacheStrategy: {
-      ttl: 60,
-      swr: 60,
+      ttl: 7200,
+      swr: 300,
     },
     //take: 5,
   });
@@ -76,8 +76,8 @@ export async function fetchCorrelatives({
       name_normalized: true,
     },
     cacheStrategy: {
-      ttl: 60,
-      swr: 60,
+      ttl: 7200,
+      swr: 300,
     },
   });
   return correlatives;
@@ -113,8 +113,8 @@ export async function fetchEnabler({
       name_normalized: true,
     },
     cacheStrategy: {
-      ttl: 60,
-      swr: 60,
+      ttl: 7200,
+      swr: 300,
     },
   });
   return enabler;
@@ -167,8 +167,8 @@ export async function fetchTps({
       id: 'asc',
     },
     cacheStrategy: {
-      ttl: 60,
-      swr: 60,
+      ttl: 7200,
+      swr: 300,
     },
   });
   return tps;
@@ -178,8 +178,8 @@ export async function fetchTps({
 export async function fetchDegree() {
   const degrees = await prisma.degrees.findMany({
     cacheStrategy: {
-      ttl: 60,
-      swr: 60,
+      ttl: 7200,
+      swr: 300,
     },
   });
 
@@ -190,8 +190,8 @@ export async function fetchDegree() {
 export async function fetchYears() {
   const years = await prisma.years.findMany({
     cacheStrategy: {
-      ttl: 60,
-      swr: 60,
+      ttl: 7200,
+      swr: 300,
     },
   });
   return years;
