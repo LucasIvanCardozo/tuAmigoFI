@@ -1,6 +1,6 @@
 'use client';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CgClose, CgMenu } from 'react-icons/cg';
 import {
   TbSquareRoundedNumber0Filled,
@@ -57,6 +57,36 @@ export default function AsideProblems({
     replace(`${pathname}?${params.toString()}`);
   };
 
+  useEffect(() => {
+    if (tpsState) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [tpsState]);
+
+  //no bloquear el scroll en pantallas escritorio
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 640px)'); // Tailwind 'sm' breakpoint is 640px
+
+    const handleMediaChange = (e: MediaQueryListEvent) => {
+      if (e.matches) {
+        setTpsState(false);
+      }
+    };
+
+    // Escucha los cambios de la media query
+    mediaQuery.addEventListener('change', (e) => handleMediaChange(e));
+
+    // Limpieza para remover el event listener
+    return () => {
+      mediaQuery.removeEventListener('change', (e) => handleMediaChange(e));
+    };
+  }, []);
+
   return (
     <>
       <button
@@ -79,13 +109,13 @@ export default function AsideProblems({
       <aside
         className={
           (tpsState ? 'translate-x-full' : 'translate-x-0') +
-          ' fixed z-40 top-0 right-full  transform-gpu transition-transform bg-[--black-olive] w-max min-w-40  rounded-md mt-10 py-4 px-3 flex flex-col gap-3 sm:relative sm:h-full sm:m-0 sm:max-w-52 sm:translate-x-0 sm:right-auto '
+          ' fixed z-40 top-0 right-full  transform-gpu transition-transform bg-[--black-olive] w-max min-w-40  rounded-md mt-10 py-4 px-3 flex flex-col max-h-[80vh] gap-3 sm:max-h-none sm:relative sm:h-full sm:m-0 sm:max-w-52 sm:right-auto '
         }
       >
         <h1 className="text-xl">
           <b>Busca tu TP</b>
         </h1>
-        <ul className="flex flex-col gap-3">
+        <ul className="flex flex-col gap-3 overflow-y-auto">
           <li
             className={
               (!searchParams.get('tps') ? 'bg-[#3D4731]' : '') +

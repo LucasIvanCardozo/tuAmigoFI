@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CgMenu, CgClose } from 'react-icons/cg';
 
 export default function Nav() {
@@ -12,11 +12,42 @@ export default function Nav() {
     setNavState(!navState);
   };
 
+  useEffect(() => {
+    if (navState) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [navState]);
+
+  //no bloquear el scroll en pantallas escritorio
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 640px)'); // Tailwind 'sm' breakpoint is 640px
+
+    const handleMediaChange = (e: MediaQueryListEvent) => {
+      if (e.matches) {
+        setNavState(false);
+      }
+    };
+
+    // Escucha los cambios de la media query
+    mediaQuery.addEventListener('change', (e) => handleMediaChange(e));
+
+    // Limpieza para remover el event listener
+    return () => {
+      mediaQuery.removeEventListener('change', (e) => handleMediaChange(e));
+    };
+  }, []);
+
   return (
     <nav className="fixed top-0 h-10 w-full z-30 flex justify-end sm:justify-center sm:mt-2 sm:z-50">
       <Link
         className="text-xl bg-[--dark-cyan] drop-shadow-sm rounded-md m-1 px-1 flex items-center justify-center sm:hidden"
         href="/"
+        onClick={handleNavState}
       >
         <b className="">Tu Amigo FI</b>
       </Link>
@@ -40,7 +71,7 @@ export default function Nav() {
       <ul
         className={
           (navState ? '-translate-x-full' : '-translate-x-0') +
-          ` absolute left-full top-10 bg-[--dark-cyan] rounded-md transform-gpu transition-transform sm:flex sm:relative sm:left-auto sm:top-auto sm:translate-x-0`
+          ` absolute left-full top-10 bg-[--dark-cyan] rounded-md transform-gpu transition-transform sm:flex sm:relative sm:left-auto sm:top-auto`
         }
       >
         {[

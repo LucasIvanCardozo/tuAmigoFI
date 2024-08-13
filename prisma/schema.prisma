@@ -66,6 +66,7 @@ model problems {
   type            String?        @db.VarChar(5)
   response_plus   String?        @db.VarChar
   type_plus       String?        @db.VarChar(5)
+  likes           likes?
   tps_problems    tps_problems[]
 
   @@index([text_normalized])
@@ -73,11 +74,13 @@ model problems {
 
 model tps {
   id           Int            @id @default(autoincrement())
-  name         String         @db.VarChar
+  name         String?        @db.VarChar
   number       Int?
-  year         Int
+  year         Int?
   tps_courses  tps_courses[]
   tps_problems tps_problems[]
+
+  @@unique([name, year], map: "tps_name_year_idx")
 }
 
 model tps_courses {
@@ -102,4 +105,20 @@ model tps_problems {
   tps         tps      @relation(fields: [tps_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@id([tps_id, problems_id])
+}
+
+model likes {
+  id       Int      @id @default(autoincrement())
+  like     Int      @default(0)
+  dislike  Int      @default(0)
+  users    users    @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  problems problems @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "likes_id_fkey1")
+}
+
+model users {
+  id    Int    @id @default(autoincrement())
+  ip    String @db.VarChar
+  likes likes?
+
+  @@index([ip])
 }
