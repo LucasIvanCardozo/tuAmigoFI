@@ -26,7 +26,7 @@ export default async function CorrelativeTable({
   }
 
   return (
-    <div className="flex gap-1 text-sm text-[--black-olive] pl-2 my-1">
+    <div className="flex gap-1 text-sm text-[--black-olive]">
       <div className="flex justify-between gap-1 self-start w-19">
         <p>{title}</p>
         <CgArrowRightO className="self-center text-[--midnight-green]" />

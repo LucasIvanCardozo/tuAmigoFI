@@ -22,24 +22,26 @@ export default async function Course({
     <li className="relative flex flex-col w-full h-min bg-[--white] drop-shadow-md p-2 sm:w-11/12">
       <div className="absolute top-0 right-0 flex flex-col text-center py-1 px-2">
         <span>{`Plan ${plan}`}</span>
-        <span className="text-[0.67rem] -m-2">{`${cg}CG / ${hs}Hs`}</span>
+        <span className="text-xs -m-2">{`${cg}CG / ${hs}Hs`}</span>
       </div>
       <h2 className="bg-[--dark-cyan] w-max text-[--white]">{name}</h2>
-      <CorrelativeTable
-        id={id_materia}
-        id_carreras={id_carrera}
-        type="correlative"
-        title="Necesitas"
-      />
-      <CorrelativeTable
-        id={id_materia}
-        id_carreras={id_carrera}
-        type="enabler"
-        title="Habilita"
-      />
+      <div className="pl-2 my-1">
+        <CorrelativeTable
+          id={id_materia}
+          id_carreras={id_carrera}
+          type="correlative"
+          title="Necesitas"
+        />
+        <CorrelativeTable
+          id={id_materia}
+          id_carreras={id_carrera}
+          type="enabler"
+          title="Habilita"
+        />
+      </div>
       <Link
         href={`./materias/${id_materia}`}
-        className="w-max self-end py-1 px-2 text-sm rounded-sm bg-[--midnight-green] text-[--white]"
+        className="w-max self-end py-1 px-2 text-base rounded-sm bg-[--midnight-green] text-[--white]"
       >
         Ir a la práctica
       </Link>

@@ -25,17 +25,22 @@ export default async function Materias({
   const years = await fetchYears();
   return (
     <>
-      <main className="relative flex pb-4 w-4/6 max-w-screen-sm mt-12 m-auto gap-2 h-auto text-[--black] sm:mt-16">
+      <main className="relative flex pb-4 w-10/12 max-w-screen-sm mt-12 m-auto gap-2 h-auto text-[--black] sm:mt-16">
         <div>
           <Image
             className="object-contain h-full"
             src="/FI.png"
-            width={300}
-            height={300}
+            width={200}
+            height={200}
             alt=""
           />
         </div>
-        <h1 className="font-bold text-4xl text-balance">Buscá tu materia!</h1>
+        <h1 className="font-bold text-4xl text-balance">
+          Buscá tu materia!
+          <p className="text-lg font-normal hidden sm:block">
+            Aquí encontrarás todo lo necesario para mejorar tus prácticas c:
+          </p>
+        </h1>
       </main>
       <section className="flex flex-col max-w-screen-md w-11/12 m-auto items-center">
         <div className="flex flex-col w-full gap-1 text-[--black] sm:flex-row">

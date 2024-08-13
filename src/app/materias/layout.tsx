@@ -22,15 +22,19 @@ export default function Layout({
 }>) {
   return (
     <>
-      <div className="overflow-hidden -z-10 absolute flex flex-col justify-around top-0 left-0 w-full h-full text-3xl text-[--silver] sm:text-5xl">
+      <div className="overflow-hidden -z-10 fixed flex flex-col justify-around top-0 left-0 w-full h-full text-3xl text-[#BABDBA] sm:text-5xl">
         {[
+          <TbMathIntegral />,
           <TbTools />,
           <TbRulerMeasure />,
+          <TbMathIntegral />,
           <TbCircuitCellPlus />,
+          <TbMathFunction />,
           <TbBulbFilled />,
+          <TbMathIntegral />,
           <TbHammer />,
           <TbMathFunction />,
-          <TbMathIntegral />,
+          <TbMathFunction />,
         ].map((element, index) => (
           <div
             key={index}
@@ -38,8 +42,8 @@ export default function Layout({
             style={{
               left: `${
                 index % 2 == 0
-                  ? 5 + Math.random() * 30
-                  : 65 + Math.random() * 30
+                  ? 5 + Math.random() * 25
+                  : 95 - Math.random() * 25
               }vw`,
               animation: `spin ${Math.random() * 25 + 15}s linear infinite`,
             }}

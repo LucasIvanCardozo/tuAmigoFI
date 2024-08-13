@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="800"
+   height="800.98401"
+   viewBox="0 0 48 48.059041"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="facebook.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1" />
+  <title
+     id="title1">Facebook-color</title>
+  <desc
+     id="desc1">Created with Sketch.</desc>
+  <defs
+     id="defs1" />
+  <rect
+     style="fill:#ffffff;stroke-width:0.06"
+     id="rect1"
+     width="27.158672"
+     height="42.568264"
+     x="14.583026"
+     y="5.4907751"
+     rx="4.6079998" />
+  <g
+     id="Icons"
+     stroke="none"
+     stroke-width="1"
+     fill="none"
+     fill-rule="evenodd">
+    <g
+       id="Color-"
+       transform="translate(-200,-160)"
+       fill="#4460a0">
+      <path
+         d="M 225.63835,208 H 202.64923 C 201.18567,208 200,206.81359 200,205.3506 V 162.64921 C 200,161.18585 201.18586,160 202.64923,160 h 42.70172 c 1.463,0 2.64905,1.18585 2.64905,2.64921 V 205.3506 C 248,206.81378 246.81377,208 245.35095,208 H 233.1193 v -18.58825 h 6.23922 l 0.93423,-7.24416 h -7.17345 v -4.62495 c 0,-2.09735 0.58241,-3.52663 3.58999,-3.52663 l 3.83602,-0.002 v -6.47924 c -0.66342,-0.0883 -2.94053,-0.28552 -5.58976,-0.28552 -5.53072,0 -9.3172,3.37596 -9.3172,9.57564 v 5.34238 h -6.25523 v 7.24416 h 6.25523 z"
+         id="Facebook" />
+    </g>
+  </g>
+</svg>
