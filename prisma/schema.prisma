@@ -57,6 +57,14 @@ model degrees {
   courses_degrees courses_degrees[]
 }
 
+model likes {
+  id       Int      @id @default(autoincrement())
+  like     Int      @default(0)
+  dislike  Int      @default(0)
+  users    users    @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  problems problems @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "likes_id_fkey1")
+}
+
 model problems {
   id              Int            @id @default(autoincrement())
   number          Int?
@@ -74,9 +82,9 @@ model problems {
 
 model tps {
   id           Int            @id @default(autoincrement())
-  name         String?        @db.VarChar
+  name         String         @db.VarChar
   number       Int?
-  year         Int?
+  year         Int
   tps_courses  tps_courses[]
   tps_problems tps_problems[]
 
@@ -92,12 +100,6 @@ model tps_courses {
   @@id([tps_id, courses_id])
 }
 
-model years {
-  id            Int             @id @default(autoincrement())
-  name          String          @unique @db.VarChar
-  courses_years courses_years[]
-}
-
 model tps_problems {
   tps_id      Int
   problems_id Int
@@ -107,18 +109,16 @@ model tps_problems {
   @@id([tps_id, problems_id])
 }
 
-model likes {
-  id       Int      @id @default(autoincrement())
-  like     Int      @default(0)
-  dislike  Int      @default(0)
-  users    users    @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  problems problems @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "likes_id_fkey1")
-}
-
 model users {
   id    Int    @id @default(autoincrement())
   ip    String @db.VarChar
   likes likes?
 
   @@index([ip])
+}
+
+model years {
+  id            Int             @id @default(autoincrement())
+  name          String          @unique @db.VarChar
+  courses_years courses_years[]
 }
