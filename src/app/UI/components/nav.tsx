@@ -13,7 +13,7 @@ export default function Nav() {
   };
 
   return (
-    <nav className="fixed h-10 w-full z-30 flex justify-end sm:justify-center sm:mt-2 sm:z-50">
+    <nav className="fixed top-0 h-10 w-full z-30 flex justify-end sm:justify-center sm:mt-2 sm:z-50">
       <Link
         className="text-xl bg-[--dark-cyan] drop-shadow-sm rounded-md m-1 px-1 flex items-center justify-center sm:hidden"
         href="/"

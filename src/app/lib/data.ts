@@ -1,6 +1,5 @@
 import prisma from './db';
 
-
 // fetching de materias
 export async function fetchCourses({
   search,
@@ -58,7 +57,7 @@ export async function fetchCorrelatives({
     where: {
       correlatives_correlatives_id_correlativeTocourses: {
         some: {
-          id_correlative: id,
+          id: id,
         },
       },
       ...(id_carreras
@@ -95,7 +94,7 @@ export async function fetchEnabler({
     where: {
       correlatives_correlatives_idTocourses: {
         some: {
-          id: id,
+          id_correlative: id,
         },
       },
       ...(id_carreras
@@ -126,10 +125,12 @@ export async function fetchTps({
   text,
   id_tps,
   id_materias,
+  withProblems,
 }: {
   text?: string;
   id_tps?: number;
   id_materias?: number;
+  withProblems?: boolean;
 }) {
   const tps = await prisma.tps.findMany({
     include: {
@@ -139,6 +140,7 @@ export async function fetchTps({
         },
       },
     },
+    ...(withProblems ? {} : {}), //colocar el take:1 pero cuando mejores la logica
     where: {
       id: id_tps,
       tps_courses: {
@@ -153,6 +155,7 @@ export async function fetchTps({
                 problems: {
                   text_normalized: {
                     contains: text,
+                    mode: 'insensitive',
                   },
                 },
               },

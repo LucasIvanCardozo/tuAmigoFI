@@ -29,7 +29,7 @@ export default async function Practica({
         <section className="text-[--black] flex flex-col grow relative h-full p-3 sm:p-0">
           <div>
             <div className="flex justify-between items-end">
-              <h1 className="text-2xl sm:text-3xl">
+              <h1 className="text-2xl sm:text-3xl font-bold">
                 <b>{course[0].name}</b>
               </h1>
               <span className="text-lg">{`Plan ${course[0].plan}`}</span>

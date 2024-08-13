@@ -86,6 +86,20 @@ export default function AsideProblems({
           <b>Busca tu TP</b>
         </h1>
         <ul className="flex flex-col gap-3">
+          <li
+            className={
+              (!searchParams.get('tps') ? 'bg-[#3D4731]' : '') +
+              ' grid grid-cols-[1.2rem,1fr] gap-1 p-1 rounded-md [&>svg]:self-start [&>svg]:h-max [&>svg]:w-full'
+            }
+          >
+            {numberIcons[0]}
+            <button className="text-start" onClick={() => handleTps('')}>
+              <h3 className="text-base leading-4">Mostrar todos</h3>
+              <p className="text-xs text-[--silver]">
+                {`Todos los TPs disponibles`}{' '}
+              </p>
+            </button>
+          </li>
           {tpList.map(({ id, name, number, year }) => (
             <li
               key={id}

@@ -24,7 +24,7 @@ export default function SearchProblems() {
     setIsHandleSearch(true);
     const params = new URLSearchParams(searchParams);
     if (text) {
-      params.set('text', text);
+      params.set('text', text.normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
     } else {
       params.delete('text');
     }

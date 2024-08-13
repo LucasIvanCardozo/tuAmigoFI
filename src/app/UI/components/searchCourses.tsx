@@ -24,12 +24,15 @@ export default function SearchCourses() {
     setIsHandleSearch(true);
     const params = new URLSearchParams(searchParams);
     if (search) {
-      params.set('search', search);
+      params.set(
+        'search',
+        search.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      );
     } else {
       params.delete('search');
     }
     replace(`${pathname}?${params.toString()}`);
-  }, 300);
+  }, 500);
 
   return (
     <input
