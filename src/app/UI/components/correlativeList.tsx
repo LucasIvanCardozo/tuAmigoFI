@@ -28,7 +28,7 @@ export default function CorrelativeList({
       {index != 0 ? <p>&nbsp;-&nbsp;</p> : ''}
       <button
         className="hover:text-[--midnight-green] hover:underline"
-        onClick={() => handleClick(name_normalized)}
+        onClick={() => handleClick(name)}
       >
         {name}
       </button>
