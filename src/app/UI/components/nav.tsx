@@ -71,7 +71,7 @@ export default function Nav() {
       <ul
         className={
           (navState ? '-translate-x-full' : '-translate-x-0') +
-          ` absolute left-full top-10 bg-[--dark-cyan] rounded-md transform-gpu transition-transform sm:flex sm:relative sm:left-auto sm:top-auto`
+          ` absolute left-full top-10 bg-[--dark-cyan] rounded-md transform-gpu transition-transform sm:flex sm:relative sm:translate-x-0 sm:left-auto sm:top-auto`
         }
       >
         {[

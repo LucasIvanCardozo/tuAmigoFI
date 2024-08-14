@@ -24,6 +24,7 @@ model courses {
   cg                                                Int?
   hs                                                Int?
   plan                                              Int
+  optional                                          Boolean           @default(false)
   correlatives_correlatives_id_correlativeTocourses correlatives[]    @relation("correlatives_id_correlativeTocourses")
   correlatives_correlatives_idTocourses             correlatives[]    @relation("correlatives_idTocourses")
   courses_degrees                                   courses_degrees[]

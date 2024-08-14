@@ -25,7 +25,7 @@ export default async function Materias({
   const years = await fetchYears();
   return (
     <>
-      <main className="relative flex pb-4 w-10/12 max-w-screen-sm mt-12 m-auto gap-2 h-auto text-[--black] sm:mt-16">
+      <main className="relative flex justify-center pb-4 w-10/12 max-w-screen-sm mt-12 m-auto gap-2 h-auto text-[--black] sm:mt-16">
         <div>
           <Image
             className="object-contain h-full"
@@ -35,7 +35,7 @@ export default async function Materias({
             alt=""
           />
         </div>
-        <h1 className="font-bold text-4xl text-balance">
+        <h1 className="font-bold text-4xl text-balance max-w-72">
           Buscá tu materia!
           <p className="text-lg font-normal hidden sm:block">
             Aquí encontrarás todo lo necesario para mejorar tus prácticas c:

@@ -10,6 +10,7 @@ export default async function Course({
   cg,
   hs,
   plan,
+  optional,
 }: {
   id_materia: number;
   id_carrera?: number;
@@ -17,14 +18,22 @@ export default async function Course({
   cg: number | null;
   hs: number | null;
   plan: number;
+  optional: boolean;
 }) {
   return (
-    <li className="relative flex flex-col w-full h-min bg-[--white] drop-shadow-md p-2 transform-gpu transition-transform sm:hover:scale-105 sm:w-11/12">
+    <li className="relative flex flex-col w-full h-min bg-[--white] shadow-md p-2 transform-gpu transition-transform sm:hover:scale-105 sm:w-11/12">
       <div className="absolute top-0 right-0 flex flex-col text-center py-1 px-2">
         <span>{`Plan ${plan}`}</span>
         <span className="text-xs -m-2">{`${cg}CG / ${hs}Hs`}</span>
       </div>
-      <h2 className="bg-[--dark-cyan] w-max text-[--white]">{name}</h2>
+      <div className="flex relative bg-[--dark-cyan] w-min">
+        <h2 className=" w-max text-[--white] ">{name}</h2>
+        {optional ? (
+          <span className="absolute left-full text-sm">{`(Opcional)`}</span>
+        ) : (
+          ''
+        )}
+      </div>
       <div className="pl-2 my-1">
         <CorrelativeTable
           id={id_materia}

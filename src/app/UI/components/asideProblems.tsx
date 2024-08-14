@@ -115,11 +115,14 @@ export default function AsideProblems({
         <h1 className="text-xl">
           <b>Busca tu TP</b>
         </h1>
-        <ul className="flex flex-col gap-3 overflow-y-auto">
+        <ul
+          className="flex flex-col gap-3 overflow-y-auto overflow-x-hidden"
+          style={{ scrollbarWidth: 'none' }}
+        >
           <li
             className={
               (!searchParams.get('tps') ? 'bg-[#3D4731]' : '') +
-              ' grid grid-cols-[1.2rem,1fr] gap-1 p-1 rounded-md [&>svg]:self-start [&>svg]:h-max [&>svg]:w-full'
+              ' grid grid-cols-[1.2rem,1fr] gap-1 p-1 rounded-md [&>svg]:self-start [&>svg]:h-max [&>svg]:w-full transform-gpu transition-transform sm:hover:scale-105'
             }
           >
             {numberIcons[0]}
@@ -137,7 +140,7 @@ export default function AsideProblems({
                 (searchParams.get('tps') == id.toString()
                   ? 'bg-[#3D4731]'
                   : '') +
-                ' grid grid-cols-[1.2rem,1fr] gap-1 p-1 rounded-md [&>svg]:self-start [&>svg]:h-max [&>svg]:w-full'
+                ' grid grid-cols-[1.2rem,1fr] gap-1 p-1 rounded-md [&>svg]:self-start [&>svg]:h-max [&>svg]:w-full transform-gpu transition-transform sm:hover:scale-105'
               }
             >
               {number && numberIcons[number]
