@@ -21,7 +21,7 @@ export default async function CorrelativeTable({
 
   if (type == 'correlative') {
     data = await fetchCorrelatives({ id, id_carreras });
-  } else if ('enabler') {
+  } else if (type == 'enabler') {
     data = await fetchEnabler({ id, id_carreras });
   }
 

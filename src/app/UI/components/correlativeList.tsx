@@ -17,7 +17,7 @@ export default function CorrelativeList({
   const handleClick = (search: string) => {
     const params = new URLSearchParams(searchParams);
     if (search) {
-      params.set('search', search);
+      params.set('search', search.normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
     } else {
       params.delete('search');
     }
