@@ -26,8 +26,8 @@ export default async function Course({
         <span>{`Plan ${plan}`}</span>
         <span className="text-xs -m-2">{`${cg}CG / ${hs}Hs`}</span>
       </div>
-      <div className="flex relative bg-[--dark-cyan] w-min">
-        <h2 className=" w-max text-[--white] ">{name}</h2>
+      <div className="flex relative w-min bg-[--dark-cyan]">
+        <h2 className="w-max text-[--white] ">{name}</h2>
         {optional ? (
           <span className="absolute left-full text-sm">{`(Opcional)`}</span>
         ) : (
