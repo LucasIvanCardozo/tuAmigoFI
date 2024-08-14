@@ -9,7 +9,10 @@ export default function Nav() {
   const pathname: string = usePathname();
 
   const handleNavState = () => {
-    setNavState(!navState);
+    if (document.documentElement.scrollWidth < 640) {
+      setNavState(!navState);
+      console.log('hola');
+    }
   };
 
   useEffect(() => {
