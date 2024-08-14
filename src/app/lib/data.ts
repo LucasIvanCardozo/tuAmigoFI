@@ -17,6 +17,7 @@ export async function fetchCourses({
       id: id,
       name_normalized: {
         contains: search,
+        mode: 'insensitive',
       },
       ...(year
         ? {
