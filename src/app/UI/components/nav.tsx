@@ -11,7 +11,6 @@ export default function Nav() {
   const handleNavState = () => {
     if (document.documentElement.scrollWidth < 640) {
       setNavState(!navState);
-      console.log('hola');
     }
   };
 
