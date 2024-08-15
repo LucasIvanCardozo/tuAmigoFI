@@ -66,8 +66,16 @@ export default function ButtonReaction({
     ).length;
     setNumberLike(likesTotal);
     setNumberDislike(problems.user_reactions.length - likesTotal);
+    console.log(likesTotal);
   }, []);
 
+  useEffect(() => {
+    const likesTotal = problems.user_reactions.filter(
+      (reaction) => reaction.reaction == 1
+    ).length;
+    console.log(likesTotal);
+  }, [problems.user_reactions]);
+  
   useEffect(() => {
     const reaction = problems.user_reactions?.find(
       (reaction) => reaction.id_user == uuid
@@ -81,7 +89,7 @@ export default function ButtonReaction({
       }
     }
   }, [uuid]);
-  
+
   return (
     <span className="flex absolute bottom-0 right-0 z-10 gap-1">
       <button className="flex" onClick={() => handleLike(1)}>
