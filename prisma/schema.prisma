@@ -28,6 +28,7 @@ model courses {
   correlatives_correlatives_id_correlativeTocourses correlatives[]    @relation("correlatives_id_correlativeTocourses")
   correlatives_correlatives_idTocourses             correlatives[]    @relation("correlatives_idTocourses")
   courses_degrees                                   courses_degrees[]
+  courses_links                                     courses_links[]
   courses_years                                     courses_years[]
   tps_courses                                       tps_courses[]
 
@@ -41,6 +42,15 @@ model courses_degrees {
   degrees    degrees @relation(fields: [degrees_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@id([courses_id, degrees_id])
+}
+
+model courses_links {
+  courses_id Int
+  links_id   Int
+  courses    courses @relation(fields: [courses_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  links      links   @relation(fields: [links_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([courses_id, links_id])
 }
 
 model courses_years {
@@ -64,6 +74,14 @@ model likes {
   dislike  Int      @default(0)
   users    users    @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   problems problems @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "likes_id_fkey1")
+}
+
+model links {
+  id            Int             @id @default(autoincrement())
+  name          String          @db.VarChar
+  link          String          @db.VarChar
+  official      Boolean
+  courses_links courses_links[]
 }
 
 model problems {

@@ -197,3 +197,28 @@ export async function fetchYears() {
   });
   return years;
 }
+
+//fetch a los links de cada materia
+export async function fetchLinks({
+  official,
+  id_materia,
+}: {
+  official: boolean;
+  id_materia: number;
+}) {
+  const links = await prisma.links.findMany({
+    where: {
+      courses_links: {
+        some: {
+          courses_id: id_materia,
+        },
+      },
+      official: official,
+    },
+    cacheStrategy: {
+      ttl: 7200,
+      swr: 300,
+    },
+  });
+  return links;
+}

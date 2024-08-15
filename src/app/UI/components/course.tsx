@@ -1,7 +1,8 @@
-import { fetchCorrelatives, fetchEnabler } from '@/app/lib/data';
+import { fetchCorrelatives, fetchEnabler, fetchLinks } from '@/app/lib/data';
 import { CgArrowRightO } from 'react-icons/cg';
 import CorrelativeTable from './correlativeTable';
 import Link from 'next/link';
+import CourseLinks from './courseLinks';
 
 export default async function Course({
   id_materia,
@@ -20,6 +21,8 @@ export default async function Course({
   plan: number;
   optional: boolean;
 }) {
+  const officialLinks = await fetchLinks({ official: true, id_materia });
+  const unofficialLinks = await fetchLinks({ official: false, id_materia });
   return (
     <li className="relative flex flex-col w-full h-min bg-[--white] shadow-md p-2 transform-gpu transition-transform sm:hover:scale-105 sm:w-11/12">
       <div className="absolute top-0 right-0 flex flex-col text-center py-1 px-2">
@@ -48,6 +51,10 @@ export default async function Course({
           title="Habilita"
         />
       </div>
+      {officialLinks.length >= 0 ? <CourseLinks links={officialLinks} /> : null}
+      {unofficialLinks.length >= 0 ? (
+        <CourseLinks links={unofficialLinks} />
+      ) : null}
       <Link
         href={`./materias/${id_materia}`}
         className="w-max self-end py-1 px-2 text-base rounded-sm bg-[--midnight-green] text-[--white]"

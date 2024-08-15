@@ -18,15 +18,6 @@ export default async function Problem({
 }) {
   return (
     <li className="bg-[--white] p-2 text-base leading-5 drop-shadow-md flex flex-col gap-1">
-      <span className="flex absolute bottom-0 right-0 z-10 my-1 mx-2 gap-1">
-        <button className="flex">
-          <AiFillLike className="text-xl" />
-          12
-        </button>
-        <button className="flex">
-          <TbAlertHexagon className="text-xl" />1
-        </button>
-      </span>
       <p className="whitespace-pre-wrap bg-[#C8E0E4] p-1 rounded-md">
         <b className="bg-[#92C1C9] rounded-sm">{`Problema ${problems.number}:`}</b>
         <br />
@@ -68,6 +59,15 @@ export default async function Problem({
             placeholder="empty"
             loading="lazy"
           />
+          <span className="flex absolute bottom-0 right-0 z-10 gap-1">
+            <button className="flex">
+              <AiFillLike className="text-xl" />
+              12
+            </button>
+            <button className="flex">
+              <TbAlertHexagon className="text-xl" />1
+            </button>
+          </span>
         </div>
       ) : (
         ''

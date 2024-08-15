@@ -16,6 +16,9 @@ const config: Config = {
         '18': '4.5rem',
         '19': '4.75rem',
       },
+      transitionProperty: {
+        height: 'height',
+      },
     },
   },
   plugins: [],
