@@ -82,7 +82,8 @@ export default function ButtonReaction({
         else setStateDislike(true);
       }
     };
-    searchReactions();
+    if (uuid != '') searchReactions();
+    else throw new Error('No se encontro el usuario');
   }, [uuid]);
 
   return (
