@@ -20,18 +20,15 @@ export default function ProblemsTable({
 
   useEffect(() => {
     const validationUser = async () => {
-      const uuidCurrent = localStorage.getItem('uuid');
-      if (uuidCurrent == null) {
+      if (uuid == '') {
         const newUuid: string = v4();
         localStorage.setItem('uuid', newUuid);
         await createUser(newUuid);
         setUuid(newUuid);
       } else {
-        const validate = await fetchUser(uuidCurrent);
+        const validate = await fetchUser(uuid);
         if (validate == null) {
           throw new Error('No deberías estar haciendo esto...');
-        } else {
-          setUuid(uuidCurrent);
         }
       }
     };
