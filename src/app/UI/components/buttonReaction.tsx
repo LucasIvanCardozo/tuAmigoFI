@@ -83,7 +83,6 @@ export default function ButtonReaction({
       }
     };
     if (uuid != '') searchReactions();
-    else throw new Error('No se encontro el usuario');
   }, [uuid]);
 
   return (
