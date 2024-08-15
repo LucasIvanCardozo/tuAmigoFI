@@ -14,6 +14,8 @@ import Problem from './problem';
 
 export default async function Tps({
   tp,
+  idUser,
+  ipUser,
 }: {
   tp: {
     tps_problems: {
@@ -26,6 +28,13 @@ export default async function Tps({
         type: string | null;
         response_plus: string | null;
         type_plus: string | null;
+        user_reactions: {
+          id: number;
+          id_problem: number;
+          reaction: number;
+          id_user: number;
+          created_at: Date | null;
+        }[];
       };
     }[];
   } & {
@@ -34,6 +43,8 @@ export default async function Tps({
     number: number | null;
     year: number;
   };
+  idUser?: number;
+  ipUser: string;
 }) {
   const numberIcons = [
     <TbSquareRoundedNumber0Filled />,
@@ -59,7 +70,12 @@ export default async function Tps({
       </div>
       <ul className="flex flex-col gap-1 pl-3">
         {tp.tps_problems.map(({ problems }, index) => (
-          <Problem problems={problems} key={index} />
+          <Problem
+            ipUser={ipUser}
+            idUser={idUser}
+            problems={problems}
+            key={index}
+          />
         ))}
       </ul>
     </li>

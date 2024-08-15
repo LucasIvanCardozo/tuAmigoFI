@@ -137,7 +137,11 @@ export async function fetchTps({
     include: {
       tps_problems: {
         select: {
-          problems: {},
+          problems: {
+            include: {
+              user_reactions: {},
+            },
+          },
         },
       },
     },
@@ -221,4 +225,13 @@ export async function fetchLinks({
     },
   });
   return links;
+}
+
+export async function fetchUser(ip: string) {
+  const idUser = await prisma.users.findFirst({
+    where: {
+      ip: ip,
+    },
+  });
+  return idUser;
 }

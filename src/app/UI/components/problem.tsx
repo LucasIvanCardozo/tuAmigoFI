@@ -1,9 +1,10 @@
 import Image from 'next/image';
-import { TbAlertHexagon } from 'react-icons/tb';
-import { AiFillLike } from 'react-icons/ai';
+import ButtonReaction from './buttonReaction';
 
 export default async function Problem({
   problems,
+  idUser,
+  ipUser,
 }: {
   problems: {
     number: number | null;
@@ -14,7 +15,16 @@ export default async function Problem({
     type: string | null;
     id: number;
     text_normalized: string;
+    user_reactions: {
+      id: number;
+      id_problem: number;
+      reaction: number;
+      id_user: number;
+      created_at: Date | null;
+    }[];
   };
+  idUser?: number;
+  ipUser: string;
 }) {
   return (
     <li className="bg-[--white] p-2 text-base leading-5 drop-shadow-md flex flex-col gap-1">
@@ -59,15 +69,7 @@ export default async function Problem({
             placeholder="empty"
             loading="lazy"
           />
-          <span className="flex absolute bottom-0 right-0 z-10 gap-1">
-            <button className="flex">
-              <AiFillLike className="text-xl" />
-              12
-            </button>
-            <button className="flex">
-              <TbAlertHexagon className="text-xl" />1
-            </button>
-          </span>
+          <ButtonReaction ipUser={ipUser} idUser={idUser} problems={problems} />
         </div>
       ) : (
         ''

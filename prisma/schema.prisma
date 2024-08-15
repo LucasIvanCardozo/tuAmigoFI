@@ -68,14 +68,6 @@ model degrees {
   courses_degrees courses_degrees[]
 }
 
-model likes {
-  id       Int      @id @default(autoincrement())
-  like     Int      @default(0)
-  dislike  Int      @default(0)
-  users    users    @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  problems problems @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "likes_id_fkey1")
-}
-
 model links {
   id            Int             @id @default(autoincrement())
   name          String          @db.VarChar
@@ -85,16 +77,16 @@ model links {
 }
 
 model problems {
-  id              Int            @id @default(autoincrement())
+  id              Int              @id @default(autoincrement())
   number          Int?
-  text            String         @db.VarChar
-  text_normalized String         @db.VarChar
-  response        String?        @db.VarChar
-  type            String?        @db.VarChar(5)
-  response_plus   String?        @db.VarChar
-  type_plus       String?        @db.VarChar(5)
-  likes           likes?
+  text            String           @db.VarChar
+  text_normalized String           @db.VarChar
+  response        String?          @db.VarChar
+  type            String?          @db.VarChar(5)
+  response_plus   String?          @db.VarChar
+  type_plus       String?          @db.VarChar(5)
   tps_problems    tps_problems[]
+  user_reactions  user_reactions[]
 
   @@index([text_normalized])
 }
@@ -128,10 +120,22 @@ model tps_problems {
   @@id([tps_id, problems_id])
 }
 
+model user_reactions {
+  id         Int       @id @default(autoincrement())
+  id_user    Int
+  id_problem Int
+  reaction   Int
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  problems   problems  @relation(fields: [id_problem], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users      users     @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([id_user, id_problem], map: "user_reactions_id_user_id_problem_idx")
+}
+
 model users {
-  id    Int    @id @default(autoincrement())
-  ip    String @db.VarChar
-  likes likes?
+  id             Int              @id @default(autoincrement())
+  ip             String           @db.VarChar
+  user_reactions user_reactions[]
 
   @@index([ip])
 }

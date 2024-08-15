@@ -1,4 +1,4 @@
-import { fetchTps } from '@/app/lib/data';
+import { fetchTps, fetchUser } from '@/app/lib/data';
 import Tps from './tps';
 
 export default async function ProblemsTable({
@@ -22,11 +22,20 @@ export default async function ProblemsTable({
       ),
     }));
   }
+  const ipUser: string = await fetch('https://api.ipify.org/?format=json')
+    .then((response) => response.json())
+    .then((data) => data.ip);
+  const idUser = await fetchUser(ipUser);
+  // fetch('https://api.ipify.org/?format=json')
+  //   .then((response) => response.json())
+  //   .then((data) => {
 
+  //   })
+  //   .catch((error) => console.error(error));
   return (
     <ul className="flex flex-col gap-1 grow relative overflow-y-auto">
       {tps.map((tp, index) => (
-        <Tps tp={tp} key={index} />
+        <Tps tp={tp} ipUser={ipUser} idUser={idUser?.id} key={index} />
       ))}
     </ul>
   );
