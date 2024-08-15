@@ -67,8 +67,10 @@ export default function ButtonReaction({
       const reaction = totalReactions.find(
         (reaction) => reaction.id_user == uuid
       );
-      if (reaction && reaction.reaction == 1) setStateLike(true);
-      else setStateDislike(true);
+      if (reaction) {
+        if (reaction.reaction == 1) setStateLike(true);
+        else setStateDislike(true);
+      }
     };
     searchReactions();
   }, []);
