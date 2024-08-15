@@ -1,6 +1,11 @@
 'use server';
 import prisma from './db';
 
+const cache = {
+  ttl: 30,
+  swr: 30,
+};
+
 export async function fetchCourse(id: number) {
   const course = await prisma.courses.findFirstOrThrow({
     where: {
@@ -45,10 +50,7 @@ export async function fetchCourses({
           }
         : {}),
     },
-    cacheStrategy: {
-      ttl: 7200,
-      swr: 300,
-    },
+    cacheStrategy: cache,
     //take: 5,
   });
   return courses;
@@ -83,10 +85,7 @@ export async function fetchCorrelatives({
       name: true,
       name_normalized: true,
     },
-    cacheStrategy: {
-      ttl: 7200,
-      swr: 300,
-    },
+    cacheStrategy: cache,
   });
   return correlatives;
 }
@@ -120,10 +119,7 @@ export async function fetchEnabler({
       name: true,
       name_normalized: true,
     },
-    cacheStrategy: {
-      ttl: 7200,
-      swr: 300,
-    },
+    cacheStrategy: cache,
   });
   return enabler;
 }
@@ -178,10 +174,7 @@ export async function fetchTps({
     orderBy: {
       id: 'asc',
     },
-    cacheStrategy: {
-      ttl: 7200,
-      swr: 300,
-    },
+    cacheStrategy: cache,
   });
   return tps;
 }
@@ -189,10 +182,7 @@ export async function fetchTps({
 //fetch de carreras
 export async function fetchDegree() {
   const degrees = await prisma.degrees.findMany({
-    cacheStrategy: {
-      ttl: 7200,
-      swr: 300,
-    },
+    cacheStrategy: cache,
   });
 
   return degrees;
@@ -201,10 +191,7 @@ export async function fetchDegree() {
 //fetch de años -- 1°, 2°, etc
 export async function fetchYears() {
   const years = await prisma.years.findMany({
-    cacheStrategy: {
-      ttl: 7200,
-      swr: 300,
-    },
+    cacheStrategy: cache,
   });
   return years;
 }
@@ -226,10 +213,7 @@ export async function fetchLinks({
       },
       official: official,
     },
-    cacheStrategy: {
-      ttl: 7200,
-      swr: 300,
-    },
+    cacheStrategy: cache,
   });
   return links;
 }
