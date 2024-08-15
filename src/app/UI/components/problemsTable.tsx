@@ -16,19 +16,22 @@ export default function ProblemsTable({
   }[];
   text?: string;
 }) {
-  const [uuid, setUuid] = useState<string>(localStorage.getItem('uuid') ?? '');
+  const [uuid, setUuid] = useState<string>('');
 
   useEffect(() => {
     const validationUser = async () => {
-      if (uuid == '') {
+      const uuidCurrent = localStorage.getItem('uuid');
+      if (uuidCurrent == null) {
         const newUuid: string = v4();
         localStorage.setItem('uuid', newUuid);
         await createUser(newUuid);
         setUuid(newUuid);
       } else {
-        const validate = await fetchUser(uuid);
+        const validate = await fetchUser(uuidCurrent);
         if (validate == null) {
           throw new Error('No deberías estar haciendo esto...');
+        } else {
+          setUuid(uuidCurrent);
         }
       }
     };
@@ -36,7 +39,7 @@ export default function ProblemsTable({
   }, []);
 
   useEffect(() => {
-    console.log('tu usuario es: ' + uuid);
+    if (uuid != '') console.log('tu usuario es: ' + uuid);
   }, [uuid]);
 
   return (
