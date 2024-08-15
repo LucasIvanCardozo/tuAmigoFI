@@ -1,40 +1,23 @@
 'use client';
 import Tps from './tps';
 import { v4 } from 'uuid';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { createUser } from '@/app/lib/actions';
 import { fetchUser } from '@/app/lib/data';
 export default function ProblemsTable({
   tps,
+  text,
 }: {
-  tps: ({
-    tps_problems: {
-      problems: {
-        number: number | null;
-        id: number;
-        text: string;
-        text_normalized: string;
-        response: string | null;
-        type: string | null;
-        response_plus: string | null;
-        type_plus: string | null;
-        user_reactions: {
-          id: number;
-          id_problem: number;
-          reaction: number;
-          id_user: string;
-          created_at: Date | null;
-        }[];
-      };
-    }[];
-  } & {
+  tps: {
     id: number;
     name: string;
     number: number | null;
     year: number;
-  })[];
+  }[];
+  text?: string;
 }) {
   const [uuid, setUuid] = useState<string>('');
+
   useEffect(() => {
     const validationUser = async () => {
       const uuidCurrent = localStorage.getItem('uuid');
@@ -58,11 +41,14 @@ export default function ProblemsTable({
   useEffect(() => {
     console.log('tu usuario es: ' + uuid);
   }, [uuid]);
+
   return (
     <ul className="flex flex-col gap-1 grow relative overflow-y-auto">
-      {tps.map((tp, index) => (
-        <Tps uuid={uuid} tp={tp} key={index} />
-      ))}
+      <Suspense>
+        {tps.map((tp, index) => (
+          <Tps uuid={uuid} tp={tp} text={text} key={index} />
+        ))}
+      </Suspense>
     </ul>
   );
 }

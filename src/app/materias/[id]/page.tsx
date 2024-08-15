@@ -20,20 +20,18 @@ export default async function Practica({
   const course = await fetchCourse(id_materia);
   const tpList = await fetchTps({ id_materias: id_materia });
   let tps = await fetchTps({
-    text: query.text,
     id_tps: query.id_tps,
     id_materias: query.id_materias,
-    withProblems: true,
   });
-  if (query.text) {
-    const text: string = query.text;
-    tps = tps.map((tp) => ({
-      ...tp,
-      tps_problems: tp.tps_problems.filter((mp) =>
-        mp.problems.text_normalized.includes(text)
-      ),
-    }));
-  }
+  // if (query.text) {
+  //   const text: string = query.text;
+  //   tps = tps.map((tp) => ({
+  //     ...tp,
+  //     tps_problems: tp.tps_problems.filter((mp) =>
+  //       mp.problems.text_normalized.includes(text)
+  //     ),
+  //   }));
+  // }
   return (
     <>
       <main className="h-screen w-full pt-8 flex gap-2 max-w-screen-lg m-auto sm:pb-3 sm:px-2 sm:pt-16">
@@ -53,7 +51,7 @@ export default async function Practica({
             </Suspense>
           </div>
           <Suspense>
-            <ProblemsTable tps={tps} />
+            <ProblemsTable text={query.text} tps={tps} />
           </Suspense>
         </section>
       </main>

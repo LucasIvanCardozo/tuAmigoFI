@@ -1,11 +1,14 @@
+'use client';
 import Image from 'next/image';
 import ButtonReaction from './buttonReaction';
+import { fetchUserReaction } from '@/app/lib/data';
+import { Suspense, useEffect, useState } from 'react';
 
 export default function Problem({
-  problems,
+  problem,
   uuid,
 }: {
-  problems: {
+  problem: {
     number: number | null;
     response_plus: string | null;
     text: string;
@@ -14,36 +17,29 @@ export default function Problem({
     type: string | null;
     id: number;
     text_normalized: string;
-    user_reactions: {
-      id: number;
-      id_problem: number;
-      reaction: number;
-      id_user: string;
-      created_at: Date | null;
-    }[];
   };
   uuid: string;
 }) {
   return (
     <li className="bg-[--white] p-2 text-base leading-5 drop-shadow-md flex flex-col gap-1">
       <p className="whitespace-pre-wrap bg-[#C8E0E4] p-1 rounded-md">
-        <b className="bg-[#92C1C9] rounded-sm">{`Problema ${problems.number}:`}</b>
+        <b className="bg-[#92C1C9] rounded-sm">{`Problema ${problem.number}:`}</b>
         <br />
-        {problems.response_plus ? (
+        {problem.response_plus ? (
           <span
             className={`${
-              problems.text.length > 200
+              problem.text.length > 200
                 ? 'grid-cols-[1fr] grid-rows-[1fr,min]'
                 : 'grid-cols-[1fr] grid-rows-[min,1fr]'
             } relative grid bg-[#C8E0E4] p-1`}
           >
             <span className="whitespace-pre-wrap pb-1 pr-1">
-              {problems.text}
+              {problem.text}
             </span>
             <span className="relative max-h-96 flex">
               <Image
                 className="object-contain"
-                src={`${problems.response_plus}.${problems.type_plus}`}
+                src={`${problem.response_plus}.${problem.type_plus}`}
                 width={500}
                 height={500}
                 alt="Imagen"
@@ -53,21 +49,21 @@ export default function Problem({
             </span>
           </span>
         ) : (
-          <span className="whitespace-pre-wrap">{problems.text}</span>
+          <span className="whitespace-pre-wrap">{problem.text}</span>
         )}
       </p>
-      {problems.response ? (
+      {problem.response ? (
         <div className="relative flex justify-center w-full">
           <Image
             className="object-contain"
-            src={`${problems.response}.${problems.type}`}
+            src={`${problem.response}.${problem.type}`}
             width={500}
             height={500}
             alt="Imagen"
             placeholder="empty"
             loading="lazy"
           />
-          <ButtonReaction uuid={uuid} problems={problems} />
+          <ButtonReaction uuid={uuid} problem={problem} />
         </div>
       ) : (
         ''

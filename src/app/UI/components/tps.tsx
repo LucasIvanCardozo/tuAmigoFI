@@ -1,3 +1,4 @@
+'use client';
 import {
   TbSquareRoundedNumber0Filled,
   TbSquareRoundedNumber1Filled,
@@ -11,38 +12,22 @@ import {
   TbSquareRoundedNumber9Filled,
 } from 'react-icons/tb';
 import Problem from './problem';
+import { fetchProblems } from '@/app/lib/data';
+import { Suspense, useEffect, useState } from 'react';
 
 export default function Tps({
   tp,
   uuid,
+  text,
 }: {
   tp: {
-    tps_problems: {
-      problems: {
-        number: number | null;
-        id: number;
-        text: string;
-        text_normalized: string;
-        response: string | null;
-        type: string | null;
-        response_plus: string | null;
-        type_plus: string | null;
-        user_reactions: {
-          id: number;
-          id_problem: number;
-          reaction: number;
-          id_user: string;
-          created_at: Date | null;
-        }[];
-      };
-    }[];
-  } & {
     id: number;
     name: string;
     number: number | null;
     year: number;
   };
   uuid: string;
+  text?: string;
 }) {
   const numberIcons = [
     <TbSquareRoundedNumber0Filled />,
@@ -56,8 +41,30 @@ export default function Tps({
     <TbSquareRoundedNumber8Filled />,
     <TbSquareRoundedNumber9Filled />,
   ];
+  const [problems, setProblems] = useState<
+    {
+      number: number | null;
+      text: string;
+      text_normalized: string;
+      id: number;
+      response: string | null;
+      type: string | null;
+      response_plus: string | null;
+      type_plus: string | null;
+    }[]
+  >([]);
 
-  return (
+  useEffect(() => {
+    const searchProblems = async () => {
+      const problems = await fetchProblems({ id_tp: tp.id, text: text });
+      setProblems(problems);
+    };
+    searchProblems();
+  }, [text]);
+
+  return problems.length == 0 ? (
+    <></>
+  ) : (
     <li key={tp.id} className="relative">
       <div className="flex items-center text-xl sticky top-0 z-20 bg-[--platinum] py-1 ">
         {tp.number && numberIcons[tp.number]
@@ -68,8 +75,10 @@ export default function Tps({
         </h2>
       </div>
       <ul className="flex flex-col gap-1 pl-3">
-        {tp.tps_problems.map(({ problems }, index) => (
-          <Problem uuid={uuid} problems={problems} key={index} />
+        {problems.map((problem, index) => (
+          <Suspense key={index}>
+            <Problem uuid={uuid} problem={problem} />
+          </Suspense>
         ))}
       </ul>
     </li>

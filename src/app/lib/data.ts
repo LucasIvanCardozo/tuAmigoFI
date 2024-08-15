@@ -2,8 +2,8 @@
 import prisma from './db';
 
 const cache = {
-  ttl: 30,
-  swr: 30,
+  ttl: 7200,
+  swr: 300,
 };
 
 export async function fetchCourse(id: number) {
@@ -126,29 +126,13 @@ export async function fetchEnabler({
 
 //fetchs a TPs
 export async function fetchTps({
-  text,
   id_tps,
   id_materias,
-  withProblems,
 }: {
-  text?: string;
   id_tps?: number;
-  id_materias?: number;
-  withProblems?: boolean;
+  id_materias: number;
 }) {
   const tps = await prisma.tps.findMany({
-    include: {
-      tps_problems: {
-        select: {
-          problems: {
-            include: {
-              user_reactions: {},
-            },
-          },
-        },
-      },
-    },
-    ...(withProblems ? {} : {}), //colocar el take:1 pero cuando mejores la logica
     where: {
       id: id_tps,
       tps_courses: {
@@ -156,20 +140,6 @@ export async function fetchTps({
           courses_id: id_materias,
         },
       },
-      ...(text
-        ? {
-            tps_problems: {
-              some: {
-                problems: {
-                  text_normalized: {
-                    contains: text,
-                    mode: 'insensitive',
-                  },
-                },
-              },
-            },
-          }
-        : {}),
     },
     orderBy: {
       id: 'asc',
@@ -225,4 +195,41 @@ export async function fetchUser(uuid: string) {
     },
   });
   return uuidUser;
+}
+
+export async function fetchUserReaction(id_problem: number) {
+  const userReactions = await prisma.user_reactions.findMany({
+    where: {
+      id_problem: id_problem,
+    },
+    cacheStrategy: {
+      ttl: 30,
+      swr: 30,
+    },
+  });
+  return userReactions;
+}
+
+export async function fetchProblems({
+  id_tp,
+  text,
+}: {
+  id_tp: number;
+  text?: string;
+}) {
+  const problems = await prisma.problems.findMany({
+    where: {
+      text_normalized: {
+        contains: text,
+        mode: 'insensitive',
+      },
+      tps_problems: {
+        some: {
+          tps_id: id_tp,
+        },
+      },
+    },
+    cacheStrategy: cache,
+  });
+  return problems;
 }
