@@ -202,10 +202,6 @@ export async function fetchUserReaction(id_problem: number) {
     where: {
       id_problem: id_problem,
     },
-    cacheStrategy: {
-      ttl: 30,
-      swr: 30,
-    },
   });
   return userReactions;
 }
