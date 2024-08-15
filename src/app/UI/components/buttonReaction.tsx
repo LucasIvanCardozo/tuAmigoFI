@@ -64,6 +64,8 @@ export default function ButtonReaction({
     const likesTotal = problems.user_reactions.filter(
       (reaction) => reaction.reaction == 1
     ).length;
+    if (problems.user_reactions.length > 0)
+      console.log(problems.user_reactions);
     setNumberLike(likesTotal);
     setNumberDislike(problems.user_reactions.length - likesTotal);
   }, []);
