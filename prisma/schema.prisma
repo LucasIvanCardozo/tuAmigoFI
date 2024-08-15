@@ -7,7 +7,7 @@ datasource db {
   url       = env("DATABASE_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
-
+//ahora si
 model correlatives {
   id                                           Int
   id_correlative                               Int
