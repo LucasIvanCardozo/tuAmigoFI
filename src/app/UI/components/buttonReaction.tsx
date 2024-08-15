@@ -74,8 +74,8 @@ export default function ButtonReaction({
       (reaction) => reaction.reaction == 1
     ).length;
     console.log(likesTotal);
-  }, [problems.user_reactions]);
-  
+  }, [problems]);
+
   useEffect(() => {
     const reaction = problems.user_reactions?.find(
       (reaction) => reaction.id_user == uuid
