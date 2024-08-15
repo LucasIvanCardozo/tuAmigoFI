@@ -14,6 +14,7 @@ export default function SearchCourses() {
   );
 
   useEffect(() => {
+    console.log(window.localStorage.length);
     if (!isHandleSearch) {
       setSearch(searchParams.get('search')?.toString() || '');
     }

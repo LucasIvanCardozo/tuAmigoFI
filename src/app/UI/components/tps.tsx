@@ -12,10 +12,9 @@ import {
 } from 'react-icons/tb';
 import Problem from './problem';
 
-export default async function Tps({
+export default function Tps({
   tp,
-  idUser,
-  ipUser,
+  uuid,
 }: {
   tp: {
     tps_problems: {
@@ -32,7 +31,7 @@ export default async function Tps({
           id: number;
           id_problem: number;
           reaction: number;
-          id_user: number;
+          id_user: string;
           created_at: Date | null;
         }[];
       };
@@ -43,8 +42,7 @@ export default async function Tps({
     number: number | null;
     year: number;
   };
-  idUser?: number;
-  ipUser: string;
+  uuid: string;
 }) {
   const numberIcons = [
     <TbSquareRoundedNumber0Filled />,
@@ -58,6 +56,7 @@ export default async function Tps({
     <TbSquareRoundedNumber8Filled />,
     <TbSquareRoundedNumber9Filled />,
   ];
+
   return (
     <li key={tp.id} className="relative">
       <div className="flex items-center text-xl sticky top-0 z-20 bg-[--platinum] py-1 ">
@@ -70,12 +69,7 @@ export default async function Tps({
       </div>
       <ul className="flex flex-col gap-1 pl-3">
         {tp.tps_problems.map(({ problems }, index) => (
-          <Problem
-            ipUser={ipUser}
-            idUser={idUser}
-            problems={problems}
-            key={index}
-          />
+          <Problem uuid={uuid} problems={problems} key={index} />
         ))}
       </ul>
     </li>

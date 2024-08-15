@@ -1,20 +1,27 @@
+'use server';
 import prisma from './db';
+
+export async function fetchCourse(id: number) {
+  const course = await prisma.courses.findFirstOrThrow({
+    where: {
+      id: id,
+    },
+  });
+  return course;
+}
 
 // fetching de materias
 export async function fetchCourses({
   search,
   year,
   degree,
-  id,
 }: {
   search?: string;
   year?: number;
   degree?: number;
-  id?: number;
 }) {
   const courses = await prisma.courses.findMany({
     where: {
-      id: id,
       name_normalized: {
         contains: search,
         mode: 'insensitive',
@@ -227,11 +234,11 @@ export async function fetchLinks({
   return links;
 }
 
-export async function fetchUser(ip: string) {
-  const idUser = await prisma.users.findFirst({
+export async function fetchUser(uuid: string) {
+  const uuidUser = await prisma.users.findFirst({
     where: {
-      ip: ip,
+      id: uuid,
     },
   });
-  return idUser;
+  return uuidUser;
 }

@@ -1,10 +1,9 @@
 import Image from 'next/image';
 import ButtonReaction from './buttonReaction';
 
-export default async function Problem({
+export default function Problem({
   problems,
-  idUser,
-  ipUser,
+  uuid,
 }: {
   problems: {
     number: number | null;
@@ -19,12 +18,11 @@ export default async function Problem({
       id: number;
       id_problem: number;
       reaction: number;
-      id_user: number;
+      id_user: string;
       created_at: Date | null;
     }[];
   };
-  idUser?: number;
-  ipUser: string;
+  uuid: string;
 }) {
   return (
     <li className="bg-[--white] p-2 text-base leading-5 drop-shadow-md flex flex-col gap-1">
@@ -69,7 +67,7 @@ export default async function Problem({
             placeholder="empty"
             loading="lazy"
           />
-          <ButtonReaction ipUser={ipUser} idUser={idUser} problems={problems} />
+          <ButtonReaction uuid={uuid} problems={problems} />
         </div>
       ) : (
         ''

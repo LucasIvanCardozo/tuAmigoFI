@@ -1,41 +1,67 @@
-import { fetchTps, fetchUser } from '@/app/lib/data';
+'use client';
 import Tps from './tps';
-
-export default async function ProblemsTable({
-  query,
+import { v4 } from 'uuid';
+import { useEffect, useState } from 'react';
+import { createUser } from '@/app/lib/actions';
+import { fetchUser } from '@/app/lib/data';
+export default function ProblemsTable({
+  tps,
 }: {
-  query: { text?: string; id_tps?: number; id_materias: number };
+  tps: ({
+    tps_problems: {
+      problems: {
+        number: number | null;
+        id: number;
+        text: string;
+        text_normalized: string;
+        response: string | null;
+        type: string | null;
+        response_plus: string | null;
+        type_plus: string | null;
+        user_reactions: {
+          id: number;
+          id_problem: number;
+          reaction: number;
+          id_user: string;
+          created_at: Date | null;
+        }[];
+      };
+    }[];
+  } & {
+    id: number;
+    name: string;
+    number: number | null;
+    year: number;
+  })[];
 }) {
-  const withProblems = true;
-  let tps = await fetchTps({
-    text: query.text,
-    id_tps: query.id_tps,
-    id_materias: query.id_materias,
-    withProblems: withProblems,
-  });
-  if (query.text && withProblems) {
-    const text: string = query.text;
-    tps = tps.map((tp) => ({
-      ...tp,
-      tps_problems: tp.tps_problems.filter((mp) =>
-        mp.problems.text_normalized.includes(text)
-      ),
-    }));
-  }
-  const ipUser: string = await fetch('https://api.ipify.org/?format=json')
-    .then((response) => response.json())
-    .then((data) => data.ip);
-  const idUser = await fetchUser(ipUser);
-  // fetch('https://api.ipify.org/?format=json')
-  //   .then((response) => response.json())
-  //   .then((data) => {
+  const [uuid, setUuid] = useState<string>('');
+  useEffect(() => {
+    const validationUser = async () => {
+      const uuidCurrent = localStorage.getItem('uuid');
+      if (uuidCurrent == null) {
+        const newUuid: string = v4();
+        localStorage.setItem('uuid', newUuid);
+        await createUser(newUuid);
+        setUuid(newUuid);
+      } else {
+        const validate = await fetchUser(uuidCurrent);
+        if (validate == null) {
+          throw new Error('No deberías estar haciendo esto...');
+        } else {
+          setUuid(uuidCurrent);
+        }
+      }
+    };
+    validationUser();
+  }, []);
 
-  //   })
-  //   .catch((error) => console.error(error));
+  useEffect(() => {
+    console.log('tu usuario es: ' + uuid);
+  }, [uuid]);
   return (
     <ul className="flex flex-col gap-1 grow relative overflow-y-auto">
       {tps.map((tp, index) => (
-        <Tps tp={tp} ipUser={ipUser} idUser={idUser?.id} key={index} />
+        <Tps uuid={uuid} tp={tp} key={index} />
       ))}
     </ul>
   );

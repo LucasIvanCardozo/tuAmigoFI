@@ -1,4 +1,4 @@
-import { fetchCourses, fetchTps } from '@/app/lib/data';
+import { fetchCourse, fetchTps } from '@/app/lib/data';
 import ProblemsTable from '@/app/UI/components/problemsTable';
 import SearchProblems from '@/app/UI/components/searchProblems';
 import AsideProblems from '@/app/UI/components/asideProblems';
@@ -17,9 +17,23 @@ export default async function Practica({
     text: searchParams?.text,
     id_materias: id_materia,
   };
-  const course = await fetchCourses({ id: id_materia });
+  const course = await fetchCourse(id_materia);
   const tpList = await fetchTps({ id_materias: id_materia });
-
+  let tps = await fetchTps({
+    text: query.text,
+    id_tps: query.id_tps,
+    id_materias: query.id_materias,
+    withProblems: true,
+  });
+  if (query.text) {
+    const text: string = query.text;
+    tps = tps.map((tp) => ({
+      ...tp,
+      tps_problems: tp.tps_problems.filter((mp) =>
+        mp.problems.text_normalized.includes(text)
+      ),
+    }));
+  }
   return (
     <>
       <main className="h-screen w-full pt-8 flex gap-2 max-w-screen-lg m-auto sm:pb-3 sm:px-2 sm:pt-16">
@@ -30,16 +44,16 @@ export default async function Practica({
           <div>
             <div className="flex justify-between items-end">
               <h1 className="text-2xl sm:text-3xl font-bold">
-                <b>{course[0].name}</b>
+                <b>{course.name}</b>
               </h1>
-              <span className="text-lg">{`Plan ${course[0].plan}`}</span>
+              <span className="text-lg">{`Plan ${course.plan}`}</span>
             </div>
             <Suspense>
               <SearchProblems />
             </Suspense>
           </div>
           <Suspense>
-            <ProblemsTable query={query} />
+            <ProblemsTable tps={tps} />
           </Suspense>
         </section>
       </main>

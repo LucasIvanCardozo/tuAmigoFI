@@ -5,7 +5,6 @@ import { fetchDegree, fetchYears } from '../lib/data';
 import DegreeCourse from '../UI/components/degreeCourse';
 import YearCourse from '../UI/components/yearCourse';
 import Image from 'next/image';
-import { merriweather } from '../UI/fonts';
 
 export default async function Materias({
   searchParams,
