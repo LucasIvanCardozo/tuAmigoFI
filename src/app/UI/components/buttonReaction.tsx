@@ -66,14 +66,10 @@ export default function ButtonReaction({
     ).length;
     setNumberLike(likesTotal);
     setNumberDislike(problems.user_reactions.length - likesTotal);
-    console.log(likesTotal);
   }, []);
 
   useEffect(() => {
-    const likesTotal = problems.user_reactions.filter(
-      (reaction) => reaction.reaction == 1
-    ).length;
-    console.log(likesTotal);
+    console.log('likesTotal');
   }, [problems]);
 
   useEffect(() => {
