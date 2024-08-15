@@ -16,7 +16,7 @@ model correlatives {
 
   @@id([id, id_correlative])
 }
-//
+
 model courses {
   id                                                Int               @id @default(autoincrement())
   name                                              String            @unique @db.VarChar
