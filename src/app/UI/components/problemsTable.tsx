@@ -16,7 +16,7 @@ export default function ProblemsTable({
   }[];
   text?: string;
 }) {
-  const [uuid, setUuid] = useState<string>('');
+  const [uuid, setUuid] = useState<string>(localStorage.getItem('uuid') ?? '');
 
   useEffect(() => {
     const validationUser = async () => {
