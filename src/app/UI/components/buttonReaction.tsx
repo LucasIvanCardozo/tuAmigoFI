@@ -56,6 +56,16 @@ export default function ButtonReaction({
     }
   }
 
+  const handleReactionUser = (
+    totalR: {
+      id: number;
+      id_user: string;
+      id_problem: number;
+      reaction: number;
+      created_at: Date | null;
+    }[]
+  ) => {};
+
   useEffect(() => {
     const searchReactions = async () => {
       const totalReactions = await fetchUserReaction(problem.id);
@@ -73,7 +83,7 @@ export default function ButtonReaction({
       }
     };
     searchReactions();
-  }, []);
+  }, [uuid]);
 
   return (
     <span className="flex absolute bottom-0 right-0 z-10 gap-1">
