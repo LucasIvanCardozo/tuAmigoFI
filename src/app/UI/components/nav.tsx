@@ -49,7 +49,7 @@ export default function Nav() {
       <Link
         className="text-xl bg-[--dark-cyan] drop-shadow-sm rounded-md m-1 px-1 flex items-center justify-center sm:hidden"
         href="/"
-        onClick={handleNavState}
+        onClick={() => setNavState(false)}
       >
         <b className="">Tu Amigo FI</b>
       </Link>
