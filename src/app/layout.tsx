@@ -27,7 +27,7 @@ export default function RootLayout({
     <html lang="es">
       <body className={cabin.className}>
         <Nav />
-        <div className="overflow-hidden -z-10 fixed flex flex-col justify-around top-0 left-0 w-full h-full text-3xl text-[#BABDBA] sm:text-5xl">
+        <div className="overflow-hidden -z-10 fixed flex flex-col justify-around top-0 left-0 w-screen h-screen text-3xl text-[#BABDBA] sm:text-5xl">
           {[
             <TbMathIntegral />,
             <TbTools />,

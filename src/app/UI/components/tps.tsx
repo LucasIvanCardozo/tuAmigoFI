@@ -13,7 +13,8 @@ import {
 } from 'react-icons/tb';
 import Problem from './problem';
 import { fetchProblems } from '@/app/lib/data';
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import TpsSkeleton from './skeletons/tpsSkeleton';
 
 export default function Tps({
   tp,
@@ -63,7 +64,7 @@ export default function Tps({
   }, [text]);
 
   return problems.length == 0 ? (
-    <></>
+    <TpsSkeleton />
   ) : (
     <li key={tp.id} className="relative">
       <div className="flex items-center text-xl sticky top-0 z-20 bg-[--platinum] py-1 ">
@@ -76,9 +77,7 @@ export default function Tps({
       </div>
       <ul className="flex flex-col gap-1 pl-3">
         {problems.map((problem, index) => (
-          <Suspense key={index}>
-            <Problem uuid={uuid} problem={problem} />
-          </Suspense>
+          <Problem key={index} uuid={uuid} problem={problem} />
         ))}
       </ul>
     </li>

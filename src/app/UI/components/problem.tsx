@@ -1,8 +1,6 @@
 'use client';
 import Image from 'next/image';
 import ButtonReaction from './buttonReaction';
-import { fetchUserReaction } from '@/app/lib/data';
-import { Suspense, useEffect, useState } from 'react';
 
 export default function Problem({
   problem,
@@ -57,11 +55,14 @@ export default function Problem({
           <Image
             className="object-contain"
             src={`${problem.response}.${problem.type}`}
-            width={500}
-            height={500}
             alt="Imagen"
-            placeholder="empty"
-            loading="lazy"
+            sizes="100vw"
+            style={{
+              width: '100%',
+              height: 'auto',
+            }}
+            width={500}
+            height={300}
           />
           <ButtonReaction uuid={uuid} problem={problem} />
         </div>

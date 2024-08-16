@@ -5,6 +5,7 @@ import { fetchDegree, fetchYears } from '../lib/data';
 import DegreeCourse from '../UI/components/degreeCourse';
 import YearCourse from '../UI/components/yearCourse';
 import Image from 'next/image';
+import CoursesSkeleton from '../UI/components/skeletons/coursesSkeleton';
 
 export default async function Materias({
   searchParams,
@@ -43,17 +44,11 @@ export default async function Materias({
       </main>
       <section className="flex flex-col max-w-screen-md w-11/12 m-auto items-center">
         <div className="flex flex-col w-full gap-1 text-[--black] sm:flex-row">
-          <Suspense>
-            <SearchCourses />
-          </Suspense>
-          <Suspense fallback={<h1>Cargando</h1>}>
-            <YearCourse years={years} />
-          </Suspense>
-          <Suspense fallback={<h1>Cargando</h1>}>
-            <DegreeCourse degrees={degrees} />
-          </Suspense>
+          <SearchCourses />
+          <YearCourse years={years} />
+          <DegreeCourse degrees={degrees} />
         </div>
-        <Suspense fallback={<h1>Cargando</h1>}>
+        <Suspense fallback={<CoursesSkeleton />}>
           <CoursesTable query={query} />
         </Suspense>
       </section>

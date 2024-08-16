@@ -4,6 +4,7 @@ import { v4 } from 'uuid';
 import { Suspense, useEffect, useState } from 'react';
 import { createUser } from '@/app/lib/actions';
 import { fetchUser } from '@/app/lib/data';
+import TpsSkeleton from './skeletons/tpsSkeleton';
 export default function ProblemsTable({
   tps,
   text,
@@ -38,17 +39,13 @@ export default function ProblemsTable({
     validationUser();
   }, []);
 
-  useEffect(() => {
-    if (uuid != '') console.log('tu usuario es: ' + uuid);
-  }, [uuid]);
+ 
 
   return (
     <ul className="flex flex-col gap-1 grow relative overflow-y-auto">
-      <Suspense>
-        {tps.map((tp, index) => (
-          <Tps uuid={uuid} tp={tp} text={text} key={index} />
-        ))}
-      </Suspense>
+      {tps.map((tp, index) => (
+        <Tps uuid={uuid} tp={tp} text={text} key={index} />
+      ))}
     </ul>
   );
 }

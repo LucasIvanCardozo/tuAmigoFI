@@ -50,7 +50,6 @@ export default function ButtonReaction({
         id_problem: problem.id,
         reaction: reaction,
       });
-      console.log(reaccion);
     } else {
       throw new Error('Editaste el localStorage... Así no eh!');
     }
