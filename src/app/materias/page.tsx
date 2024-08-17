@@ -29,13 +29,13 @@ export default async function Materias({
         <div>
           <Image
             className="object-contain h-full"
-            src="/FI.png"
+            src="/FI.svg"
             width={200}
             height={200}
             alt=""
           />
         </div>
-        <h1 className="font-bold text-4xl text-balance max-w-72">
+        <h1 className="font-bold bg-[#F3F4F6] ml-1 p-1 rounded-2xl text-4xl text-balance h-fit max-w-72 rounded-es-none shadow-md sm:ml-6 sm:p-2">
           Buscá tu materia!
           <p className="text-lg font-normal hidden sm:block">
             Aquí encontrarás todo lo necesario para mejorar tus prácticas c:

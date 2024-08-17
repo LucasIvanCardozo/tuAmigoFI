@@ -1,8 +1,8 @@
-
 'use client';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { CgClose, CgMenu } from 'react-icons/cg';
+import { SiGoogledocs } from 'react-icons/si';
 
 export default function AsideProblemsMidterms({
   midtermsList,
@@ -97,15 +97,15 @@ export default function AsideProblemsMidterms({
         >
           <li
             className={
-              (!searchParams.get('tps') ? 'bg-[#3D4731]' : '') +
+              (!searchParams.get('midterms') ? 'bg-[#3D4731]' : '') +
               ' grid grid-cols-[1.2rem,1fr] gap-1 p-1 rounded-md [&>svg]:self-start [&>svg]:h-max [&>svg]:w-full transform-gpu transition-transform sm:hover:scale-105'
             }
           >
-            {/* {numberIcons[0]} */}
+            <SiGoogledocs />
             <button className="text-start" onClick={() => handleMidterms('')}>
               <h3 className="text-base leading-4">Mostrar todos</h3>
               <p className="text-xs text-[--silver]">
-                {`Todos los TPs disponibles`}{' '}
+                {`Todos los parciales`}{' '}
               </p>
             </button>
           </li>
@@ -113,22 +113,20 @@ export default function AsideProblemsMidterms({
             <li
               key={id}
               className={
-                (searchParams.get('tps') == id.toString()
+                (searchParams.get('midterms') == id.toString()
                   ? 'bg-[#3D4731]'
                   : '') +
                 ' grid grid-cols-[1.2rem,1fr] gap-1 p-1 rounded-md [&>svg]:self-start [&>svg]:h-max [&>svg]:w-full transform-gpu transition-transform sm:hover:scale-105'
               }
             >
-              {/* {number && numberIcons[number]
-                ? numberIcons[number]
-                : numberIcons[0]} */}
+              <SiGoogledocs />
               <button
                 className="text-start"
                 onClick={() => handleMidterms(id.toString())}
               >
                 <h3 className="text-base leading-4">{name}</h3>
                 <p className="text-xs text-[--silver]">
-                  {`${date.getMonth()} ${date.getFullYear()}`}{' '}
+                  {`Del ${date.getMonth()}/${date.getFullYear()}`}{' '}
                 </p>
               </button>
             </li>

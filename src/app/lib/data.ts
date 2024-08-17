@@ -6,6 +6,7 @@ const cache = {
   swr: 300,
 };
 
+// fetching de materias
 export async function fetchCourse(id: number) {
   const course = await prisma.courses.findFirstOrThrow({
     where: {
@@ -15,7 +16,6 @@ export async function fetchCourse(id: number) {
   return course;
 }
 
-// fetching de materias
 export async function fetchCourses({
   search,
   year,
@@ -156,12 +156,10 @@ export async function fetchProblemsMidterms({
 }) {
   const problems = await prisma.problems.findMany({
     where: {
+      id_midterms: id_midterm,
       text_normalized: {
         contains: text,
         mode: 'insensitive',
-      },
-      midterms: {
-        id: id_midterm,
       },
     },
     cacheStrategy: cache,

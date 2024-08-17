@@ -78,16 +78,17 @@ model links {
 }
 
 model midterms {
-  id        Int       @id @default(autoincrement())
+  id        Int        @id @default(autoincrement())
   id_course Int
-  name      String    @db.VarChar
-  date      DateTime  @db.Date
-  courses   courses   @relation(fields: [id_course], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  problems  problems?
+  name      String     @db.VarChar
+  date      DateTime   @db.Date
+  courses   courses    @relation(fields: [id_course], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  problems  problems[]
 }
 
 model problems {
   id              Int              @id @default(autoincrement())
+  id_midterms     Int?
   number          Int?
   text            String           @db.VarChar
   text_normalized String           @db.VarChar
@@ -95,7 +96,7 @@ model problems {
   type            String?          @db.VarChar(5)
   response_plus   String?          @db.VarChar
   type_plus       String?          @db.VarChar(5)
-  midterms        midterms         @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  midterms        midterms?        @relation(fields: [id_midterms], references: [id], onDelete: NoAction, onUpdate: NoAction)
   tps_problems    tps_problems[]
   user_reactions  user_reactions[]
 

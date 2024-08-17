@@ -15,6 +15,7 @@ import Problem from './problem';
 import { fetchProblems, fetchProblemsMidterms } from '@/app/lib/data';
 import { useEffect, useState } from 'react';
 import TpsSkeleton from './skeletons/tpsSkeleton';
+import { SiGoogledocs } from 'react-icons/si';
 
 export default function Midterm({
   midterm,
@@ -57,13 +58,11 @@ export default function Midterm({
     <TpsSkeleton />
   ) : (
     <li key={midterm.id} className="relative">
-      <div className="flex items-center text-xl sticky top-0 z-20 bg-[--platinum] py-1 ">
-        {/* {tp.number && numberIcons[tp.number]
-          ? numberIcons[tp.number]
-          : numberIcons[0]} */}
+      <div className="flex items-center text-xl sticky top-0 z-20 bg-[--platinum] py-1">
+        <SiGoogledocs />
         <h2>
           {midterm.name}{' '}
-          <p className="inline-block text-base">{`(${midterm.date.getFullYear()},${midterm.date.getMonth()})`}</p>
+          <p className="inline-block text-base">{`(${midterm.date.getMonth()}/${midterm.date.getFullYear()})`}</p>
         </h2>
       </div>
       <ul className="flex flex-col gap-1 pl-3">
