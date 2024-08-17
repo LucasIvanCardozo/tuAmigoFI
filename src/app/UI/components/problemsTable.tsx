@@ -20,7 +20,6 @@ export default function ProblemsTable({
   const [uuid, setUuid] = useState<string>('');
 
   useEffect(() => {
-    localStorage.clear();
     const validationUser = async () => {
       const uuidCurrent = localStorage.getItem('uuid');
       if (uuidCurrent == null) {
