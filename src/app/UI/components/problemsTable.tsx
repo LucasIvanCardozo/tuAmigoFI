@@ -20,6 +20,7 @@ export default function ProblemsTable({
   const [uuid, setUuid] = useState<string>('');
 
   useEffect(() => {
+    localStorage.clear();
     const validationUser = async () => {
       const uuidCurrent = localStorage.getItem('uuid');
       if (uuidCurrent == null) {
@@ -38,8 +39,6 @@ export default function ProblemsTable({
     };
     validationUser();
   }, []);
-
- 
 
   return (
     <ul className="flex flex-col gap-1 grow relative overflow-y-auto">
