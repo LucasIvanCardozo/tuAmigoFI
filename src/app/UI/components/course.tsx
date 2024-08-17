@@ -30,7 +30,7 @@ export default async function Course({
         <span className="text-xs -m-2">{`${cg}CG / ${hs}Hs`}</span>
       </div>
       <div className="flex relative w-min bg-[--dark-cyan]">
-        <h2 className="w-max text-nowrap text-[--white] ">{name}</h2>
+        <h2 className="w-max text-lg text-nowrap text-[--white] ">{name}</h2>
         {optional ? (
           <span className="absolute left-full text-sm">{`(Opcional)`}</span>
         ) : (
@@ -55,12 +55,20 @@ export default async function Course({
       {unofficialLinks.length >= 0 ? (
         <CourseLinks links={unofficialLinks} />
       ) : null}
-      <Link
-        href={`./materias/${id_materia}`}
-        className="w-max self-end py-1 px-2 text-base rounded-sm bg-[--midnight-green] text-[--white]"
-      >
-        Ir a la práctica
-      </Link>
+      <div className="flex justify-end gap-1 pt-1 text-[--white] text-sm sm:text-base">
+        <Link
+          href={`./materias/parciales/${id_materia}`}
+          className="w-max self-end py-1 px-2 rounded-sm bg-[--midnight-green]"
+        >
+          Ver parciales
+        </Link>
+        <Link
+          href={`./materias/practica/${id_materia}`}
+          className="w-max self-end py-1 px-2 rounded-sm bg-[--midnight-green]"
+        >
+          Ir a la práctica
+        </Link>
+      </div>
     </li>
   );
 }

@@ -124,6 +124,51 @@ export async function fetchEnabler({
   return enabler;
 }
 
+//fetch a parciales
+export async function fetchMidterms({
+  id_midterm,
+  id_materias,
+}: {
+  id_midterm?: number;
+  id_materias: number;
+}) {
+  const midterms = await prisma.midterms.findMany({
+    where: {
+      id: id_midterm,
+      courses: {
+        id: id_materias,
+      },
+    },
+    orderBy: {
+      id: 'asc',
+    },
+    cacheStrategy: cache,
+  });
+  return midterms;
+}
+
+export async function fetchProblemsMidterms({
+  id_midterm,
+  text,
+}: {
+  id_midterm: number;
+  text?: string;
+}) {
+  const problems = await prisma.problems.findMany({
+    where: {
+      text_normalized: {
+        contains: text,
+        mode: 'insensitive',
+      },
+      midterms: {
+        id: id_midterm,
+      },
+    },
+    cacheStrategy: cache,
+  });
+  return problems;
+}
+
 //fetchs a TPs
 export async function fetchTps({
   id_tps,

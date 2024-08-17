@@ -21,7 +21,7 @@ export default function CourseLinks({
   return (
     <>
       <button
-        className="flex items-center cursor-pointer"
+        className="flex items-center cursor-pointer w-fit"
         onClick={handleClick}
       >
         {viewState ? <VscTriangleDown /> : <VscTriangleRight />}

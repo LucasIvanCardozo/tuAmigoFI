@@ -1,0 +1,76 @@
+'use client';
+import {
+  TbSquareRoundedNumber0Filled,
+  TbSquareRoundedNumber1Filled,
+  TbSquareRoundedNumber2Filled,
+  TbSquareRoundedNumber3Filled,
+  TbSquareRoundedNumber4Filled,
+  TbSquareRoundedNumber5Filled,
+  TbSquareRoundedNumber6Filled,
+  TbSquareRoundedNumber7Filled,
+  TbSquareRoundedNumber8Filled,
+  TbSquareRoundedNumber9Filled,
+} from 'react-icons/tb';
+import Problem from './problem';
+import { fetchProblems, fetchProblemsMidterms } from '@/app/lib/data';
+import { useEffect, useState } from 'react';
+import TpsSkeleton from './skeletons/tpsSkeleton';
+
+export default function Midterm({
+  midterm,
+  uuid,
+  text,
+}: {
+  midterm: {
+    id: number;
+    name: string;
+    date: Date;
+  };
+  uuid: string;
+  text?: string;
+}) {
+  const [problems, setProblems] = useState<
+    {
+      number: number | null;
+      text: string;
+      text_normalized: string;
+      id: number;
+      response: string | null;
+      type: string | null;
+      response_plus: string | null;
+      type_plus: string | null;
+    }[]
+  >([]);
+
+  useEffect(() => {
+    const searchProblems = async () => {
+      const problems = await fetchProblemsMidterms({
+        id_midterm: midterm.id,
+        text: text,
+      });
+      setProblems(problems);
+    };
+    searchProblems();
+  }, [text]);
+
+  return problems.length == 0 ? (
+    <TpsSkeleton />
+  ) : (
+    <li key={midterm.id} className="relative">
+      <div className="flex items-center text-xl sticky top-0 z-20 bg-[--platinum] py-1 ">
+        {/* {tp.number && numberIcons[tp.number]
+          ? numberIcons[tp.number]
+          : numberIcons[0]} */}
+        <h2>
+          {midterm.name}{' '}
+          <p className="inline-block text-base">{`(${midterm.date.getFullYear()},${midterm.date.getMonth()})`}</p>
+        </h2>
+      </div>
+      <ul className="flex flex-col gap-1 pl-3">
+        {problems.map((problem, index) => (
+          <Problem key={index} uuid={uuid} problem={problem} />
+        ))}
+      </ul>
+    </li>
+  );
+}

@@ -34,7 +34,7 @@ export default function Problem({
             <span className="whitespace-pre-wrap pb-1 pr-1">
               {problem.text}
             </span>
-            <span className="relative max-h-96 flex">
+            <span className="relative max-h-96 flex justify-center">
               <Image
                 className="object-contain"
                 src={`${problem.response_plus}.${problem.type_plus}`}

@@ -30,6 +30,7 @@ model courses {
   courses_degrees                                   courses_degrees[]
   courses_links                                     courses_links[]
   courses_years                                     courses_years[]
+  midterms                                          midterms[]
   tps_courses                                       tps_courses[]
 
   @@index([name_normalized])
@@ -76,6 +77,15 @@ model links {
   courses_links courses_links[]
 }
 
+model midterms {
+  id        Int       @id @default(autoincrement())
+  id_course Int
+  name      String    @db.VarChar
+  date      DateTime  @db.Date
+  courses   courses   @relation(fields: [id_course], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  problems  problems?
+}
+
 model problems {
   id              Int              @id @default(autoincrement())
   number          Int?
@@ -85,6 +95,7 @@ model problems {
   type            String?          @db.VarChar(5)
   response_plus   String?          @db.VarChar
   type_plus       String?          @db.VarChar(5)
+  midterms        midterms         @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   tps_problems    tps_problems[]
   user_reactions  user_reactions[]
 
