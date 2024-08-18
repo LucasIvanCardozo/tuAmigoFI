@@ -35,7 +35,7 @@ const spanish_es = {
 };
 
 export default function CalendarSection() {
-  const [countCalendar, setCountCalendar] = useState<number>();
+  const [countCalendar, setCountCalendar] = useState<number>(1);
   const yearCurrent: number = new Date().getFullYear();
   const recessDays: string[] = [
     `${yearCurrent}/01/01`,
@@ -149,33 +149,26 @@ export default function CalendarSection() {
     .concat(startEndDays);
 
   useEffect(() => {
-    let width = document.documentElement.scrollWidth;
-    width < 640
-      ? setCountCalendar(1)
-      : width < 768
-      ? setCountCalendar(2)
-      : setCountCalendar(3);
+    const updateCountCalendar = () => {
+      const width = document.documentElement.clientWidth;
+      if (width < 640) setCountCalendar(1);
+      else if (width >= 640 && width < 1024) setCountCalendar(2);
+      else setCountCalendar(3);
+    };
+
+    updateCountCalendar();
+
     const mediaQuery640 = window.matchMedia('(min-width: 640px)');
     const mediaQuery1024 = window.matchMedia('(min-width: 1024px)');
 
-    const handleMediaChange = (e: MediaQueryListEvent) => {
-      let width = document.documentElement.scrollWidth;
-      console.log(width);
-      if (width < 640) {
-        setCountCalendar(1);
-      } else if (width < 1024) {
-        setCountCalendar(2);
-      } else {
-        setCountCalendar(3);
-      }
-    };
-    // Escucha los cambios de la media query
-    mediaQuery640.addEventListener('change', (e) => handleMediaChange(e));
-    mediaQuery1024.addEventListener('change', (e) => handleMediaChange(e));
-    // Limpieza para remover el event listener
+    // Escucha los cambios en las media queries
+    mediaQuery640.addEventListener('change', updateCountCalendar);
+    mediaQuery1024.addEventListener('change', updateCountCalendar);
+
+    // Limpieza para remover los event listeners
     return () => {
-      mediaQuery640.removeEventListener('change', (e) => handleMediaChange(e));
-      mediaQuery1024.removeEventListener('change', (e) => handleMediaChange(e));
+      mediaQuery640.removeEventListener('change', updateCountCalendar);
+      mediaQuery1024.removeEventListener('change', updateCountCalendar);
     };
   }, []);
 
@@ -189,28 +182,73 @@ export default function CalendarSection() {
           multiple
           numberOfMonths={countCalendar}
           readOnly
-          mapDays={({ date }) => {
+          mapDays={({ date, today }) => {
             let dateStr = date.toString().split('T')[0];
             if (allDays.includes(dateStr)) {
               if (recessDays.includes(dateStr)) {
                 return {
-                  style: { backgroundColor: '#9A031E', color: 'white' },
+                  style: {
+                    backgroundColor: '#9A031E',
+                    color: 'white',
+                    borderRadius: '20%',
+                  },
                 };
               } else if (midtermsDays.includes(dateStr))
                 return {
-                  style: { backgroundColor: '#5F0F40', color: 'white' },
+                  style: {
+                    backgroundColor: '#5F0F40',
+                    color: 'white',
+                    borderRadius: '20%',
+                  },
                 };
               else if (holidays.includes(dateStr))
                 return {
-                  style: { backgroundColor: '#0F4C5C', color: 'white' },
+                  style: {
+                    backgroundColor: '#0F4C5C',
+                    color: 'white',
+                    borderRadius: '20%',
+                  },
                 };
               else
                 return {
-                  style: { backgroundColor: '#5192A4', color: 'white' },
+                  style: {
+                    backgroundColor: '#5192A4',
+                    color: 'white',
+                    borderRadius: '20%',
+                  },
                 };
+            } else if (
+              date.toDate().toDateString() == today.toDate().toDateString()
+            ) {
+              return {
+                style: {
+                  backgroundColor: 'yellow',
+                  color: 'black',
+                  fontWeight: 'bold',
+                  borderRadius: '20%',
+                },
+              };
             }
           }}
         />
+        <div className="text-nowrap flex justify-center gap-2 flex-wrap m-2">
+          <div className=" h-4 relative flex items-center gap-1">
+            <div className="h-4/5 aspect-video  bg-[#9A031E]"></div>
+            <span>Receso</span>
+          </div>
+          <div className=" h-4 relative flex items-center gap-1">
+            <div className="h-4/5 aspect-video  bg-[#5F0F40]"></div>
+            <span>Totalizadores</span>
+          </div>
+          <div className=" h-4 relative flex items-center gap-1">
+            <div className="h-4/5 aspect-video  bg-[#0F4C5C]"></div>
+            <span>Feriado</span>
+          </div>
+          <div className=" h-4 relative flex items-center gap-1">
+            <div className="h-4/5 aspect-video  bg-[#5192A4]"></div>
+            <span>Inicio/Fin de cuatrimestre</span>
+          </div>
+        </div>
       </div>
     </section>
   );

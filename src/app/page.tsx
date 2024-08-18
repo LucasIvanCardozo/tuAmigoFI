@@ -68,6 +68,14 @@ export default async function Home() {
         <h2 className="font-bold text-3xl my-2">Planes de estudio</h2>
         <PlansDownload courses={courses} />
       </section>
+      <section className="text-[--black] relative max-w-screen-md m-auto w-11/12">
+        <h2 className="font-bold text-3xl my-2">Horario de cursadas</h2>
+        <PlansDownload courses={courses} />
+      </section>
+      <section className="text-[--black] relative max-w-screen-md m-auto w-11/12">
+        <h2 className="font-bold text-3xl my-2">Horario de aulas</h2>
+        <PlansDownload courses={courses} />
+      </section>
       <Suspense>
         <CalendarSection />
       </Suspense>
