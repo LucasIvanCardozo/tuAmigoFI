@@ -90,7 +90,7 @@ export default function AsideProblems({
   return (
     <>
       <button
-        className="fixed top-0 left-0 m-1 h-8 bg-[--black-olive] rounded-md aspect-square z-50 sm:hidden"
+        className="fixed top-0 left-0 m-1 h-8 bg-[--black-olive] rounded-md aspect-square rounded-e-none z-50 sm:hidden"
         onClick={handleTpsState}
       >
         <CgMenu
@@ -105,6 +105,9 @@ export default function AsideProblems({
             ' transform-gpu transition-opacity absolute top-0 left-0 w-full h-full p-1'
           }
         />
+        <div className="absolute h-8 left-full top-0 text-xl bg-[--black-olive] drop-shadow-sm rounded-md px-1 flex items-center justify-center rounded-s-none text-nowrap sm:hidden">
+          <b className="">Busca tu TP</b>
+        </div>
       </button>
       <aside
         className={
@@ -112,7 +115,7 @@ export default function AsideProblems({
           ' fixed z-40 top-0 right-full  transform-gpu transition-transform bg-[--black-olive] w-max min-w-40  rounded-md mt-10 py-4 px-3 flex flex-col max-h-[80vh] gap-3 sm:max-h-none sm:relative sm:h-full sm:m-0 sm:max-w-52 sm:right-auto '
         }
       >
-        <h1 className="text-xl">
+        <h1 className="text-xl hidden sm:block">
           <b>Busca tu TP</b>
         </h1>
         <ul

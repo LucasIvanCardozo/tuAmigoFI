@@ -42,7 +42,6 @@ export default async function Practica({
           <ProblemsTable text={query.text} tps={tps} />
         </section>
       </main>
-      <footer className="w-full h-20 bg-black"></footer>
     </>
   );
 }
