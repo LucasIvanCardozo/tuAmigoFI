@@ -77,6 +77,31 @@ export default async function Home() {
       <Suspense>
         <CalendarSection />
       </Suspense>
+      <section className="flex text-[--black] justify-center  max-w-screen-md m-auto w-11/12">
+        <Image
+          className="object-contain w-1/4 min-w-24"
+          src="/FI.svg"
+          width={200}
+          height={200}
+          alt=""
+        />
+        <div className="max-w-96 pl-2">
+          <h2 className="text-2xl sm:text-3xl">
+            <b>¿Algún problema?</b>
+          </h2>
+          <p className="pl-1 text-balance sm:text-lg">
+            No dudes en contactarte con el{' '}
+            <a
+              className="text-blue-700"
+              href="https://www.instagram.com/cei_unmdp/"
+            >
+              <b>CEI</b>
+            </a>
+            , éste es el centro de estudiantes actual de la facultad. Ellos no
+            dudarán en darte una mano.
+          </p>
+        </div>
+      </section>
       <section className="text-[--black] relative max-w-screen-md m-auto w-11/12 h-96">
         <h2 className="font-bold text-3xl my-2">Colaboradores</h2>
       </section>
