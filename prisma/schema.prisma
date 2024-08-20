@@ -7,6 +7,7 @@ datasource db {
   url       = env("DATABASE_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
+
 model correlatives {
   id                                           Int
   id_correlative                               Int
@@ -22,7 +23,6 @@ model courses {
   name_normalized                                   String            @db.VarChar
   cg                                                Int?
   hs                                                Int?
-  plan                                              Int
   optional                                          Boolean           @default(false)
   correlatives_correlatives_id_correlativeTocourses correlatives[]    @relation("correlatives_id_correlativeTocourses")
   correlatives_correlatives_idTocourses             correlatives[]    @relation("correlatives_idTocourses")
@@ -30,6 +30,7 @@ model courses {
   courses_links                                     courses_links[]
   courses_years                                     courses_years[]
   midterms                                          midterms[]
+  plans_courses                                     plans_courses[]
   tps_courses                                       tps_courses[]
 
   @@index([name_normalized])
@@ -66,6 +67,16 @@ model degrees {
   id              Int               @id @default(autoincrement())
   name            String            @unique @db.VarChar
   courses_degrees courses_degrees[]
+  degrees_plans   degrees_plans[]
+}
+
+model degrees_plans {
+  degrees_id Int
+  plans_id   Int
+  degrees    degrees @relation(fields: [degrees_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  plans      plans   @relation(fields: [plans_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([degrees_id, plans_id])
 }
 
 model links {
@@ -83,6 +94,22 @@ model midterms {
   date      DateTime   @db.Date
   courses   courses    @relation(fields: [id_course], references: [id], onDelete: NoAction, onUpdate: NoAction)
   problems  problems[]
+}
+
+model plans {
+  id            Int             @id @default(autoincrement())
+  year          Int             @unique
+  degrees_plans degrees_plans[]
+  plans_courses plans_courses[]
+}
+
+model plans_courses {
+  plans_id   Int
+  courses_id Int
+  courses    courses @relation(fields: [courses_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  plans      plans   @relation(fields: [plans_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([plans_id, courses_id])
 }
 
 model problems {

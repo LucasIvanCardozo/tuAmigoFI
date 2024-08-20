@@ -35,7 +35,6 @@ export default async function Practica({
               <h1 className="text-2xl sm:text-3xl font-bold">
                 <b>{course.name}</b>
               </h1>
-              <span className="text-lg">{`Plan ${course.plan}`}</span>
             </div>
             <SearchProblems />
           </div>

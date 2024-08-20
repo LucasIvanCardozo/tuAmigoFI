@@ -195,6 +195,18 @@ export async function fetchTps({
 //fetch de carreras
 export async function fetchDegree() {
   const degrees = await prisma.degrees.findMany({
+    include: {
+      degrees_plans: {
+        select: {
+          plans: true,
+        },
+        orderBy: {
+          plans: {
+            year: 'asc',
+          },
+        },
+      },
+    },
     cacheStrategy: cache,
   });
 

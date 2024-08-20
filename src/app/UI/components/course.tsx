@@ -10,7 +10,6 @@ export default async function Course({
   name,
   cg,
   hs,
-  plan,
   optional,
 }: {
   id_materia: number;
@@ -18,7 +17,6 @@ export default async function Course({
   name: string;
   cg: number | null;
   hs: number | null;
-  plan: number;
   optional: boolean;
 }) {
   const officialLinks = await fetchLinks({ official: true, id_materia });
@@ -26,8 +24,7 @@ export default async function Course({
   return (
     <li className="relative flex flex-col w-full h-min bg-[--white] shadow-md p-2 transform-gpu transition-transform sm:hover:scale-105 sm:w-11/12">
       <div className="absolute top-0 right-0 flex flex-col text-center py-1 px-2">
-        <span>{`Plan ${plan}`}</span>
-        <span className="text-xs -m-2">{`${cg}CG / ${hs}Hs`}</span>
+        <span>{`${cg}CG / ${hs}Hs`}</span>
       </div>
       <div className="flex relative w-min bg-[--dark-cyan]">
         <h2 className="w-max text-lg text-nowrap text-[--white] ">{name}</h2>

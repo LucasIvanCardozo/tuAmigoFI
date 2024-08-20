@@ -6,7 +6,17 @@ import { Suspense } from 'react';
 import CalendarSection from './UI/components/calendar';
 
 export default async function Home() {
-  const courses = await fetchDegree();
+  const degrees: ({
+    degrees_plans: {
+      plans: {
+        id: number;
+        year: number;
+      };
+    }[];
+  } & {
+    id: number;
+    name: string;
+  })[] = await fetchDegree();
   return (
     <>
       <main className="mt-14 relative flex text-[--black] min-h-36 h-auto w-11/12 justify-between m-auto max-w-screen-md sm:mt-20 sm:justify-around">
@@ -25,36 +35,32 @@ export default async function Home() {
             </p>
           </h1>
         </div>
-        <div className="self-end h-auto ">
-          <span>Oficiales</span>
-          <ul className="flex gap-4 ">
-            <li>
-              <Image
-                className="object-contain"
-                src="/instagram.svg"
-                width={25}
-                height={25}
-                alt=""
-              />
-            </li>
-            <li>
-              <Image
-                className="object-contain h-full"
-                src="/facebook.svg"
-                width={25}
-                height={25}
-                alt=""
-              />
-            </li>
-            <li>
-              <Image
-                className="object-contain h-full"
-                src="/whatsapp.svg"
-                width={25}
-                height={25}
-                alt=""
-              />
-            </li>
+        <div className="self-end h-auto">
+          <span>Canales oficiales</span>
+          <ul className="flex justify-around w-full drop-shadow-sm">
+            {[
+              { link: 'https://www.fi.mdp.edu.ar/', src: '/unmdpfi.jpg' },
+              {
+                link: 'https://www.instagram.com/cei_unmdp/',
+                src: '/unmdpcei.png',
+              },
+              {
+                link: 'https://campus.fi.mdp.edu.ar/',
+                src: '/campus.ico',
+              },
+            ].map((data, index) => (
+              <li key={index}>
+                <a href={data.link} target="_blank">
+                  <Image
+                    className="object-contain rounded-md"
+                    src={data.src}
+                    width={25}
+                    height={25}
+                    alt=""
+                  />
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
       </main>
@@ -66,15 +72,7 @@ export default async function Home() {
       </section>
       <section className="text-[--black] relative max-w-screen-md m-auto w-11/12">
         <h2 className="font-bold text-3xl my-2">Planes de estudio</h2>
-        <PlansDownload courses={courses} />
-      </section>
-      <section className="text-[--black] relative max-w-screen-md m-auto w-11/12">
-        <h2 className="font-bold text-3xl my-2">Horario de cursadas</h2>
-        <PlansDownload courses={courses} />
-      </section>
-      <section className="text-[--black] relative max-w-screen-md m-auto w-11/12">
-        <h2 className="font-bold text-3xl my-2">Horario de aulas</h2>
-        <PlansDownload courses={courses} />
+        <PlansDownload degrees={degrees} />
       </section>
       <Suspense>
         <CalendarSection />

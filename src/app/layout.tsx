@@ -58,7 +58,7 @@ export default function RootLayout({
           ))}
         </div>
         {children}
-        <footer className="w-full h-20 flex justify-center items-center gap-1 bg-black">
+        <footer className="w-full h-20 flex justify-center items-center gap-1 bg-black ">
           <p>Creada por</p>
           <a className="underline" href="">
             Lucas Cardozo
