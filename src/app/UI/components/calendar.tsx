@@ -176,11 +176,10 @@ export default function CalendarSection() {
   }, []);
 
   return (
-    <section className="relative mt-5 text-[--black] w-full">
-      <div className="text-5xl w-full flex justify-center h-fit sm:text-7xl">
-        <h2 className="font-bold opacity-70 flex flex-col -translate-x-1/4 mb-4">
-          <span>Calendario</span>
-          <span className="translate-x-1/2 -mt-4">académico</span>
+    <section className="relative mt-5 text-[--black] max-w-screen-md m-auto w-11/12">
+      <div className="text-3xl w-full flex h-fit sm:text-4xl">
+        <h2 className="font-bold flex flex-col mb-2">
+          <span>Calendario académico</span>
         </h2>
       </div>
       <div className="w-full">
