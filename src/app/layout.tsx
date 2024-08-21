@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={cabin.className + ' flex flex-col min-h- gap-2'}>
+      <body className={cabin.className + ' flex flex-col min-h-screen gap-8'}>
         <Nav />
         <div className="overflow-hidden -z-10 fixed flex flex-col justify-around top-0 left-0 w-screen h-screen text-3xl text-[#BABDBA] sm:text-5xl">
           {[
@@ -58,7 +58,7 @@ export default function RootLayout({
           ))}
         </div>
         {children}
-        <footer className="w-full h-20 flex justify-center items-center gap-1 bg-black ">
+        <footer className="w-full h-20 flex justify-center items-center gap-1 bg-black self-end">
           <p>Creada por</p>
           <a className="underline" href="">
             Lucas Cardozo

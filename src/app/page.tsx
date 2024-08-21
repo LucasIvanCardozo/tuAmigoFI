@@ -1,9 +1,7 @@
 import Image from 'next/image';
 import { fetchDegree } from './lib/data';
-import PlansDownload from './UI/components/plansDownload';
-import DatePicker, { Calendar } from 'react-multi-date-picker';
-import { Suspense } from 'react';
 import CalendarSection from './UI/components/calendar';
+import QuestionsSection from './UI/components/questionsSection';
 
 export default async function Home() {
   const degrees: ({
@@ -19,7 +17,7 @@ export default async function Home() {
   })[] = await fetchDegree();
   return (
     <>
-      <main className="mt-14 relative flex text-[--black] min-h-36 h-auto w-11/12 justify-between m-auto max-w-screen-md sm:mt-20 sm:justify-around">
+      <main className="pt-14 relative flex text-[--black] min-h-36 h-auto w-11/12 justify-between mx-auto max-w-screen-md my-10 sm:pt-20 sm:justify-around">
         <div className="relative w-2/5 max-w-52">
           <Image
             className="object-contain w-full "
@@ -64,19 +62,18 @@ export default async function Home() {
           </ul>
         </div>
       </main>
-      <section className="text-[--black] max-w-screen-md m-auto my-10 w-full text-balance text-center">
+      <section className="text-[--black] max-w-screen-md m-auto w-full text-balance text-center">
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quisquam
         doloribus est necessitatibus quis aut beatae nulla maiores iste possimus
         temporibus vero soluta delectus in similique, expedita nihil
         repellendus, molestiae corrupti? Lorem ipsum dolor sit, amet consectetur
       </section>
-      <section className="text-[--black] relative max-w-screen-md m-auto w-11/12">
-        <h2 className="font-bold text-3xl my-2">Planes de estudio</h2>
-        <PlansDownload degrees={degrees} />
+      
+        <QuestionsSection degrees={degrees} />
+      <CalendarSection />
+      <section className="text-[--black] relative max-w-screen-md m-auto w-11/12 h-96">
+        <h2 className="font-bold text-3xl my-2">Colaboradores</h2>
       </section>
-      <Suspense>
-        <CalendarSection />
-      </Suspense>
       <section className="flex text-[--black] justify-center  max-w-screen-md m-auto w-11/12">
         <Image
           className="object-contain w-1/4 min-w-24"
@@ -101,9 +98,6 @@ export default async function Home() {
             dudarán en darte una mano.
           </p>
         </div>
-      </section>
-      <section className="text-[--black] relative max-w-screen-md m-auto w-11/12 h-96">
-        <h2 className="font-bold text-3xl my-2">Colaboradores</h2>
       </section>
     </>
   );

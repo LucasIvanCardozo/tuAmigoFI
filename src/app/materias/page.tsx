@@ -25,7 +25,7 @@ export default async function Materias({
   const years = await fetchYears();
   return (
     <>
-      <main className="relative flex justify-center pb-4 w-10/12 max-w-screen-sm mt-12 m-auto gap-2 h-auto text-[--black] sm:mt-16">
+      <main className="relative flex justify-center pb-4 w-10/12 max-w-screen-sm pt-12 m-auto gap-2 h-auto text-[--black] m-10 sm:pt-16">
         <div>
           <Image
             className="object-contain h-full"
