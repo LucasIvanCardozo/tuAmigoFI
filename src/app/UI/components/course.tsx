@@ -48,9 +48,9 @@ export default async function Course({
           title="Habilita"
         />
       </div>
-      {officialLinks.length >= 0 ? <CourseLinks links={officialLinks} /> : null}
+      {officialLinks.length >= 0 ? <CourseLinks official={true} links={officialLinks} /> : null}
       {unofficialLinks.length >= 0 ? (
-        <CourseLinks links={unofficialLinks} />
+        <CourseLinks official={false} links={unofficialLinks} />
       ) : null}
       <div className="flex justify-end gap-1 pt-1 text-[--white] text-sm sm:text-base">
         <Link

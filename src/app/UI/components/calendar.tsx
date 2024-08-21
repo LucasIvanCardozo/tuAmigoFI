@@ -188,7 +188,7 @@ export default function CalendarSection() {
               if (recessDays.includes(dateStr)) {
                 return {
                   style: {
-                    backgroundColor: '#9A031E',
+                    backgroundColor: '#770000',
                     color: 'white',
                     borderRadius: '20%',
                   },
@@ -196,7 +196,7 @@ export default function CalendarSection() {
               } else if (midtermsDays.includes(dateStr))
                 return {
                   style: {
-                    backgroundColor: '#5F0F40',
+                    backgroundColor: '#000077',
                     color: 'white',
                     borderRadius: '20%',
                   },

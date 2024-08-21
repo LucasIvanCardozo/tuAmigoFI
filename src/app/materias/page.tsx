@@ -42,7 +42,7 @@ export default async function Materias({
           </p>
         </h1>
       </main>
-      <section className="flex flex-col max-w-screen-md w-11/12 m-auto items-center">
+      <section className="flex flex-col max-w-screen-md w-11/12 m-auto grow items-center">
         <div className="flex flex-col w-full gap-1 text-[--black] sm:flex-row">
           <SearchCourses />
           <YearCourse years={years} />
