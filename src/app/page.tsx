@@ -1,3 +1,4 @@
+import 'katex/dist/katex.min.css';
 import Image from 'next/image';
 import { fetchDegree } from './lib/data';
 import CalendarSection from './UI/components/calendar';
@@ -68,8 +69,7 @@ export default async function Home() {
         temporibus vero soluta delectus in similique, expedita nihil
         repellendus, molestiae corrupti? Lorem ipsum dolor sit, amet consectetur
       </section>
-      
-        <QuestionsSection degrees={degrees} />
+      <QuestionsSection degrees={degrees} />
       <CalendarSection />
       <section className="text-[--black] relative max-w-screen-md m-auto w-11/12 h-96">
         <h2 className="font-bold text-3xl my-2">Colaboradores</h2>

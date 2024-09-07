@@ -51,7 +51,7 @@ export default function QuestionsSection({
               {degrees
                 .find((degree) => degree.id == degreeState)
                 ?.degrees_plans.map((plan, index) => (
-                  <option key={index} value={plan.plans.id}>
+                  <option key={index} value={plan.plans.year}>
                     {plan.plans.year}
                   </option>
                 ))}

@@ -1,5 +1,4 @@
-import { fetchCorrelatives, fetchEnabler, fetchLinks } from '@/app/lib/data';
-import { CgArrowRightO } from 'react-icons/cg';
+import { fetchLinks } from '@/app/lib/data';
 import CorrelativeTable from './correlativeTable';
 import Link from 'next/link';
 import CourseLinks from './courseLinks';
@@ -26,8 +25,10 @@ export default async function Course({
       <div className="absolute top-0 right-0 flex flex-col text-center py-1 px-2">
         <span>{`${cg}CG / ${hs}Hs`}</span>
       </div>
-      <div className="flex relative w-min bg-[--dark-cyan]">
-        <h2 className="w-max text-lg text-nowrap text-[--white] ">{name}</h2>
+      <div className="flex relative w-3/4">
+        <h2 className="w-fit leading-6 text-lg text-balance text-[--white] bg-[--dark-cyan]">
+          {name}
+        </h2>
         {optional ? (
           <span className="absolute left-full text-sm">{`(Opcional)`}</span>
         ) : (
@@ -48,7 +49,9 @@ export default async function Course({
           title="Habilita"
         />
       </div>
-      {officialLinks.length >= 0 ? <CourseLinks official={true} links={officialLinks} /> : null}
+      {officialLinks.length >= 0 ? (
+        <CourseLinks official={true} links={officialLinks} />
+      ) : null}
       {unofficialLinks.length >= 0 ? (
         <CourseLinks official={false} links={unofficialLinks} />
       ) : null}

@@ -1,11 +1,9 @@
 import CoursesTable from '../UI/components/coursesTable';
-import { Suspense } from 'react';
 import SearchCourses from '../UI/components/searchCourses';
 import { fetchDegree, fetchYears } from '../lib/data';
 import DegreeCourse from '../UI/components/degreeCourse';
 import YearCourse from '../UI/components/yearCourse';
 import Image from 'next/image';
-import CoursesSkeleton from '../UI/components/skeletons/coursesSkeleton';
 
 export default async function Materias({
   searchParams,
@@ -48,9 +46,7 @@ export default async function Materias({
           <YearCourse years={years} />
           <DegreeCourse degrees={degrees} />
         </div>
-        <Suspense fallback={<CoursesSkeleton />}>
-          <CoursesTable query={query} />
-        </Suspense>
+        <CoursesTable query={query} />
       </section>
     </>
   );

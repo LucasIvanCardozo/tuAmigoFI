@@ -7,6 +7,7 @@ export default async function CoursesTable({
   query: { search?: string; year?: number; degree?: number };
 }) {
   const courses = await fetchCourses(query);
+
   return (
     <ul className="w-full flex flex-col gap-3 items-center my-5 text-[--black]">
       {courses?.map(({ id, name, cg, hs, optional }) => (
@@ -20,6 +21,7 @@ export default async function CoursesTable({
           optional={optional}
         />
       ))}
+      <button>Click Me</button>
     </ul>
   );
 }

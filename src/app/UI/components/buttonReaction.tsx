@@ -55,15 +55,6 @@ export default function ButtonReaction({
     }
   }
 
-  const handleReactionUser = (
-    totalR: {
-      id: number;
-      id_user: string;
-      id_problem: number;
-      reaction: number;
-      created_at: Date | null;
-    }[]
-  ) => {};
 
   useEffect(() => {
     const searchReactions = async () => {

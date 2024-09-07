@@ -1,0 +1,554 @@
+('Análisis Matemático I', 'analisis matematico i', 6, 96, false),
+('Álgebra I-B', 'algebra i-b', 4, 64, false),
+('Informática Básica', 'informatica basica', 4, 64, false),
+('Tecnologías Informáticas A', 'tecnologias informaticas a', 6, 96, false),
+('Física A', 'fisica a', 6, 96, false),
+('Probabilidad y Estadística', 'probabilidad y estadistica', 4, 64, false),
+('Programación B', 'programacion b', 8, 128, false),
+('Tecnologías Informáticas B', 'tecnologias informaticas b', 6, 96, false),
+('Inglés I', 'ingles i', 3, 48, false),
+('Investigación de Operaciones', 'investigacion de operaciones', 4, 64, false),
+('Estructura y Organización de Datos', 'estructura y organizacion de datos', 5, 80, false),
+('Fundamentos de Sistemas Operativos', 'fundamentos de sistemas operativos', 6, 96, false),
+('Fundamentos de Lenguajes Formales', 'fundamentos de lenguajes formales', 4, 64, false),
+('Sistema de Bases de Datos', 'sistema de bases de datos', 6, 96, false),
+('Introducción a la Inteligencia Artificial', 'introduccion a la inteligencia artificial', 4, 64, false),
+('Redes y Comunicación de Datos B', 'redes y comunicacion de datos b', 4, 64, false),
+('Análisis y Diseño de Sistemas B', 'analisis y diseno de sistemas b', 6, 96, false),
+('Comportamiento Organizacional y Relaciones del Trabajo', 'comportamiento organizacional y relaciones del trabajo', 4, 64, false),
+('Teoría de Modelos y Simulación', 'teoria de modelos y simulacion', 4, 64, false),
+('Ética, Legislación y Propiedad Intelectual en el Ejercicio Profesional', 'etica legislacion y propiedad intelectual en el ejercicio profesional', 4, 64, false),
+('Auditoría y Homologación Calidad de Software A', 'auditoria y homologacion calidad de software a', 4, 64, false),
+('Análisis Matemático II', 'analisis matematico ii', 5, 80, false),
+('Álgebra II', 'algebra ii', 5, 80, false),
+('Programación A', 'programacion a', 8, 128, false),
+('Introducción a la Matemática Discreta', 'introduccion a la matematica discreta', 4, 64, false),
+('Física B-II', 'fisica b-ii', 6, 96, false),
+('Teorías de la Información y la Computación', 'teorias de la informacion y la computacion', 5, 80, false),
+('Fundamentos de la Arquitectura de Computadoras', 'fundamentos de la arquitectura de computadoras', 5, 80, false),
+('Programación C', 'programacion c', 8, 128, false),
+('Inglés II', 'ingles ii', 3, 48, false),
+('Calidad de Software A', 'calidad de software a', 4, 64, false),
+('Administración Empresarial en la Economía del Conocimiento', 'administracion empresarial en la economia del conocimiento', 4, 64, false),
+('Redes y Computación de Datos A', 'redes y computacion de datos a', 4, 64, false),
+('Análisis y Diseño de Sistemas A', 'analisis y diseno de sistemas a', 6, 96, false),
+('Calidad de Software B', 'calidad de software b', 4, 64, false),
+('Gestión de Proyectos Informáticos', 'gestion de proyectos informaticos', 4, 64, false),
+('Gestión de la Seguridad Informática', 'gestion de la seguridad informatica', 4, 64, false),
+('Diseño e Implementación de Sistemas Distribuidos', 'diseno e implementacion de sistemas distribuidos', 4, 64, false),
+('Seguridad y Salud Ocupacional', 'seguridad y salud ocupacional', 4, 64, false),
+('Análisis Matemático III', 'analisis matematico iii', 6, 96, false),
+('Proyecto Transversal C II', 'proyecto transversal c ii', 2, 32, false),
+('Teoría de Circuitos', 'teoria de circuitos', 6, 96, false),
+('Dispositivos y Circuitos Electrónicos', 'dispositivos y circuitos electronicos', 6, 96, false),
+('Señales y Sistemas de Tiempo Discreto', 'senales y sistemas de tiempo discreto', 4, 64, false),
+('Programación III', 'programacion iii', 5, 80, false),
+('Circuitos Digitales', 'circuitos digitales', 6, 96, false),
+('Sistemas Operativos', 'sistemas operativos', 6, 96, false),
+('Sistemas Embebidos', 'sistemas embebidos', 7, 112, false),
+('Ingeniería de Soluciones', 'ingenieria de soluciones', 4, 64, false),
+('Organización Empresarial e Industrial', 'organizacion empresarial e industrial', 4, 64, false),
+('Sistemas de Computación Distribuidos I', 'sistemas de computacion distribuidos i', 6, 96, false),
+('Mecanismos de Seguridad en Redes', 'mecanismos de seguridad en redes', 3, 48, false),
+('Economía para Ingeniería', 'economia para ingenieria', 4, 64, false),
+('Diseño Digital Avanzado', 'diseno digital avanzado', 5, 80, false),
+('Optativa II (Complementaria)', 'optativa ii complementaria', 4, 64, false),
+('Proyecto Transversal C I', 'proyecto transversal c i', 2, 32, false),
+('Fisica C-II', 'fisica c-ii', 4, 64, false),
+('Señales y Sistemas de Tiempo Continuo', 'senales y sistemas de tiempo continuo', 6, 96, false),
+('Proyecto Transversal C III', 'proyecto transversal c iii', 2, 32, false),
+('Arquitectura de Computadoras', 'arquitectura de computadoras', 6, 96, false),
+('Control Discreto', 'control discreto', 6, 96, false),
+('Principios de la Seguridad Informática', 'principios de la seguridad informatica', 3, 48, false),
+('Fundamentos de Comunicaciones Digitales', 'fundamentos de comunicaciones digitales', 6, 96, false),
+('Redes de Transmisión de Datos', 'redes de transmision de datos', 6, 96, false),
+('Ética, Legislación y Ejercicio Profesional', 'etica legislacion y ejercicio profesional', 4, 64, false),
+('Inteligencia Computacional', 'inteligencia computacional', 5, 80, false),
+('Proyecto Final de Computación', 'proyecto final de computacion', 10, 160, false),
+('Sistemas de Computación Distribuidos II', 'sistemas de computacion distribuidos ii', 6, 96, false),
+('Optativa I (Tecnológica)', 'optativa i tecnologica', 5, 80, false),
+('Química General e Inorgánica', 'quimica general e inorganica', 6, 96, false),
+('Taller de Ingeniería I', 'taller de ingenieria i', 6, 96, false),
+('Balance de Masa y Energía', 'balance de masa y energia', 4, 64, false),
+('Fundamentos de la Programación', 'fundamentos de la programacion', 4, 64, false),
+('Sistemas de Representación en Plantas de Procesos', 'sistemas de representacion en plantas de procesos', 2, 32, false),
+('Taller de Ingeniería II', 'taller de ingenieria ii', 6, 96, false),
+('Métodos Numéricos para Ingeniería', 'metodos numericos para ingenieria', 4, 64, false),
+('Operaciones Unitarias I', 'operaciones unitarias i', 8, 128, false),
+('Termodinámica II', 'termodinamica ii', 4, 64, false),
+('Taller de Ingeniería III', 'taller de ingenieria iii', 8, 128, false),
+('Ingeniería de Reacciones Químicas I', 'ingenieria de reacciones quimicas i', 7, 112, false),
+('Fisicoquímica I', 'fisicoquimica i', 5, 80, false),
+('Termodinámica I', 'termodinamica i', 4, 64, false),
+('Química del Carbono', 'quimica del carbono', 5, 80, false),
+('Fisicoquímica II', 'fisicoquimica ii', 3, 48, false),
+('Operación de Plantas de Procesos', 'operacion de plantas de procesos', 2, 32, false),
+('Operaciones Unitarias II', 'operaciones unitarias ii', 8, 128, false),
+('Ingeniería de Sistemas de Procesos', 'ingenieria de sistemas de procesos', 3, 48, false),
+('Ingeniería de Reacciones Químicas II', 'ingenieria de reacciones quimicas ii', 5, 80, false),
+('Química Biológica y Microbiología', 'quimica biologica y microbiologia', 4, 64, false),
+('Sistemas de Gestión Integrados', 'sistemas de gestion integrados', 4, 64, false),
+('Técnicas de Análisis Fisicoquímicos', 'tecnicas de analisis fisicoquimicos', 4, 64, false),
+('Dinámica, Instrumentación y Control de Procesos', 'dinamica, instrumentacion y control de procesos', 7, 112, false),
+('Tecnología de los Materiales', 'tecnologia de los materiales', 4, 64, false),
+('Ingeniería de los Procesos Biotecnológicos', 'ingenieria de los procesos biotecnologicos', 4, 64, false),
+('Proyecto Integrador de Ingeniería Química', 'proyecto integrador de ingenieria quimica', 10, 160, false);
+('Álgebra I-A', 'algebra i-a', 6, 96, false),
+('Sistemas de Representación para Ingeniería', 'sistemas de representacion para ingenieria', 3, 48, false),
+('Fundamentos de Química', 'fundamentos de quimica', 4, 64, false),
+('Fundamentos de la Estática y Resistencia de Materiales', 'fundamentos de la estatica y resistencia de materiales', 4, 64, false),
+('Electrotecnia B', 'electrotecnia b', 6, 96, false),
+('Mediciones Eléctricas A', 'mediciones electricas a', 6, 96, false),
+('Automatización A', 'automatizacion a', 6, 96, false),
+('Introducción a la Mecánica de los Fluidos', 'introduccion a la mecanica de los fluidos', 3, 48, false),
+('Máquinas Eléctricas B', 'maquinas electricas b', 6, 96, false),
+('Materiales Electrotécnicos', 'materiales electrotecnicos', 4, 64, false),
+('Formulación y Evaluación de Proyectos de Inversión', 'formulacion y evaluacion de proyectos de inversion', 4, 64, false),
+('Instalaciones Eléctricas A', 'instalaciones electricas a', 6, 96, false),
+('Proyecto Final', 'proyecto final', 10, 160, false),
+('Física C-I', 'fisica c-i', 6, 96, false),
+('Electrotecnia A', 'electrotecnia a', 6, 96, false),
+('Introducción a la Termodinámica y Máquinas Térmicas', 'introduccion a la termodinamica y maquinas termicas', 4, 64, false),
+('Mediciones Eléctricas B', 'mediciones electricas b', 6, 96, false),
+('Tecnología CAD Aplicada', 'tecnologia cad aplicada', 4, 64, false),
+('Principios de Electrónica', 'principios de electronica', 4, 64, false),
+('Electrotecnia C', 'electrotecnia c', 6, 96, false),
+('Sistemas de Transmisión de Energía Eléctrica', 'sistemas de transmision de energia electrica', 6, 96, false),
+('Instalaciones Eléctricas B', 'instalaciones electricas b', 4, 64, false),
+('Automatización B', 'automatizacion b', 4, 64, false),
+('Electrónica de Potencia I', 'electronica de potencia i', 4, 64, false),
+('Generación de Energía Eléctrica B', 'generacion de energia electrica b', 4, 64, false),
+('Protección y Análisis de Sistemas de Potencia', 'proteccion y analisis de sistemas de potencia', 6, 96, false),
+('Redes Eléctricas Inteligentes', 'redes electricas inteligentes', 5, 80, false),
+('Estática I', 'estatica i', 5, 80, false),
+('Introducción a la Mecánica del Continuo', 'introduccion a la mecanica del continuo', 3, 48, false),
+('Materiales Estructurales', 'materiales estructurales', 4, 64, false),
+('Mecánica de la Partícula y Cuerpo Rígido', 'mecanica de la particula y cuerpo rigido', 7, 112, false),
+('Introducción a la Metrología y Fabricación', 'introduccion a la metrologia y fabricacion', 4, 64, false),
+('Formulación y Evaluación de proyectos de Inversión', 'formulacion y evaluacion de proyectos de inversion', 4, 64, false),
+('Mantenimiento Industrial', 'mantenimiento industrial', 3, 48, false),
+('ELEMENTOS DE MAQUINAS', 'elementos de maquinas', 6, 96, false),
+('PROYECTO FINAL', 'proyecto final', 10, 160, false),
+('Estática II', 'estatica ii', 5, 80, false),
+('Componentes de los Sistemas Eléctricos de Potencia', 'componentes de los sistemas electricos de potencia', 4, 64, false),
+('Transferencia y Tecnología del Calor', 'transferencia y tecnologia del calor', 4, 64, false),
+('Fluidos y Máquinas Fluidodinámicas', 'fluidos y maquinas fluidodinamicas', 6, 96, false),
+('Proyecto Transversal I', 'proyecto transversal i', 2, 32, false),
+('Proyecto Transversal II', 'proyecto transversal ii', 2, 32, false),
+('Física B-I', 'fisica b-i', 8, 128, false),
+('Proyecto Transversal III', 'proyecto transversal iii', 2, 32, false),
+('Programación I', 'programacion i', 5, 80, false),
+('Teoría de Señales y Sistemas', 'teoria de senales y sistemas', 7, 112, false),
+('Análisis de Circuitos', 'analisis de circuitos', 7, 112, false),
+('Proyecto Transversal IV', 'proyecto transversal iv', 2, 32, false),
+('Filtros Analógicos', 'filtros analogicos', 6, 96, false),
+('Probabilidad, Estadística y Procesos Estocásticos', 'probabilidad estadistica y procesos estocasticos', 7, 112, false),
+('Dispositivos Semiconductores', 'dispositivos semiconductores', 8, 128, false),
+('Tecnología Electrónica', 'tecnologia electronica', 3, 48, false),
+('Proyecto Transversal V', 'proyecto transversal v', 2, 32, false),
+('Técnicas y Dispositivos Digitales', 'tecnicas y dispositivos digitales', 5, 80, false),
+('Sistemas y Circuitos Electrónicos', 'sistemas y circuitos electronicos', 6, 96, false),
+('Introducción al Tratamiento Digital de Señales', 'introduccion al tratamiento digital de senales', 6, 96, false),
+('Líneas de Transmisión y Antenas', 'lineas de transmision y antenas', 6, 96, false),
+('Electrónica Digital', 'electronica digital', 5, 80, false),
+('Electrónica Aplicada', 'electronica aplicada', 6, 96, false),
+('Proyecto Transversal VI', 'proyecto transversal vi', 2, 32, false),
+('Instrumentación y Mediciones Electrónicas II', 'instrumentacion y mediciones electronicas ii', 6, 96, false),
+('Redes de Datos', 'redes de datos', 5, 80, false),
+('Introducción a la Arquitectura de Computadoras', 'introduccion a la arquitectura de computadoras', 6, 96, false),
+('Control Automático', 'control automatico', 6, 96, false),
+('Introducción a la Ciencia de Materiales', 'introduccion a la ciencia de materiales', 6, 96, false),
+('Física Experimental A', 'fisica experimental a', 4, 64, false),
+('Mecánica de Materiales y Componentes', 'mecanica de materiales y componentes', 4, 64, false),
+('Química del Estado Sólido', 'quimica del estado solido', 6, 96, false),
+('Cerámica de Aplicación Industrial', 'ceramica de aplicacion industrial', 6, 96, false),
+('Transporte de Calor y Materia', 'transporte de calor y materia', 4, 64, false),
+('Modelado y Simulación de Materiales I', 'modelado y simulacion de materiales i', 3, 48, false),
+('Introducción a la Física del Estado Sólido', 'introduccion a la fisica del estado solido', 6, 96, false),
+('Introducción al Diseño 3D', 'introduccion al diseno 3d', 3, 48, false),
+('Termodinámica de Materiales', 'termodinamica de materiales', 7, 112, false),
+('Fluidodinámica', 'fluidodinamica', 5, 80, false),
+('Introducción a Polímeros', 'introduccion a polimeros', 6, 96, false),
+('Propiedades Funcionales de Materiales', 'propiedades funcionales de materiales', 4, 64, false),
+('Fundamentos de Metalurgia Física', 'fundamentos de metalurgia fisica', 6, 96, false),
+('Comportamiento Mecánico de Polímeros y Cerámicos', 'comportamiento mecanico de polimeros y ceramicos', 6, 96, false),
+('Modelado y Simulación de Materiales II', 'modelado y simulacion de materiales ii', 3, 48, false),
+('Procesamiento de Plásticos', 'procesamiento de plasticos', 6, 96, false),
+('Corrosión de Metales y Aleaciones', 'corrosion de metales y aleaciones', 4, 64, false),
+('Procesamiento de Compuestos', 'procesamiento de compuestos', 6, 96, false),
+('Laboratorio de Transformación de Materiales', 'laboratorio de transformacion de materiales', 5, 80, false),
+('Selección de Materiales', 'seleccion de materiales', 7, 112, false),
+('Adquisición y Análisis de la Información Experimental', 'adquisicion y analisis de la informacion experimental', 5, 80, false),
+('Procesamiento de Metales', 'procesamiento de metales', 6, 96, false),
+('Propiedades Estructurales de Metales', 'propiedades estructurales de metales', 3, 48, false),
+('Mecánica del Sólido', 'mecanica del solido', 4),
+('Proyecto de Ingeniería Industrial I', 'proyecto de ingenieria industrial i', 4),
+('Administración de Operaciones', 'administracion de operaciones', 4),
+('Investigación Operativa A', 'investigacion operativa a', 4),
+('Gestión de la Tecnología y la Innovación', 'gestion de la tecnologia y la innovacion', 4),
+('Termodinámica Industrial', 'termodinamica industrial', 4),
+('Conceptos de Economía Industrial', 'conceptos de economia industrial', 4),
+('Máquinas y Equipos Industriales I', 'maquinas y equipos industriales i', 5),
+('Planificación y Control de la Producción', 'planificacion y control de la produccion', 4),
+('Investigación Operativa B', 'investigacion operativa b', 4),
+('Mecánica de Fluidos', 'mecanica de fluidos', 3),
+('Gestión de la Logística Integral y Cadena de Suministros', 'gestion de la logistica integral y cadena de suministros', 4),
+('Formulación y Evaluación de Proyectos Productivos', 'formulacion y evaluacion de proyectos productivos', 5),
+('Gestión Comercial de las Organizaciones', 'gestion comercial de las organizaciones', 4),
+('Tecnología de Control', 'tecnologia de control', 4),
+('Introducción a los Procesos de Fabricación', 'introduccion a los procesos de fabricacion', 3),
+('Control de la Producción', 'control de la produccion', 4),
+('Inglés Profesional A', 'ingles profesional a', 4),
+('Sustentabilidad, Higiene y Seguridad', 'sustentabilidad higiene y seguridad', 5),
+('Desarrollo Económico y Comercio Internacional', 'desarrollo economico y comercio internacional', 4),
+('Sistemas Informáticos de Gestión', 'sistemas informaticos de gestion', 4),
+('Proyecto de Ingeniería Industrial IV', 'proyecto de ingenieria industrial iv', 10),
+('Proyecto de Ingeniería Industrial II', 'proyecto de ingenieria industrial ii', 4),
+('Diseño de Instalaciones y Procesos', 'diseno de instalaciones y procesos', 4),
+('Sistemas de Gestión y Mejora Continua', 'sistemas de gestion y mejora continua', 5),
+
+
+Quimica-Electronica-Computacion-Informatica-Electromecanica-Electrica
+Materiales-
+
+Ingenieria en Alimentos
+**Primer Año:**
+- **Primer Cuatrimestre:**
+1. Análisis Matemático I
+2. Álgebra I-B
+3. Química General e Inorgánica
+4. Taller de Ingeniería I
+
+- **Segundo Cuatrimestre:**
+1. Análisis Matemático II
+2. Álgebra II-B
+3. Física A
+4. Fisicoquímica I
+5. Inglés I
+
+**Segundo Año:**
+- **Primer Cuatrimestre:**
+1. Análisis Matemático III
+2. Balance de Masa y Energía
+3. Fundamentos de la Programación
+4. Física B-II
+5. Sistemas de Representación en Plantas de Procesos
+6. Taller de Ingeniería II
+
+- **Segundo Cuatrimestre:**
+1. Métodos Numéricos para Ingeniería
+2. Operaciones Unitarias I
+3. Termodinámica de Alimentos I
+4. Química del Carbono
+5. Fisicoquímica II
+6. Física C-II
+7. Inglés II
+
+**Tercer Año:**
+- **Primer Cuatrimestre:**
+1. Operación de Plantas de Procesos
+2. Operaciones Unitarias II
+3. Termodinámica de Alimentos II
+4. Química Biológica
+5. Taller de Ingeniería III
+
+- **Segundo Cuatrimestre:**
+1. Bromatología y Calidad de Alimentos
+2. Operaciones Unitarias III
+3. Microbiología
+4. Ética, Legislación y Propiedad Intelectual en el Ejercicio Profesional
+5. Organización Empresarial e Industrial
+
+**Cuarto Año:**
+- **Primer Cuatrimestre:**
+1. Transformación y Preservación de Alimentos
+2. Industrialización de Alimentos I
+3. Sistemas de Gestión Integrados
+4. Seguridad y Salud Ocupacional
+5. Control de Procesos en Alimentos
+
+- **Segundo Cuatrimestre:**
+1. Ingeniería de Procesos Biotecnológicos
+2. Industrialización de Alimentos II
+3. Gestión en la Industria Alimentaria
+4. Formulación y Evaluación de Proyectos de Inversión
+5. Proyecto Integrador de Ingeniería en Alimentos
+
+Ingenieria Industrial
+**Primer Año:**
+1. **Primer Cuatrimestre:**
+- Introducción a la Ciencia y la Ingeniería (6 CG)
+- Álgebra I-B (4 CG)
+- Fundamentos de Química (4 CG)
+- Inglés I (3 CG)
+
+2. **Segundo Cuatrimestre:**
+- Análisis Matemático I (6 CG)
+- Física A (6 CG)
+- Fundamentos de la Programación (4 CG)
+
+**Segundo Año:**
+1. **Primer Cuatrimestre:**
+- Análisis Matemático II (5 CG)
+- Álgebra II (5 CG)
+- Física B-II (6 CG)
+- Inglés II (3 CG)
+
+2. **Segundo Cuatrimestre:**
+- Análisis Matemático III (6 CG)
+- Probabilidad y Estadística (4 CG)
+- Mecánica del Sólido (4 CG)
+- Proyecto de Ingeniería Industrial I (4 CG)
+
+**Tercer Año:**
+1. **Primer Cuatrimestre:**
+- Administración Estratégica (4 CG)
+- Conceptos de Economía Industrial (4 CG)
+- Máquinas y Equipos Industriales I (5 CG)
+- Tecnología de los Materiales (4 CG)
+
+2. **Segundo Cuatrimestre:**
+- Planificación y Control de la Producción (4 CG)
+- Investigación Operativa A (4 CG)
+- Mecánica de Fluidos (3 CG)
+- Física Experimental A (4 CG)
+
+**Cuarto Año:**
+1. **Primer Cuatrimestre:**
+- Gestión de la Logística Integral y Cadena de Suministros (4 CG)
+- Formulación y Evaluación de Proyectos Productivos (5 CG)
+- Gestión Comercial de las Organizaciones (4 CG)
+- Tecnología de Control (4 CG)
+
+2. **Segundo Cuatrimestre:**
+- Introducción a los Procesos de Fabricación (3 CG)
+- Sustentabilidad, Higiene y Seguridad (5 CG)
+- Desarrollo Económico y Comercio Internacional (4 CG)
+- Sistemas Informáticos de Gestión (4 CG)
+
+**Quinto Año:**
+1. **Primer Cuatrimestre:**
+- Proyecto de Ingeniería Industrial III (4 CG)
+- Control de la Producción (4 CG)
+- Inglés Profesional A (4 CG)
+
+2. **Segundo Cuatrimestre:**
+- Proyecto de Ingeniería Industrial IV (10 CG)
+
+Ingenieria Mecanica
+**Primer Año:**
+1. Introducción a la Ciencia y la Ingeniería - 6 CG
+1. Álgebra I-A - 6 CG
+1. Dibujo A - 3 CG
+1. Fundamentos de Química - 4 CG
+2. Análisis Matemático I - 5 CG
+2. Álgebra II - 5 CG
+2. Física A - 6 CG
+2. Dibujo B - 4 CG
+
+**Segundo Año:**
+3. Análisis Matemático II - 5 CG
+3. Física B-II - 6 CG
+3. Mecanismos y Elementos de la Mecánica - 2 CG
+3. Inglés I - 3 CG
+4. Física C-II - 4 CG
+4. Electrotecnia D - 4 CG
+4. Aplicaciones de la Hidráulica y Neumática - 3 CG
+4. Fundamentos de la Programación - 4 CG
+
+**Tercer Año:**
+5. Análisis Matemático III - 6 CG
+5. Estática I - 5 CG
+5. Termodinámica para Ingeniería Mecánica - 5 CG
+5. Física Experimental A - 4 CG
+6. Estática II - 5 CG
+6. Inglés II - 3 CG
+6. Introducción al Modelado Computacional - 4 CG
+6. Seminario de Energías Renovables - 2 CG
+
+**Cuarto Año:**
+7. Mecánica de la Partícula y del Cuerpo Rígido - 7 CG
+7. Metrología e Introducción a la Fabricación - 5 CG
+7. Transferencia y Tecnología del Calor - 5 CG
+7. Vibraciones Mecánicas - 6 CG
+8. Materiales II - 5 CG
+8. Tribología, Fricción, Desgaste y Lubricación - 3 CG
+8. Sistemas Propulsivos I - 5 CG
+8. Procesos de Fabricación I - 5 CG
+
+**Quinto Año:**
+9. Economía para Ingeniería - 4 CG
+9. Seguridad y Salud Ocupacional - 4 CG
+9. Proyecto Integrador I - 3 CG
+10. Ética, Legislación y Propiedad Intelectual en el Ejercicio Profesional - 4 CG
+10. Electrónica de Control y Automatización - 6 CG
+
+Ingenieria en materiales
+**Primer Año:**
+1. Análisis Matemático I (1)
+2. Álgebra I-A (1)
+3. Inglés I (1)
+4. Fundamentos de Química (1)
+5. Análisis Matemático II (2)
+6. Álgebra II (2)
+7. Física A (2)
+8. Inglés II (2)
+9. Fundamentos de la Programación (2)
+
+**Segundo Año:**
+1. Análisis Matemático III (3)
+2. Introducción a la Ciencia de Materiales (3)
+3. Estática I (3)
+4. Física B-I (3)
+5. Introducción a la Física del Estado Sólido (5)
+6. Física Experimental A (5)
+7. Mecánica de Materiales y Componentes (5)
+8. Química del Estado Sólido (5)
+9. Economía para Ingeniería (5)
+
+**Tercer Año:**
+1. Física C-I (4)
+2. Métodos Numéricos para Ingeniería (4)
+3. Introducción al Diseño 3D (4)
+4. Termodinámica de Materiales (4)
+5. Estática II (4)
+6. Fluidodinámica (6)
+7. Introducción a Polímeros (6)
+8. Propiedades Funcionales de Materiales (6)
+9. Fundamentos de Metalurgia Física (6)
+
+**Cuarto Año:**
+1. Comportamiento Mecánico de Polímeros y Cerámicos (8)
+2. Modelado y Simulación de Materiales I (8)
+3. Procesamiento de Plásticos (8)
+4. Cerámica de Aplicación Industrial (7)
+5. Transporte de Calor y Materia (7)
+6. Ética, Legislación y Propiedad Intelectual en el Ejercicio Profesional (7)
+7. Modelado y Simulación de Materiales II (7)
+8. Procesamiento de Metales (9)
+9. Formulación y Evaluación de Proyectos de Inversión (9)
+10. Organización Empresarial e Industrial (9)
+
+**Quinto Año:**
+1. Adquisición y Análisis de la Información Experimental (10)
+2. Laboratorio de Transformación de Materiales (10)
+3. Selección de Materiales (10)
+4. Seguridad y Salud Ocupacional (10)
+5. Sistemas de Gestión Integrados (10)
+6. Trabajo Final (10)
+
+Ingenieria electronica
+**Primer Año:**
+1. Análisis Matemático I (6 CG)
+1. Álgebra I-A (6 CG)
+1. Inglés I (3 CG)
+1. Proyecto Transversal I (2 CG)
+1. Fundamentos de Química (4 CG)
+2. Análisis Matemático II (5 CG)
+2. Álgebra II (5 CG)
+2. Física A (6 CG)
+2. Inglés II (3 CG)
+2. Informática Básica (4 CG)
+2. Proyecto Transversal II (2 CG)
+
+**Segundo Año:**
+3. Análisis Matemático III (6 CG)
+3. Física B-I (8 CG)
+3. Métodos Numéricos para Ingeniería (4 CG)
+3. Proyecto Transversal III (2 CG)
+3. Programación I (5 CG)
+4. Física C-I (6 CG)
+4. Teoría de Señales y Sistemas (7 CG)
+4. Análisis de Circuitos (7 CG)
+4. Proyecto Transversal IV (2 CG)
+
+**Tercer Año:**
+5. Filtros Analógicos (6 CG)
+5. Probabilidad, Estadística y Procesos Estocásticos (7 CG)
+5. Dispositivos Semiconductores (8 CG)
+5. Tecnología Electrónica (3 CG)
+5. Proyecto Transversal V (2 CG)
+6. Introducción al Tratamiento Digital de Señales (6 CG)
+6. Líneas de Transmisión y Antenas (6 CG)
+6. Electrónica Digital (5 CG)
+6. Electrónica Aplicada (6 CG)
+6. Proyecto Transversal VI (2 CG)
+
+**Cuarto Año:**
+7. Técnicas y Dispositivos Digitales (5 CG)
+7. Sistemas y Circuitos Electrónicos (6 CG)
+7. Sistemas de Comunicaciones (7 CG)
+7. Organización Empresarial e Industrial (4 CG)
+7. Instrumentación y Mediciones Electrónicas I (6 CG)
+8. Instrumentación y Mediciones Electrónicas II (6 CG)
+8. Redes de Datos (5 CG)
+8. Introducción a la Arquitectura de Computadoras (6 CG)
+8. Control Automático (6 CG)
+8. Seguridad y Salud Ocupacional (4 CG)
+
+**Quinto Año:**
+9. Economía para Ingeniería (4 CG)
+9. Electiva I (5 CG)
+9. Electiva II (5 CG)
+9. Optativa I (5 CG)
+10. Ética, Legislación y Ejercicio Profesional (4 CG)
+10. Optativa II (4 CG)
+10. Electiva III (5 CG)
+10. Proyecto Final (10 CG)
+
+Ingenieria elñectromecanica
+**Primer Año:**
+1. Análisis Matemático I (1)
+2. Álgebra I-A (1)
+3. Sistemas de Representación para Ingeniería (1)
+4. Fundamentos de Química (1)
+5. Inglés I (1)
+6. Análisis Matemático II (2)
+7. Álgebra II (2)
+8. Física A (2)
+9. Fundamentos de la Programación (2)
+
+**Segundo Año:**
+1. Análisis Matemático III (3)
+2. Física B-I (3)
+3. Probabilidad y Estadística (3)
+4. Estática I (3)
+5. Inglés II (4)
+6. Física C-I (4)
+7. Electrotecnia A (4)
+8. Introducción a la Termodinámica y Máquinas Térmicas (4)
+9. Estática II (4)
+
+**Tercer Año:**
+1. Electrotecnia B (5)
+2. Mediciones Eléctricas A (5)
+3. Automatización A (5)
+4. Introducción a la Mecánica del Continuo (5)
+5. Materiales Estructurales (5)
+6. Economía para Ingeniería (5)
+7. Máquinas Eléctricas A (6)
+8. Mediciones Eléctricas B (6)
+9. Tecnología CAD Aplicada (6)
+10. Principios de Electrónica (6)
+11. Fluidos y Máquinas Fluidodinámicas (6)
+
+**Cuarto Año:**
+1. Máquinas Eléctricas B (7)
+2. Materiales Electrotécnicos (7)
+3. Mecánica de la Partícula y Cuerpo Rígido (7)
+4. Instalaciones Eléctricas A (7)
+5. Organización Empresarial e Industrial (7)
+6. Ética, Legislación y Propiedad Intelectual en el Ejercicio Profesional (9)
+7. Componentes de los Sistemas Eléctricos de Potencia (9)
+8. Transferencia y Tecnología del Calor (9)
+9. Introducción a la Metrología y Fabricación (9)
+10. Formulación y Evaluación de Proyectos de Inversión (9)
+11. Mantenimiento Industrial (9)
+
+**Quinto Año:**
+1. Elementos de Máquinas (10)
+2. Proyecto Final (10)
+
+
+
+<-en courses_years y courses_degrees llegue hasta la id 200->

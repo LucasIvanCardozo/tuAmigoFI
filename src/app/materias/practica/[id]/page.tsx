@@ -20,11 +20,11 @@ export default async function Practica({
   };
   const course = await fetchCourse(id_materia);
   const tpList = await fetchTps({ id_materias: id_materia });
-
-  let tps = await fetchTps({
+  const tps = await fetchTps({
     id_tps: query.id_tps,
     id_materias: query.id_materias,
   });
+
   return (
     <>
       <main className="h-screen w-full pt-8 flex gap-2 max-w-screen-lg m-auto sm:pb-3 sm:px-2 sm:pt-16">

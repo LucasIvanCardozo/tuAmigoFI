@@ -1,6 +1,10 @@
 'use client';
 import Image from 'next/image';
 import ButtonReaction from './buttonReaction';
+import { useEffect, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { CldImage } from 'next-cloudinary';
+import { fetchProblem } from '@/app/lib/data';
 
 export default function Problem({
   problem,
@@ -18,6 +22,25 @@ export default function Problem({
   };
   uuid: string;
 }) {
+  const [response, setResponse] = useState<boolean>(false);
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
+  const handleImportImage = (id: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('importImage', id.toString());
+    replace(`${pathname}?${params.toString()}`);
+  };
+
+  useEffect(() => {
+    const hasResponse = async () => {
+      const newResponse = await fetchProblem({ id: problem.id });
+      if (newResponse.id_contributors) setResponse(true);
+    };
+    hasResponse();
+  }, []);
+
   return (
     <li className="bg-[--white] p-2 text-base leading-5 drop-shadow-md flex flex-col gap-1">
       <p className="whitespace-pre-wrap bg-[#C8E0E4] p-1 rounded-md">
@@ -50,24 +73,25 @@ export default function Problem({
           <span className="whitespace-pre-wrap">{problem.text}</span>
         )}
       </p>
-      {problem.response ? (
+      {response ? (
         <div className="relative flex justify-center w-full">
-          <Image
-            className="object-contain"
-            src={`${problem.response}.${problem.type}`}
-            alt="Imagen"
-            sizes="100vw"
+          <CldImage
+            src={`responses/${problem.id.toString()}`}
+            alt=""
+            width="500"
+            height="500"
             style={{
+              objectFit: 'cover',
               width: '100%',
               height: 'auto',
             }}
-            width={500}
-            height={300}
           />
           <ButtonReaction uuid={uuid} problem={problem} />
         </div>
       ) : (
-        ''
+        <button onClick={() => handleImportImage(problem.id)}>
+          Añadir mi problema
+        </button>
       )}
     </li>
   );

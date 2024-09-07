@@ -8,6 +8,12 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
+model contributors {
+  dni      String     @id @db.VarChar
+  name     String     @db.VarChar
+  problems problems[]
+}
+
 model correlatives {
   id                                           Int
   id_correlative                               Int
@@ -30,7 +36,6 @@ model courses {
   courses_links                                     courses_links[]
   courses_years                                     courses_years[]
   midterms                                          midterms[]
-  plans_courses                                     plans_courses[]
   tps_courses                                       tps_courses[]
 
   @@index([name_normalized])
@@ -100,16 +105,6 @@ model plans {
   id            Int             @id @default(autoincrement())
   year          Int             @unique
   degrees_plans degrees_plans[]
-  plans_courses plans_courses[]
-}
-
-model plans_courses {
-  plans_id   Int
-  courses_id Int
-  courses    courses @relation(fields: [courses_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  plans      plans   @relation(fields: [plans_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@id([plans_id, courses_id])
 }
 
 model problems {
@@ -122,6 +117,8 @@ model problems {
   type            String?          @db.VarChar(5)
   response_plus   String?          @db.VarChar
   type_plus       String?          @db.VarChar(5)
+  id_contributors String?          @db.VarChar
+  contributors    contributors?    @relation(fields: [id_contributors], references: [dni], onDelete: NoAction, onUpdate: NoAction)
   midterms        midterms?        @relation(fields: [id_midterms], references: [id], onDelete: NoAction, onUpdate: NoAction)
   tps_problems    tps_problems[]
   user_reactions  user_reactions[]

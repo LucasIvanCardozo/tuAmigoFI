@@ -6,12 +6,24 @@ const cache = {
   swr: 300,
 };
 
+// fetching de contribuidores
+export async function fetchContributor(id: string) {
+  const contributor = await prisma.contributors.findFirst({
+    where: {
+      dni: id,
+    },
+    cacheStrategy: cache,
+  });
+  return contributor;
+}
+
 // fetching de materias
 export async function fetchCourse(id: number) {
   const course = await prisma.courses.findFirstOrThrow({
     where: {
       id: id,
     },
+    cacheStrategy: cache,
   });
   return course;
 }
@@ -50,8 +62,10 @@ export async function fetchCourses({
           }
         : {}),
     },
+    orderBy: {
+      name: 'asc',
+    },
     cacheStrategy: cache,
-    //take: 5,
   });
   return courses;
 }
@@ -244,6 +258,7 @@ export async function fetchLinks({
 }
 
 export async function fetchUser(uuid: string) {
+  console.log(uuid);
   const uuidUser = await prisma.users.findFirst({
     where: {
       id: uuid,
@@ -283,4 +298,14 @@ export async function fetchProblems({
     cacheStrategy: cache,
   });
   return problems;
+}
+
+export async function fetchProblem({ id }: { id: number }) {
+  const problem = await prisma.problems.findUniqueOrThrow({
+    where: {
+      id: id,
+    },
+    cacheStrategy: cache,
+  });
+  return problem;
 }

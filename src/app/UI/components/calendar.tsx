@@ -1,5 +1,5 @@
 'use client';
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Calendar } from 'react-multi-date-picker';
 import CoursesSkeleton from './skeletons/coursesSkeleton';
 
@@ -200,7 +200,7 @@ export default function CalendarSection() {
                 if (recessDays.includes(dateStr)) {
                   return {
                     style: {
-                      backgroundColor: '#770000',
+                      backgroundColor: '#9A031E',
                       color: 'white',
                       borderRadius: '20%',
                     },
@@ -208,7 +208,7 @@ export default function CalendarSection() {
                 } else if (midtermsDays.includes(dateStr))
                   return {
                     style: {
-                      backgroundColor: '#000077',
+                      backgroundColor: '#5F0F40',
                       color: 'white',
                       borderRadius: '20%',
                     },
