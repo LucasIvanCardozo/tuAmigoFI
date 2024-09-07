@@ -1,44 +1,5 @@
 'use server';
 import prisma from './db';
-import stream from 'stream';
-import { promisify } from 'util';
-import { v2 as cloudinary } from 'cloudinary';
-
-cloudinary.config({
-  cloud_name: 'donzj5rlf',
-  api_key: '114644541663818',
-  api_secret: 'YJ9B-Goy__55LcSFW5Rcayo1bTg',
-});
-
-// Promisify the stream pipeline
-const pipeline = promisify(stream.pipeline);
-
-export async function uploadImage({
-  buffer,
-  imageId,
-}: {
-  buffer: Buffer;
-  imageId: string;
-}) {
-  try {
-    // Create a promise-based upload stream
-    const uploadStream = cloudinary.uploader.upload_stream({
-      public_id: imageId,
-      folder: 'responses',
-      format: 'webp',
-      quality: '50',
-      transformation: [{ width: 800, height: 600, crop: 'limit' }],
-    });
-
-    // Use pipeline to manage the stream
-    await pipeline(stream.Readable.from(buffer), uploadStream);
-
-    return { ok: true };
-  } catch (error) {
-    console.error('Upload failed:', error);
-    return { ok: false };
-  }
-}
 
 export async function createContributor(dni: string, name: string) {
   const contributor = await prisma.contributors.create({

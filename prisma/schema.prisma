@@ -7,7 +7,7 @@ datasource db {
   url       = env("DATABASE_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
-
+ 
 model contributors {
   dni      String     @id @db.VarChar
   name     String     @db.VarChar
