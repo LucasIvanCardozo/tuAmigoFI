@@ -40,6 +40,7 @@ export async function AddContributor(idProblem: number, dni: string) {
     },
     data: {
       id_contributors: dni,
+      response: false,
     },
   });
   return problem;

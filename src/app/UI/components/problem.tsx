@@ -5,24 +5,14 @@ import { useEffect, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { CldImage } from 'next-cloudinary';
 import { fetchProblem } from '@/app/lib/data';
-
+import { problems } from '@prisma/client';
 export default function Problem({
   problem,
   uuid,
 }: {
-  problem: {
-    number: number | null;
-    response_plus: string | null;
-    text: string;
-    type_plus: string | null;
-    response: string | null;
-    type: string | null;
-    id: number;
-    text_normalized: string;
-  };
+  problem: problems;
   uuid: string;
 }) {
-  const [response, setResponse] = useState<boolean>(false);
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -32,14 +22,6 @@ export default function Problem({
     params.set('importImage', id.toString());
     replace(`${pathname}?${params.toString()}`);
   };
-
-  useEffect(() => {
-    const hasResponse = async () => {
-      const newResponse = await fetchProblem({ id: problem.id });
-      if (newResponse.id_contributors) setResponse(true);
-    };
-    hasResponse();
-  }, []);
 
   return (
     <li className="bg-[--white] p-2 text-base leading-5 drop-shadow-md flex flex-col gap-1">
@@ -73,10 +55,10 @@ export default function Problem({
           <span className="whitespace-pre-wrap">{problem.text}</span>
         )}
       </p>
-      {response ? (
+      {problem.response ? (
         <div className="relative flex justify-center w-full">
           <CldImage
-            src={`responses/${problem.id.toString()}`}
+            src={problem.id.toString()}
             alt=""
             width="500"
             height="500"
@@ -88,6 +70,8 @@ export default function Problem({
           />
           <ButtonReaction uuid={uuid} problem={problem} />
         </div>
+      ) : problem.response == false ? (
+        <span>La respuesta esta en revisión.</span>
       ) : (
         <button onClick={() => handleImportImage(problem.id)}>
           Añadir mi problema

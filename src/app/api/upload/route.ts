@@ -23,9 +23,9 @@ export async function POST(request: NextRequest) {
     const uploadImage = cloudinary.uploader.upload_stream(
       {
         public_id: imageId,
-        folder: 'responses',
+        invalidate: true,
         format: 'webp',
-        quality: '50',
+        quality: 'auto',
         transformation: [{ width: 800, height: 600, crop: 'limit' }],
       },
       (error, result) => {
@@ -40,9 +40,8 @@ export async function POST(request: NextRequest) {
     const bufferStream = new stream.PassThrough();
     bufferStream.end(buffer);
     bufferStream.pipe(uploadImage);
-    const response = NextResponse.json({ success: true });
-    return response;
-  } catch (error) {
-    console.error(error);
+    return NextResponse.json({ success: true });
+  } catch (error: any) {
+    return NextResponse.json({ success: false, error: error.message });
   }
 }

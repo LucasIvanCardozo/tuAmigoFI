@@ -1,15 +1,9 @@
 'use client';
+import { years } from '@prisma/client';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export default function YearCourse({
-  years,
-}: {
-  years: {
-    id: number;
-    name: string;
-  }[];
-}) {
+export default function YearCourse({ years }: { years: years[] }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();

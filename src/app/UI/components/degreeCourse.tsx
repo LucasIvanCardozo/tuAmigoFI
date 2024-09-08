@@ -1,15 +1,9 @@
 'use client';
+import { degrees } from '@prisma/client';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export default function DegreeCourse({
-  degrees,
-}: {
-  degrees: {
-    id: number;
-    name: string;
-  }[];
-}) {
+export default function DegreeCourse({ degrees }: { degrees: degrees[] }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();

@@ -10,16 +10,8 @@ export default async function CoursesTable({
 
   return (
     <ul className="w-full flex flex-col gap-3 items-center my-5 text-[--black]">
-      {courses?.map(({ id, name, cg, hs, optional }) => (
-        <Course
-          key={id}
-          id_materia={id}
-          id_carrera={query.degree}
-          name={name}
-          cg={cg}
-          hs={hs}
-          optional={optional}
-        />
+      {courses?.map((course) => (
+        <Course key={course.id} course={course} id_carrera={query.degree} />
       ))}
       <button>Click Me</button>
     </ul>

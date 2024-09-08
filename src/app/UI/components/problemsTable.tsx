@@ -6,17 +6,13 @@ import { createUser } from '@/app/lib/actions';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { fetchUser } from '@/app/lib/data';
 import ModalImporImage from './modalImporImage';
+import { tps } from '@prisma/client';
 
 export default function ProblemsTable({
   tps,
   text,
 }: {
-  tps: {
-    id: number;
-    name: string;
-    number: number | null;
-    year: number;
-  }[];
+  tps: tps[];
   text?: string;
 }) {
   const [modal, setModal] = useState<string>('');

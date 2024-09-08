@@ -1,6 +1,7 @@
 'use client';
 import { addReaction } from '@/app/lib/actions';
 import { fetchUserReaction } from '@/app/lib/data';
+import { problems } from '@prisma/client';
 import { useEffect, useState } from 'react';
 import { AiFillLike } from 'react-icons/ai';
 import { TbAlertHexagon } from 'react-icons/tb';
@@ -9,16 +10,7 @@ export default function ButtonReaction({
   problem,
   uuid,
 }: {
-  problem: {
-    number: number | null;
-    response_plus: string | null;
-    text: string;
-    type_plus: string | null;
-    response: string | null;
-    type: string | null;
-    id: number;
-    text_normalized: string;
-  };
+  problem: problems;
   uuid: string;
 }) {
   const [stateLike, setStateLike] = useState<boolean>(false);
@@ -54,7 +46,6 @@ export default function ButtonReaction({
       throw new Error('Editaste el localStorage... Así no eh!');
     }
   }
-
 
   useEffect(() => {
     const searchReactions = async () => {

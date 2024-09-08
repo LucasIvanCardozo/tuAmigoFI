@@ -17,6 +17,32 @@ export async function fetchContributor(id: string) {
   return contributor;
 }
 
+export async function fetchContributors() {
+  const contributors = await prisma.contributors.findMany({
+    where: {
+      problems: {
+        some: {
+          response: true,
+        },
+      },
+    },
+    include: {
+      _count: {
+        select: {
+          problems: true,
+        },
+      },
+    },
+    orderBy: {
+      problems: {
+        _count: 'desc',
+      },
+    },
+    cacheStrategy: cache,
+  });
+  return contributors;
+}
+
 // fetching de materias
 export async function fetchCourse(id: number) {
   const course = await prisma.courses.findFirstOrThrow({
@@ -258,7 +284,6 @@ export async function fetchLinks({
 }
 
 export async function fetchUser(uuid: string) {
-  console.log(uuid);
   const uuidUser = await prisma.users.findFirst({
     where: {
       id: uuid,

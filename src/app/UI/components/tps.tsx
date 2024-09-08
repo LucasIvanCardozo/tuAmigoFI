@@ -15,18 +15,14 @@ import Problem from './problem';
 import { fetchProblems } from '@/app/lib/data';
 import { useEffect, useState } from 'react';
 import TpsSkeleton from './skeletons/tpsSkeleton';
+import { problems, tps } from '@prisma/client';
 
 export default function Tps({
   tp,
   uuid,
   text,
 }: {
-  tp: {
-    id: number;
-    name: string;
-    number: number | null;
-    year: number;
-  };
+  tp: tps;
   uuid: string;
   text?: string;
 }) {
@@ -42,18 +38,7 @@ export default function Tps({
     <TbSquareRoundedNumber8Filled />,
     <TbSquareRoundedNumber9Filled />,
   ];
-  const [problems, setProblems] = useState<
-    {
-      number: number | null;
-      text: string;
-      text_normalized: string;
-      id: number;
-      response: string | null;
-      type: string | null;
-      response_plus: string | null;
-      type_plus: string | null;
-    }[]
-  >([]);
+  const [problems, setProblems] = useState<problems[]>([]);
 
   useEffect(() => {
     const searchProblems = async () => {

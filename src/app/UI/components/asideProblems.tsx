@@ -1,4 +1,5 @@
 'use client';
+import { tps } from '@prisma/client';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { CgClose, CgMenu } from 'react-icons/cg';
@@ -15,16 +16,7 @@ import {
   TbSquareRoundedNumber9Filled,
 } from 'react-icons/tb';
 
-export default function AsideProblems({
-  tpList,
-}: {
-  tpList: {
-    id: number;
-    name: string;
-    number: number | null;
-    year: number;
-  }[];
-}) {
+export default function AsideProblems({ tpList }: { tpList: tps[] }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();

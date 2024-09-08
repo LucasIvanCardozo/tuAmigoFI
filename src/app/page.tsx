@@ -1,8 +1,9 @@
 import 'katex/dist/katex.min.css';
 import Image from 'next/image';
-import { fetchDegree } from './lib/data';
+import { fetchContributors, fetchDegree } from './lib/data';
 import CalendarSection from './UI/components/calendar';
 import QuestionsSection from './UI/components/questionsSection';
+import { link } from 'fs';
 
 export default async function Home() {
   const degrees: ({
@@ -16,6 +17,7 @@ export default async function Home() {
     id: number;
     name: string;
   })[] = await fetchDegree();
+  const contributors = await fetchContributors();
   return (
     <>
       <main className="pt-14 relative flex text-[--black] min-h-36 h-auto w-11/12 justify-between mx-auto max-w-screen-md my-10 sm:pt-20 sm:justify-around">
@@ -73,6 +75,13 @@ export default async function Home() {
       <CalendarSection />
       <section className="text-[--black] relative max-w-screen-md m-auto w-11/12 h-96">
         <h2 className="font-bold text-3xl my-2">Colaboradores</h2>
+        <ul>
+          {contributors.map(({ _count, name }, index) => (
+            <li
+              key={index}
+            >{`${name}: gracias por tus ${_count.problems} problemas resueltos <3`}</li>
+          ))}
+        </ul>
       </section>
       <section className="flex text-[--black] justify-center  max-w-screen-md m-auto w-11/12">
         <Image
