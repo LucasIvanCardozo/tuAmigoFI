@@ -4,15 +4,12 @@ import { useEffect, useState } from 'react';
 import { createUser } from '@/app/lib/actions';
 import { fetchUser } from '@/app/lib/data';
 import Midterm from './midterm';
+import { midterms } from '@prisma/client';
 export default function ProblemsTableMidterms({
   midterms,
   text,
 }: {
-  midterms: {
-    id: number;
-    name: string;
-    date: Date;
-  }[];
+  midterms: midterms[];
   text?: string;
 }) {
   const [uuid, setUuid] = useState<string>('');

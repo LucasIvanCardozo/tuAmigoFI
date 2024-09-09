@@ -12,36 +12,22 @@ import {
   TbSquareRoundedNumber9Filled,
 } from 'react-icons/tb';
 import Problem from './problem';
-import { fetchProblems, fetchProblemsMidterms } from '@/app/lib/data';
+import { fetchProblemsMidterms } from '@/app/lib/data';
 import { useEffect, useState } from 'react';
 import TpsSkeleton from './skeletons/tpsSkeleton';
 import { SiGoogledocs } from 'react-icons/si';
+import { midterms, problems } from '@prisma/client';
 
 export default function Midterm({
   midterm,
   uuid,
   text,
 }: {
-  midterm: {
-    id: number;
-    name: string;
-    date: Date;
-  };
+  midterm: midterms;
   uuid: string;
   text?: string;
 }) {
-  const [problems, setProblems] = useState<
-    {
-      number: number | null;
-      text: string;
-      text_normalized: string;
-      id: number;
-      response: string | null;
-      type: string | null;
-      response_plus: string | null;
-      type_plus: string | null;
-    }[]
-  >([]);
+  const [problems, setProblems] = useState<problems[]>([]);
 
   useEffect(() => {
     const searchProblems = async () => {
