@@ -1,25 +1,32 @@
 'use client';
 
+import { fetchDegrees } from '@/app/lib/data';
+import { degrees } from '@prisma/client';
 import { useEffect, useState } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 
-export default function QuestionsSection({
-  degrees,
-}: {
-  degrees: ({
-    degrees_plans: {
-      plans: {
-        id: number;
-        year: number;
-      };
-    }[];
-  } & {
-    id: number;
-    name: string;
-  })[];
-}) {
+export default function QuestionsSection() {
+  const [degrees, setDegrees] = useState<
+    ({
+      degrees_plans: {
+        plans: {
+          id: number;
+          year: number;
+        };
+      }[];
+    } & degrees)[]
+  >();
   const [degreeState, setDegreeState] = useState<number>();
   const [planState, setPlanState] = useState<number>();
+
+  useEffect(() => {
+    const dataFetch = async () => {
+      const degreesData = await fetchDegrees();
+      setDegrees(degreesData);
+    };
+    dataFetch();
+  }, []);
+
   return (
     <section className="text-[--black] relative max-w-screen-md m-auto w-11/12">
       <h2 className="w-full font-bold -z-10 text-3xl mb-2 sm:text-4xl">
@@ -33,12 +40,18 @@ export default function QuestionsSection({
             className="w-full grow shadow-sm p-1"
             onChange={(e) => setDegreeState(Number(e.target.value))}
           >
-            <option hidden>Elegir carrera</option>
-            {degrees?.map((degree) => (
-              <option key={degree.id} value={degree.id}>
-                {degree.name}
-              </option>
-            ))}
+            {degrees ? (
+              <>
+                <option hidden>Elegir carrera</option>
+                {degrees?.map((degree) => (
+                  <option key={degree.id} value={degree.id}>
+                    {degree.name}
+                  </option>
+                ))}
+              </>
+            ) : (
+              <option hidden>Cargando...</option>
+            )}
           </select>
           {degreeState ? (
             <select
@@ -47,14 +60,20 @@ export default function QuestionsSection({
               className="w-24"
               onChange={(e) => setPlanState(Number(e.target.value))}
             >
-              <option hidden>Plan</option>
-              {degrees
-                .find((degree) => degree.id == degreeState)
-                ?.degrees_plans.map((plan, index) => (
-                  <option key={index} value={plan.plans.year}>
-                    {plan.plans.year}
-                  </option>
-                ))}
+              {degrees ? (
+                <>
+                  <option hidden>Plan</option>
+                  {degrees
+                    .find((degree) => degree.id == degreeState)
+                    ?.degrees_plans.map((plan, index) => (
+                      <option key={index} value={plan.plans.year}>
+                        {plan.plans.year}
+                      </option>
+                    ))}
+                </>
+              ) : (
+                <option hidden>Cargando...</option>
+              )}
             </select>
           ) : null}
         </div>

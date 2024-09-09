@@ -1,22 +1,11 @@
 import 'katex/dist/katex.min.css';
 import Image from 'next/image';
-import { fetchContributors, fetchDegree } from './lib/data';
+import { fetchContributors, fetchDegrees } from './lib/data';
 import CalendarSection from './UI/components/calendar';
 import QuestionsSection from './UI/components/questionsSection';
 import { link } from 'fs';
 
 export default async function Home() {
-  const degrees: ({
-    degrees_plans: {
-      plans: {
-        id: number;
-        year: number;
-      };
-    }[];
-  } & {
-    id: number;
-    name: string;
-  })[] = await fetchDegree();
   const contributors = await fetchContributors();
   return (
     <>
@@ -71,7 +60,7 @@ export default async function Home() {
         temporibus vero soluta delectus in similique, expedita nihil
         repellendus, molestiae corrupti? Lorem ipsum dolor sit, amet consectetur
       </section>
-      <QuestionsSection degrees={degrees} />
+      <QuestionsSection/>
       <CalendarSection />
       <section className="text-[--black] relative max-w-screen-md m-auto w-11/12 h-96">
         <h2 className="font-bold text-3xl my-2">Colaboradores</h2>

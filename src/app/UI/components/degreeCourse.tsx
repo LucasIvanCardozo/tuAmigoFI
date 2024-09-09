@@ -1,13 +1,23 @@
 'use client';
-import { degrees } from '@prisma/client';
+import { fetchDegrees } from '@/app/lib/data';
+import { degrees, degrees_plans } from '@prisma/client';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export default function DegreeCourse({ degrees }: { degrees: degrees[] }) {
+export default function DegreeCourse() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-
+  const [degrees, setDegrees] = useState<
+    ({
+      degrees_plans: {
+        plans: {
+          id: number;
+          year: number;
+        };
+      }[];
+    } & degrees)[]
+  >();
   const [degree, setDegree] = useState<string>(
     searchParams.get('degree')?.toString() ?? ''
   );
@@ -23,6 +33,14 @@ export default function DegreeCourse({ degrees }: { degrees: degrees[] }) {
     replace(`${pathname}?${params.toString()}`);
   };
 
+  useEffect(() => {
+    const dataFetch = async () => {
+      const degreesData = await fetchDegrees();
+      setDegrees(degreesData);
+    };
+    dataFetch();
+  }, []);
+
   return (
     <select
       name="carreras"
@@ -31,13 +49,20 @@ export default function DegreeCourse({ degrees }: { degrees: degrees[] }) {
       value={degree}
       onChange={(e) => handleDegree(e.target.value)}
     >
-      <option hidden>Carrera</option>
-      <option value="0">Todas</option>
-      {degrees?.map((degree) => (
-        <option key={degree.id} value={degree.id}>
-          {degree.name}
-        </option>
-      ))}
+      {degrees ? (
+        <>
+          <option hidden>Carrera</option>
+          <option value="0">Todas</option>
+
+          {degrees?.map((degree) => (
+            <option key={degree.id} value={degree.id}>
+              {degree.name}
+            </option>
+          ))}
+        </>
+      ) : (
+        <option hidden>Cargando...</option>
+      )}
     </select>
   );
 }

@@ -1,13 +1,15 @@
 'use client';
+import { fetchYears } from '@/app/lib/data';
 import { years } from '@prisma/client';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export default function YearCourse({ years }: { years: years[] }) {
+export default function YearCourse() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
 
+  const [years, setYears] = useState<years[]>();
   const [year, setYear] = useState<string>(
     searchParams.get('year')?.toString() ?? ''
   );
@@ -22,6 +24,15 @@ export default function YearCourse({ years }: { years: years[] }) {
     setYear(year);
     replace(`${pathname}?${params.toString()}`);
   };
+
+  useEffect(() => {
+    const dataFetch = async () => {
+      const yearsData = await fetchYears();
+      setYears(yearsData);
+    };
+    dataFetch();
+  }, []);
+
   return (
     <select
       name="years"
@@ -30,13 +41,19 @@ export default function YearCourse({ years }: { years: years[] }) {
       value={year}
       onChange={(e) => handleYears(e.target.value)}
     >
-      <option hidden>Año</option>
-      <option value="0">Todos</option>
-      {years?.map((year) => (
-        <option key={year.id} value={year.id}>
-          {year.name}
-        </option>
-      ))}
+      {years ? (
+        <>
+          <option hidden>Año</option>
+          <option value="0">Todos</option>
+          {years.map((year) => (
+            <option key={year.id} value={year.id}>
+              {year.name}
+            </option>
+          ))}
+        </>
+      ) : (
+        <option hidden>Cargando...</option>
+      )}
     </select>
   );
 }

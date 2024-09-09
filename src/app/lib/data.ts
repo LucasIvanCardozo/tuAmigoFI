@@ -233,7 +233,7 @@ export async function fetchTps({
 }
 
 //fetch de carreras
-export async function fetchDegree() {
+export async function fetchDegrees() {
   const degrees = await prisma.degrees.findMany({
     include: {
       degrees_plans: {
