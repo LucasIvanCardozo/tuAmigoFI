@@ -66,7 +66,7 @@ export default function Problem({
               objectFit: 'cover',
               width: '100%',
               height: 'auto',
-            }}
+            }} 
           />
           <ButtonReaction uuid={uuid} problem={problem} />
         </div>
