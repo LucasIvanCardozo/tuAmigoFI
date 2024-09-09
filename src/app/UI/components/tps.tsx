@@ -38,7 +38,7 @@ export default function Tps({
     <TbSquareRoundedNumber8Filled />,
     <TbSquareRoundedNumber9Filled />,
   ];
-  const [problems, setProblems] = useState<problems[]>([]);
+  const [problems, setProblems] = useState<problems[]>();
 
   useEffect(() => {
     const searchProblems = async () => {
@@ -48,8 +48,10 @@ export default function Tps({
     searchProblems();
   }, [text]);
 
-  return problems.length == 0 ? (
+  return problems == undefined ? (
     <TpsSkeleton />
+  ) : problems.length == 0 ? (
+    <p>Sin problemas :,c</p>
   ) : (
     <li key={tp.id} className="relative">
       <div className="flex items-center text-xl sticky top-0 z-20 bg-[--platinum] py-1 ">

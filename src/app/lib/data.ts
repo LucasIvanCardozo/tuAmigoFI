@@ -123,7 +123,6 @@ export async function fetchCorrelatives({
     select: {
       id: true,
       name: true,
-      name_normalized: true,
     },
     cacheStrategy: cache,
   });

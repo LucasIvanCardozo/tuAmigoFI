@@ -1,12 +1,13 @@
 import 'katex/dist/katex.min.css';
 import Image from 'next/image';
-import { fetchContributors, fetchDegrees } from './lib/data';
+import { fetchContributors } from './lib/data';
 import CalendarSection from './UI/components/calendar';
 import QuestionsSection from './UI/components/questionsSection';
-import { link } from 'fs';
+import Contributors from './UI/components/contributors';
+import { Suspense } from 'react';
+import ContributorsSkeleton from './UI/components/skeletons/contributorsSkeleton';
 
 export default async function Home() {
-  const contributors = await fetchContributors();
   return (
     <>
       <main className="pt-14 relative flex text-[--black] min-h-36 h-auto w-11/12 justify-between mx-auto max-w-screen-md my-10 sm:pt-20 sm:justify-around">
@@ -60,18 +61,11 @@ export default async function Home() {
         temporibus vero soluta delectus in similique, expedita nihil
         repellendus, molestiae corrupti? Lorem ipsum dolor sit, amet consectetur
       </section>
-      <QuestionsSection/>
+      <QuestionsSection />
       <CalendarSection />
-      <section className="text-[--black] relative max-w-screen-md m-auto w-11/12 h-96">
-        <h2 className="font-bold text-3xl my-2">Colaboradores</h2>
-        <ul>
-          {contributors.map(({ _count, name }, index) => (
-            <li
-              key={index}
-            >{`${name}: gracias por tus ${_count.problems} problemas resueltos <3`}</li>
-          ))}
-        </ul>
-      </section>
+      <Suspense fallback={<ContributorsSkeleton />}>
+        <Contributors />
+      </Suspense>
       <section className="flex text-[--black] justify-center  max-w-screen-md m-auto w-11/12">
         <Image
           className="object-contain w-1/4 min-w-24"

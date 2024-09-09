@@ -3,6 +3,8 @@ import CorrelativeTable from './correlativeTable';
 import Link from 'next/link';
 import CourseLinks from './courseLinks';
 import { courses } from '@prisma/client';
+import { Suspense } from 'react';
+import CorrelativeTableSkeleton from './skeletons/correlativeTableSkeleton';
 
 export default async function Course({
   course,
@@ -30,18 +32,22 @@ export default async function Course({
         )}
       </div>
       <div className="pl-2 my-1">
-        <CorrelativeTable
-          id={id}
-          id_carreras={id_carrera}
-          type="correlative"
-          title="Necesitas"
-        />
-        <CorrelativeTable
-          id={id}
-          id_carreras={id_carrera}
-          type="enabler"
-          title="Habilita"
-        />
+        <Suspense fallback={CorrelativeTableSkeleton('Necesitas')}>
+          <CorrelativeTable
+            id={id}
+            id_carreras={id_carrera}
+            type="correlative"
+            title="Necesitas"
+          />
+        </Suspense>
+        <Suspense fallback={CorrelativeTableSkeleton('Habilita')}>
+          <CorrelativeTable
+            id={id}
+            id_carreras={id_carrera}
+            type="enabler"
+            title="Habilita"
+          />
+        </Suspense>
       </div>
       {officialLinks.length >= 0 ? (
         <CourseLinks official={true} links={officialLinks} />

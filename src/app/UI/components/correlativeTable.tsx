@@ -16,7 +16,6 @@ export default async function CorrelativeTable({
   let data: {
     id: number;
     name: string;
-    name_normalized: string;
   }[] = [];
 
   if (type == 'correlative') {
@@ -33,12 +32,11 @@ export default async function CorrelativeTable({
       </div>
       <div className="flex flex-wrap">
         {data.length != 0 ? (
-          data.map(({ id, name, name_normalized }, index) => (
+          data.map(({ id, name }, index) => (
             <CorrelativeList
               key={id}
               index={index}
               name={name}
-              name_normalized={name_normalized}
             />
           ))
         ) : (

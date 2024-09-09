@@ -28,7 +28,6 @@ export default function ModalImportImage({ imageId }: { imageId: string }) {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //validacion de datos
     if (!anonymusCheck) {
       if (!nameUser) {
         setError('Tienes que ingresar tu nombre');
@@ -42,7 +41,6 @@ export default function ModalImportImage({ imageId }: { imageId: string }) {
       setError('No hay ningun archivo seleccionado');
       return;
     }
-
     try {
       const formData = new FormData();
       formData.set('file', file);
@@ -75,47 +73,54 @@ export default function ModalImportImage({ imageId }: { imageId: string }) {
   return (
     <div className="fixed z-50 inset-0 bg-slate-800 bg-opacity-30 text-white flex justify-center items-center">
       <form
-        className="flex flex-col bg-slate-800 p-5 rounded-lg gap-3"
+        className="flex flex-col max-w-80 w-11/12 bg-slate-800 p-5 rounded-lg gap-3"
         onSubmit={handleSubmit}
       >
-        <label htmlFor="name">Nombre</label>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          placeholder="Ingresa tu nombre"
-          onChange={(e) => setNameUser(e.target.value)}
-          required={!anonymusCheck}
-          disabled={anonymusCheck}
-        />
-        <label htmlFor="dni">Dni</label>
-        <input
-          type="text"
-          name="dni"
-          id="dni"
-          placeholder="Ingresa tu DNI"
-          onChange={(e) => setDniUser(e.target.value)}
-          required={!anonymusCheck}
-          disabled={anonymusCheck}
-        />
-        <input
-          type="checkbox"
-          name="check"
-          id="check"
-          onChange={() => setAnonymusCheck(!anonymusCheck)}
-        />
-        <label htmlFor="check">Quiero ser anonimo</label>
+        <div className="flex flex-col">
+          <label htmlFor="name">Nombre</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Ingresa tu nombre"
+            onChange={(e) => setNameUser(e.target.value)}
+            required={!anonymusCheck}
+            disabled={anonymusCheck}
+          />
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="dni">Dni</label>
+          <input
+            type="text"
+            name="dni"
+            id="dni"
+            placeholder="Ingresa tu DNI"
+            onChange={(e) => setDniUser(e.target.value)}
+            required={!anonymusCheck}
+            disabled={anonymusCheck}
+          />
+        </div>
+        <div className="flex gap-2">
+          <input
+            type="checkbox"
+            name="check"
+            id="check"
+            onChange={() => setAnonymusCheck(!anonymusCheck)}
+          />
+          <label htmlFor="check">Quiero ser anonimo</label>
+        </div>
         <input
           type="file"
           accept="image/*"
           required
           onChange={(e) => setFile(e.target.files?.[0])}
         />
-
-        <button type="button" onClick={handleCancel}>
-          Cancelar
-        </button>
-        <button type="submit">Enviar</button>
+        <div className="flex gap-4 justify-center">
+          <button type="submit">Enviar</button>
+          <button type="button" onClick={handleCancel}>
+            Cancelar
+          </button>
+        </div>
         {error && <p style={{ color: 'red' }}>{error}</p>}
       </form>
     </div>
