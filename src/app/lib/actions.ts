@@ -1,11 +1,20 @@
 'use server';
 import prisma from './db';
 
-export async function createContributor(dni: string, name: string) {
+export async function createContributor(
+  dni: number,
+  name: string,
+  instagram?: string
+) {
   const contributor = await prisma.contributors.create({
     data: {
       dni: dni,
       name: name,
+      ...(instagram
+        ? {
+            instagram: instagram,
+          }
+        : {}),
     },
   });
   return contributor;
@@ -14,7 +23,7 @@ export async function createContributor(dni: string, name: string) {
 export async function createAnonymus() {
   const existingContributor = await prisma.contributors.findUnique({
     where: {
-      dni: '00000000', // Verificamos si el dni ya existe
+      dni: 0, // Verificamos si el dni ya existe
     },
   });
 
@@ -22,7 +31,7 @@ export async function createAnonymus() {
     // Si no existe, lo creamos
     const contributor = await prisma.contributors.create({
       data: {
-        dni: '00000000',
+        dni: 0,
         name: 'Anonymus',
       },
     });
@@ -33,7 +42,7 @@ export async function createAnonymus() {
   return existingContributor;
 }
 
-export async function AddContributor(idProblem: number, dni: string) {
+export async function AddContributor(idProblem: number, dni: number) {
   const problem = await prisma.problems.update({
     where: {
       id: idProblem,

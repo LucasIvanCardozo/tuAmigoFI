@@ -9,9 +9,10 @@ datasource db {
 }
 
 model contributors {
-  dni      String     @id @db.VarChar
-  name     String     @db.VarChar
-  problems problems[]
+  name      String     @db.VarChar
+  instagram String?    @db.VarChar
+  dni       Int        @id
+  problems  problems[]
 }
 
 model correlatives {
@@ -114,9 +115,8 @@ model problems {
   text            String           @db.VarChar
   text_normalized String           @db.VarChar
   response_plus   String?          @db.VarChar
-  type_plus       String?          @db.VarChar(5)
-  id_contributors String?          @db.VarChar
   response        Boolean?
+  id_contributors Int?
   contributors    contributors?    @relation(fields: [id_contributors], references: [dni], onDelete: NoAction, onUpdate: NoAction)
   midterms        midterms?        @relation(fields: [id_midterms], references: [id], onDelete: NoAction, onUpdate: NoAction)
   tps_problems    tps_problems[]

@@ -7,7 +7,7 @@ const cache = {
 };
 
 // fetching de contribuidores
-export async function fetchContributor(id: string) {
+export async function fetchContributor(id: number) {
   const contributor = await prisma.contributors.findFirst({
     where: {
       dni: id,

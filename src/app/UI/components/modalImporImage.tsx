@@ -12,7 +12,8 @@ import { FormEvent, useState } from 'react';
 export default function ModalImportImage({ imageId }: { imageId: string }) {
   const [file, setFile] = useState<File>();
   const [nameUser, setNameUser] = useState<string>();
-  const [dniUser, setDniUser] = useState<string>();
+  const [dniUser, setDniUser] = useState<number>();
+  const [instagramUser, setInstagramUser] = useState<string>();
   const [error, setError] = useState<string | null>(null);
   const [anonymusCheck, setAnonymusCheck] = useState<boolean>(false);
 
@@ -41,6 +42,7 @@ export default function ModalImportImage({ imageId }: { imageId: string }) {
       setError('No hay ningun archivo seleccionado');
       return;
     }
+
     try {
       const formData = new FormData();
       formData.set('file', file);
@@ -56,11 +58,12 @@ export default function ModalImportImage({ imageId }: { imageId: string }) {
       if (response.ok) {
         if (!anonymusCheck && nameUser && dniUser) {
           const contributor = await fetchContributor(dniUser);
-          if (contributor == null) await createContributor(dniUser, nameUser);
+          if (contributor == null)
+            await createContributor(dniUser, nameUser, instagramUser);
           await AddContributor(Number(imageId), dniUser);
         } else if (anonymusCheck) {
           await createAnonymus();
-          await AddContributor(Number(imageId), '00000000');
+          await AddContributor(Number(imageId), 0);
         }
         handleCancel();
       } else {
@@ -73,33 +76,81 @@ export default function ModalImportImage({ imageId }: { imageId: string }) {
   return (
     <div className="fixed z-50 inset-0 bg-slate-800 bg-opacity-30 text-white flex justify-center items-center">
       <form
-        className="flex flex-col max-w-80 w-11/12 bg-slate-800 p-5 rounded-lg gap-3"
+        className="flex flex-col max-w-80 w-11/12 bg-slate-800 p-5 rounded-lg gap-3 "
         onSubmit={handleSubmit}
       >
         <div className="flex flex-col">
-          <label htmlFor="name">Nombre</label>
+          <label htmlFor="dni">Dni</label>
           <input
-            type="text"
-            name="name"
-            id="name"
-            placeholder="Ingresa tu nombre"
-            onChange={(e) => setNameUser(e.target.value)}
+            className="text-black"
+            type="number"
+            name="dni"
+            id="dni"
+            placeholder={anonymusCheck ? 'No hace falta :)' : 'Ingresa tu DNI'}
+            onChange={(e) => setDniUser(Number(e.target.value))}
             required={!anonymusCheck}
             disabled={anonymusCheck}
           />
         </div>
         <div className="flex flex-col">
-          <label htmlFor="dni">Dni</label>
+          <label htmlFor="name">Nombre</label>
           <input
+            className="text-black"
             type="text"
-            name="dni"
-            id="dni"
-            placeholder="Ingresa tu DNI"
-            onChange={(e) => setDniUser(e.target.value)}
+            name="name"
+            id="name"
+            placeholder={
+              anonymusCheck
+                ? 'No hace falta :)'
+                : !(
+                    dniUser != undefined &&
+                    dniUser > 35000000 &&
+                    dniUser < 60000000
+                  )
+                ? 'Primero ingresa tu DNI'
+                : 'Ingresa tu nombre'
+            }
+            onChange={(e) => setNameUser(e.target.value)}
             required={!anonymusCheck}
-            disabled={anonymusCheck}
+            disabled={
+              anonymusCheck ||
+              !(
+                dniUser != undefined &&
+                dniUser > 35000000 &&
+                dniUser < 60000000
+              )
+            }
           />
         </div>
+        {/* <div className="flex flex-col">
+          <label htmlFor="dni">Usuario de Instagram</label>
+          <input
+            className="text-black"
+            type="text"
+            name="user"
+            id="user"
+            placeholder={
+              anonymusCheck
+                ? 'No hace falta :)'
+                : !(
+                    dniUser != undefined &&
+                    dniUser > 35000000 &&
+                    dniUser < 60000000
+                  )
+                ? 'Primero ingresa tu DNI'
+                : 'Ingresa tu usuario de instagram'
+            }
+            onChange={(e) => setInstagramUser(e.target.value)}
+            disabled={
+              anonymusCheck ||
+              !(
+                dniUser != undefined &&
+                dniUser > 35000000 &&
+                dniUser < 60000000
+              )
+            }
+          />
+        </div> */}
         <div className="flex gap-2">
           <input
             type="checkbox"

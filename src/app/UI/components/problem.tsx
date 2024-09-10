@@ -42,7 +42,7 @@ export default function Problem({
             <span className="relative max-h-96 flex justify-center">
               <Image
                 className="object-contain"
-                src={`${problem.response_plus}.${problem.type_plus}`}
+                src={`${problem.response_plus}.webp`}
                 width={500}
                 height={500}
                 alt="Imagen"
@@ -66,14 +66,17 @@ export default function Problem({
               objectFit: 'cover',
               width: '100%',
               height: 'auto',
-            }} 
+            }}
           />
           <ButtonReaction uuid={uuid} problem={problem} />
         </div>
       ) : problem.response == false ? (
         <span>La respuesta esta en revisión.</span>
       ) : (
-        <button onClick={() => handleImportImage(problem.id)}>
+        <button
+          className="flex self-end bg-[#C8E0E4] px-1 rounded-sm shadow-sm"
+          onClick={() => handleImportImage(problem.id)}
+        >
           Añadir mi problema
         </button>
       )}
