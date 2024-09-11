@@ -319,6 +319,9 @@ export async function fetchProblems({
         },
       },
     },
+    orderBy: {
+      number: 'asc',
+    },
     cacheStrategy: cache,
   });
   return problems;
