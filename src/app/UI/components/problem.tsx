@@ -1,11 +1,14 @@
 'use client';
 import Image from 'next/image';
 import ButtonReaction from './buttonReaction';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { CldImage } from 'next-cloudinary';
 import { fetchProblem } from '@/app/lib/data';
 import { problems } from '@prisma/client';
+import ContributorName from './contributorName';
+import Latex from 'react-latex-next';
+import 'katex/dist/katex.min.css';
 export default function Problem({
   problem,
   uuid,
@@ -37,12 +40,12 @@ export default function Problem({
             } relative grid bg-[#C8E0E4] p-1`}
           >
             <span className="whitespace-pre-wrap pb-1 pr-1">
-              {problem.text}
+              <Latex>{problem.text}</Latex>
             </span>
             <span className="relative max-h-96 flex justify-center">
               <Image
-                className="object-contain"
-                src={`${problem.response_plus}.webp`}
+                className="object-contain rounded-md"
+                src={`/problem-plus/${problem.id}.webp`}
                 width={500}
                 height={500}
                 alt="Imagen"
@@ -52,7 +55,9 @@ export default function Problem({
             </span>
           </span>
         ) : (
-          <span className="whitespace-pre-wrap">{problem.text}</span>
+          <span className="whitespace-pre-wrap">
+            <Latex>{problem.text}</Latex>
+          </span>
         )}
       </p>
       {problem.response ? (
@@ -68,6 +73,15 @@ export default function Problem({
               height: 'auto',
             }}
           />
+          <Suspense>
+            {problem.id_contributors ? (
+              <Suspense>
+                <div className="opacity-50 absolute bottom-0 left-0">
+                  <ContributorName dni={problem.id_contributors} />
+                </div>
+              </Suspense>
+            ) : null}
+          </Suspense>
           <ButtonReaction uuid={uuid} problem={problem} />
         </div>
       ) : problem.response == false ? (
@@ -77,7 +91,7 @@ export default function Problem({
           className="flex self-end bg-[#C8E0E4] px-1 rounded-sm shadow-sm"
           onClick={() => handleImportImage(problem.id)}
         >
-          Añadir mi problema
+          Añadir mi respuesta
         </button>
       )}
     </li>

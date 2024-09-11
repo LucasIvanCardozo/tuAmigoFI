@@ -73,8 +73,11 @@ export default function ModalImportImage({ imageId }: { imageId: string }) {
       setError('Ocurrio un error al subir la imagen');
     }
   };
+
   return (
-    <div className="fixed z-50 inset-0 bg-slate-800 bg-opacity-30 text-white flex justify-center items-center">
+    <div
+      className="fixed z-50 inset-0 bg-slate-800 bg-opacity-30 text-white flex justify-center items-center"
+    >
       <form
         className="flex flex-col max-w-80 w-11/12 bg-slate-800 p-5 rounded-lg gap-3 "
         onSubmit={handleSubmit}
