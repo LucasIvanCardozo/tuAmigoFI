@@ -13,12 +13,14 @@ export default async function Materias({
     search?: string;
     year?: string;
     degree?: string;
+    page?: string;
   };
 }) {
   const query = {
     search: searchParams?.search,
     year: searchParams?.year ? Number(searchParams.year) : undefined,
     degree: searchParams?.degree ? Number(searchParams.degree) : undefined,
+    page: searchParams?.page ? Number(searchParams.page) : undefined,
   };
   return (
     <>

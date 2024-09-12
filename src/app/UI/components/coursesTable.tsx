@@ -2,11 +2,12 @@ import { fetchCourses } from '@/app/lib/data';
 import Course from './course';
 import { Suspense } from 'react';
 import CourseSkeleton from './skeletons/courseSkeleton';
+import IndexList from './indexList';
 
 export default async function CoursesTable({
   query,
 }: {
-  query: { search?: string; year?: number; degree?: number };
+  query: { search?: string; year?: number; degree?: number; page?: number };
 }) {
   const courses = await fetchCourses(query);
 
@@ -19,7 +20,7 @@ export default async function CoursesTable({
           </Suspense>
         ))}
       </Suspense>
-      <button>Click Me</button>
+      <IndexList query={query} />
     </ul>
   );
 }

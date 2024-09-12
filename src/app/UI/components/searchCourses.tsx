@@ -10,7 +10,7 @@ export default function SearchCourses() {
 
   const [isHandleSearch, setIsHandleSearch] = useState(false);
   const [search, setSearch] = useState<string>(
-    searchParams.get('name')?.toString() || ''
+    searchParams.get('search')?.toString() || ''
   );
 
   useEffect(() => {
@@ -31,6 +31,7 @@ export default function SearchCourses() {
     } else {
       params.delete('search');
     }
+    params.set('page', '1');
     replace(`${pathname}?${params.toString()}`);
   }, 500);
 

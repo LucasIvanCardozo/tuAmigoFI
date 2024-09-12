@@ -54,14 +54,50 @@ export async function fetchCourse(id: number) {
   return course;
 }
 
+export async function fetchCourseCount(query: {
+  search?: string;
+  year?: number;
+  degree?: number;
+}) {
+  const count = await prisma.courses.count({
+    where: {
+      name_normalized: {
+        contains: query.search,
+        mode: 'insensitive',
+      },
+      ...(query.year
+        ? {
+            courses_years: {
+              some: {
+                years_id: query.year,
+              },
+            },
+          }
+        : {}),
+      ...(query.degree
+        ? {
+            courses_degrees: {
+              some: {
+                degrees_id: query.degree,
+              },
+            },
+          }
+        : {}),
+    },
+  });
+  return count;
+}
+
 export async function fetchCourses({
   search,
   year,
   degree,
+  page,
 }: {
   search?: string;
   year?: number;
   degree?: number;
+  page?: number;
 }) {
   const courses = await prisma.courses.findMany({
     where: {
@@ -91,6 +127,12 @@ export async function fetchCourses({
     orderBy: {
       name: 'asc',
     },
+    ...(page
+      ? {
+          take: 5,
+          skip: (page - 1) * 5,
+        }
+      : { take: 5, skip: 0 }),
     cacheStrategy: cache,
   });
   return courses;
