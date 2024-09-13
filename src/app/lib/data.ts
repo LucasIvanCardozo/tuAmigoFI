@@ -2,8 +2,8 @@
 import prisma from './db';
 
 const cache = {
-  ttl: 0,
-  swr: 0,
+  ttl: 7200,
+  swr: 300,
 };
 
 // fetching de contribuidores
