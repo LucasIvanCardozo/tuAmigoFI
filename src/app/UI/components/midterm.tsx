@@ -1,16 +1,4 @@
 'use client';
-import {
-  TbSquareRoundedNumber0Filled,
-  TbSquareRoundedNumber1Filled,
-  TbSquareRoundedNumber2Filled,
-  TbSquareRoundedNumber3Filled,
-  TbSquareRoundedNumber4Filled,
-  TbSquareRoundedNumber5Filled,
-  TbSquareRoundedNumber6Filled,
-  TbSquareRoundedNumber7Filled,
-  TbSquareRoundedNumber8Filled,
-  TbSquareRoundedNumber9Filled,
-} from 'react-icons/tb';
 import Problem from './problem';
 import { fetchProblemsMidterms } from '@/app/lib/data';
 import { useEffect, useState } from 'react';
@@ -27,7 +15,7 @@ export default function Midterm({
   uuid: string;
   text?: string;
 }) {
-  const [problems, setProblems] = useState<problems[]>([]);
+  const [problems, setProblems] = useState<problems[]>();
 
   useEffect(() => {
     const searchProblems = async () => {
@@ -40,8 +28,10 @@ export default function Midterm({
     searchProblems();
   }, [text]);
 
-  return problems.length == 0 ? (
+  return problems == undefined ? (
     <TpsSkeleton />
+  ) : problems.length == 0 ? (
+    <p>Sin problemas :,c</p>
   ) : (
     <li key={midterm.id} className="relative">
       <div className="flex items-center text-xl sticky top-0 z-20 bg-[--platinum] py-1">

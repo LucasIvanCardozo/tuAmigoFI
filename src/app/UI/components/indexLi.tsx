@@ -13,7 +13,9 @@ export default function IndexLi({
   return (
     <li
       className={
-        page == index + modifier ? 'font-bold text-xl text-[--black-olive]' : ''
+        (page == index + modifier
+          ? 'font-bold text-xl text-[--black-olive]'
+          : 'opacity-60') + ' px-1'
       }
     >
       <button onClick={() => callback((index + modifier).toString())}>

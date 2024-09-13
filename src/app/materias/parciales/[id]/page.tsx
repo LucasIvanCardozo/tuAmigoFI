@@ -20,8 +20,7 @@ export default async function Practica({
   };
   const course = await fetchCourse(id_materia);
   const midtermsList = await fetchMidterms({ id_materias: id_materia });
-
-  let midterms = await fetchMidterms({
+  const midterms = await fetchMidterms({
     id_midterm: query.id_midterm,
     id_materias: query.id_materias,
   });

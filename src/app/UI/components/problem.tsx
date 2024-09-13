@@ -31,7 +31,7 @@ export default function Problem({
       <p className="whitespace-pre-wrap bg-[#C8E0E4] p-1 rounded-md">
         <b className="bg-[#92C1C9] rounded-sm">{`Problema ${problem.number}:`}</b>
         <br />
-        {problem.response_plus ? (
+        {problem.text_plus ? (
           <span
             className={`${
               problem.text.length > 200

@@ -114,7 +114,7 @@ model problems {
   number          Int?
   text            String           @db.VarChar
   text_normalized String           @db.VarChar
-  response_plus   String?          @db.VarChar
+  text_plus       String?          @db.VarChar
   response        Boolean?
   id_contributors Int?
   contributors    contributors?    @relation(fields: [id_contributors], references: [dni], onDelete: NoAction, onUpdate: NoAction)

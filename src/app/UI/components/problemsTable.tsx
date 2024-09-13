@@ -1,12 +1,12 @@
 'use client';
-import Tps from './tps';
 import { v4 } from 'uuid';
-import { Suspense, useEffect, useState } from 'react';
+import Tps from './tps';
+import { useEffect, useState } from 'react';
 import { createUser } from '@/app/lib/actions';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import {useSearchParams } from 'next/navigation';
 import { fetchUser } from '@/app/lib/data';
-import ModalImporImage from './modalImporImage';
 import { tps } from '@prisma/client';
+import ModalImporImage from './modalImporImage';
 
 export default function ProblemsTable({
   tps,
