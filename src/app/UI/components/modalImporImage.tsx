@@ -26,9 +26,9 @@ export default function ModalImportImage({
   const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 524288) {
+      if (file.size > 1048576) {
         e.target.value = '';
-        setError('El archivo pesa más de 500 KB');
+        setError('El archivo pesa más de 1 MB');
       } else {
         setFile(file);
         setError(null);
