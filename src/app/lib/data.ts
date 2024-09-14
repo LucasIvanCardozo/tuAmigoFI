@@ -364,7 +364,7 @@ export async function fetchProblems({
     orderBy: {
       number: 'asc',
     },
-    cacheStrategy: cache,
+    // cacheStrategy: cache,
   });
   return problems;
 }
