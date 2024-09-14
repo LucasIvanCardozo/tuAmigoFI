@@ -6,81 +6,94 @@ import {
   createContributor,
 } from '@/app/lib/actions';
 import { fetchContributor } from '@/app/lib/data';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 
-export default function ModalImportImage({ imageId }: { imageId: string }) {
+export default function ModalImportImage({
+  problemId,
+  callback,
+}: {
+  problemId: number;
+  callback: (problemId: number | undefined) => void;
+}) {
   const [file, setFile] = useState<File>();
   const [nameUser, setNameUser] = useState<string>();
   const [dniUser, setDniUser] = useState<number>();
-  const [instagramUser, setInstagramUser] = useState<string>();
+  // const [instagramUser, setInstagramUser] = useState<string>();
   const [error, setError] = useState<string | null>(null);
   const [anonymusCheck, setAnonymusCheck] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const pathname = usePathname();
-
-  const handleCancel = () => {
-    const params = new URLSearchParams(searchParams);
-    params.delete('importImage');
-    router.replace(`${pathname}?${params.toString()}`);
+  const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 524288) {
+        e.target.value = '';
+        setError('El archivo pesa más de 500 KB');
+      } else {
+        setFile(file);
+        setError(null);
+      }
+    }
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const formValidate = (): boolean => {
     if (!anonymusCheck) {
       if (!nameUser) {
         setError('Tienes que ingresar tu nombre');
-        return;
+        return false;
       } else if (!dniUser) {
         setError('Tienes que inmgresar tu DNI');
-        return;
+        return false;
       }
     }
     if (!file) {
       setError('No hay ningun archivo seleccionado');
-      return;
+      return false;
     }
+    return true;
+  };
 
-    try {
-      const formData = new FormData();
-      formData.set('file', file);
-      formData.set('id', imageId);
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (formValidate() && file) {
+      try {
+        const formData = new FormData();
+        formData.set('file', file);
+        formData.set('id', problemId.toString());
 
-      //Consulta a la api
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
+        //Consulta a la api
+        const response = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData,
+        });
 
-      const result = await response.json();
-      if (response.ok) {
-        if (!anonymusCheck && nameUser && dniUser) {
-          const contributor = await fetchContributor(dniUser);
-          if (contributor == null)
-            await createContributor(dniUser, nameUser, instagramUser);
-          await AddContributor(Number(imageId), dniUser);
-        } else if (anonymusCheck) {
-          await createAnonymus();
-          await AddContributor(Number(imageId), 0);
+        const result = await response.json();
+        if (response.ok) {
+          if (!anonymusCheck && nameUser && dniUser) {
+            const contributor = await fetchContributor(dniUser);
+            if (contributor == null)
+              await createContributor(dniUser, nameUser /*, instagramUser*/);
+            await AddContributor(problemId, dniUser);
+          } else if (anonymusCheck) {
+            await createAnonymus();
+            await AddContributor(problemId, 0);
+          }
+          callback(undefined);
+        } else {
+          setError(result.error || 'Ocurrio un error');
         }
-        handleCancel();
-      } else {
-        setError(result.error || 'Ocurrio un error');
+      } catch (err) {
+        setError('Ocurrio un error al subir la imagen');
       }
-    } catch (err) {
-      setError('Ocurrio un error al subir la imagen');
     }
+    setLoading(false);
   };
 
   return (
-    <div
-      className="fixed z-50 inset-0 bg-slate-800 bg-opacity-30 text-white flex justify-center items-center"
-    >
+    <div className="fixed z-50 inset-0 bg-slate-800 bg-opacity-30 text-white flex justify-center items-center">
       <form
         className="flex flex-col max-w-80 w-11/12 bg-slate-800 p-5 rounded-lg gap-3 "
-        onSubmit={handleSubmit}
+        onSubmit={(e) => (setLoading(true), handleSubmit(e))}
       >
         <div className="flex flex-col">
           <label htmlFor="dni">Dni</label>
@@ -167,14 +180,26 @@ export default function ModalImportImage({ imageId }: { imageId: string }) {
           type="file"
           accept="image/*"
           required
-          onChange={(e) => setFile(e.target.files?.[0])}
+          onChange={(e) => handleImage(e)}
         />
-        <div className="flex gap-4 justify-center">
-          <button type="submit">Enviar</button>
-          <button type="button" onClick={handleCancel}>
-            Cancelar
-          </button>
-        </div>
+        {loading ? (
+          <div className="flex justify-center">
+            <div className="relative">
+              <div className="absolute h-6 w-6 border-x-2 rounded-full animate-spin"></div>
+              <div className="h-6 w-6 border-2 opacity-40 rounded-full animate-ping"></div>
+            </div>
+          </div>
+        ) : (
+          <div className="flex gap-4 justify-center">
+            <button type="submit">Enviar</button>
+            <button
+              type="button"
+              onClick={() => (setLoading(true), callback(undefined))}
+            >
+              Cancelar
+            </button>
+          </div>
+        )}
         {error && <p style={{ color: 'red' }}>{error}</p>}
       </form>
     </div>

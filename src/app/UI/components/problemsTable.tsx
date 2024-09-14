@@ -3,7 +3,7 @@ import { v4 } from 'uuid';
 import Tps from './tps';
 import { useEffect, useState } from 'react';
 import { createUser } from '@/app/lib/actions';
-import {useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { fetchUser } from '@/app/lib/data';
 import { tps } from '@prisma/client';
 import ModalImporImage from './modalImporImage';
@@ -15,13 +15,8 @@ export default function ProblemsTable({
   tps: tps[];
   text?: string;
 }) {
-  const [modal, setModal] = useState<string>('');
+  const [modal, setModal] = useState<number | undefined>();
   const [uuid, setUuid] = useState<string>('');
-  const searchParams = useSearchParams();
-
-  useEffect(() => {
-    setModal(searchParams.get('importImage')?.toString() || '');
-  }, [searchParams]);
 
   useEffect(() => {
     const validationUser = async () => {
@@ -43,6 +38,8 @@ export default function ProblemsTable({
     validationUser();
   }, []);
 
+  const handleModal = (problemId: number | undefined) => setModal(problemId);
+
   return (
     <>
       <ul className="flex flex-col gap-1 grow relative overflow-y-auto">
@@ -52,11 +49,17 @@ export default function ProblemsTable({
           </li>
         ) : (
           tps.map((tp, index) => (
-            <Tps uuid={uuid} tp={tp} text={text} key={index} />
+            <Tps
+              key={index}
+              uuid={uuid}
+              tp={tp}
+              text={text}
+              callback={handleModal}
+            />
           ))
         )}
       </ul>
-      {modal != '' && <ModalImporImage imageId={modal} />}
+      {modal && <ModalImporImage problemId={modal} callback={handleModal} />}
     </>
   );
 }

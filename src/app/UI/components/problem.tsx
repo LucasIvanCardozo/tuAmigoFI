@@ -1,10 +1,8 @@
 'use client';
 import Image from 'next/image';
 import ButtonReaction from './buttonReaction';
-import { Suspense, useEffect, useState } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 import { CldImage } from 'next-cloudinary';
-import { fetchProblem } from '@/app/lib/data';
 import { problems } from '@prisma/client';
 import ContributorName from './contributorName';
 import Latex from 'react-latex-next';
@@ -12,20 +10,12 @@ import 'katex/dist/katex.min.css';
 export default function Problem({
   problem,
   uuid,
+  callback,
 }: {
   problem: problems;
   uuid: string;
+  callback: (problemId: number | undefined) => void;
 }) {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { replace } = useRouter();
-
-  const handleImportImage = (id: number) => {
-    const params = new URLSearchParams(searchParams);
-    params.set('importImage', id.toString());
-    replace(`${pathname}?${params.toString()}`);
-  };
-
   return (
     <li className="bg-[--white] p-2 text-base leading-5 drop-shadow-md flex flex-col gap-1">
       <p className="whitespace-pre-wrap bg-[#C8E0E4] p-1 rounded-md">
@@ -89,7 +79,7 @@ export default function Problem({
       ) : (
         <button
           className="flex self-end bg-[#C8E0E4] px-1 rounded-sm shadow-sm"
-          onClick={() => handleImportImage(problem.id)}
+          onClick={() => callback(problem.id)}
         >
           Añadir mi respuesta
         </button>

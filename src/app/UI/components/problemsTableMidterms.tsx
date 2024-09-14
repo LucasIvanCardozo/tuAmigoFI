@@ -3,7 +3,6 @@ import { v4 } from 'uuid';
 import Midterm from './midterm';
 import { useEffect, useState } from 'react';
 import { createUser } from '@/app/lib/actions';
-import { useSearchParams } from 'next/navigation';
 import { fetchUser } from '@/app/lib/data';
 import { midterms } from '@prisma/client';
 import ModalImporImage from './modalImporImage';
@@ -15,13 +14,8 @@ export default function ProblemsTableMidterms({
   midterms: midterms[];
   text?: string;
 }) {
-  const [modal, setModal] = useState<string>('');
+  const [modal, setModal] = useState<number | undefined>();
   const [uuid, setUuid] = useState<string>('');
-  const searchParams = useSearchParams();
-
-  useEffect(() => {
-    setModal(searchParams.get('importImage')?.toString() || '');
-  }, [searchParams]);
 
   useEffect(() => {
     const validationUser = async () => {
@@ -43,6 +37,8 @@ export default function ProblemsTableMidterms({
     validationUser();
   }, []);
 
+  const handleModal = (problemId: number | undefined) => setModal(problemId);
+
   return (
     <>
       <ul className="flex flex-col gap-1 grow relative overflow-y-auto">
@@ -52,11 +48,17 @@ export default function ProblemsTableMidterms({
           </li>
         ) : (
           midterms.map((midterm, index) => (
-            <Midterm uuid={uuid} midterm={midterm} text={text} key={index} />
+            <Midterm
+              uuid={uuid}
+              midterm={midterm}
+              text={text}
+              key={index}
+              callback={handleModal}
+            />
           ))
         )}
       </ul>
-      {modal != '' && <ModalImporImage imageId={modal} />}
+      {modal && <ModalImporImage problemId={modal} callback={handleModal} />}
     </>
   );
 }

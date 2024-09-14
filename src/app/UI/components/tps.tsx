@@ -21,10 +21,12 @@ export default function Tps({
   tp,
   uuid,
   text,
+  callback,
 }: {
   tp: tps;
   uuid: string;
   text?: string;
+  callback: (problemId: number | undefined) => void;
 }) {
   const numberIcons = [
     <TbSquareRoundedNumber0Filled />,
@@ -64,7 +66,12 @@ export default function Tps({
       </div>
       <ul className="flex flex-col gap-1 pl-3">
         {problems.map((problem, index) => (
-          <Problem key={index} uuid={uuid} problem={problem} />
+          <Problem
+            key={index}
+            uuid={uuid}
+            problem={problem}
+            callback={callback}
+          />
         ))}
       </ul>
     </li>
