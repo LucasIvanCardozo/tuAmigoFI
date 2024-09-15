@@ -21,28 +21,36 @@ export async function POST(request: NextRequest) {
   const buffer = Buffer.from(bytes);
 
   try {
-    const uploadImage = cloudinary.uploader.upload_stream(
+    console.log('Inicio');
+    const upload = await cloudinary.uploader.unsigned_upload(
+      `data:image/png;base64,${buffer.toString('base64')}`,
+      'ml_default',
       {
         public_id: imageId,
-        invalidate: true,
-        format: 'webp',
-        quality: 'auto',
-        transformation: [{ width: 800, height: 600, crop: 'limit' }],
-      },
-      (error, result) => {
-        if (error) {
-          console.error(error);
-          return NextResponse.json({ success: false, error: error.message });
-        }
-        return NextResponse.json({ success: true, result });
       }
     );
-    const stream = require('stream');
-    const bufferStream = new stream.PassThrough();
-    bufferStream.end(buffer);
-    bufferStream.pipe(uploadImage);
+    // const uploadImage = cloudinary.uploader.upload_stream(
+    //   {
+    //     public_id: imageId,
+    //     invalidate: true,
+    //     format: 'webp',
+    //     quality: 'auto',
+    //   },
+    //   (error, result) => {
+    //     if (error) {
+    //       console.error(error);
+    //       return NextResponse.json({ success: false, error: error.message });
+    //     }
+    //     console.log(result);
+    //     return NextResponse.json({ success: true, result });
+    //   }
+    // );
+    // const stream = require('stream');
+    // const bufferStream = new stream.PassThrough();
+    // bufferStream.end(buffer);
+    // bufferStream.pipe(uploadImage);
     return NextResponse.json({ success: true });
   } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message });
+    return NextResponse.json({ success: false });
   }
 }

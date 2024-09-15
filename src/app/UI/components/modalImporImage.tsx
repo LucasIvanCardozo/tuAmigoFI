@@ -68,7 +68,7 @@ export default function ModalImportImage({
         });
 
         const result = await response.json();
-        if (response.ok) {
+        if (result.success) {
           if (!anonymusCheck && nameUser && dniUser) {
             const contributor = await fetchContributor(dniUser);
             if (contributor == null)
@@ -80,10 +80,10 @@ export default function ModalImportImage({
           }
           callback(undefined);
         } else {
-          setError(result.error || 'Ocurrio un error');
+          setError('Ocurrio un error en la suba de la imagen');
         }
       } catch (err) {
-        setError('Ocurrio un error al subir la imagen');
+        setError('Ocurrio un error al llamar a la API');
       }
     }
     setLoading(false);
