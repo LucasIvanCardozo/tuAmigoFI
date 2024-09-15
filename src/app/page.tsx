@@ -79,12 +79,12 @@ export default async function Home() {
             <b>¿Algún problema?</b>
           </h2>
           <p className="pl-1 text-balance sm:text-lg">
-            No dudes en contactarte con el{' '}
+            No dudes en contactarte con{' '}
             <a
               className="text-blue-700"
               href="https://www.instagram.com/cei_unmdp/"
             >
-              <b>CEI</b>
+              <b>Cauces</b>
             </a>
             , éste es el centro de estudiantes actual de la facultad. Ellos no
             dudarán en darte una mano.
