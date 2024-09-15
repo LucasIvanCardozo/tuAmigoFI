@@ -17,13 +17,14 @@ export async function POST(request: NextRequest) {
   if (!file) return NextResponse.json({ success: false });
   if (imageId == '') return NextResponse.json({ success: false });
 
+  const typeImage = file.type.split('/').reverse()[0];
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
 
   try {
     console.log('Inicio');
     const upload = await cloudinary.uploader.unsigned_upload(
-      `data:image/png;base64,${buffer.toString('base64')}`,
+      `data:image/${typeImage};base64,${buffer.toString('base64')}`,
       'ml_default',
       {
         public_id: imageId,
