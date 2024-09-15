@@ -2,8 +2,6 @@ import { fetchCourse, fetchTps } from '@/app/lib/data';
 import ProblemsTable from '@/app/UI/components/problemsTable';
 import SearchProblems from '@/app/UI/components/searchProblems';
 import AsideProblems from '@/app/UI/components/asideProblems';
-import { Suspense } from 'react';
-import TpsSkeleton from '@/app/UI/components/skeletons/tpsSkeleton';
 
 export default async function Practica({
   searchParams,
