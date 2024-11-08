@@ -100,6 +100,15 @@ export default function Nav() {
             </Link>
           </li>
         ))}
+        <li className="rounded-md border-l-2 border-[#31969B] hover:bg-[--midnight-green]">
+          <Link
+            href={''}
+            className="inline-block text-center w-40 py-2 font-bold px-3  sm:w-28 sm:font-normal"
+            onClick={handleNavState}
+          >
+            Iniciar sesion
+          </Link>
+        </li>
       </ul>
     </nav>
   );

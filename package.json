@@ -8,13 +8,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "npx prisma db pull && npx prisma generate --no-engine"
+    "postinstall": "npx prisma db pull && npx prisma generate"
   },
   "dependencies": {
     "@prisma/client": "5.19.1",
     "@prisma/extension-accelerate": "1.1.0",
     "cloudinary": "2.4.0",
-    "next": "14.2.7",
+    "next": "14.2.17",
+    "next-auth": "4.24.10",
     "next-cloudinary": "6.12.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
