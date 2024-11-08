@@ -3,10 +3,13 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { CgMenu, CgClose } from 'react-icons/cg';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 export default function Nav() {
   const [navState, setNavState] = useState<boolean>(false);
   const pathname: string = usePathname();
+  const { data: session } = useSession();
+  console.log(session);
 
   const handleNavState = () => {
     if (document.documentElement.scrollWidth < 640) {
@@ -73,7 +76,7 @@ export default function Nav() {
       <ul
         className={
           (navState ? '-translate-x-full' : '-translate-x-0') +
-          ` absolute left-full top-10 bg-[--dark-cyan] rounded-md transform-gpu transition-transform sm:flex sm:relative sm:translate-x-0 sm:left-auto sm:top-auto`
+          ` flex flex-col absolute left-full top-10 bg-[--dark-cyan] rounded-md transform-gpu transition-transform sm:flex-row sm:relative sm:translate-x-0 sm:left-auto sm:top-auto`
         }
       >
         {[
@@ -100,14 +103,24 @@ export default function Nav() {
             </Link>
           </li>
         ))}
-        <li className="rounded-md border-l-2 border-[#31969B] hover:bg-[--midnight-green]">
-          <Link
-            href={''}
-            className="inline-block text-center w-40 py-2 font-bold px-3  sm:w-28 sm:font-normal"
-            onClick={handleNavState}
-          >
-            Iniciar sesion
-          </Link>
+        <li className="rounded-md border-t-2 border-[#31969B] hover:bg-[--midnight-green] sm:border-l-2 sm:border-t-0">
+          {session?.user ? (
+            <Link
+              href={''}
+              className="inline-block text-center w-40 py-2 font-bold px-3 sm:w-28 sm:font-normal"
+              onClick={() => signOut()}
+            >
+              Cerrar sesion
+            </Link>
+          ) : (
+            <Link
+              href={''}
+              className="inline-block text-center w-40 py-2 font-bold px-3 sm:w-28 sm:font-normal"
+              onClick={() => signIn()}
+            >
+              Iniciar sesion
+            </Link>
+          )}
         </li>
       </ul>
     </nav>
