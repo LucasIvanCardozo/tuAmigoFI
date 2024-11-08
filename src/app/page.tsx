@@ -55,11 +55,17 @@ export default async function Home() {
           </ul>
         </div>
       </main>
-      <section className="text-[--black] max-w-screen-md m-auto w-full text-balance text-center">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quisquam
-        doloribus est necessitatibus quis aut beatae nulla maiores iste possimus
-        temporibus vero soluta delectus in similique, expedita nihil
-        repellendus, molestiae corrupti? Lorem ipsum dolor sit, amet consectetur
+      <section className="text-[--black] max-w-screen-md m-auto w-full text-balance text-center sm:hidden">
+        En Tu-Amigo-FI encontrás finales, trabajos prácticos, un calendario
+        académico y mucho más. Todo pensado para darte una mano en tu carrera de
+        ingeniería.
+      </section>
+      <section className="hidden text-[--black] max-w-screen-md m-auto w-full text-balance text-center sm:visible sm:block">
+        En Tu-Amigo-FI tenés todo lo que necesitás para avanzar en ingeniería:
+        finales, trabajos prácticos resueltos, guías y mucho más para
+        facilitarte el estudio. También podés consultar el calendario académico
+        y subir tus propios aportes para ayudar a otros estudiantes. Todo en un
+        solo lugar para que tu paso por la facu sea más llevadero.
       </section>
       <QuestionsSection />
       <CalendarSection />
@@ -83,6 +89,7 @@ export default async function Home() {
             <a
               className="text-blue-700"
               href="https://www.instagram.com/cei_unmdp/"
+              target="_blank"
             >
               <b>Cauces</b>
             </a>

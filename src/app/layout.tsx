@@ -65,6 +65,7 @@ export default function RootLayout({
             <a className="underline" href="">
               Lucas Cardozo
             </a>
+            <a href="./privacidad">Politica y privacidad</a>
           </footer>
         </Providers>
       </body>
