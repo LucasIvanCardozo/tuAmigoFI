@@ -36,7 +36,7 @@ export default function ButtonReaction({
           setStateDislike(false);
           setNumberDislike(numberDislike - 1);
         }
-      }
+      } 
       const reaccion = await addReaction({
         uuid: uuid,
         id_problem: problem.id,
