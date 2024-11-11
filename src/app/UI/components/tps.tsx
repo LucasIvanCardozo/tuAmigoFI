@@ -16,15 +16,14 @@ import { fetchProblems } from '@/app/lib/data';
 import { useEffect, useState } from 'react';
 import TpsSkeleton from './skeletons/tpsSkeleton';
 import { problems, tps } from '@prisma/client';
+import { Session } from 'inspector';
 
 export default function Tps({
   tp,
-  uuid,
   text,
   callback,
 }: {
   tp: tps;
-  uuid: string;
   text?: string;
   callback: (problemId: number | undefined) => void;
 }) {
@@ -41,19 +40,58 @@ export default function Tps({
     <TbSquareRoundedNumber9Filled />,
   ];
   const [problems, setProblems] = useState<problems[]>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    setLoading(true);
     const searchProblems = async () => {
       const problems = await fetchProblems({ id_tp: tp.id, text: text });
       setProblems(problems);
+      setLoading(false);
     };
     searchProblems();
-  }, [text]);
+  }, [text, tp]);
 
-  return problems == undefined ? (
+  return (
+    <>
+      <li key={tp.id} className="relative">
+        <div className="flex items-center text-xl sticky top-0 z-20 bg-[--platinum] py-1 ">
+          {tp.number && numberIcons[tp.number]
+            ? numberIcons[tp.number]
+            : numberIcons[0]}
+          <h2>
+            {tp.name} <p className="inline-block text-base">{`(${tp.year})`}</p>
+          </h2>
+        </div>
+        {problems == undefined || loading ? (
+          <p>Hola</p>
+        ) : problems.length == 0 ? (
+          <p className="pl-3">Sin problemas :c</p>
+        ) : (
+          <ul className="flex flex-col gap-1 pl-3">
+            {problems.map((problem, index) => (
+              <Problem key={index} problem={problem} callback={callback} />
+            ))}
+          </ul>
+        )}
+      </li>
+    </>
+  );
+
+  problems == undefined || loading ? (
     <TpsSkeleton />
   ) : problems.length == 0 ? (
-    <p>Sin problemas :,c</p>
+    <li key={tp.id} className="relative">
+      <div className="flex items-center text-xl sticky top-0 z-20 bg-[--platinum] py-1 ">
+        {tp.number && numberIcons[tp.number]
+          ? numberIcons[tp.number]
+          : numberIcons[0]}
+        <h2>
+          {tp.name} <p className="inline-block text-base">{`(${tp.year})`}</p>
+        </h2>
+      </div>
+      <p className="pl-3">Sin problemas :c</p>
+    </li>
   ) : (
     <li key={tp.id} className="relative">
       <div className="flex items-center text-xl sticky top-0 z-20 bg-[--platinum] py-1 ">
@@ -66,12 +104,7 @@ export default function Tps({
       </div>
       <ul className="flex flex-col gap-1 pl-3">
         {problems.map((problem, index) => (
-          <Problem
-            key={index}
-            uuid={uuid}
-            problem={problem}
-            callback={callback}
-          />
+          <Problem key={index} problem={problem} callback={callback} />
         ))}
       </ul>
     </li>

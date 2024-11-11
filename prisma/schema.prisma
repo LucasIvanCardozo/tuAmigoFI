@@ -8,13 +8,6 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-model contributors {
-  name      String     @db.VarChar
-  instagram String?    @db.VarChar
-  dni       Int        @id
-  problems  problems[]
-}
-
 model correlatives {
   id                                           Int
   id_correlative                               Int
@@ -116,9 +109,9 @@ model problems {
   text_normalized String           @db.VarChar
   text_plus       String?          @db.VarChar
   response        Boolean?
-  id_contributors Int?
-  contributors    contributors?    @relation(fields: [id_contributors], references: [dni], onDelete: NoAction, onUpdate: NoAction)
+  id_user         Int?
   midterms        midterms?        @relation(fields: [id_midterms], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users           users?           @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
   tps_problems    tps_problems[]
   user_reactions  user_reactions[]
 
@@ -130,6 +123,8 @@ model tps {
   name         String         @db.VarChar
   number       Int?
   year         Int
+  id_user      Int?
+  users        users?         @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
   tps_courses  tps_courses[]
   tps_problems tps_problems[]
 
@@ -156,7 +151,7 @@ model tps_problems {
 
 model user_reactions {
   id         Int       @id @default(autoincrement())
-  id_user    String    @db.VarChar(36)
+  id_user    Int
   id_problem Int
   reaction   Int
   created_at DateTime? @default(now()) @db.Timestamp(6)
@@ -167,7 +162,13 @@ model user_reactions {
 }
 
 model users {
-  id             String           @id @db.VarChar(36)
+  id             Int              @id @default(autoincrement())
+  email          String           @unique @db.VarChar
+  name           String?          @db.VarChar
+  image          String?          @db.VarChar
+  admin          Boolean
+  problems       problems[]
+  tps            tps[]
   user_reactions user_reactions[]
 
   @@index([id])

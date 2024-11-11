@@ -1,0 +1,7 @@
+borrar toda la info de las reacciones
+borrar todos los id de usuario
+cambiar id por autoincremental
+agregar columna para, nombre, email y mas
+eliminar tabla contributors
+cambiar id_contributors por id_user en problemas
+cambiar id_contributord de problemas por id de tabla usuarioagregar admin a usuario

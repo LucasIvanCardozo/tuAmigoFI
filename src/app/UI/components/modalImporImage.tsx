@@ -3,9 +3,10 @@
 import {
   AddContributor,
   createAnonymus,
-  createContributor,
+  // createContributor,
 } from '@/app/lib/actions';
-import { fetchContributor } from '@/app/lib/data';
+import { useSession } from 'next-auth/react';
+// import { fetchContributor } from '@/app/lib/data';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
 export default function ModalImportImage({
@@ -16,12 +17,10 @@ export default function ModalImportImage({
   callback: (problemId: number | undefined) => void;
 }) {
   const [file, setFile] = useState<File>();
-  const [nameUser, setNameUser] = useState<string>();
-  const [dniUser, setDniUser] = useState<number>();
-  // const [instagramUser, setInstagramUser] = useState<string>();
   const [error, setError] = useState<string | null>(null);
   const [anonymusCheck, setAnonymusCheck] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const { data: session } = useSession();
 
   const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -37,14 +36,9 @@ export default function ModalImportImage({
   };
 
   const formValidate = (): boolean => {
-    if (!anonymusCheck) {
-      if (!nameUser) {
-        setError('Tienes que ingresar tu nombre');
-        return false;
-      } else if (!dniUser) {
-        setError('Tienes que inmgresar tu DNI');
-        return false;
-      }
+    if (!session?.user) {
+      setError('Debes iniciar sesion para subir una imagen');
+      return false;
     }
     if (!file) {
       setError('No hay ningun archivo seleccionado');
@@ -55,7 +49,7 @@ export default function ModalImportImage({
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (formValidate() && file) {
+    if (formValidate() && file && session?.user?.email) {
       try {
         const formData = new FormData();
         formData.set('file', file);
@@ -69,11 +63,8 @@ export default function ModalImportImage({
 
         const result = await response.json();
         if (result.success) {
-          if (!anonymusCheck && nameUser && dniUser) {
-            const contributor = await fetchContributor(dniUser);
-            if (contributor == null)
-              await createContributor(dniUser, nameUser /*, instagramUser*/);
-            await AddContributor(problemId, dniUser);
+          if (!anonymusCheck) {
+            await AddContributor(problemId, session.user.id);
           } else if (anonymusCheck) {
             await createAnonymus();
             await AddContributor(problemId, 0);
@@ -95,7 +86,7 @@ export default function ModalImportImage({
         className="flex flex-col max-w-80 w-11/12 bg-slate-800 p-5 rounded-lg gap-3 "
         onSubmit={(e) => (setLoading(true), handleSubmit(e))}
       >
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
           <label htmlFor="dni">Dni</label>
           <input
             className="text-black"
@@ -137,7 +128,7 @@ export default function ModalImportImage({
               )
             }
           />
-        </div>
+        </div> */}
         {/* <div className="flex flex-col">
           <label htmlFor="dni">Usuario de Instagram</label>
           <input

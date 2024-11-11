@@ -7,55 +7,46 @@ import { useSearchParams } from 'next/navigation';
 import { fetchUser } from '@/app/lib/data';
 import { tps } from '@prisma/client';
 import ModalImporImage from './modalImporImage';
+import { useSession } from 'next-auth/react';
+import TpsSkeleton from './skeletons/tpsSkeleton';
 
 export default function ProblemsTable({
-  tps,
+  tpList,
   text,
 }: {
-  tps: tps[];
+  tpList: tps[];
   text?: string;
 }) {
+  const searchParams = useSearchParams();
   const [modal, setModal] = useState<number | undefined>();
-  const [uuid, setUuid] = useState<string>('');
+  const [tps, setTps] = useState<tps[]>();
+  const [searchTps, setSearchTps] = useState<number | undefined>();
+  useEffect(() => {
+    setSearchTps(Number(searchParams.get('tps')) || undefined);
+  }, [searchParams]);
 
   useEffect(() => {
-    const validationUser = async () => {
-      const uuidCurrent = localStorage.getItem('uuid');
-      if (uuidCurrent == null) {
-        const newUuid: string = v4();
-        localStorage.setItem('uuid', newUuid);
-        await createUser(newUuid);
-        setUuid(newUuid);
-      } else {
-        const validate = await fetchUser(uuidCurrent);
-        if (validate == null) {
-          throw new Error('No deberías estar haciendo esto...');
-        } else {
-          setUuid(uuidCurrent);
-        }
-      }
-    };
-    validationUser();
-  }, []);
+    if (searchTps) {
+      setTps(tpList.filter((tp) => tp.id == searchTps));
+    } else {
+      setTps(tpList);
+    }
+  }, [searchTps]);
 
   const handleModal = (problemId: number | undefined) => setModal(problemId);
 
   return (
     <>
       <ul className="flex flex-col gap-1 grow relative overflow-y-auto">
-        {tps.length == 0 ? (
+        {tps == undefined ? (
+          <TpsSkeleton />
+        ) : tps.length == 0 ? (
           <li className="w-full h-full flex justify-center items-center text-3xl">
             <p>No hay datos :,c</p>
           </li>
         ) : (
           tps.map((tp, index) => (
-            <Tps
-              key={index}
-              uuid={uuid}
-              tp={tp}
-              text={text}
-              callback={handleModal}
-            />
+            <Tps key={index} tp={tp} text={text} callback={handleModal} />
           ))
         )}
       </ul>

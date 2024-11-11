@@ -8,12 +8,10 @@ import { midterms, problems } from '@prisma/client';
 
 export default function Midterm({
   midterm,
-  uuid,
   text,
   callback,
 }: {
   midterm: midterms;
-  uuid: string;
   text?: string;
   callback: (problemId: number | undefined) => void;
 }) {
@@ -47,7 +45,6 @@ export default function Midterm({
         {problems.map((problem, index) => (
           <Problem
             key={index}
-            uuid={uuid}
             problem={problem}
             callback={callback}
           />

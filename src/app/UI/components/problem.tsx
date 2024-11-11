@@ -7,13 +7,12 @@ import { problems } from '@prisma/client';
 import ContributorName from './contributorName';
 import Latex from 'react-latex-next';
 import 'katex/dist/katex.min.css';
+import { Session } from 'inspector';
 export default function Problem({
   problem,
-  uuid,
   callback,
 }: {
   problem: problems;
-  uuid: string;
   callback: (problemId: number | undefined) => void;
 }) {
   return (
@@ -63,7 +62,7 @@ export default function Problem({
               height: 'auto',
             }}
           />
-          <Suspense>
+          {/* <Suspense>
             {problem.id_contributors ? (
               <Suspense>
                 <div className="opacity-50 absolute bottom-0 left-0">
@@ -71,8 +70,10 @@ export default function Problem({
                 </div>
               </Suspense>
             ) : null}
-          </Suspense>
-          <ButtonReaction uuid={uuid} problem={problem} />
+          </Suspense> */}
+          <ButtonReaction
+            problem={problem}
+          />
         </div>
       ) : problem.response == false ? (
         <span>La respuesta esta en revisión.</span>

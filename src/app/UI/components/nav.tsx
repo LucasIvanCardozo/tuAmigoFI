@@ -9,7 +9,6 @@ export default function Nav() {
   const [navState, setNavState] = useState<boolean>(false);
   const pathname: string = usePathname();
   const { data: session } = useSession();
-  console.log(session);
 
   const handleNavState = () => {
     if (document.documentElement.scrollWidth < 640) {

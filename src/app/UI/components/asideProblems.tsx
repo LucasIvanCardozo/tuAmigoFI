@@ -1,5 +1,6 @@
 'use client';
 import { tps } from '@prisma/client';
+import { useSession } from 'next-auth/react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { CgClose, CgMenu } from 'react-icons/cg';
@@ -15,8 +16,15 @@ import {
   TbSquareRoundedNumber8Filled,
   TbSquareRoundedNumber9Filled,
 } from 'react-icons/tb';
+import ModalAddTp from './modalAddTp';
 
-export default function AsideProblems({ tpList }: { tpList: tps[] }) {
+export default function AsideProblems({
+  tpList,
+  idCourse,
+}: {
+  tpList: tps[];
+  idCourse: number;
+}) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -33,10 +41,14 @@ export default function AsideProblems({ tpList }: { tpList: tps[] }) {
     <TbSquareRoundedNumber9Filled />,
   ];
   const [tpsState, setTpsState] = useState<boolean>(false);
+  const [modal, setModal] = useState<number | undefined>();
+  const { data: session } = useSession();
 
   const handleTpsState = () => {
     setTpsState(!tpsState);
   };
+
+  const handleModal = (idCourse: number | undefined) => setModal(idCourse);
 
   const handleTps = (tp: string) => {
     setTpsState(false);
@@ -150,8 +162,23 @@ export default function AsideProblems({ tpList }: { tpList: tps[] }) {
               </button>
             </li>
           ))}
+          {session?.user && session.user.admin ? (
+            <li
+              className={
+                'gap-1 p-1 rounded-md transform-gpu text-center transition-transform sm:hover:scale-105'
+              }
+            >
+              <button
+                className="text-start"
+                onClick={() => handleModal(idCourse)}
+              >
+                <h3 className="text-base leading-4">Agregar TP</h3>
+              </button>
+            </li>
+          ) : null}
         </ul>
       </aside>
+      {modal && <ModalAddTp idCourse={modal} callback={handleModal} />}
     </>
   );
 }

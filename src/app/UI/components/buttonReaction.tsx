@@ -2,24 +2,25 @@
 import { addReaction } from '@/app/lib/actions';
 import { fetchUserReaction } from '@/app/lib/data';
 import { problems } from '@prisma/client';
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { AiFillLike } from 'react-icons/ai';
 import { TbAlertHexagon } from 'react-icons/tb';
 
 export default function ButtonReaction({
   problem,
-  uuid,
-}: {
+}:
+{
   problem: problems;
-  uuid: string;
 }) {
   const [stateLike, setStateLike] = useState<boolean>(false);
   const [stateDislike, setStateDislike] = useState<boolean>(false);
   const [numberLike, setNumberLike] = useState<number>(0);
   const [numberDislike, setNumberDislike] = useState<number>(0);
+  const { data: session } = useSession();
 
   async function handleLike(reaction: number) {
-    if (uuid.length == 36) {
+    if (session?.user?.id) {
       if (reaction == 0) {
         setStateDislike(!stateDislike);
         if (stateDislike) setNumberDislike(numberDislike - 1);
@@ -36,14 +37,14 @@ export default function ButtonReaction({
           setStateDislike(false);
           setNumberDislike(numberDislike - 1);
         }
-      } 
+      }
       const reaccion = await addReaction({
-        uuid: uuid,
+        id: session.user.id,
         id_problem: problem.id,
         reaction: reaction,
       });
     } else {
-      throw new Error('Editaste el localStorage... Así no eh!');
+      window.alert('Deberás iniciar sesion para reaccionar al problema.');
     }
   }
 
@@ -56,18 +57,18 @@ export default function ButtonReaction({
       setNumberLike(likesTotal);
       setNumberDislike(totalReactions.length - likesTotal);
       const reaction = totalReactions.find(
-        (reaction) => reaction.id_user == uuid
+        (reaction) => reaction.id_user == session?.user?.id
       );
       if (reaction) {
         if (reaction.reaction == 1) setStateLike(true);
         else setStateDislike(true);
       }
     };
-    if (uuid != '') searchReactions();
-  }, [uuid]);
+    searchReactions();
+  }, [session]);
 
   return (
-    <span className="flex absolute bottom-0 right-0 z-10 gap-1">
+    <span className="flex absolute bottom-0 right-0 z-10 gap-1 bg-[--white] rounded-sm">
       <button className="flex" onClick={() => handleLike(1)}>
         <AiFillLike
           className={(stateLike ? 'text-green-500' : '') + ' text-xl'}

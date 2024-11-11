@@ -6,19 +6,19 @@ const cache = {
   swr: 300,
 };
 
-// fetching de contribuidores
-export async function fetchContributor(id: number) {
-  const contributor = await prisma.contributors.findFirstOrThrow({
-    where: {
-      dni: id,
-    },
-    cacheStrategy: cache,
-  });
-  return contributor;
-}
+// // fetching de contribuidores
+// export async function fetchContributor(id: number) {
+//   const contributor = await prisma.contributors.findFirstOrThrow({
+//     where: {
+//       dni: id,
+//     },
+//     cacheStrategy: cache,
+//   });
+//   return contributor;
+// }
 
 export async function fetchContributors() {
-  const contributors = await prisma.contributors.findMany({
+  const contributors = await prisma.users.findMany({
     where: {
       problems: {
         some: {
@@ -324,13 +324,22 @@ export async function fetchLinks({
   return links;
 }
 
-export async function fetchUser(uuid: string) {
-  const uuidUser = await prisma.users.findFirst({
-    where: {
-      id: uuid,
-    },
-  });
-  return uuidUser;
+export async function fetchUser(id: number | string) {
+  let user;
+  if (typeof id === 'number') {
+    user = await prisma.users.findFirst({
+      where: {
+        id: id,
+      },
+    });
+  } else if (typeof id === 'string') {
+    user = await prisma.users.findFirst({
+      where: {
+        email: id,
+      },
+    });
+  }
+  return user;
 }
 
 export async function fetchUserReaction(id_problem: number) {
@@ -364,7 +373,7 @@ export async function fetchProblems({
     orderBy: {
       number: 'asc',
     },
-    // cacheStrategy: cache,
+    // cacheStrategy: cache, esto deberia activarse con u chache de al menos 1 dia
   });
   return problems;
 }
