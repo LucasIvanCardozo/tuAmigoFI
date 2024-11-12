@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { CgMenu, CgClose } from 'react-icons/cg';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import Image from 'next/image';
 
 export default function Nav() {
   const [navState, setNavState] = useState<boolean>(false);
@@ -103,13 +104,31 @@ export default function Nav() {
           </li>
         ))}
         <li className="rounded-md border-t-2 border-[#31969B] hover:bg-[--midnight-green] sm:border-l-2 sm:border-t-0">
-          {session?.user ? (
+          {session === undefined ? (
+            <div className="flex justify-center w-40 py-2 px-3 sm:w-28">
+              <div className="relative">
+                <div className="absolute h-6 w-6 border-x-2 rounded-full animate-spin"></div>
+                <div className="h-6 w-6 border-2 opacity-40 rounded-full animate-ping"></div>
+              </div>
+            </div>
+          ) : session?.user ? (
             <Link
               href={''}
-              className="inline-block text-center w-40 py-2 font-bold px-3 sm:w-28 sm:font-normal"
+              className="flex text-center items-center justify-center gap-1 w-40 py-2 font-bold px-3 sm:w-max sm:font-normal"
               onClick={() => signOut()}
             >
-              Cerrar sesion
+              {session.user.image && (
+                <div className="h-6 rounded-2xl overflow-hidden aspect-square">
+                  <Image
+                    className=""
+                    src={session.user.image}
+                    width={100}
+                    height={100}
+                    alt="Picture of the author"
+                  />
+                </div>
+              )}
+              <p>Cerrar sesion</p>
             </Link>
           ) : (
             <Link

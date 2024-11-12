@@ -162,17 +162,19 @@ export default function AsideProblems({
               </button>
             </li>
           ))}
-          {session?.user && session.user.admin ? (
+          {session?.user && session.user.tier > 0 ? (
             <li
               className={
                 'gap-1 p-1 rounded-md transform-gpu text-center transition-transform sm:hover:scale-105'
               }
             >
               <button
-                className="text-start"
+                className="text-start bg-[--white] py-1 px-2 rounded-md"
                 onClick={() => handleModal(idCourse)}
               >
-                <h3 className="text-base leading-4">Agregar TP</h3>
+                <h3 className="text-base text-[--black-olive] leading-4">
+                  Agregar TP
+                </h3>
               </button>
             </li>
           ) : null}

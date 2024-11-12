@@ -12,6 +12,7 @@ import {
   TbMathIntegral,
 } from 'react-icons/tb';
 import Providers from './UI/components/providers';
+import { useSession } from 'next-auth/react';
 
 export const metadata: Metadata = {
   title: 'Tu amigo FI',
@@ -65,7 +66,7 @@ export default function RootLayout({
             <a className="underline" href="">
               Lucas Cardozo
             </a>
-            <a href="./privacidad">Politica y privacidad</a>
+            <a href="/privacidad">Politica y privacidad</a>
           </footer>
         </Providers>
       </body>

@@ -27,10 +27,8 @@ export default function ModalAddTp({
       setError('Tienes que ingresar el año del TP');
       return false;
     }
-    if (!session?.user || !session?.user.admin) {
-      setError(
-        'Debes iniciar sesion y ser administrador para subir una imagen'
-      );
+    if (!session?.user || session?.user.tier == 0) {
+      setError('Debes iniciar sesion y ser administrador para subir un TP');
       return false;
     }
     return true;

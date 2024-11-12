@@ -32,7 +32,7 @@ const authOptions = NextAuth({
             });
           }
           user.idUser = existingUser.id;
-          user.admin = existingUser.admin;
+          user.tier = existingUser.tier;
           return true;
         } else {
           console.error('No se pudo iniciar sesion!');
@@ -46,13 +46,13 @@ const authOptions = NextAuth({
     async jwt({ token, user }) {
       if (user) {
         token.idUser = user.idUser;
-        token.admin = user.admin;
+        token.tier = user.tier;
       }
       return token;
     },
     async session({ session, token }) {
       session.user.id = token.idUser;
-      session.user.admin = token.admin;
+      session.user.tier = token.tier;
       return session;
     },
   },

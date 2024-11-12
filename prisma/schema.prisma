@@ -166,7 +166,7 @@ model users {
   email          String           @unique @db.VarChar
   name           String?          @db.VarChar
   image          String?          @db.VarChar
-  admin          Boolean
+  tier           Int
   problems       problems[]
   tps            tps[]
   user_reactions user_reactions[]

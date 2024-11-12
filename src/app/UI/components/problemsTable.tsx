@@ -9,6 +9,7 @@ import { tps } from '@prisma/client';
 import ModalImporImage from './modalImporImage';
 import { useSession } from 'next-auth/react';
 import TpsSkeleton from './skeletons/tpsSkeleton';
+import ModalDeleteTp from './modalDeleteTP';
 
 export default function ProblemsTable({
   tpList,
@@ -18,22 +19,28 @@ export default function ProblemsTable({
   text?: string;
 }) {
   const searchParams = useSearchParams();
-  const [modal, setModal] = useState<number | undefined>();
+  const [modalImage, setModalImage] = useState<number | undefined>();
+  const [modalDeleteTp, setModalDeleteTp] = useState<tps | undefined>();
   const [tps, setTps] = useState<tps[]>();
-  const [searchTps, setSearchTps] = useState<number | undefined>();
-  useEffect(() => {
-    setSearchTps(Number(searchParams.get('tps')) || undefined);
-  }, [searchParams]);
+
+  // const [searchTps, setSearchTps] = useState<number | undefined>();
+  // useEffect(() => {
+  //   setSearchTps(Number(searchParams.get('tps')) || undefined);
+  // }, [searchParams]);
 
   useEffect(() => {
-    if (searchTps) {
-      setTps(tpList.filter((tp) => tp.id == searchTps));
+    const tpsAux = Number(searchParams.get('tps')) || undefined;
+    if (tpsAux) {
+      setTps(tpList.filter((tp) => tp.id == tpsAux));
     } else {
       setTps(tpList);
     }
-  }, [searchTps]);
+  }, [searchParams]);
 
-  const handleModal = (problemId: number | undefined) => setModal(problemId);
+  const handleModalImage = (problemId: number | undefined) =>
+    setModalImage(problemId);
+
+  const handleModalDeleteTp = (tp: tps | undefined) => setModalDeleteTp(tp);
 
   return (
     <>
@@ -46,11 +53,22 @@ export default function ProblemsTable({
           </li>
         ) : (
           tps.map((tp, index) => (
-            <Tps key={index} tp={tp} text={text} callback={handleModal} />
+            <Tps
+              key={index}
+              tp={tp}
+              text={text}
+              callbackImage={handleModalImage}
+              callbackDeleteTp={handleModalDeleteTp}
+            />
           ))
         )}
       </ul>
-      {modal && <ModalImporImage problemId={modal} callback={handleModal} />}
+      {modalImage && (
+        <ModalImporImage problemId={modalImage} callback={handleModalImage} />
+      )}
+      {modalDeleteTp && (
+        <ModalDeleteTp tp={modalDeleteTp} callback={handleModalDeleteTp} />
+      )}
     </>
   );
 }

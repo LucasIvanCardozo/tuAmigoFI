@@ -50,7 +50,30 @@ export async function createTp({
     });
     return tp;
   } catch (error) {
-    console.error('No se pudo subir el tp');
+    console.error('No se pudo subir el TP');
+  }
+}
+
+export async function deleteTP({ id }: { id: number }) {
+  try {
+    const deleteRelationTPCourse = await prisma.tps_courses.deleteMany({
+      where: {
+        tps_id: id,
+      },
+    });
+    const deletRelationTPProblems = await prisma.tps_problems.deleteMany({
+      where: {
+        tps_id: id,
+      },
+    });
+    const deleteTP = await prisma.tps.delete({
+      where: {
+        id: id,
+      },
+    });
+    return deleteTP;
+  } catch (error) {
+    console.error('No se pudo eliminar el TP');
   }
 }
 
@@ -68,7 +91,7 @@ export async function createAnonymus() {
         id: 0,
         email: 'Anonymous',
         name: 'Anonymous',
-        admin: false,
+        tier: 0,
       },
     });
     return contributor;
@@ -105,7 +128,7 @@ export async function createUser({
       email: email,
       ...(name ? { name: name } : {}),
       ...(image ? { image: image } : {}),
-      admin: false,
+      tier: 0,
     },
   });
   return user;
