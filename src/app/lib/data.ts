@@ -228,26 +228,6 @@ export async function fetchMidterms({
   return midterms;
 }
 
-export async function fetchProblemsMidterms({
-  id_midterm,
-  text,
-}: {
-  id_midterm: number;
-  text?: string;
-}) {
-  const problems = await prisma.problems.findMany({
-    where: {
-      id_midterms: id_midterm,
-      text_normalized: {
-        contains: text,
-        mode: 'insensitive',
-      },
-    },
-    cacheStrategy: cache,
-  });
-  return problems;
-}
-
 //fetchs a TPs
 export async function fetchTps({
   id_tps,

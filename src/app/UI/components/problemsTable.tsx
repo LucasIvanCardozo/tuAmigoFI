@@ -7,7 +7,6 @@ import { useSearchParams } from 'next/navigation';
 import { fetchUser } from '@/app/lib/data';
 import { tps } from '@prisma/client';
 import ModalImporImage from './modalImporImage';
-import { useSession } from 'next-auth/react';
 import TpsSkeleton from './skeletons/tpsSkeleton';
 import ModalDeleteTp from './modalDeleteTP';
 
@@ -22,11 +21,6 @@ export default function ProblemsTable({
   const [modalImage, setModalImage] = useState<number | undefined>();
   const [modalDeleteTp, setModalDeleteTp] = useState<tps | undefined>();
   const [tps, setTps] = useState<tps[]>();
-
-  // const [searchTps, setSearchTps] = useState<number | undefined>();
-  // useEffect(() => {
-  //   setSearchTps(Number(searchParams.get('tps')) || undefined);
-  // }, [searchParams]);
 
   useEffect(() => {
     const tpsAux = Number(searchParams.get('tps')) || undefined;

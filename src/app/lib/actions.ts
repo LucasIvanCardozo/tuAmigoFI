@@ -20,6 +20,30 @@ import prisma from './db';
 //   return contributor;
 // }
 
+export async function createMidterm({
+  name,
+  date,
+  idCourse,
+}: {
+  name: string;
+  date: Date;
+  idCourse: number;
+}) {
+  try {
+    const midterm = prisma.midterms.create({
+      data: {
+        name: name,
+        date: date,
+        id_course: idCourse,
+        response: false,
+      },
+    });
+    return midterm;
+  } catch (error) {
+    console.error('No se pudo subir el parcial');
+  }
+}
+
 export async function createTp({
   name,
   number,
@@ -72,6 +96,19 @@ export async function deleteTP({ id }: { id: number }) {
       },
     });
     return deleteTP;
+  } catch (error) {
+    console.error('No se pudo eliminar el TP');
+  }
+}
+
+export async function deleteMidterm({ id }: { id: number }) {
+  try {
+    const deleteMidterm = await prisma.midterms.delete({
+      where: {
+        id: id,
+      },
+    });
+    return deleteMidterm;
   } catch (error) {
     console.error('No se pudo eliminar el TP');
   }

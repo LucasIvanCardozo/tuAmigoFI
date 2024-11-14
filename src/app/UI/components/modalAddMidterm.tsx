@@ -1,51 +1,86 @@
 // 'src/app/components/ModalImportImage.tsx'
 'use client';
-import { createTp } from '@/app/lib/actions';
+import { createMidterm } from '@/app/lib/actions';
 import { useSession } from 'next-auth/react';
 // import { fetchContributor } from '@/app/lib/data';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
-export default function ModalAddTp({
+export default function ModalAddMidterm({
   idCourse,
   callback,
 }: {
   idCourse: number;
   callback: (idCourse: number | undefined) => void;
 }) {
-  const [nameTP, setNameTP] = useState<string | null>(null);
-  const [numberTP, setNumberTP] = useState<number | null>(null);
-  const [yearTP, setYearTP] = useState<number | null>(null);
+  const [file, setFile] = useState<File>();
+  const [nameMidterm, setNameMidterm] = useState<string | null>(null);
+  const [dateMidterm, setDateMidterm] = useState<Date | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const { data: session } = useSession();
 
   const formValidate = (): boolean => {
-    if (!nameTP) {
-      setError('Tienes que ingresar el nombre del TP');
+    if (!nameMidterm) {
+      setError('Tienes que ingresar el nombre del parcial');
       return false;
-    } else if (!yearTP) {
-      setError('Tienes que ingresar el año del TP');
+    } else if (!dateMidterm) {
+      setError('Tienes que ingresar la fecha del parcial');
+    } else if (!file) {
+      setError('No hay ningun archivo seleccionado');
       return false;
     }
     if (!session?.user || session?.user.tier == 0) {
-      setError('Debes iniciar sesion y ser administrador para subir un TP');
+      setError(
+        'Debes iniciar sesion y ser al menos moderador para subir un parcial'
+      );
       return false;
     }
     return true;
   };
 
+  const handlePDF = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 1048576) {
+        e.target.value = '';
+        setError('El archivo pesa más de 1 MB');
+      } else {
+        setFile(file);
+        setError(null);
+      }
+    }
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (formValidate() && session?.user?.id && nameTP && yearTP) {
+    if (
+      formValidate() &&
+      session?.user?.id &&
+      nameMidterm &&
+      dateMidterm &&
+      file
+    ) {
       try {
-        const tp = await createTp({
-          name: nameTP,
-          number: numberTP,
-          year: yearTP,
-          idUser: session.user.id,
+        const midterm = await createMidterm({
+          name: nameMidterm,
+          date: dateMidterm,
           idCourse: idCourse,
         });
-        callback(undefined);
+        if (midterm) {
+          const formData = new FormData();
+          formData.set('file', file);
+          formData.set('id', midterm.id.toString());
+          formData.set('subFolder', 'problemas');
+
+          const response = await fetch('/api/upload', {
+            method: 'POST',
+            body: formData,
+          });
+          const result = await response.json();
+          callback(undefined);
+        } else {
+          setError('Ocurrio un error en la suba del PDF');
+        }
       } catch (err) {
         setError('Ocurrio un error al llamar a la API');
       }
@@ -67,39 +102,34 @@ export default function ModalAddTp({
             name="name"
             id="name"
             placeholder={'Ingresa el titulo del TP'}
-            onChange={(e) => setNameTP(e.target.value)}
+            onChange={(e) => setNameMidterm(e.target.value)}
             required
           />
         </div>
         <div className="flex flex-col">
-          <label htmlFor="number">Número</label>
+          <label htmlFor="date">Fecha</label>
           <input
             className="text-black"
-            type="number"
-            name="number"
-            id="number"
-            placeholder={'Ingresa el número del TP'}
-            onChange={(e) => setNumberTP(Number(e.target.value))}
-          />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="year">Año</label>
-          <input
-            className="text-black"
-            type="number"
-            name="year"
-            id="year"
-            placeholder={'Ingresa el año del TP'}
+            type="date"
+            name="date"
+            id="date"
+            placeholder={'Ingresa la fecha de el parcial'}
             required
-            onChange={(e) => setYearTP(Number(e.target.value))}
+            onChange={(e) => setDateMidterm(new Date(e.target.value))}
           />
         </div>
+        <input
+          type="file"
+          accept="application/pdf"
+          required
+          onChange={(e) => handlePDF(e)}
+        />
         <div>
           <h3 className="text-sm">Recuerda!</h3>
           <p className="text-xs">
-            Por favor asegurate de que el TP que quieres agregar no se encuentre
-            ya disponible en la lista. En caso de cualquier problema podes
-            contactarme:{' '}
+            Por favor asegurate de que el parcial que quieres agregar no se
+            encuentre ya disponible en la lista. En caso de cualquier problema
+            podes contactarme:{' '}
             <a
               className="underline"
               target="_blank"

@@ -1,41 +1,65 @@
 'use client';
 import Midterm from './midterm';
 import { useEffect, useState } from 'react';
-import { createUser } from '@/app/lib/actions';
-import { fetchUser } from '@/app/lib/data';
 import { midterms } from '@prisma/client';
 import ModalImporImage from './modalImporImage';
+import { useSearchParams } from 'next/navigation';
+import TpsSkeleton from './skeletons/tpsSkeleton';
+import ModalDeleteMidterm from './modalDeleteMidterm';
 
 export default function ProblemsTableMidterms({
-  midterms,
-  text,
+  midtermsList,
 }: {
-  midterms: midterms[];
-  text?: string;
+  midtermsList: midterms[];
 }) {
-  const [modal, setModal] = useState<number | undefined>();
+  const searchParams = useSearchParams();
+  const [modalDeleteMidterm, setModalDeleteMidterm] = useState<
+    midterms | undefined
+  >();
+  const [midterms, setMidterms] = useState<midterms[]>();
 
-  const handleModal = (problemId: number | undefined) => setModal(problemId);
+  useEffect(() => {
+    setMidterms(undefined);
+    setTimeout(() => {
+      const midtermsAux = Number(searchParams.get('midterms')) || undefined;
+      if (midtermsAux) {
+        setMidterms(
+          midtermsList.filter((midterm) => midterm.id == midtermsAux)
+        );
+      } else {
+        setMidterms(midtermsList);
+      }
+    }, 50);
+  }, [searchParams]);
+
+  const handleModalDeleteMidterm = (midterm: midterms | undefined) =>
+    setModalDeleteMidterm(midterm);
 
   return (
     <>
       <ul className="flex flex-col gap-1 grow relative overflow-y-auto">
-        {midterms.length == 0 ? (
+        {midterms == undefined ? (
+          <TpsSkeleton />
+        ) : midterms.length == 0 ? (
           <li className="w-full h-full flex justify-center items-center text-3xl">
-            <p>No hay datos :,c</p>
+            <p>No hay parciales :,c</p>
           </li>
         ) : (
           midterms.map((midterm, index) => (
             <Midterm
-              midterm={midterm}
-              text={text}
               key={index}
-              callback={handleModal}
+              midterm={midterm}
+              callbackDeleteMidterm={handleModalDeleteMidterm}
             />
           ))
         )}
       </ul>
-      {modal && <ModalImporImage problemId={modal} callback={handleModal} />}
+      {modalDeleteMidterm && (
+        <ModalDeleteMidterm
+          midterm={modalDeleteMidterm}
+          callback={handleModalDeleteMidterm}
+        />
+      )}
     </>
   );
 }

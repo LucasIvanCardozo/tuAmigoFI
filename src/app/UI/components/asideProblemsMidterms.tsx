@@ -1,26 +1,32 @@
 'use client';
+import { midterms } from '@prisma/client';
+import { useSession } from 'next-auth/react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { CgClose, CgMenu } from 'react-icons/cg';
 import { SiGoogledocs } from 'react-icons/si';
+import ModalAddTp from './modalAddTp';
+import ModalAddMidterm from './modalAddMidterm';
 
 export default function AsideProblemsMidterms({
   midtermsList,
+  idCourse,
 }: {
-  midtermsList: {
-    id: number;
-    name: string;
-    date: Date;
-  }[];
+  midtermsList: midterms[];
+  idCourse: number;
 }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
   const [midtermsState, setMidtermsState] = useState<boolean>(false);
+  const [modal, setModal] = useState<number | undefined>();
+  const { data: session } = useSession();
 
   const handleMidtermsState = () => {
     setMidtermsState(!midtermsState);
   };
+
+  const handleModal = (idCourse: number | undefined) => setModal(idCourse);
 
   const handleMidterms = (midterm: string) => {
     setMidtermsState(false);
@@ -134,8 +140,30 @@ export default function AsideProblemsMidterms({
               </button>
             </li>
           ))}
+          {session?.user && session.user.tier > 0 && (
+            <li
+              className={
+                'gap-1 p-1 rounded-md transform-gpu text-center transition-transform sm:hover:scale-105'
+              }
+            >
+              <button
+                className="text-start bg-[--white] py-1 px-2 rounded-md"
+                onClick={() => handleModal(idCourse)}
+              >
+                <h3 className="text-base text-[--black-olive] leading-4">
+                  Agregar Parcial
+                </h3>
+              </button>
+            </li>
+          )}
         </ul>
       </aside>
+      {modal && (
+        <ModalAddMidterm
+          idCourse={idCourse}
+          callback={handleModal}
+        />
+      )}
     </>
   );
 }

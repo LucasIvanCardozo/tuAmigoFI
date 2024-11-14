@@ -6,3 +6,5 @@ eliminar tabla contributors
 cambiar id_contributors por id_user en problemas
 cambiar id_contributord de problemas por id de tabla usuario
 agregar tier a usuario
+agregar a midterms response bool [not null]
+eliminar id_midterm de problems
