@@ -223,7 +223,7 @@ export async function fetchMidterms({
     orderBy: {
       id: 'asc',
     },
-    cacheStrategy: cache,
+    // cacheStrategy: cache,
   });
   return midterms;
 }
