@@ -140,7 +140,8 @@ export default function AsideProblemsMidterms({
               </button>
             </li>
           ))}
-          {session?.user && session.user.tier > 0 && (
+          {session?.user && (
+            // && session.user.tier > 0
             <li
               className={
                 'gap-1 p-1 rounded-md transform-gpu text-center transition-transform sm:hover:scale-105'
@@ -158,12 +159,7 @@ export default function AsideProblemsMidterms({
           )}
         </ul>
       </aside>
-      {modal && (
-        <ModalAddMidterm
-          idCourse={idCourse}
-          callback={handleModal}
-        />
-      )}
+      {modal && <ModalAddMidterm idCourse={idCourse} callback={handleModal} />}
     </>
   );
 }
