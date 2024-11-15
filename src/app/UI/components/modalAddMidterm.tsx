@@ -96,16 +96,21 @@ export default function ModalAddMidterm({
         onSubmit={(e) => (setLoading(true), handleSubmit(e))}
       >
         <div className="flex flex-col">
-          <label htmlFor="name">Titulo</label>
-          <input
+          <label htmlFor="name">Título</label>
+          <select
             className="text-black"
-            type="text"
             name="name"
             id="name"
-            placeholder={'Ingresa el titulo del TP'}
             onChange={(e) => setNameMidterm(e.target.value)}
             required
-          />
+          >
+            <option value="">Selecciona el tipo de parcial</option>
+            <option value="Primer parcial">Primer parcial</option>
+            <option value="Segundo parcial">Segundo parcial</option>
+            <option value="Tercer Parcial">Tercer Parcial</option>
+            <option value="Final">Final</option>
+            <option value="Otros">Otros</option>
+          </select>
         </div>
         <div className="flex flex-col">
           <label htmlFor="date">Fecha</label>
