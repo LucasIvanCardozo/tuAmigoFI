@@ -22,10 +22,11 @@ export default function ModalAddMidtermResponse({
       setError('No hay ningun archivo seleccionado');
       return false;
     }
-    if (!session?.user || session?.user.tier == 0) {
-      setError(
-        'Debes iniciar sesion y ser al menos moderador para subir un parcial'
-      );
+    if (
+      !session?.user
+      // || session?.user.tier == 0
+    ) {
+      setError('Debes iniciar sesion para subir un parcial');
       return false;
     }
     return true;
