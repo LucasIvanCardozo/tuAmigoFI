@@ -1,12 +1,12 @@
 // 'src/app/components/ModalImportImage.tsx'
 'use client';
 
-import { deleteMidterm } from '@/app/lib/actions';
-import { midterms, tps } from '@prisma/client';
+import { deleteMidterm, deleteMidtermResponse } from '@/app/lib/actions';
+import { midterms } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { FormEvent, useState } from 'react';
 
-export default function ModalDeleteMidterm({
+export default function ModalDeleteMidtermResponse({
   midterm,
   callback,
 }: {
@@ -31,14 +31,16 @@ export default function ModalDeleteMidterm({
       try {
         const formData = new FormData();
         formData.set('id', midterm.id.toString());
-        formData.set('subFolder', 'problemas');
+        formData.set('subFolder', 'respuestas');
 
         const response = await fetch('/api/destroy', {
           method: 'POST',
           body: formData,
         });
         if (response.ok) {
-          const deleteMidterms = await deleteMidterm({ id: midterm.id });
+          const deleteMidterms = await deleteMidtermResponse({
+            id: midterm.id,
+          });
           callback(undefined);
         } else {
           throw new Error('Error el na eliminacion el cloudinary');
@@ -58,7 +60,7 @@ export default function ModalDeleteMidterm({
       >
         <div>
           <h3 className="text-lg mb-4">
-            <b>Estas por eliminar un TP</b>
+            <b>Estas por eliminar una respuesta</b>
           </h3>
           <div className="flex flex-col [&>*]:flex [&>*]:gap-1">
             <p>
@@ -74,9 +76,9 @@ export default function ModalDeleteMidterm({
         <div>
           <h3 className="text-sm">Recuerda!</h3>
           <p className="text-xs">
-            Se eliminaran los problemas y las respuestas! Por favor asegurate de
-            que el parcial que quieres eliminar sea el correcto. En caso de
-            cualquier problema podes contactarme:{' '}
+            Por favor asegurate de que la respuesta a el parcial que quieres
+            eliminar sea la correcta. En caso de cualquier problema podes
+            contactarme:{' '}
             <a
               className="underline"
               target="_blank"

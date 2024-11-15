@@ -18,30 +18,17 @@ export async function POST(request: NextRequest) {
   const type = file.type.split('/').reverse()[0];
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
-  console.log(type);
   try {
     if (type == 'pdf') {
       const subFolder = data.get('subFolder')?.toString() || '';
-      if (subFolder == 'problemas') {
-        const upload = await cloudinary.uploader.unsigned_upload(
-          `data:application/${type};base64,${buffer.toString('base64')}`,
-          'ml_default',
-          {
-            public_id: id,
-            folder: `parciales/${subFolder}`,
-          }
-        );
-      } else if (subFolder == 'respuestas') {
-        const upload = await cloudinary.uploader.unsigned_upload(
-          `data:application/${type};base64,${buffer.toString('base64')}`,
-          'ml_default',
-          {
-            public_id: id,
-            folder: `parciales/${subFolder}`,
-            resource_type: 'raw',
-          }
-        );
-      } else throw new Error('Carpeta no identificada');
+      const upload = await cloudinary.uploader.unsigned_upload(
+        `data:application/${type};base64,${buffer.toString('base64')}`,
+        'ml_default',
+        {
+          public_id: id,
+          folder: `parciales/${subFolder}`,
+        }
+      );
     } else {
       const upload = await cloudinary.uploader.unsigned_upload(
         `data:image/${type};base64,${buffer.toString('base64')}`,

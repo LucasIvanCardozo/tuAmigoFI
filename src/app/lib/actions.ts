@@ -24,10 +24,12 @@ export async function createMidterm({
   name,
   date,
   idCourse,
+  idUser,
 }: {
   name: string;
   date: Date;
   idCourse: number;
+  idUser: number;
 }) {
   try {
     const midterm = prisma.midterms.create({
@@ -35,12 +37,33 @@ export async function createMidterm({
         name: name,
         date: date,
         id_course: idCourse,
-        response: false,
+        id_user: idUser,
       },
     });
     return midterm;
   } catch (error) {
     console.error('No se pudo subir el parcial');
+  }
+}
+
+export async function addResponseMidterm({
+  idUser,
+  idMidterm,
+}: {
+  idUser: number;
+  idMidterm: number;
+}) {
+  try {
+    const addResponse = await prisma.midterms.update({
+      where: {
+        id: idMidterm,
+      },
+      data: {
+        response: idUser,
+      },
+    });
+  } catch (error) {
+    console.error('No se pudo editar el parcial');
   }
 }
 
@@ -103,9 +126,35 @@ export async function deleteTP({ id }: { id: number }) {
 
 export async function deleteMidterm({ id }: { id: number }) {
   try {
+    const deleteReactions = await prisma.midterms_reactions.deleteMany({
+      where: {
+        id_midterm: id,
+      },
+    });
     const deleteMidterm = await prisma.midterms.delete({
       where: {
         id: id,
+      },
+    });
+    return deleteMidterm;
+  } catch (error) {
+    console.error('No se pudo eliminar el TP');
+  }
+}
+
+export async function deleteMidtermResponse({ id }: { id: number }) {
+  try {
+    const deleteReactions = await prisma.midterms_reactions.deleteMany({
+      where: {
+        id_midterm: id,
+      },
+    });
+    const updateMidterm = await prisma.midterms.update({
+      where: {
+        id: id,
+      },
+      data: {
+        response: null,
       },
     });
     return deleteMidterm;
@@ -180,18 +229,10 @@ export async function addReaction({
   id_problem: number;
   reaction: number;
 }) {
-  const userId = await prisma.users.findFirstOrThrow({
-    where: {
-      id: id,
-    },
-    select: {
-      id: true,
-    },
-  });
   const reactionSearch = await prisma.user_reactions.findFirst({
     where: {
       id_problem: id_problem,
-      id_user: userId.id,
+      id_user: id,
     },
   });
   if (reactionSearch) {
@@ -217,7 +258,52 @@ export async function addReaction({
     const createReaction = await prisma.user_reactions.create({
       data: {
         id_problem: id_problem,
-        id_user: userId.id,
+        id_user: id,
+        reaction: reaction,
+      },
+    });
+    return createReaction;
+  }
+}
+export async function addReactionMidterm({
+  id,
+  id_midterm,
+  reaction,
+}: {
+  id: number;
+  id_midterm: number;
+  reaction: number;
+}) {
+  const reactionSearch = await prisma.midterms_reactions.findFirst({
+    where: {
+      id_midterm: id_midterm,
+      id_user: id,
+    },
+  });
+  if (reactionSearch) {
+    if (reaction != reactionSearch.reaction) {
+      const updateReaction = await prisma.midterms_reactions.update({
+        where: {
+          id: reactionSearch.id,
+        },
+        data: {
+          reaction: reaction,
+        },
+      });
+      return updateReaction;
+    } else {
+      const deleteReaction = await prisma.midterms_reactions.delete({
+        where: {
+          id: reactionSearch.id,
+        },
+      });
+      return deleteReaction;
+    }
+  } else {
+    const createReaction = await prisma.midterms_reactions.create({
+      data: {
+        id_midterm: id_midterm,
+        id_user: id,
         reaction: reaction,
       },
     });

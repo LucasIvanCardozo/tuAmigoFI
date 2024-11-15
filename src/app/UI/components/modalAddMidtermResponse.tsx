@@ -1,31 +1,24 @@
 // 'src/app/components/ModalImportImage.tsx'
 'use client';
-import { createMidterm } from '@/app/lib/actions';
+import { addResponseMidterm, createMidterm } from '@/app/lib/actions';
+import { midterms } from '@prisma/client';
 import { useSession } from 'next-auth/react';
-// import { fetchContributor } from '@/app/lib/data';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
-export default function ModalAddMidterm({
-  idCourse,
+export default function ModalAddMidtermResponse({
+  midterm,
   callback,
 }: {
-  idCourse: number;
-  callback: (idCourse: number | undefined) => void;
+  midterm: midterms;
+  callback: (midterm: midterms | undefined) => void;
 }) {
   const [file, setFile] = useState<File>();
-  const [nameMidterm, setNameMidterm] = useState<string | null>(null);
-  const [dateMidterm, setDateMidterm] = useState<Date | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const { data: session } = useSession();
 
   const formValidate = (): boolean => {
-    if (!nameMidterm) {
-      setError('Tienes que ingresar el nombre del parcial');
-      return false;
-    } else if (!dateMidterm) {
-      setError('Tienes que ingresar la fecha del parcial');
-    } else if (!file) {
+    if (!file) {
       setError('No hay ningun archivo seleccionado');
       return false;
     }
@@ -53,25 +46,17 @@ export default function ModalAddMidterm({
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (
-      formValidate() &&
-      session?.user?.id &&
-      nameMidterm &&
-      dateMidterm &&
-      file
-    ) {
+    if (formValidate() && session?.user?.id && file) {
       try {
-        const midterm = await createMidterm({
-          name: nameMidterm,
-          date: dateMidterm,
-          idCourse: idCourse,
+        const addResponse = await addResponseMidterm({
           idUser: session.user.id,
+          idMidterm: midterm.id,
         });
         if (midterm) {
           const formData = new FormData();
           formData.set('file', file);
           formData.set('id', midterm.id.toString());
-          formData.set('subFolder', 'problemas');
+          formData.set('subFolder', 'respuestas');
 
           const response = await fetch('/api/upload', {
             method: 'POST',
@@ -80,7 +65,7 @@ export default function ModalAddMidterm({
           const result = await response.json();
           callback(undefined);
         } else {
-          setError('Ocurrio un error en la suba del PDF');
+          setError('Ocurrio un error en la suba de la respuesta');
         }
       } catch (err) {
         setError('Ocurrio un error al llamar a la API');
@@ -95,30 +80,6 @@ export default function ModalAddMidterm({
         className="flex flex-col max-w-80 w-11/12 bg-slate-800 p-5 rounded-lg gap-3 "
         onSubmit={(e) => (setLoading(true), handleSubmit(e))}
       >
-        <div className="flex flex-col">
-          <label htmlFor="name">Titulo</label>
-          <input
-            className="text-black"
-            type="text"
-            name="name"
-            id="name"
-            placeholder={'Ingresa el titulo del TP'}
-            onChange={(e) => setNameMidterm(e.target.value)}
-            required
-          />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="date">Fecha</label>
-          <input
-            className="text-black"
-            type="date"
-            name="date"
-            id="date"
-            placeholder={'Ingresa la fecha de el parcial'}
-            required
-            onChange={(e) => setDateMidterm(new Date(e.target.value))}
-          />
-        </div>
         <input
           type="file"
           accept="application/pdf"
@@ -128,9 +89,8 @@ export default function ModalAddMidterm({
         <div>
           <h3 className="text-sm">Recuerda!</h3>
           <p className="text-xs">
-            Por favor asegurate de que el parcial que quieres agregar no se
-            encuentre ya disponible en la lista. En caso de cualquier problema
-            podes contactarme:{' '}
+            Por favor asegurate de que las respuestas estén legibles y sean para
+            este parcial. En caso de cualquier problema podes contactarme:{' '}
             <a
               className="underline"
               target="_blank"

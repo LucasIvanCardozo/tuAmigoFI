@@ -8,3 +8,10 @@ cambiar id_contributord de problemas por id de tabla usuario
 agregar tier a usuario
 agregar a midterms response bool [not null]
 eliminar id_midterm de problems
+agregar id_user a midterms
+se añlade midterms_reaction
+
+
+borro user_reactions
+borro columna id_user de problems
+borro users

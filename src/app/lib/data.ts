@@ -331,6 +331,15 @@ export async function fetchUserReaction(id_problem: number) {
   return userReactions;
 }
 
+export async function fetchUserReactionMidterm(id: number) {
+  const userReactions = await prisma.midterms_reactions.findMany({
+    where: {
+      id_midterm: id,
+    },
+  });
+  return userReactions;
+}
+
 export async function fetchProblems({
   id_tp,
   text,

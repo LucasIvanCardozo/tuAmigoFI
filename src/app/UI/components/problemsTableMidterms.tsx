@@ -2,10 +2,11 @@
 import Midterm from './midterm';
 import { useEffect, useState } from 'react';
 import { midterms } from '@prisma/client';
-import ModalImporImage from './modalImporImage';
 import { useSearchParams } from 'next/navigation';
 import TpsSkeleton from './skeletons/tpsSkeleton';
 import ModalDeleteMidterm from './modalDeleteMidterm';
+import ModalAddMidtermResponse from './modalAddMidtermResponse';
+import ModalDeleteMidtermResponse from './modalDeleteMidtermResponse';
 
 export default function ProblemsTableMidterms({
   midtermsList,
@@ -14,6 +15,12 @@ export default function ProblemsTableMidterms({
 }) {
   const searchParams = useSearchParams();
   const [modalDeleteMidterm, setModalDeleteMidterm] = useState<
+    midterms | undefined
+  >();
+  const [modalDeleteMidtermResponse, setModalDeleteMidtermResponse] = useState<
+    midterms | undefined
+  >();
+  const [modalAddResponse, setModalAddResponse] = useState<
     midterms | undefined
   >();
   const [midterms, setMidterms] = useState<midterms[]>();
@@ -35,6 +42,11 @@ export default function ProblemsTableMidterms({
   const handleModalDeleteMidterm = (midterm: midterms | undefined) =>
     setModalDeleteMidterm(midterm);
 
+  const handleModalAddResponse = (midterm: midterms | undefined) =>
+    setModalAddResponse(midterm);
+
+  const handleModalDeleteMidtermResponse = (midterm: midterms | undefined) =>
+    setModalDeleteMidtermResponse(midterm);
   return (
     <>
       <ul className="flex flex-col gap-1 grow relative overflow-y-auto">
@@ -50,6 +62,8 @@ export default function ProblemsTableMidterms({
               key={index}
               midterm={midterm}
               callbackDeleteMidterm={handleModalDeleteMidterm}
+              callbackAddResponse={handleModalAddResponse}
+              callbackDeleteMidtermResponse={handleModalDeleteMidtermResponse}
             />
           ))
         )}
@@ -58,6 +72,18 @@ export default function ProblemsTableMidterms({
         <ModalDeleteMidterm
           midterm={modalDeleteMidterm}
           callback={handleModalDeleteMidterm}
+        />
+      )}
+      {modalDeleteMidtermResponse && (
+        <ModalDeleteMidtermResponse
+          midterm={modalDeleteMidtermResponse}
+          callback={handleModalDeleteMidtermResponse}
+        />
+      )}
+      {modalAddResponse && (
+        <ModalAddMidtermResponse
+          midterm={modalAddResponse}
+          callback={handleModalAddResponse}
         />
       )}
     </>
