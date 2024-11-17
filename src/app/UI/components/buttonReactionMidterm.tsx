@@ -1,7 +1,7 @@
 'use client';
-import { addReaction, addReactionMidterm } from '@/app/lib/actions';
-import { fetchUserReaction, fetchUserReactionMidterm } from '@/app/lib/data';
-import { midterms, problems } from '@prisma/client';
+import {  addReactionMidterm } from '@/app/lib/actions';
+import { fetchUserReactionMidterm } from '@/app/lib/data';
+import { midterms } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { AiFillLike } from 'react-icons/ai';

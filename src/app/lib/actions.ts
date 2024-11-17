@@ -99,9 +99,10 @@ export async function addResponseTp({
         },
       });
       return addResponse;
-    } else throw new Error('El usuario ya tiene una respuesta a este problema');
+    } else
+      throw new Error('No puedes tener mas de una respueste a un problema!');
   } catch (error) {
-    throw new Error(`${error}`);
+    throw error;
   }
 }
 
@@ -153,7 +154,24 @@ export async function deleteTP({ id }: { id: number }) {
     });
     return deleteTP;
   } catch (error) {
-    console.error('No se pudo eliminar el TP');
+    throw new Error('No se pudo eliminar el TP');
+  }
+}
+export async function deleteTpResponse({ id }: { id: number }) {
+  try {
+    const deleteTpsReactions = await prisma.tps_reactions.deleteMany({
+      where: {
+        id_problem: id,
+      },
+    });
+    const deleteTpResponse = await prisma.tps_responses.delete({
+      where: {
+        id: id,
+      },
+    });
+    return deleteTpResponse;
+  } catch (error) {
+    throw new Error('No se pudo eliminar el TP');
   }
 }
 
@@ -255,22 +273,22 @@ export async function createUser({
 
 export async function addReaction({
   id,
-  id_problem,
+  id_response,
   reaction,
 }: {
   id: number;
-  id_problem: number;
+  id_response: number;
   reaction: number;
 }) {
-  const reactionSearch = await prisma.user_reactions.findFirst({
+  const reactionSearch = await prisma.tps_reactions.findFirst({
     where: {
-      id_problem: id_problem,
+      id_problem: id_response,
       id_user: id,
     },
   });
   if (reactionSearch) {
     if (reaction != reactionSearch.reaction) {
-      const updateReaction = await prisma.user_reactions.update({
+      const updateReaction = await prisma.tps_reactions.update({
         where: {
           id: reactionSearch.id,
         },
@@ -280,7 +298,7 @@ export async function addReaction({
       });
       return updateReaction;
     } else {
-      const deleteReaction = await prisma.user_reactions.delete({
+      const deleteReaction = await prisma.tps_reactions.delete({
         where: {
           id: reactionSearch.id,
         },
@@ -288,9 +306,9 @@ export async function addReaction({
       return deleteReaction;
     }
   } else {
-    const createReaction = await prisma.user_reactions.create({
+    const createReaction = await prisma.tps_reactions.create({
       data: {
-        id_problem: id_problem,
+        id_problem: id_response,
         id_user: id,
         reaction: reaction,
       },
@@ -298,6 +316,7 @@ export async function addReaction({
     return createReaction;
   }
 }
+
 export async function addReactionMidterm({
   id,
   id_midterm,

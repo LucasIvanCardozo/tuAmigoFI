@@ -1,17 +1,16 @@
 'use client';
 import { addReaction } from '@/app/lib/actions';
 import { fetchUserReaction } from '@/app/lib/data';
-import { problems } from '@prisma/client';
+import { tps_responses } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { AiFillLike } from 'react-icons/ai';
 import { TbAlertHexagon } from 'react-icons/tb';
 
 export default function ButtonReaction({
-  problem,
-}:
-{
-  problem: problems;
+  response,
+}: {
+  response: tps_responses;
 }) {
   const [stateLike, setStateLike] = useState<boolean>(false);
   const [stateDislike, setStateDislike] = useState<boolean>(false);
@@ -40,7 +39,7 @@ export default function ButtonReaction({
       }
       const reaccion = await addReaction({
         id: session.user.id,
-        id_problem: problem.id,
+        id_response: response.id,
         reaction: reaction,
       });
     } else {
@@ -50,7 +49,7 @@ export default function ButtonReaction({
 
   useEffect(() => {
     const searchReactions = async () => {
-      const totalReactions = await fetchUserReaction(problem.id);
+      const totalReactions = await fetchUserReaction(response.id);
       const likesTotal = totalReactions.filter(
         (reaction) => reaction.reaction == 1
       ).length;
@@ -60,12 +59,20 @@ export default function ButtonReaction({
         (reaction) => reaction.id_user == session?.user?.id
       );
       if (reaction) {
-        if (reaction.reaction == 1) setStateLike(true);
-        else setStateDislike(true);
+        if (reaction.reaction == 1) {
+          setStateLike(true);
+          setStateDislike(false);
+        } else {
+          setStateDislike(true);
+          setStateLike(false);
+        }
+      } else {
+        setStateDislike(false);
+        setStateLike(false);
       }
     };
     searchReactions();
-  }, [session]);
+  }, [session, response]);
 
   return (
     <span className="flex absolute bottom-0 right-0 z-10 gap-1 bg-[--white] rounded-sm">

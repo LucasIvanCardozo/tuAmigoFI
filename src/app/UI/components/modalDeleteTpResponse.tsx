@@ -1,17 +1,16 @@
 // 'src/app/components/ModalImportImage.tsx'
 'use client';
-
-import { deleteMidterm } from '@/app/lib/actions';
-import { midterms, tps } from '@prisma/client';
+import { deleteTP, deleteTpResponse } from '@/app/lib/actions';
+import { tps, tps_responses } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { FormEvent, useState } from 'react';
 
-export default function ModalDeleteMidterm({
-  midterm,
+export default function ModalDeleteTpResponse({
+  response,
   callback,
 }: {
-  midterm: midterms;
-  callback: (midterm: midterms | undefined) => void;
+  response: tps_responses;
+  callback: (response: tps_responses | undefined) => void;
 }) {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -19,7 +18,9 @@ export default function ModalDeleteMidterm({
 
   const formValidate = (): boolean => {
     if (!session?.user || session?.user.tier < 2) {
-      setError('Debes iniciar sesion y ser administrador para eliminar un TP');
+      setError(
+        'Debes iniciar sesion y ser administrador para eliminar una respuesta'
+      );
       return false;
     }
     return true;
@@ -29,28 +30,27 @@ export default function ModalDeleteMidterm({
     e.preventDefault();
     if (formValidate() && session && session?.user?.tier == 2) {
       try {
-        const formData = new FormData();
-        formData.set('id', midterm.id.toString());
-        formData.set('subFolder', 'parciales/problemas');
-        const res = await fetch('/api/destroy', {
-          method: 'POST',
-          body: formData,
-        });
-
-        formData.set('subFolder', 'parciales/respuestas');
-        const res2 = await fetch('/api/destroy', {
-          method: 'POST',
-          body: formData,
-        });
-
-        if (res.ok && res2.ok) {
-          const deleteMidterms = await deleteMidterm({ id: midterm.id });
-          callback(undefined);
+        if (response.type == 1 || response.type == 2) {
+          const formData = new FormData();
+          formData.set('id', response.id_user.toString());
+          formData.set(
+            'subFolder',
+            `tps/respuestas/${response.id_tp}/${response.number}`
+          );
+          const res = await fetch('/api/destroy', {
+            method: 'POST',
+            body: formData,
+          });
+          if (res.ok) {
+            const deleteResponse = await deleteTpResponse({ id: response.id });
+          } else throw new Error('Error al eliminar respuesta');
         } else {
-          throw new Error('Error el na eliminacion el cloudinary');
+          const deleteResponse = await deleteTpResponse({ id: response.id });
         }
+
+        callback(undefined);
       } catch (err) {
-        setError('Ocurrio un error al querer eliminar el parcial');
+        setError('Ocurrio un error al querer eliminar el TP');
       }
     }
     setLoading(false);
@@ -64,25 +64,24 @@ export default function ModalDeleteMidterm({
       >
         <div>
           <h3 className="text-lg mb-4">
-            <b>Estas por eliminar un TP</b>
+            <b>Estas por eliminar una respuesta</b>
           </h3>
           <div className="flex flex-col [&>*]:flex [&>*]:gap-1">
             <p>
-              <b>Nombre:</b>
-              {midterm.name}
+              <b>Numero:</b>
+              {response.number}
             </p>
             <p>
-              <b>Fecha:</b>
-              {`${midterm.date.getMonth()}/${midterm.date.getFullYear()}`}
+              <b>Usuario:</b>
+              {response.id_user}
             </p>
           </div>
         </div>
         <div>
           <h3 className="text-sm">Recuerda!</h3>
           <p className="text-xs">
-            Se eliminaran los problemas y las respuestas! Por favor asegurate de
-            que el parcial que quieres eliminar sea el correcto. En caso de
-            cualquier problema podes contactarme:{' '}
+            Por favor asegurate de que la respuesta que quieras eliminar sea la
+            correcto. En caso de cualquier problema podes contactarme:{' '}
             <a
               className="underline"
               target="_blank"

@@ -10,13 +10,15 @@ cloudinary.config({
 
 export async function POST(request: NextRequest) {
   const data = await request.formData();
-  const id = data.get('id')?.toString() || '';
 
   try {
     const subFolder = data.get('subFolder')?.toString() || '';
     if (subFolder) {
-      const deleteAsset = await cloudinary.uploader.destroy(
-        `${subFolder}/${id}`
+      const deleteAssets = await cloudinary.api.delete_resources_by_prefix(
+        `${subFolder}/`,
+        async function () {
+          const deleteFolder = await cloudinary.api.delete_folder(subFolder);
+        }
       );
     }
     return NextResponse.json({ success: true });

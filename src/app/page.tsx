@@ -1,6 +1,5 @@
 import 'katex/dist/katex.min.css';
 import Image from 'next/image';
-import { fetchContributors } from './lib/data';
 import CalendarSection from './UI/components/calendar';
 import QuestionsSection from './UI/components/questionsSection';
 import Contributors from './UI/components/contributors';

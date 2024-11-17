@@ -17,8 +17,7 @@ export default function PdfView({ id, url }: { id: number; url: string }) {
     setLoadImage(true);
     const response = await fetch(
       `https://res.cloudinary.com/donzj5rlf/image/upload/pg_${page}/f_auto/q_auto:eco/v${Math.floor(
-        Date.now()
-        //  / (1000 * 60 * 60 * 1)
+        Date.now() / (1000 * 60 * 60 * 1)
       )}/${url}/${id}`
     );
     if (response.ok) {

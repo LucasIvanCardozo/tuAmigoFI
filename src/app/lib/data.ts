@@ -243,7 +243,7 @@ export async function fetchTps({
       id_course: id_materias,
     },
     orderBy: {
-      id: 'asc',
+      number: 'asc',
     },
     cacheStrategy: cache,
   });
@@ -315,10 +315,10 @@ export async function fetchUser(id: number | string) {
   return user;
 }
 
-export async function fetchUserReaction(id_problem: number) {
+export async function fetchUserReaction(id_response: number) {
   const userReactions = await prisma.tps_reactions.findMany({
     where: {
-      id_problem: id_problem,
+      id_problem: id_response,
     },
   });
   return userReactions;
@@ -333,38 +333,37 @@ export async function fetchUserReactionMidterm(id: number) {
   return userReactions;
 }
 
-export async function fetchProblems({
-  id_tp,
-  text,
-}: {
-  id_tp: number;
-  text?: string;
-}) {
-  const problems = await prisma.tps_responses.findMany({
+export async function fetchResponses({ id_tp }: { id_tp: number }) {
+  const responses = await prisma.tps_responses.findMany({
     where: {
-      // text_normalized: {
-      //   contains: text,
-      //   mode: 'insensitive',
-      // },
-      // tps_problems: {
-      //   some: {
-      //     tps_id: id_tp,
-      //   },
-      // },
       id_tp: id_tp,
+    },
+    include: {
+      _count: {
+        select: {
+          tps_reactions: {
+            where: {
+              reaction: 1,
+            },
+          },
+        },
+      },
     },
     orderBy: {
       number: 'asc',
     },
-    // cacheStrategy: cache, esto deberia activarse con u chache de al menos 1 dia
   });
-  const groupedResponses = problems.reduce<Record<number, tps_responses[]>>(
+  const groupedResponses = responses.reduce<Record<number, typeof responses>>(
     (acc, response) => {
       const { number } = response;
       if (!acc[number]) {
         acc[number] = [];
       }
       acc[number].push(response);
+      acc[number].sort(
+        (a, b) =>
+          (b._count?.tps_reactions || 0) - (a._count?.tps_reactions || 0)
+      );
       return acc;
     },
     {}

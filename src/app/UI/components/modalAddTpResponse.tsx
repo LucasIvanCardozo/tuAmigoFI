@@ -84,7 +84,7 @@ export default function ModalAddTpResponse({
               type: typeResponse,
             });
             callback(undefined);
-          } else setError('No se encontro ningun texto');
+          } else throw new Error('No se encontro ningun texto');
         } else if (typeResponse == 1 || typeResponse == 2) {
           if (file) {
             const addResponse = await addResponseTp({
@@ -106,14 +106,14 @@ export default function ModalAddTpResponse({
               const result = await response.json();
               callback(undefined);
             } else {
-              setError('Ocurrio un error en la suba de la respuesta');
+              throw new Error('Ocurrio un error en la suba de la respuesta');
             }
-          } else setError('No se encontro ningun archivo');
+          } else throw new Error('No se encontro ningun archivo');
         }
-      } catch (err) {
-        setError(
-          'Ocurrio un error, acuerdate que no puedes subir mas de una respuesta a un problema.'
-        );
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else setError('Ocurrio un error inesperado.');
       }
     }
     setLoading(false);

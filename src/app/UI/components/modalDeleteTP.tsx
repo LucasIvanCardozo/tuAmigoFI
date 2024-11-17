@@ -28,7 +28,25 @@ export default function ModalDeleteTp({
     e.preventDefault();
     if (formValidate() && session && session?.user?.tier == 2) {
       try {
-        const deleteTp = await deleteTP({ id: tp.id });
+        const formData = new FormData();
+        formData.set('subFolder', `tps/respuestas/${tp.id}`);
+        const res = await fetch('/api/destroyAll', {
+          method: 'POST',
+          body: formData,
+        });
+
+        formData.set('id', tp.id.toString());
+        formData.set('subFolder', `tps/problemas`);
+
+        const res2 = await fetch('/api/destroy', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (res.ok && res2.ok) {
+          const deleteTp = await deleteTP({ id: tp.id });
+        } else throw new Error('Error al eliminar respuesta');
+
         callback(undefined);
       } catch (err) {
         setError('Ocurrio un error al querer eliminar el TP');

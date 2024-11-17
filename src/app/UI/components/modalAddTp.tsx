@@ -2,7 +2,6 @@
 'use client';
 import { createTp } from '@/app/lib/actions';
 import { useSession } from 'next-auth/react';
-// import { fetchContributor } from '@/app/lib/data';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
 export default function ModalAddTp({
