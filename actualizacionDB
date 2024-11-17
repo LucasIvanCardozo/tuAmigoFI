@@ -25,3 +25,4 @@ elimine las relaciones entre ellas (las de arriba)
 cambio nombre de tabla problems a tps_responses
 elimino text_normalized, text_plus,responses de tps_responses
 cambio nombre de user_reactions a tps_reactions
+ 
