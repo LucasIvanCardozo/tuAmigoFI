@@ -245,7 +245,7 @@ export async function fetchTps({
     orderBy: {
       number: 'asc',
     },
-    cacheStrategy: cache,
+    // cacheStrategy: cache,
   });
   return tps;
 }
