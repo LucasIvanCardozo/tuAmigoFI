@@ -16,8 +16,9 @@ export default function PdfView({ id, url }: { id: number; url: string }) {
   const handlePage = async (page: number) => {
     setLoadImage(true);
     const response = await fetch(
-      `https://res.cloudinary.com/donzj5rlf/image/upload/pg_${page}/f_auto,q_auto/v${Math.floor(
-        Date.now() / (1000 * 60 * 60 * 1)
+      `https://res.cloudinary.com/donzj5rlf/image/upload/pg_${page}/f_auto/q_auto:eco/v${Math.floor(
+        Date.now()
+        //  / (1000 * 60 * 60 * 1)
       )}/${url}/${id}`
     );
     if (response.ok) {
@@ -44,13 +45,14 @@ export default function PdfView({ id, url }: { id: number; url: string }) {
     <>
       <div className="relative flex justify-center w-full">
         <Image
-          src={`https://res.cloudinary.com/donzj5rlf/image/upload/pg_${pageNumber}/f_auto,q_auto/v${Math.floor(
-            Date.now() / (1000 * 60 * 60 * 1)
+          src={`https://res.cloudinary.com/donzj5rlf/image/upload/pg_${pageNumber}/f_auto/q_auto:eco/v${Math.floor(
+            Date.now()
+            //  / (1000 * 60 * 60 * 1)
           )}/${url}/${id}`}
           alt="PDF"
           onLoad={() => setLoadImage(false)}
-          width={710}
-          height={1000}
+          width={1200}
+          height={1697}
           loading="lazy"
         />
       </div>

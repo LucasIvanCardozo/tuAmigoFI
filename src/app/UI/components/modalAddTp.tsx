@@ -12,6 +12,7 @@ export default function ModalAddTp({
   idCourse: number;
   callback: (idCourse: number | undefined) => void;
 }) {
+  const [file, setFile] = useState<File>();
   const [nameTP, setNameTP] = useState<string | null>(null);
   const [numberTP, setNumberTP] = useState<number | null>(null);
   const [yearTP, setYearTP] = useState<number | null>(null);
@@ -26,6 +27,9 @@ export default function ModalAddTp({
     } else if (!yearTP) {
       setError('Tienes que ingresar el año del TP');
       return false;
+    } else if (!file) {
+      setError('No hay ningun archivo seleccionado');
+      return false;
     }
     if (!session?.user || session?.user.tier == 0) {
       setError('Debes iniciar sesion y ser administrador para subir un TP');
@@ -34,9 +38,22 @@ export default function ModalAddTp({
     return true;
   };
 
+  const handlePDF = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 1048576) {
+        e.target.value = '';
+        setError('El archivo pesa más de 1 MB');
+      } else {
+        setFile(file);
+        setError(null);
+      }
+    }
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (formValidate() && session?.user?.id && nameTP && yearTP) {
+    if (formValidate() && session?.user?.id && nameTP && yearTP && file) {
       try {
         const tp = await createTp({
           name: nameTP,
@@ -45,7 +62,21 @@ export default function ModalAddTp({
           idUser: session.user.id,
           idCourse: idCourse,
         });
-        callback(undefined);
+        if (tp) {
+          const formData = new FormData();
+          formData.set('file', file);
+          formData.set('id', tp.id.toString());
+          formData.set('subFolder', `tps/problemas`);
+
+          const response = await fetch('/api/upload', {
+            method: 'POST',
+            body: formData,
+          });
+          const result = await response.json();
+          callback(undefined);
+        } else {
+          setError('Ocurrio un error en la suba del PDF');
+        }
       } catch (err) {
         setError('Ocurrio un error al llamar a la API');
       }
@@ -94,6 +125,12 @@ export default function ModalAddTp({
             onChange={(e) => setYearTP(Number(e.target.value))}
           />
         </div>
+        <input
+          type="file"
+          accept="application/pdf"
+          required
+          onChange={(e) => handlePDF(e)}
+        />
         <div>
           <h3 className="text-sm">Recuerda!</h3>
           <p className="text-xs">

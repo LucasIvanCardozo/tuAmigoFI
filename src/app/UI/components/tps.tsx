@@ -15,20 +15,24 @@ import Problem from './problem';
 import { fetchProblems } from '@/app/lib/data';
 import { useEffect, useState } from 'react';
 import TpsSkeleton from './skeletons/tpsSkeleton';
-import { problems, tps } from '@prisma/client';
+import { tps_responses, tps } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { MdOutlineAddBox } from 'react-icons/md';
 import { MdDelete } from 'react-icons/md';
+import PdfView from './pdfView';
+import ResponseTp from './responseTp';
 export default function Tps({
   tp,
   text,
   callbackImage,
   callbackDeleteTp,
+  callbackAddResponse,
 }: {
   tp: tps;
   text?: string;
   callbackImage: (problemId: number | undefined) => void;
   callbackDeleteTp: (tp: tps | undefined) => void;
+  callbackAddResponse: (tp: tps | undefined) => void;
 }) {
   const numberIcons = [
     <TbSquareRoundedNumber0Filled />,
@@ -42,7 +46,7 @@ export default function Tps({
     <TbSquareRoundedNumber8Filled />,
     <TbSquareRoundedNumber9Filled />,
   ];
-  const [problems, setProblems] = useState<problems[]>();
+  const [problems, setProblems] = useState<Record<number, tps_responses[]>>();
   const [loading, setLoading] = useState<boolean>(false);
   const { data: session } = useSession();
 
@@ -73,25 +77,37 @@ export default function Tps({
               <button title="Eliminar TP" onClick={() => callbackDeleteTp(tp)}>
                 <MdDelete />
               </button>
-              <button title="Añadir problema">
+              <button
+                title="Añadir una respuesta"
+                onClick={() => callbackAddResponse(tp)}
+              >
                 <MdOutlineAddBox />
               </button>
             </div>
           )}
         </div>
-        {problems == undefined || loading ? (
-          <ul className="flex h-96 flex-col z-10 grow relative overflow-y-auto">
-            <TpsSkeleton />
-          </ul>
-        ) : problems.length == 0 ? (
-          <p className="pl-3">Sin problemas :c</p>
-        ) : (
-          <ul className="flex flex-col gap-1 pl-3">
-            {problems.map((problem, index) => (
-              <Problem key={index} problem={problem} callback={callbackImage} />
-            ))}
-          </ul>
-        )}
+        <div className="bg-[--white] p-2 text-base leading-5 drop-shadow-md flex flex-col gap-1">
+          <div className="relative overflow-hidden bg-[#C8E0E4] h-min py-1 rounded-md sm:p-1">
+            <PdfView id={tp.id} url="tps/problemas" />
+          </div>
+          {problems == undefined || loading ? (
+            <ul className="flex h-96 flex-col z-10 grow relative overflow-y-auto">
+              <TpsSkeleton />
+            </ul>
+          ) : Object.keys(problems).length == 0 ? (
+            <p className="pl-3">Sin respuestas :c</p>
+          ) : (
+            <ul className="flex flex-col gap-1 pl-3">
+              {Object.entries(problems).map((response, index) => (
+                <ResponseTp
+                  key={index}
+                  response={response}
+                  callback={callbackImage}
+                />
+              ))}
+            </ul>
+          )}
+        </div>
       </li>
     </>
   );

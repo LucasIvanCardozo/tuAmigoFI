@@ -57,7 +57,7 @@ export default function ModalAddMidtermResponse({
           const formData = new FormData();
           formData.set('file', file);
           formData.set('id', midterm.id.toString());
-          formData.set('subFolder', 'respuestas');
+          formData.set('subFolder', 'parciales/respuestas');
 
           const response = await fetch('/api/upload', {
             method: 'POST',

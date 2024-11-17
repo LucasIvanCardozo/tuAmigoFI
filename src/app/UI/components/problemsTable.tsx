@@ -5,10 +5,11 @@ import { useEffect, useState } from 'react';
 import { createUser } from '@/app/lib/actions';
 import { useSearchParams } from 'next/navigation';
 import { fetchUser } from '@/app/lib/data';
-import { tps } from '@prisma/client';
+import { tps, tps_responses } from '@prisma/client';
 import ModalImporImage from './modalImporImage';
 import TpsSkeleton from './skeletons/tpsSkeleton';
 import ModalDeleteTp from './modalDeleteTP';
+import ModalAddTpResponse from './modalAddTpResponse';
 
 export default function ProblemsTable({
   tpList,
@@ -20,6 +21,8 @@ export default function ProblemsTable({
   const searchParams = useSearchParams();
   const [modalImage, setModalImage] = useState<number | undefined>();
   const [modalDeleteTp, setModalDeleteTp] = useState<tps | undefined>();
+  const [modalAddResponse, setModalAddResponse] = useState<tps | undefined>();
+
   const [tps, setTps] = useState<tps[]>();
 
   useEffect(() => {
@@ -35,6 +38,8 @@ export default function ProblemsTable({
     setModalImage(problemId);
 
   const handleModalDeleteTp = (tp: tps | undefined) => setModalDeleteTp(tp);
+  const handleModalAddResponse = (tp: tps | undefined) =>
+    setModalAddResponse(tp);
 
   return (
     <>
@@ -53,6 +58,7 @@ export default function ProblemsTable({
               text={text}
               callbackImage={handleModalImage}
               callbackDeleteTp={handleModalDeleteTp}
+              callbackAddResponse={handleModalAddResponse}
             />
           ))
         )}
@@ -62,6 +68,12 @@ export default function ProblemsTable({
       )}
       {modalDeleteTp && (
         <ModalDeleteTp tp={modalDeleteTp} callback={handleModalDeleteTp} />
+      )}
+      {modalAddResponse && (
+        <ModalAddTpResponse
+          tp={modalAddResponse}
+          callback={handleModalAddResponse}
+        />
       )}
     </>
   );

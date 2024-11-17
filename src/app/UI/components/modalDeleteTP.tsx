@@ -26,7 +26,6 @@ export default function ModalDeleteTp({
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('hoal');
     if (formValidate() && session && session?.user?.tier == 2) {
       try {
         const deleteTp = await deleteTP({ id: tp.id });

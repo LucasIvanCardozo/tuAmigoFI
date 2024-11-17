@@ -36,7 +36,7 @@ export default async function Practica({
                 <b>{course.name}</b>
               </h1>
             </div>
-            <SearchProblems />
+            {/* <SearchProblems /> */}
           </div>
           <ProblemsTable text={query.text} tpList={tpList} />
         </section>

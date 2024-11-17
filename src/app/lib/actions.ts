@@ -67,6 +67,44 @@ export async function addResponseMidterm({
   }
 }
 
+export async function addResponseTp({
+  idUser,
+  idTp,
+  number,
+  type,
+  text,
+}: {
+  idUser: number;
+  idTp: number;
+  number: number;
+  type: number;
+  text?: string;
+}) {
+  try {
+    const validation = await prisma.tps_responses.findFirst({
+      where: {
+        id_tp: idTp,
+        id_user: idUser,
+        number: number,
+      },
+    });
+    if (!validation) {
+      const addResponse = await prisma.tps_responses.create({
+        data: {
+          id_tp: idTp,
+          number: number,
+          type: type,
+          id_user: idUser,
+          ...(text && { text: text }),
+        },
+      });
+      return addResponse;
+    } else throw new Error('El usuario ya tiene una respuesta a este problema');
+  } catch (error) {
+    throw new Error(`${error}`);
+  }
+}
+
 export async function createTp({
   name,
   number,
@@ -84,15 +122,10 @@ export async function createTp({
     const tp = await prisma.tps.create({
       data: {
         name: name,
-        ...(number ? { number: number } : {}),
+        ...(number ? { number: number } : { number: 0 }),
         year: year,
         id_user: idUser,
-      },
-    });
-    const tps_courses = await prisma.tps_courses.create({
-      data: {
-        courses_id: idCourse,
-        tps_id: tp.id,
+        id_course: idCourse,
       },
     });
     return tp;
@@ -103,14 +136,14 @@ export async function createTp({
 
 export async function deleteTP({ id }: { id: number }) {
   try {
-    const deleteRelationTPCourse = await prisma.tps_courses.deleteMany({
+    const deleteTpsResponses = await prisma.tps_responses.deleteMany({
       where: {
-        tps_id: id,
+        id_tp: id,
       },
     });
-    const deletRelationTPProblems = await prisma.tps_problems.deleteMany({
+    const deleteTpsReactions = await prisma.tps_reactions.deleteMany({
       where: {
-        tps_id: id,
+        id_problem: id,
       },
     });
     const deleteTP = await prisma.tps.delete({
@@ -187,18 +220,18 @@ export async function createAnonymus() {
   return existingContributor;
 }
 
-export async function AddContributor(idProblem: number, id: number) {
-  const problem = await prisma.problems.update({
-    where: {
-      id: idProblem,
-    },
-    data: {
-      id_user: id,
-      response: false,
-    },
-  });
-  return problem;
-}
+// export async function AddContributor(idProblem: number, id: number) {
+//   const problem = await prisma.problems.update({
+//     where: {
+//       id: idProblem,
+//     },
+//     data: {
+//       id_user: id,
+//       response: false,
+//     },
+//   });
+//   return problem;
+// }
 
 export async function createUser({
   name,

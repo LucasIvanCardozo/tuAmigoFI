@@ -18,15 +18,15 @@ export async function POST(request: NextRequest) {
   const type = file.type.split('/').reverse()[0];
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
+  const subFolder = data.get('subFolder')?.toString() || '';
   try {
     if (type == 'pdf') {
-      const subFolder = data.get('subFolder')?.toString() || '';
       const upload = await cloudinary.uploader.unsigned_upload(
         `data:application/${type};base64,${buffer.toString('base64')}`,
         'ml_default',
         {
           public_id: id,
-          folder: `parciales/${subFolder}`,
+          folder: subFolder,
         }
       );
     } else {
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
         'ml_default',
         {
           public_id: id,
-          folder: 'tps',
+          folder: subFolder,
         }
       );
     }
