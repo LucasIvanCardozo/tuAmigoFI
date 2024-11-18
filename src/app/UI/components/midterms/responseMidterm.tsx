@@ -84,7 +84,7 @@ export default function ResponseMidterm({
       {
         // 0 -> texto ; 1 -> imagen ; 2 -> pdf ; 3 -> codigo
         response[1][indexResponse].type == 0 ? (
-          <div className="text-balance">
+          <div className="text-balance pb-4">
             <p>{response[1][indexResponse].text}</p>
           </div>
         ) : response[1][indexResponse].type == 1 ? (
