@@ -4,7 +4,7 @@ import Link from 'next/link';
 import CourseLinks from './courseLinks';
 import { courses } from '@prisma/client';
 import { Suspense } from 'react';
-import CorrelativeTableSkeleton from './skeletons/correlativeTableSkeleton';
+import CorrelativeTableSkeleton from '../skeletons/correlativeTableSkeleton';
 
 export default async function Course({
   course,

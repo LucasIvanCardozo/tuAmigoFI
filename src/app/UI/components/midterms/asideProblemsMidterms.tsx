@@ -5,7 +5,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { CgClose, CgMenu } from 'react-icons/cg';
 import { SiGoogledocs } from 'react-icons/si';
-import ModalAddMidterm from './modalAddMidterm';
+import ModalAddMidterm from './modals/modalAddMidterm';
 import { TbSquareAsteriskFilled } from 'react-icons/tb';
 
 export default function AsideProblemsMidterms({
@@ -142,7 +142,7 @@ export default function AsideProblemsMidterms({
               >
                 <h2 className="text-base leading-4">{name}</h2>
                 <p className="text-xs text-[--silver]">
-                  {`Del ${date.getMonth()}/${date.getFullYear()}`}{' '}
+                  {`Del ${date.getMonth() + 1}/${date.getFullYear()}`}{' '}
                 </p>
               </button>
             </li>
@@ -167,7 +167,10 @@ export default function AsideProblemsMidterms({
         </ul>
       </aside>
       {modalAddMidterm && (
-        <ModalAddMidterm idCourse={idCourse} callbackAddMidterm={handleModalAddMidterm} />
+        <ModalAddMidterm
+          idCourse={idCourse}
+          callbackAddMidterm={handleModalAddMidterm}
+        />
       )}
     </>
   );

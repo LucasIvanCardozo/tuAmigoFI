@@ -1,30 +1,32 @@
 'use client';
+import ButtonReactionTp from './buttonReactionTp';
 import { useEffect, useState } from 'react';
 import { CldImage } from 'next-cloudinary';
-import { midterms_responses, tps_responses, users } from '@prisma/client';
+import { tps_responses, users } from '@prisma/client';
 import 'katex/dist/katex.min.css';
 import { fetchUser } from '@/app/lib/data';
-import PdfView from './pdfView';
+import PdfView from '../pdfView';
 import {
   BiSolidRightArrowSquare,
   BiSolidLeftArrowSquare,
 } from 'react-icons/bi';
 import { useSession } from 'next-auth/react';
 import { MdDelete } from 'react-icons/md';
-import ButtonReactionMidterm from './buttonReactionMidterm';
+import UserResponseSkeleton from '../skeletons/userResponseSkeleton';
 
-export default function ResponseMidterm({
+export default function ResponseTp({
   response,
   callbackDeleteResponse,
 }: {
-  response: [string, midterms_responses[]];
-  callbackDeleteResponse: (response: midterms_responses | undefined) => void;
+  response: [string, tps_responses[]];
+  callbackDeleteResponse: (response: tps_responses | undefined) => void;
 }) {
   const [indexResponse, setIndexResponse] = useState<number>(0);
   const [user, setUser] = useState<users>();
   const { data: session } = useSession();
 
   useEffect(() => {
+    setUser(undefined);
     const user = async () => {
       const aux = await fetchUser(response[1][indexResponse].id_user);
       aux && setUser(aux);
@@ -40,21 +42,17 @@ export default function ResponseMidterm({
   };
 
   return (
-    <li className="relative bg-[--white] p-2 text-base leading-5 shadow-md flex flex-col gap-1 min-h-32">
+    <li className="relative bg-[--white] p-1 text-base leading-5 shadow-md flex flex-col min-h-32">
       <div>
-        {user ? (
-          <p className="bg-[#C8E0E4] p-1 rounded-md flex justify-between">
-            <b className="bg-[#92C1C9] rounded-sm">{`Respuesta ${response[0]}:`}</b>
-            <br />
+        <p className="bg-[#C8E0E4] p-1 rounded-md flex justify-between">
+          <b className="bg-[#92C1C9] rounded-sm">{`Respuesta ${response[0]}:`}</b>
+          <br />
+          {user ? (
             <span className="opacity-75">Por {`${user?.name}`}</span>
-          </p>
-        ) : (
-          <p className="bg-[#C8E0E4] p-1 rounded-md flex justify-between">
-            <b className="bg-[#92C1C9] rounded-sm">{`Respuesta ${response[0]}:`}</b>
-            <br />
-            <span className="opacity-75">Cargando usuario</span>
-          </p>
-        )}
+          ) : (
+            <UserResponseSkeleton />
+          )}
+        </p>
 
         <div className="w-full h-5 relative flex justify-between">
           {session && session.user.tier == 2 && (
@@ -90,15 +88,13 @@ export default function ResponseMidterm({
             <p>{response[1][indexResponse].text}</p>
           </div>
         ) : response[1][indexResponse].type == 1 ? (
-          <div className="relative flex justify-center w-full">
+          <div className="relative flex justify-center w-full max-h-250">
             <CldImage
               src={`https://res.cloudinary.com/donzj5rlf/image/upload/f_auto,q_auto/v${Math.floor(
                 Date.now() / (1000 * 60 * 60 * 24 * 7)
-              )}/parciales/respuestas/${
-                response[1][indexResponse].id_midterm
-              }/${response[1][indexResponse].number}/${
-                response[1][indexResponse].id_user
-              }`}
+              )}/tps/respuestas/${response[1][indexResponse].id_tp}/${
+                response[1][indexResponse].number
+              }/${response[1][indexResponse].id_user}`}
               alt=""
               width="500"
               height="500"
@@ -113,7 +109,7 @@ export default function ResponseMidterm({
           <div className="relative overflow-hidden bg-[#C8E0E4] h-min max-w-full py-1 rounded-md sm:p-1">
             <PdfView
               id={response[1][indexResponse].id_user}
-              url={`parciales/respuestas/${response[1][indexResponse].id_midterm}/${response[1][indexResponse].number}`}
+              url={`tps/respuestas/${response[1][indexResponse].id_tp}/${response[1][indexResponse].number}`}
             />
           </div>
         ) : response[1][indexResponse].type == 3 ? (
@@ -122,7 +118,7 @@ export default function ResponseMidterm({
           </div>
         ) : null
       }
-      <ButtonReactionMidterm response={response[1][indexResponse]} />
+      <ButtonReactionTp response={response[1][indexResponse]} />
     </li>
   );
 }

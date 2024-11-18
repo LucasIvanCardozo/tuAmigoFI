@@ -19,6 +19,9 @@ const config: Config = {
       transitionProperty: {
         height: 'height',
       },
+      height: {
+        '250': '62.5rem',
+      },
     },
   },
   plugins: [],

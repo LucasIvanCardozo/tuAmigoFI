@@ -33,6 +33,7 @@ model courses {
   tps                                               tps[]
 
   @@index([name_normalized])
+  @@index([name_normalized], map: "courses_name_normalized_idx1")
 }
 
 model courses_degrees {
@@ -87,18 +88,23 @@ model midterms {
   courses            courses              @relation(fields: [id_course], references: [id], onDelete: NoAction, onUpdate: NoAction)
   users              users?               @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
   midterms_responses midterms_responses[]
+
+  @@unique([id, id_course], map: "midterms_id_id_course_idx")
 }
 
 model midterms_reactions {
   id                 Int                @id @default(autoincrement())
   id_user            Int
   id_response        Int
-  reaction           Int
   created_at         DateTime?          @default(now()) @db.Timestamp(6)
+  reaction           Boolean
   midterms_responses midterms_responses @relation(fields: [id_response], references: [id], onDelete: NoAction, onUpdate: NoAction)
   users              users              @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@unique([id_user, id_response], map: "midterms_reactions_id_user_id_response_idx")
+  @@unique([id_user, id_response], map: "midterms_reactions_id_user_id_response_idx1")
+  @@index([id_response])
+  @@index([id_user])
 }
 
 model midterms_responses {
@@ -129,6 +135,7 @@ model tps {
   users         users?          @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
   tps_responses tps_responses[]
 
+  @@unique([id, id_course], map: "tps_id_id_course_idx")
   @@unique([name, year], map: "tps_name_year_idx")
 }
 
@@ -136,12 +143,15 @@ model tps_reactions {
   id            Int           @id @default(autoincrement())
   id_user       Int
   id_response   Int
-  reaction      Int
   created_at    DateTime?     @default(now()) @db.Timestamp(6)
+  reaction      Boolean
   tps_responses tps_responses @relation(fields: [id_response], references: [id], onDelete: NoAction, onUpdate: NoAction)
   users         users         @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@unique([id_user, id_response], map: "tps_reactions_id_user_id_response_idx")
+  @@unique([id_user, id_response], map: "tps_reactions_id_user_id_response_idx1")
+  @@index([id_response])
+  @@index([id_user])
 }
 
 model tps_responses {

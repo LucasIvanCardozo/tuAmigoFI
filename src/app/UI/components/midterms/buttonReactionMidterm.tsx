@@ -1,7 +1,7 @@
 'use client';
 import { addReactionMidterm } from '@/app/lib/actions';
 import { fetchUserReactionMidterm } from '@/app/lib/data';
-import {  midterms_responses } from '@prisma/client';
+import { midterms_responses } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { AiFillLike } from 'react-icons/ai';
@@ -14,44 +14,54 @@ export default function ButtonReactionMidterm({
 }) {
   const [stateLike, setStateLike] = useState<boolean>(false);
   const [stateDislike, setStateDislike] = useState<boolean>(false);
-  const [numberLike, setNumberLike] = useState<number>(0);
-  const [numberDislike, setNumberDislike] = useState<number>(0);
+  const [numberLike, setNumberLike] = useState<number | undefined>();
+  const [numberDislike, setNumberDislike] = useState<number | undefined>();
   const { data: session } = useSession();
 
-  async function handleLike(reaction: number) {
+  async function handleLike(reaction: boolean) {
     if (session?.user?.id) {
-      if (reaction == 0) {
-        setStateDislike(!stateDislike);
-        if (stateDislike) setNumberDislike(numberDislike - 1);
-        else setNumberDislike(numberDislike + 1);
-        if (stateLike) {
-          setStateLike(false);
-          setNumberLike(numberLike - 1);
-        }
-      } else {
-        setStateLike(!stateLike);
-        if (stateLike) setNumberLike(numberLike - 1);
-        else setNumberLike(numberLike + 1);
-        if (stateDislike) {
-          setStateDislike(false);
-          setNumberDislike(numberDislike - 1);
-        }
+      if (numberDislike == undefined) {
+        setNumberDislike(0);
       }
-      await addReactionMidterm({
-        id: session.user.id,
-        id_response: response.id,
-        reaction: reaction,
-      });
+      if (numberLike == undefined) {
+        setNumberLike(0);
+      }
+      if (numberDislike != undefined && numberLike != undefined) {
+        if (!reaction) {
+          setStateDislike(!stateDislike);
+          if (stateDislike) setNumberDislike(numberDislike - 1);
+          else setNumberDislike(numberDislike + 1);
+          if (stateLike) {
+            setStateLike(false);
+            setNumberLike(numberLike - 1);
+          }
+        } else {
+          setStateLike(!stateLike);
+          if (stateLike) setNumberLike(numberLike - 1);
+          else setNumberLike(numberLike + 1);
+          if (stateDislike) {
+            setStateDislike(false);
+            setNumberDislike(numberDislike - 1);
+          }
+        }
+        await addReactionMidterm({
+          id: session.user.id,
+          id_response: response.id,
+          reaction: reaction,
+        });
+      }
     } else {
       window.alert('Deberás iniciar sesion para reaccionar al problema.');
     }
   }
 
   useEffect(() => {
+    setNumberDislike(undefined);
+    setNumberLike(undefined);
     const searchReactions = async () => {
       const totalReactions = await fetchUserReactionMidterm(response.id);
       const likesTotal = totalReactions.filter(
-        (reaction) => reaction.reaction == 1
+        (reaction) => reaction.reaction
       ).length;
       setNumberLike(likesTotal);
       setNumberDislike(totalReactions.length - likesTotal);
@@ -59,7 +69,7 @@ export default function ButtonReactionMidterm({
         (reaction) => reaction.id_user == session?.user?.id
       );
       if (reaction) {
-        if (reaction.reaction == 1) {
+        if (reaction.reaction) {
           setStateLike(true);
           setStateDislike(false);
         } else {
@@ -75,18 +85,18 @@ export default function ButtonReactionMidterm({
   }, [session, response]);
 
   return (
-    <span className="flex absolute bottom-0 right-0 z-10 gap-1 bg-[--white] rounded-md">
-      <button className="flex" onClick={() => handleLike(1)}>
+    <span className="flex absolute bottom-0 right-0 z-10 gap-1 p-1 bg-[--white] rounded-md">
+      <button className="flex" onClick={() => handleLike(true)}>
         <AiFillLike
           className={(stateLike ? 'text-green-500' : '') + ' text-xl'}
         />
-        {numberLike}
+        {numberLike != undefined ? numberLike : '-'}
       </button>
-      <button className="flex" onClick={() => handleLike(0)}>
+      <button className="flex" onClick={() => handleLike(false)}>
         <TbAlertHexagon
           className={(stateDislike ? 'text-red-500' : '') + ' text-xl'}
         />
-        {numberDislike}
+        {numberDislike != undefined ? numberDislike : '-'}
       </button>
     </span>
   );

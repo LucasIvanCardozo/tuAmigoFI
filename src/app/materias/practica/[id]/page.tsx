@@ -1,6 +1,6 @@
 import { fetchCourse, fetchTps } from '@/app/lib/data';
-import AsideProblems from '@/app/UI/components/asideProblems';
-import ProblemsTableTp from '@/app/UI/components/problemsTableTp';
+import AsideProblemsTps from '@/app/UI/components/tps/asideProblemsTps';
+import ProblemsTableTp from '@/app/UI/components/tps/problemsTableTp';
 
 export default async function Practica({ params }: { params: { id: string } }) {
   const id_materia = Number(params.id);
@@ -10,7 +10,7 @@ export default async function Practica({ params }: { params: { id: string } }) {
   return (
     <>
       <main className="h-screen w-full pt-8 flex gap-2 max-w-screen-lg m-auto sm:pb-3 sm:px-2 sm:pt-16">
-        <AsideProblems tpList={tpList} idCourse={id_materia} />
+        <AsideProblemsTps tpList={tpList} idCourse={id_materia} />
         <section className="text-[--black] flex flex-col grow relative h-full p-3 sm:p-0">
           <div>
             <div className="flex justify-between items-end">

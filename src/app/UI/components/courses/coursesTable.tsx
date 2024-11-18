@@ -1,7 +1,7 @@
 import { fetchCourses } from '@/app/lib/data';
 import Course from './course';
 import { Suspense } from 'react';
-import CourseSkeleton from './skeletons/courseSkeleton';
+import CourseSkeleton from '../skeletons/courseSkeleton';
 import IndexList from './indexList';
 
 export default async function CoursesTable({

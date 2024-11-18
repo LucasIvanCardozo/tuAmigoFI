@@ -1,5 +1,5 @@
-import CoursesTable from '../UI/components/coursesTable';
-import SearchCourses from '../UI/components/searchCourses';
+import CoursesTable from '../UI/components/courses/coursesTable';
+import SearchCourses from '../UI/components/courses/searchCourses';
 import DegreeCourse from '../UI/components/degreeCourse';
 import YearCourse from '../UI/components/yearCourse';
 import Image from 'next/image';

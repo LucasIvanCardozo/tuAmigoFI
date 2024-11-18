@@ -37,3 +37,7 @@ agrego tps
 agrego tps_responses
 agrego tps_reactions
 
+------------------
+
+cambio reaction de midterms_reaction y tps_reactions a booleano
+indice par en tps y midterms,indice id_r y id_u a midterms_reaction, lo mismo para tps_reactions

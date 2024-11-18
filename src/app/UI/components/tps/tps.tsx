@@ -17,7 +17,7 @@ import { tps_responses, tps } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { MdOutlineAddBox } from 'react-icons/md';
 import { MdDelete } from 'react-icons/md';
-import PdfView from './pdfView';
+import PdfView from '../pdfView';
 import ResponseTp from './responseTp';
 export default function Tps({
   tp,
@@ -86,7 +86,7 @@ export default function Tps({
         <div className="relative overflow-hidden bg-[#C8E0E4] h-min py-1 rounded-md sm:p-1">
           <PdfView id={tp.id} url="tps/problemas" />
         </div>
-        <ul className="flex flex-col gap-1 pl-2">
+        <ul className="flex flex-col gap-1 pl-1">
           {responses == undefined || loading ? (
             <li className="pl-3">
               <p>Cargando respuestas...</p>

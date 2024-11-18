@@ -18,9 +18,9 @@ import {
   TbSquareAsteriskFilled,
   TbSquareDotFilled,
 } from 'react-icons/tb';
-import ModalAddTp from './modalAddTp';
+import ModalAddTp from './modals/modalAddTp';
 
-export default function AsideProblems({
+export default function AsideProblemsTps({
   tpList,
   idCourse,
 }: {

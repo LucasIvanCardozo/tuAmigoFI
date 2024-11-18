@@ -179,9 +179,7 @@ export async function fetchMidterms({
   const midterms = await prisma.midterms.findMany({
     where: {
       id: id_midterm,
-      courses: {
-        id: id_materias,
-      },
+      id_course: id_materias,
     },
     orderBy: {
       id: 'asc',
@@ -301,31 +299,27 @@ export async function fetchResponsesTp({ id_tp }: { id_tp: number }) {
       id_tp: id_tp,
     },
     include: {
-      _count: {
-        select: {
-          tps_reactions: {
-            where: {
-              reaction: 1,
-            },
-          },
-        },
-      },
+      tps_reactions: true,
     },
     orderBy: {
       number: 'asc',
     },
   });
-  const groupedResponses = responses.reduce<Record<number, typeof responses>>(
+
+  const groupedResponses = responses.reduce<Record<number, any>>(
     (acc, response) => {
-      const { number } = response;
+      const { number, tps_reactions } = response;
+
+      const score =
+        tps_reactions.filter((reaction) => reaction.reaction).length -
+        tps_reactions.filter((reaction) => reaction.reaction).length;
+
       if (!acc[number]) {
         acc[number] = [];
       }
-      acc[number].push(response);
-      acc[number].sort(
-        (a, b) =>
-          (b._count?.tps_reactions || 0) - (a._count?.tps_reactions || 0)
-      );
+
+      acc[number].push({ ...response, score });
+      acc[number].sort((a: any, b: any) => b.score - a.score);
       return acc;
     },
     {}
@@ -344,32 +338,28 @@ export async function fetchResponsesMidterm({
       id_midterm: id_midterm,
     },
     include: {
-      _count: {
-        select: {
-          midterms_reactions: {
-            where: {
-              reaction: 1,
-            },
-          },
-        },
-      },
+      midterms_reactions: true,
     },
     orderBy: {
       number: 'asc',
     },
   });
-  const groupedResponses = responses.reduce<Record<number, typeof responses>>(
+
+  const groupedResponses = responses.reduce<Record<number, any>>(
     (acc, response) => {
-      const { number } = response;
+      const { number, midterms_reactions } = response;
+
+      const score =
+        midterms_reactions.filter((reaction) => reaction.reaction)
+          .length -
+        midterms_reactions.filter((reaction) => reaction.reaction).length;
+
       if (!acc[number]) {
         acc[number] = [];
       }
-      acc[number].push(response);
-      acc[number].sort(
-        (a, b) =>
-          (b._count?.midterms_reactions || 0) -
-          (a._count?.midterms_reactions || 0)
-      );
+
+      acc[number].push({ ...response, score });
+      acc[number].sort((a: any, b: any) => b.score - a.score);
       return acc;
     },
     {}

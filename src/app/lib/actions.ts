@@ -278,7 +278,7 @@ export async function addReactionTp({
 }: {
   id: number;
   id_response: number;
-  reaction: number;
+  reaction: boolean;
 }) {
   try {
     const reactionSearch = await prisma.tps_reactions.findFirst({
@@ -328,7 +328,7 @@ export async function addReactionMidterm({
 }: {
   id: number;
   id_response: number;
-  reaction: number;
+  reaction: boolean;
 }) {
   try {
     const reactionSearch = await prisma.midterms_reactions.findFirst({

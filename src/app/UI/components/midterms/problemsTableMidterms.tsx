@@ -3,10 +3,10 @@ import Midterm from './midterm';
 import { useEffect, useState } from 'react';
 import { midterms, midterms_responses } from '@prisma/client';
 import { useSearchParams } from 'next/navigation';
-import TpsSkeleton from './skeletons/tpsSkeleton';
-import ModalDeleteMidterm from './modalDeleteMidterm';
-import ModalAddMidtermResponse from './modalAddMidtermResponse';
-import ModalDeleteMidtermResponse from './modalDeleteMidtermResponse';
+import TpsSkeleton from '../skeletons/tpsSkeleton';
+import ModalDeleteMidterm from './modals/modalDeleteMidterm';
+import ModalAddMidtermResponse from './modals/modalAddMidtermResponse';
+import ModalDeleteMidtermResponse from './modals/modalDeleteMidtermResponse';
 
 export default function ProblemsTableMidterms({
   midtermsList,

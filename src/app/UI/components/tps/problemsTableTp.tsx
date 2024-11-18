@@ -3,10 +3,10 @@ import Tps from './tps';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { tps, tps_responses } from '@prisma/client';
-import TpsSkeleton from './skeletons/tpsSkeleton';
-import ModalDeleteTp from './modalDeleteTP';
-import ModalAddTpResponse from './modalAddTpResponse';
-import ModalDeleteTpResponse from './modalDeleteTpResponse';
+import TpsSkeleton from '../skeletons/tpsSkeleton';
+import ModalDeleteTp from './modals/modalDeleteTP';
+import ModalAddTpResponse from './modals/modalAddTpResponse';
+import ModalDeleteTpResponse from './modals/modalDeleteTpResponse';
 
 export default function ProblemsTable({ tpList }: { tpList: tps[] }) {
   const searchParams = useSearchParams();
