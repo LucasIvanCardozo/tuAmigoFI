@@ -84,7 +84,7 @@ export default function ResponseTp({
       {
         // 0 -> texto ; 1 -> imagen ; 2 -> pdf ; 3 -> codigo
         response[1][indexResponse].type == 0 ? (
-          <div>
+          <div className="text-balance">
             <p>{response[1][indexResponse].text}</p>
           </div>
         ) : response[1][indexResponse].type == 1 ? (
