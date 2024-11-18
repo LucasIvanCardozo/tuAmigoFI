@@ -20,7 +20,13 @@ export default function ButtonReactionTp({
 
   async function handleLike(reaction: boolean) {
     if (session?.user?.id) {
-      if (numberDislike && numberLike) {
+      if (numberDislike == undefined) {
+        setNumberDislike(0);
+      }
+      if (numberLike == undefined) {
+        setNumberLike(0);
+      }
+      if (numberDislike != undefined && numberLike != undefined) {
         if (!reaction) {
           setStateDislike(!stateDislike);
           if (stateDislike) setNumberDislike(numberDislike - 1);
