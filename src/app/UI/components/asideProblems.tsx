@@ -95,6 +95,7 @@ export default function AsideProblems({
     <>
       <button
         className="fixed top-0 left-0 m-1 h-8 bg-[--black-olive] rounded-md aspect-square rounded-e-none z-50 sm:hidden"
+        aria-label="Abrir o cerrar menú"
         onClick={handleTpsState}
       >
         <CgMenu
@@ -133,8 +134,12 @@ export default function AsideProblems({
             }
           >
             {numberIcons[0]}
-            <button className="text-start" onClick={() => handleTps('')}>
-              <h3 className="text-base leading-4">Mostrar todos</h3>
+            <button
+              className="text-start"
+              onClick={() => handleTps('')}
+              aria-label="Mostrar todos"
+            >
+              <h2 className="text-base leading-4">Mostrar todos</h2>
               <p className="text-xs text-[--silver]">
                 {`Todos los TPs disponibles`}{' '}
               </p>
@@ -155,9 +160,10 @@ export default function AsideProblems({
                 : numberIcons[0]}
               <button
                 className="text-start"
+                aria-label={`Tp número ${number} con nombre ${name}`}
                 onClick={() => handleTps(id.toString())}
               >
-                <h3 className="text-base leading-4">{name}</h3>
+                <h2 className="text-base leading-4">{name}</h2>
                 <p className="text-xs text-[--silver]">{`Del año ${year}`} </p>
               </button>
             </li>
@@ -170,11 +176,12 @@ export default function AsideProblems({
             >
               <button
                 className="text-start bg-[--white] py-1 px-2 rounded-md"
+                aria-label="Agregar Tp"
                 onClick={() => handleModal(idCourse)}
               >
-                <h3 className="text-base text-[--black-olive] leading-4">
+                <p className="text-base text-[--black-olive] leading-4">
                   Agregar TP
-                </h3>
+                </p>
               </button>
             </li>
           )}

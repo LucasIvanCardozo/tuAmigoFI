@@ -74,6 +74,7 @@ export default function AsideProblemsMidterms({
       <button
         className="fixed top-0 left-0 m-1 h-8 bg-[--black-olive] rounded-md aspect-square rounded-e-none z-50 sm:hidden"
         onClick={handleMidtermsState}
+        aria-label="Abrir o cerrar menú"
       >
         <CgMenu
           className={
@@ -111,8 +112,12 @@ export default function AsideProblemsMidterms({
             }
           >
             <SiGoogledocs />
-            <button className="text-start" onClick={() => handleMidterms('')}>
-              <h3 className="text-base leading-4">Mostrar todos</h3>
+            <button
+              className="text-start"
+              onClick={() => handleMidterms('')}
+              aria-label="Mostrar todos"
+            >
+              <h2 className="text-base leading-4">Mostrar todos</h2>
               <p className="text-xs text-[--silver]">
                 {`Todos los parciales`}{' '}
               </p>
@@ -132,8 +137,9 @@ export default function AsideProblemsMidterms({
               <button
                 className="text-start"
                 onClick={() => handleMidterms(id.toString())}
+                aria-label={`${name} del ${date}`}
               >
-                <h3 className="text-base leading-4">{name}</h3>
+                <h2 className="text-base leading-4">{name}</h2>
                 <p className="text-xs text-[--silver]">
                   {`Del ${date.getMonth()}/${date.getFullYear()}`}{' '}
                 </p>
@@ -150,10 +156,11 @@ export default function AsideProblemsMidterms({
               <button
                 className="text-start bg-[--white] py-1 px-2 rounded-md"
                 onClick={() => handleModal(idCourse)}
+                aria-label="Agregar parcial"
               >
-                <h3 className="text-base text-[--black-olive] leading-4">
+                <p className="text-base text-[--black-olive] leading-4">
                   Agregar Parcial
-                </h3>
+                </p>
               </button>
             </li>
           )}

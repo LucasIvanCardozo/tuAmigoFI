@@ -91,9 +91,13 @@ export default function Tps({
           </div>
           <ul className="flex flex-col gap-1 pl-2">
             {responses == undefined || loading ? (
-              <p className="pl-3">Cargando respuestas...</p>
+              <li className="pl-3">
+                <p>Cargando respuestas...</p>
+              </li>
             ) : Object.keys(responses).length == 0 ? (
-              <p className="pl-3">Sin respuestas :c</p>
+              <li className="pl-3">
+                <p>Sin respuestas :c</p>
+              </li>
             ) : (
               <>
                 {Object.entries(responses).map((response, index) => (
