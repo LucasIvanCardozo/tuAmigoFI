@@ -224,29 +224,29 @@ export async function deleteMidtermResponse({ id }: { id: number }) {
   }
 }
 
-export async function createAnonymus() {
-  const existingContributor = await prisma.users.findUnique({
-    where: {
-      id: 0, // Verificamos si el dni ya existe
-    },
-  });
+// export async function createAnonymus() {
+//   const existingContributor = await prisma.users.findUnique({
+//     where: {
+//       id: 0, // Verificamos si el dni ya existe
+//     },
+//   });
 
-  if (!existingContributor) {
-    // Si no existe, lo creamos
-    const contributor = await prisma.users.create({
-      data: {
-        id: 0,
-        email: 'Anonymous',
-        name: 'Anonymous',
-        tier: 0,
-      },
-    });
-    return contributor;
-  }
+//   if (!existingContributor) {
+//     // Si no existe, lo creamos
+//     const contributor = await prisma.users.create({
+//       data: {
+//         id: 0,
+//         email: 'Anonymous',
+//         name: 'Anonymous',
+//         tier: 0,
+//       },
+//     });
+//     return contributor;
+//   }
 
-  // Si ya existe, retornamos el registro existente
-  return existingContributor;
-}
+//   // Si ya existe, retornamos el registro existente
+//   return existingContributor;
+// }
 
 // export async function AddContributor(idProblem: number, id: number) {
 //   const problem = await prisma.problems.update({
@@ -266,15 +266,15 @@ export async function createUser({
   email,
   image,
 }: {
-  name?: string | null;
+  name: string;
   email: string;
-  image?: string | null;
+  image: string;
 }) {
   const user = await prisma.users.create({
     data: {
       email: email,
-      ...(name ? { name: name } : {}),
-      ...(image ? { image: image } : {}),
+      name: name,
+      image: image,
       tier: 0,
     },
   });
