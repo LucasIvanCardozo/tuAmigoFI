@@ -75,7 +75,7 @@ export default function ButtonReaction({
   }, [session, response]);
 
   return (
-    <span className="flex absolute bottom-0 right-0 z-10 gap-1 bg-[--white] rounded-sm">
+    <span className="flex absolute bottom-0 right-0 z-10 gap-1 p-1 bg-[--white] rounded-md">
       <button className="flex" onClick={() => handleLike(1)}>
         <AiFillLike
           className={(stateLike ? 'text-green-500' : '') + ' text-xl'}

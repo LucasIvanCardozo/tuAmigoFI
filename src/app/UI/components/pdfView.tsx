@@ -10,23 +10,15 @@ import {
 
 export default function PdfView({ id, url }: { id: number; url: string }) {
   const [pageNumber, setPageNumber] = useState<number>(1);
-  const [isTherePage, setIsTherePage] = useState<boolean>(true);
-  const [loadingImage, setLoadImage] = useState<boolean>(false);
+  const [lastPage, setLastPage] = useState<number>(0);
+  const [loadingImage, setLoadingImage] = useState<boolean>(false);
+  const imageUrl = `https://res.cloudinary.com/donzj5rlf/image/upload/pg_${pageNumber}/f_auto/q_auto:eco/v${Math.floor(
+    Date.now() / (1000 * 60 * 60 * 24)
+  )}/${url}/${id}`;
 
-  const handlePage = async (page: number) => {
-    setLoadImage(true);
-    const response = await fetch(
-      `https://res.cloudinary.com/donzj5rlf/image/upload/pg_${page}/f_auto/q_auto:eco/v${Math.floor(
-        Date.now() / (1000 * 60 * 60 * 1)
-      )}/${url}/${id}`
-    );
-    if (response.ok) {
-      setIsTherePage(true);
-      setPageNumber(page);
-    } else {
-      setIsTherePage(false);
-    }
-    setLoadImage(false);
+  const handlePage = (newPage: number) => {
+    setLoadingImage(true);
+    setPageNumber(newPage);
   };
 
   const downloadFile = async () => {
@@ -36,7 +28,7 @@ export default function PdfView({ id, url }: { id: number; url: string }) {
     const blob = await response.blob();
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
-    link.download = 'descarga-Tu-Amigo-FI.pdf';
+    link.download = 'Tu-Amigo-FI-descarga.pdf';
     link.click();
   };
 
@@ -44,12 +36,14 @@ export default function PdfView({ id, url }: { id: number; url: string }) {
     <>
       <div className="relative flex justify-center w-full">
         <Image
-          src={`https://res.cloudinary.com/donzj5rlf/image/upload/pg_${pageNumber}/f_auto/q_auto:eco/v${Math.floor(
-            Date.now()
-            //  / (1000 * 60 * 60 * 1)
-          )}/${url}/${id}`}
+          src={imageUrl}
           alt="PDF"
-          onLoad={() => setLoadImage(false)}
+          onLoad={() => setLoadingImage(false)}
+          onError={() => {
+            setLastPage(pageNumber - 1);
+            setPageNumber(pageNumber - 1);
+            setLoadingImage(false);
+          }}
           width={1200}
           height={1697}
           loading="lazy"
@@ -60,16 +54,16 @@ export default function PdfView({ id, url }: { id: number; url: string }) {
           <span className="relative py-1">
             {pageNumber != 1 && (
               <button
-                className="absolute right-full"
+                className="absolute h-full right-full top-0 bottom-0"
                 onClick={() => handlePage(pageNumber - 1)}
               >
                 <MdOutlineKeyboardArrowLeft />
               </button>
             )}
             Página {pageNumber}
-            {isTherePage && (
+            {pageNumber != lastPage && (
               <button
-                className="absolute left-full"
+                className="absolute h-full left-full top-0 bottom-0"
                 onClick={() => handlePage(pageNumber + 1)}
               >
                 <MdOutlineKeyboardArrowRight />

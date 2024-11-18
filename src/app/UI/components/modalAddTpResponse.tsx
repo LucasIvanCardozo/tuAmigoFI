@@ -74,7 +74,6 @@ export default function ModalAddTpResponse({
     ) {
       try {
         if (typeResponse == 0 || typeResponse == 3) {
-          console.log('texto');
           if (text && text != '') {
             const addResponse = await addResponseTp({
               idUser: session.user.id,
@@ -84,6 +83,7 @@ export default function ModalAddTpResponse({
               type: typeResponse,
             });
             callback(undefined);
+            window.location.reload();
           } else throw new Error('No se encontro ningun texto');
         } else if (typeResponse == 1 || typeResponse == 2) {
           if (file) {
@@ -105,6 +105,7 @@ export default function ModalAddTpResponse({
               });
               const result = await response.json();
               callback(undefined);
+              window.location.reload();
             } else {
               throw new Error('Ocurrio un error en la suba de la respuesta');
             }

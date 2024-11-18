@@ -73,6 +73,7 @@ export default function ModalAddTp({
           });
           const result = await response.json();
           callback(undefined);
+          window.location.reload();
         } else {
           setError('Ocurrio un error en la suba del PDF');
         }

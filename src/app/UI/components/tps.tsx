@@ -13,7 +13,6 @@ import {
 } from 'react-icons/tb';
 import { fetchResponses } from '@/app/lib/data';
 import { useEffect, useState } from 'react';
-import TpsSkeleton from './skeletons/tpsSkeleton';
 import { tps_responses, tps } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { MdOutlineAddBox } from 'react-icons/md';
@@ -22,11 +21,13 @@ import PdfView from './pdfView';
 import ResponseTp from './responseTp';
 export default function Tps({
   tp,
+  display,
   callbackDeleteTp,
   callbackAddResponse,
   callbackDeleteResponse,
 }: {
   tp: tps;
+  display: number | undefined;
   callbackDeleteTp: (tp: tps | undefined) => void;
   callbackAddResponse: (tp: tps | undefined) => void;
   callbackDeleteResponse: (response: tps_responses | undefined) => void;
@@ -51,17 +52,17 @@ export default function Tps({
     setLoading(true);
     const searchProblems = async () => {
       const responses = await fetchResponses({ id_tp: tp.id });
-      setTimeout(() => {
-        setResponses(responses);
-        setLoading(false);
-      }, 1000);
+      setResponses(responses);
+      setLoading(false);
     };
     searchProblems();
-  }, [tp]);
+  }, []);
 
   return (
     <>
-      <li key={tp.id} className="relative">
+      <li
+        className={'relative ' + `${display && display != tp.id && 'hidden'}`}
+      >
         <div className="flex items-center text-xl sticky top-0 z-20 bg-[--platinum] py-1 ">
           {tp.number && numberIcons[tp.number]
             ? numberIcons[tp.number]
@@ -88,23 +89,23 @@ export default function Tps({
           <div className="relative overflow-hidden bg-[#C8E0E4] h-min py-1 rounded-md sm:p-1">
             <PdfView id={tp.id} url="tps/problemas" />
           </div>
-          {responses == undefined || loading ? (
-            <ul className="flex h-96 flex-col z-10 grow relative overflow-y-auto">
-              <TpsSkeleton />
-            </ul>
-          ) : Object.keys(responses).length == 0 ? (
-            <p className="pl-3">Sin respuestas :c</p>
-          ) : (
-            <ul className="flex flex-col gap-1 pl-3">
-              {Object.entries(responses).map((response, index) => (
-                <ResponseTp
-                  key={index}
-                  response={response}
-                  callbackDeleteResponse={callbackDeleteResponse}
-                />
-              ))}
-            </ul>
-          )}
+          <ul className="flex flex-col gap-1 pl-2">
+            {responses == undefined || loading ? (
+              <p className="pl-3">Cargando respuestas...</p>
+            ) : Object.keys(responses).length == 0 ? (
+              <p className="pl-3">Sin respuestas :c</p>
+            ) : (
+              <>
+                {Object.entries(responses).map((response, index) => (
+                  <ResponseTp
+                    key={response[0]}
+                    response={response}
+                    callbackDeleteResponse={callbackDeleteResponse}
+                  />
+                ))}
+              </>
+            )}
+          </ul>
         </div>
       </li>
     </>

@@ -42,6 +42,7 @@ export default function ModalDeleteMidtermResponse({
             id: midterm.id,
           });
           callback(undefined);
+          window.location.reload();
         } else {
           throw new Error('Error el na eliminacion el cloudinary');
         }

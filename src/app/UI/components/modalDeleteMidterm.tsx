@@ -46,6 +46,8 @@ export default function ModalDeleteMidterm({
         if (res.ok && res2.ok) {
           const deleteMidterms = await deleteMidterm({ id: midterm.id });
           callback(undefined);
+          window.location.href =
+            window.location.origin + window.location.pathname;
         } else {
           throw new Error('Error el na eliminacion el cloudinary');
         }

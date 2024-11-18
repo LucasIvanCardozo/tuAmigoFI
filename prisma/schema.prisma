@@ -151,8 +151,8 @@ model tps_responses {
 model users {
   id                 Int                  @id @default(autoincrement())
   email              String               @unique @db.VarChar
-  name               String?              @db.VarChar
-  image              String?              @db.VarChar
+  name               String               @db.VarChar
+  image              String               @db.VarChar
   tier               Int
   midterms           midterms[]
   midterms_reactions midterms_reactions[]

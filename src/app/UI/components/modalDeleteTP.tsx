@@ -45,9 +45,10 @@ export default function ModalDeleteTp({
 
         if (res.ok && res2.ok) {
           const deleteTp = await deleteTP({ id: tp.id });
+          callback(undefined);
+          window.location.href =
+            window.location.origin + window.location.pathname;
         } else throw new Error('Error al eliminar respuesta');
-
-        callback(undefined);
       } catch (err) {
         setError('Ocurrio un error al querer eliminar el TP');
       }

@@ -8,26 +8,19 @@ import ModalDeleteTp from './modalDeleteTP';
 import ModalAddTpResponse from './modalAddTpResponse';
 import ModalDeleteTpResponse from './modalDeleteTpResponse';
 
-export default function ProblemsTable({
-  tpList,
-}: {
-  tpList: tps[];
-}) {
+export default function ProblemsTable({ tpList }: { tpList: tps[] }) {
   const searchParams = useSearchParams();
   const [modalDeleteTp, setModalDeleteTp] = useState<tps | undefined>();
   const [modalAddResponse, setModalAddResponse] = useState<tps | undefined>();
   const [modalDeleteResponse, setModalDeleteResponse] = useState<
     tps_responses | undefined
   >();
-  const [tps, setTps] = useState<tps[]>();
+  const [showTp, setShowTp] = useState<number | undefined>(
+    Number(searchParams.get('tps')) || undefined
+  );
 
   useEffect(() => {
-    const tpsAux = Number(searchParams.get('tps')) || undefined;
-    if (tpsAux) {
-      setTps(tpList.filter((tp) => tp.id == tpsAux));
-    } else {
-      setTps(tpList);
-    }
+    setShowTp(Number(searchParams.get('tps')) || undefined);
   }, [searchParams]);
 
   const handleModalDeleteTp = (tp: tps | undefined) => setModalDeleteTp(tp);
@@ -41,17 +34,18 @@ export default function ProblemsTable({
   return (
     <>
       <ul className="flex flex-col gap-1 grow relative overflow-y-auto">
-        {tps == undefined ? (
+        {tpList == undefined ? (
           <TpsSkeleton />
-        ) : tps.length == 0 ? (
+        ) : tpList.length == 0 ? (
           <li className="w-full h-full flex justify-center items-center text-3xl">
             <p>No hay datos :,c</p>
           </li>
         ) : (
-          tps.map((tp, index) => (
+          tpList.map((tp) => (
             <Tps
-              key={index}
+              key={tp.id}
               tp={tp}
+              display={showTp}
               callbackDeleteTp={handleModalDeleteTp}
               callbackAddResponse={handleModalAddResponse}
               callbackDeleteResponse={handleModalDeleteResponse}
