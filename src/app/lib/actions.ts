@@ -137,16 +137,25 @@ export async function createTp({
 
 export async function deleteTP({ id }: { id: number }) {
   try {
+    const tpsResponses = await prisma.tps_responses.findMany({
+      where: {
+        id_tp: id,
+      },
+    });
     const deleteTpsResponses = await prisma.tps_responses.deleteMany({
       where: {
         id_tp: id,
       },
     });
-    const deleteTpsReactions = await prisma.tps_reactions.deleteMany({
-      where: {
-        id_problem: id,
-      },
+
+    tpsResponses.forEach(async (response) => {
+      const deleteTpsReactions = await prisma.tps_reactions.deleteMany({
+        where: {
+          id_problem: response.id,
+        },
+      });
     });
+
     const deleteTP = await prisma.tps.delete({
       where: {
         id: id,
