@@ -311,8 +311,8 @@ export async function fetchResponsesTp({ id_tp }: { id_tp: number }) {
       const { number, tps_reactions } = response;
 
       const score =
-        tps_reactions.filter((reaction) => reaction.reaction).length -
-        tps_reactions.filter((reaction) => reaction.reaction).length;
+        tps_reactions.filter((reaction) => reaction.reaction == true).length -
+        tps_reactions.filter((reaction) => reaction.reaction == false).length;
 
       if (!acc[number]) {
         acc[number] = [];
@@ -350,9 +350,10 @@ export async function fetchResponsesMidterm({
       const { number, midterms_reactions } = response;
 
       const score =
-        midterms_reactions.filter((reaction) => reaction.reaction)
+        midterms_reactions.filter((reaction) => reaction.reaction == true)
           .length -
-        midterms_reactions.filter((reaction) => reaction.reaction).length;
+        midterms_reactions.filter((reaction) => reaction.reaction == false)
+          .length;
 
       if (!acc[number]) {
         acc[number] = [];
