@@ -143,30 +143,37 @@ export async function deleteTP({ id }: { id: number }) {
       },
     });
 
-    tpsResponses.forEach(async (response) => {
-      await prisma.tps_reactions.deleteMany({
-        where: {
-          id_problem: response.id,
-        },
-      });
-    });
+    // Eliminar todas las reacciones asociadas a las respuestas del TP
+    await Promise.all(
+      tpsResponses.map((response) =>
+        prisma.tps_reactions.deleteMany({
+          where: {
+            id_problem: response.id,
+          },
+        })
+      )
+    );
 
-    const deleteTpsResponses = await prisma.tps_responses.deleteMany({
+    // Eliminar las respuestas del TP
+    await prisma.tps_responses.deleteMany({
       where: {
         id_tp: id,
       },
     });
 
+    // Eliminar el TP
     const deleteTP = await prisma.tps.delete({
       where: {
         id: id,
       },
     });
+
     return deleteTP;
   } catch (error) {
     throw new Error('No se pudo eliminar el TP');
   }
 }
+
 export async function deleteTpResponse({ id }: { id: number }) {
   try {
     const deleteTpsReactions = await prisma.tps_reactions.deleteMany({
