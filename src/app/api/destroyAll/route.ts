@@ -14,12 +14,14 @@ export async function POST(request: NextRequest) {
   try {
     const subFolder = data.get('subFolder')?.toString() || '';
     if (subFolder) {
-      const deleteAssets = await cloudinary.api.delete_resources_by_prefix(
-        `${subFolder}/`,
-        async function () {
-          const deleteFolder = await cloudinary.api.delete_folder(subFolder);
-        }
-      );
+      const folderExists = await cloudinary.api
+        .sub_folders(subFolder)
+        .catch(() => null);
+        
+      if (folderExists) {
+        await cloudinary.api.delete_resources_by_prefix(`${subFolder}/`);
+        await cloudinary.api.delete_folder(subFolder);
+      }
     }
     return NextResponse.json({ success: true });
   } catch (error: any) {
