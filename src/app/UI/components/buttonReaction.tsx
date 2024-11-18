@@ -1,6 +1,6 @@
 'use client';
-import { addReaction } from '@/app/lib/actions';
-import { fetchUserReaction } from '@/app/lib/data';
+import { addReactionTp } from '@/app/lib/actions';
+import { fetchUserReactionTp } from '@/app/lib/data';
 import { tps_responses } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
@@ -37,7 +37,7 @@ export default function ButtonReaction({
           setNumberDislike(numberDislike - 1);
         }
       }
-      const reaccion = await addReaction({
+      await addReactionTp({
         id: session.user.id,
         id_response: response.id,
         reaction: reaction,
@@ -49,7 +49,7 @@ export default function ButtonReaction({
 
   useEffect(() => {
     const searchReactions = async () => {
-      const totalReactions = await fetchUserReaction(response.id);
+      const totalReactions = await fetchUserReactionTp(response.id);
       const likesTotal = totalReactions.filter(
         (reaction) => reaction.reaction == 1
       ).length;

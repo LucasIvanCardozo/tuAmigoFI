@@ -16,8 +16,6 @@ borro user_reactions
 borro columna id_user de problems
 borro users
 
-----------------------------------------------
-
 añadi id_course a links
 añadi id_course a tps
 añadi id_tps a problems
@@ -25,4 +23,17 @@ elimine las relaciones entre ellas (las de arriba)
 cambio nombre de tabla problems a tps_responses
 elimino text_normalized, text_plus,responses de tps_responses
 cambio nombre de user_reactions a tps_reactions
- 
+asdasdada
+
+-------------------------
+elimino tps_reactions
+elimino tps_responses
+elimino midterms
+elimino tps
+agrego midterms
+agrego midterms_reactions
+agrego midterms_responses
+agrego tps
+agrego tps_responses
+agrego tps_reactions
+

@@ -31,28 +31,32 @@ export default function ModalDeleteMidterm({
       try {
         const formData = new FormData();
         formData.set('id', midterm.id.toString());
-        formData.set('subFolder', 'parciales/problemas');
-        const res = await fetch('/api/destroy', {
+        formData.set('subFolder', `parciales/respuestas/${midterm.id}`);
+        const res = await fetch('/api/destroyAll', {
           method: 'POST',
           body: formData,
         });
 
-        formData.set('subFolder', 'parciales/respuestas');
+        formData.set('id', midterm.id.toString());
+        formData.set('subFolder', `parciales/problemas`);
+
         const res2 = await fetch('/api/destroy', {
           method: 'POST',
           body: formData,
         });
 
         if (res.ok && res2.ok) {
-          const deleteMidterms = await deleteMidterm({ id: midterm.id });
+          await deleteMidterm({ id: midterm.id });
           callback(undefined);
           window.location.href =
             window.location.origin + window.location.pathname;
         } else {
-          throw new Error('Error el na eliminacion el cloudinary');
+          throw new Error('Error al eliminar esta respuesta');
         }
-      } catch (err) {
-        setError('Ocurrio un error al querer eliminar el parcial');
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else setError('Ocurrio un error inesperado');
       }
     }
     setLoading(false);
@@ -66,7 +70,7 @@ export default function ModalDeleteMidterm({
       >
         <div>
           <h3 className="text-lg mb-4">
-            <b>Estas por eliminar un TP</b>
+            <b>Estas por eliminar un parcial</b>
           </h3>
           <div className="flex flex-col [&>*]:flex [&>*]:gap-1">
             <p>

@@ -1,7 +1,7 @@
 'use client';
 import Midterm from './midterm';
 import { useEffect, useState } from 'react';
-import { midterms } from '@prisma/client';
+import { midterms, midterms_responses } from '@prisma/client';
 import { useSearchParams } from 'next/navigation';
 import TpsSkeleton from './skeletons/tpsSkeleton';
 import ModalDeleteMidterm from './modalDeleteMidterm';
@@ -17,26 +17,18 @@ export default function ProblemsTableMidterms({
   const [modalDeleteMidterm, setModalDeleteMidterm] = useState<
     midterms | undefined
   >();
-  const [modalDeleteMidtermResponse, setModalDeleteMidtermResponse] = useState<
-    midterms | undefined
+  const [modalDeleteResponse, setModalDeleteResponse] = useState<
+    midterms_responses | undefined
   >();
   const [modalAddResponse, setModalAddResponse] = useState<
     midterms | undefined
   >();
-  const [midterms, setMidterms] = useState<midterms[]>();
+  const [showTp, setShowTp] = useState<number | undefined>(
+    Number(searchParams.get('midterms')) || undefined
+  );
 
   useEffect(() => {
-    setMidterms(undefined);
-    setTimeout(() => {
-      const midtermsAux = Number(searchParams.get('midterms')) || undefined;
-      if (midtermsAux) {
-        setMidterms(
-          midtermsList.filter((midterm) => midterm.id == midtermsAux)
-        );
-      } else {
-        setMidterms(midtermsList);
-      }
-    }, 50);
+    setShowTp(Number(searchParams.get('midterms')) || undefined);
   }, [searchParams]);
 
   const handleModalDeleteMidterm = (midterm: midterms | undefined) =>
@@ -45,25 +37,28 @@ export default function ProblemsTableMidterms({
   const handleModalAddResponse = (midterm: midterms | undefined) =>
     setModalAddResponse(midterm);
 
-  const handleModalDeleteMidtermResponse = (midterm: midterms | undefined) =>
-    setModalDeleteMidtermResponse(midterm);
+  const handleModalDeleteResponse = (
+    response: midterms_responses | undefined
+  ) => setModalDeleteResponse(response);
+
   return (
     <>
       <ul className="flex flex-col gap-1 grow relative overflow-y-auto">
-        {midterms == undefined ? (
+        {midtermsList == undefined ? (
           <TpsSkeleton />
-        ) : midterms.length == 0 ? (
+        ) : midtermsList.length == 0 ? (
           <li className="w-full h-full flex justify-center items-center text-3xl">
             <p>No hay parciales :,c</p>
           </li>
         ) : (
-          midterms.map((midterm, index) => (
+          midtermsList.map((midterm) => (
             <Midterm
-              key={index}
+              key={midterm.id}
               midterm={midterm}
+              display={showTp}
               callbackDeleteMidterm={handleModalDeleteMidterm}
               callbackAddResponse={handleModalAddResponse}
-              callbackDeleteMidtermResponse={handleModalDeleteMidtermResponse}
+              callbackDeleteResponse={handleModalDeleteResponse}
             />
           ))
         )}
@@ -74,10 +69,10 @@ export default function ProblemsTableMidterms({
           callback={handleModalDeleteMidterm}
         />
       )}
-      {modalDeleteMidtermResponse && (
+      {modalDeleteResponse && (
         <ModalDeleteMidtermResponse
-          midterm={modalDeleteMidtermResponse}
-          callback={handleModalDeleteMidtermResponse}
+          response={modalDeleteResponse}
+          callback={handleModalDeleteResponse}
         />
       )}
       {modalAddResponse && (

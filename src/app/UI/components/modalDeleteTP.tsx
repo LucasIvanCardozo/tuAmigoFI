@@ -44,13 +44,15 @@ export default function ModalDeleteTp({
         });
 
         if (res.ok && res2.ok) {
-          const deleteTp = await deleteTP({ id: tp.id });
+          await deleteTP({ id: tp.id });
           callback(undefined);
           window.location.href =
             window.location.origin + window.location.pathname;
         } else throw new Error('Error al eliminar respuesta');
-      } catch (err) {
-        setError('Ocurrio un error al querer eliminar el TP');
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else setError('Ocurrio un error inesperado');
       }
     }
     setLoading(false);

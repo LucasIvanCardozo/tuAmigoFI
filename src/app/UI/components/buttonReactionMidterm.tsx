@@ -1,16 +1,16 @@
 'use client';
-import {  addReactionMidterm } from '@/app/lib/actions';
+import { addReactionMidterm } from '@/app/lib/actions';
 import { fetchUserReactionMidterm } from '@/app/lib/data';
-import { midterms } from '@prisma/client';
+import {  midterms_responses } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { AiFillLike } from 'react-icons/ai';
 import { TbAlertHexagon } from 'react-icons/tb';
 
 export default function ButtonReactionMidterm({
-  midterm,
+  response,
 }: {
-  midterm: midterms;
+  response: midterms_responses;
 }) {
   const [stateLike, setStateLike] = useState<boolean>(false);
   const [stateDislike, setStateDislike] = useState<boolean>(false);
@@ -37,9 +37,9 @@ export default function ButtonReactionMidterm({
           setNumberDislike(numberDislike - 1);
         }
       }
-      const reaccion = await addReactionMidterm({
+      await addReactionMidterm({
         id: session.user.id,
-        id_midterm: midterm.id,
+        id_response: response.id,
         reaction: reaction,
       });
     } else {
@@ -49,7 +49,7 @@ export default function ButtonReactionMidterm({
 
   useEffect(() => {
     const searchReactions = async () => {
-      const totalReactions = await fetchUserReactionMidterm(midterm.id);
+      const totalReactions = await fetchUserReactionMidterm(response.id);
       const likesTotal = totalReactions.filter(
         (reaction) => reaction.reaction == 1
       ).length;
@@ -59,15 +59,23 @@ export default function ButtonReactionMidterm({
         (reaction) => reaction.id_user == session?.user?.id
       );
       if (reaction) {
-        if (reaction.reaction == 1) setStateLike(true);
-        else setStateDislike(true);
+        if (reaction.reaction == 1) {
+          setStateLike(true);
+          setStateDislike(false);
+        } else {
+          setStateDislike(true);
+          setStateLike(false);
+        }
+      } else {
+        setStateDislike(false);
+        setStateLike(false);
       }
     };
     searchReactions();
-  }, [session]);
+  }, [session, response]);
 
   return (
-    <span className="flex absolute bottom-0 right-0 z-10 gap-1 bg-[--white] rounded-sm">
+    <span className="flex absolute bottom-0 right-0 z-10 gap-1 bg-[--white] rounded-md">
       <button className="flex" onClick={() => handleLike(1)}>
         <AiFillLike
           className={(stateLike ? 'text-green-500' : '') + ' text-xl'}

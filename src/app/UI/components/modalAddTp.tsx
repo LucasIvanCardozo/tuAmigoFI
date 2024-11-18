@@ -6,10 +6,10 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 
 export default function ModalAddTp({
   idCourse,
-  callback,
+  callbackAddTp,
 }: {
   idCourse: number;
-  callback: (idCourse: number | undefined) => void;
+  callbackAddTp: (idCourse: number | undefined) => void;
 }) {
   const [file, setFile] = useState<File>();
   const [nameTP, setNameTP] = useState<string | null>(null);
@@ -18,6 +18,7 @@ export default function ModalAddTp({
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const { data: session } = useSession();
+  const currentYear = new Date().getFullYear();
 
   const formValidate = (): boolean => {
     if (!nameTP) {
@@ -26,11 +27,14 @@ export default function ModalAddTp({
     } else if (!yearTP) {
       setError('Tienes que ingresar el año del TP');
       return false;
+    } else if (yearTP < 2000 || yearTP > currentYear) {
+      setError(`El año del tp debe estar entre 2000 y ${currentYear}`);
+      return false;
     } else if (!file) {
       setError('No hay ningun archivo seleccionado');
       return false;
     }
-    if (!session?.user || session?.user.tier == 0) {
+    if (!session?.user) {
       setError('Debes iniciar sesion y ser administrador para subir un TP');
       return false;
     }
@@ -40,13 +44,21 @@ export default function ModalAddTp({
   const handlePDF = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 1048576) {
-        e.target.value = '';
-        setError('El archivo pesa más de 1 MB');
+      if (file.type == 'application/pdf') {
+        if (file.size > 1048576) {
+          e.target.value = '';
+          setError('El archivo pesa más de 1 MB');
+        } else {
+          setFile(file);
+          setError(null);
+        }
       } else {
-        setFile(file);
-        setError(null);
+        setError('Por favor selecciona un archivo .pdf');
+        setFile(undefined);
+        e.target.value = '';
       }
+    } else {
+      setFile(undefined);
     }
   };
 
@@ -67,18 +79,23 @@ export default function ModalAddTp({
           formData.set('id', tp.id.toString());
           formData.set('subFolder', `tps/problemas`);
 
-          const response = await fetch('/api/upload', {
+          await fetch('/api/upload', {
             method: 'POST',
             body: formData,
           });
-          const result = await response.json();
-          callback(undefined);
+          callbackAddTp(undefined);
           window.location.reload();
         } else {
-          setError('Ocurrio un error en la suba del PDF');
+          throw new Error(
+            'Ocurrio un error en la suba del PDF a la base de datos'
+          );
         }
-      } catch (err) {
-        setError('Ocurrio un error al llamar a la API');
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError('Ocurrio un error inesperado');
+        }
       }
     }
     setLoading(false);
@@ -103,11 +120,15 @@ export default function ModalAddTp({
           />
         </div>
         <div className="flex flex-col">
-          <label htmlFor="number">Número</label>
+          <label htmlFor="number">
+            <span>Número </span>
+            <span className="opacity-60">(0 si no tiene)</span>
+          </label>
           <input
             className="text-black"
             type="number"
             name="number"
+            min={0}
             id="number"
             placeholder={'Ingresa el número del TP'}
             onChange={(e) => setNumberTP(Number(e.target.value))}
@@ -120,6 +141,8 @@ export default function ModalAddTp({
             type="number"
             name="year"
             id="year"
+            min={2000}
+            max={currentYear}
             placeholder={'Ingresa el año del TP'}
             required
             onChange={(e) => setYearTP(Number(e.target.value))}
@@ -158,7 +181,7 @@ export default function ModalAddTp({
             <button type="submit">Enviar</button>
             <button
               type="button"
-              onClick={() => (setLoading(true), callback(undefined))}
+              onClick={() => (setLoading(true), callbackAddTp(undefined))}
             >
               Cancelar
             </button>

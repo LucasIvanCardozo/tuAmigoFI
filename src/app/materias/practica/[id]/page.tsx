@@ -1,6 +1,6 @@
 import { fetchCourse, fetchTps } from '@/app/lib/data';
-import ProblemsTable from '@/app/UI/components/problemsTable';
 import AsideProblems from '@/app/UI/components/asideProblems';
+import ProblemsTableTp from '@/app/UI/components/problemsTableTp';
 
 export default async function Practica({ params }: { params: { id: string } }) {
   const id_materia = Number(params.id);
@@ -19,7 +19,7 @@ export default async function Practica({ params }: { params: { id: string } }) {
               </h1>
             </div>
           </div>
-          <ProblemsTable tpList={tpList} />
+          <ProblemsTableTp tpList={tpList} />
         </section>
       </main>
     </>

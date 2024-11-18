@@ -5,8 +5,8 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { CgClose, CgMenu } from 'react-icons/cg';
 import { SiGoogledocs } from 'react-icons/si';
-import ModalAddTp from './modalAddTp';
 import ModalAddMidterm from './modalAddMidterm';
+import { TbSquareAsteriskFilled } from 'react-icons/tb';
 
 export default function AsideProblemsMidterms({
   midtermsList,
@@ -19,14 +19,15 @@ export default function AsideProblemsMidterms({
   const pathname = usePathname();
   const { replace } = useRouter();
   const [midtermsState, setMidtermsState] = useState<boolean>(false);
-  const [modal, setModal] = useState<number | undefined>();
+  const [modalAddMidterm, setModalAddMidterm] = useState<number | undefined>();
   const { data: session } = useSession();
 
   const handleMidtermsState = () => {
     setMidtermsState(!midtermsState);
   };
 
-  const handleModal = (idCourse: number | undefined) => setModal(idCourse);
+  const handleModalAddMidterm = (idCourse: number | undefined) =>
+    setModalAddMidterm(idCourse);
 
   const handleMidterms = (midterm: string) => {
     setMidtermsState(false);
@@ -111,7 +112,7 @@ export default function AsideProblemsMidterms({
               ' grid grid-cols-[1.2rem,1fr] gap-1 p-1 rounded-md [&>svg]:self-start [&>svg]:h-max [&>svg]:w-full transform-gpu transition-transform sm:hover:scale-105'
             }
           >
-            <SiGoogledocs />
+            <TbSquareAsteriskFilled />
             <button
               className="text-start"
               onClick={() => handleMidterms('')}
@@ -147,7 +148,6 @@ export default function AsideProblemsMidterms({
             </li>
           ))}
           {session?.user && (
-            // && session.user.tier > 0
             <li
               className={
                 'gap-1 p-1 rounded-md transform-gpu text-center transition-transform sm:hover:scale-105'
@@ -155,7 +155,7 @@ export default function AsideProblemsMidterms({
             >
               <button
                 className="text-start bg-[--white] py-1 px-2 rounded-md"
-                onClick={() => handleModal(idCourse)}
+                onClick={() => handleModalAddMidterm(idCourse)}
                 aria-label="Agregar parcial"
               >
                 <p className="text-base text-[--black-olive] leading-4">
@@ -166,7 +166,9 @@ export default function AsideProblemsMidterms({
           )}
         </ul>
       </aside>
-      {modal && <ModalAddMidterm idCourse={idCourse} callback={handleModal} />}
+      {modalAddMidterm && (
+        <ModalAddMidterm idCourse={idCourse} callbackAddMidterm={handleModalAddMidterm} />
+      )}
     </>
   );
 }

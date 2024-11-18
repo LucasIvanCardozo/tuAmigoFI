@@ -2,15 +2,14 @@
 'use client';
 import { createMidterm } from '@/app/lib/actions';
 import { useSession } from 'next-auth/react';
-// import { fetchContributor } from '@/app/lib/data';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
 export default function ModalAddMidterm({
   idCourse,
-  callback,
+  callbackAddMidterm,
 }: {
   idCourse: number;
-  callback: (idCourse: number | undefined) => void;
+  callbackAddMidterm: (idCourse: number | undefined) => void;
 }) {
   const [file, setFile] = useState<File>();
   const [nameMidterm, setNameMidterm] = useState<string | null>(null);
@@ -29,10 +28,7 @@ export default function ModalAddMidterm({
       setError('No hay ningun archivo seleccionado');
       return false;
     }
-    if (
-      !session?.user
-      // || session?.user.tier == 0
-    ) {
+    if (!session?.user) {
       setError('Debes iniciar sesion para subir un parcial');
       return false;
     }
@@ -42,13 +38,21 @@ export default function ModalAddMidterm({
   const handlePDF = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 1048576) {
-        e.target.value = '';
-        setError('El archivo pesa más de 1 MB');
+      if (file.type == 'application/pdf') {
+        if (file.size > 1048576) {
+          e.target.value = '';
+          setError('El archivo pesa más de 1 MB');
+        } else {
+          setFile(file);
+          setError(null);
+        }
       } else {
-        setFile(file);
-        setError(null);
+        setError('Por favor selecciona un archivo .pdf');
+        setFile(undefined);
+        e.target.value = '';
       }
+    } else {
+      setFile(undefined);
     }
   };
 
@@ -74,17 +78,23 @@ export default function ModalAddMidterm({
           formData.set('id', midterm.id.toString());
           formData.set('subFolder', 'parciales/problemas');
 
-          const response = await fetch('/api/upload', {
+          await fetch('/api/upload', {
             method: 'POST',
             body: formData,
           });
-          const result = await response.json();
-          callback(undefined);
+          callbackAddMidterm(undefined);
+          window.location.reload();
         } else {
-          setError('Ocurrio un error en la suba del PDF');
+          throw new Error(
+            'Ocurrio un error en la suba del PDF a la base de datos'
+          );
         }
-      } catch (err) {
-        setError('Ocurrio un error al llamar a la API');
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError('Ocurrio un error inesperado');
+        }
       }
     }
     setLoading(false);
@@ -158,7 +168,7 @@ export default function ModalAddMidterm({
             <button type="submit">Enviar</button>
             <button
               type="button"
-              onClick={() => (setLoading(true), callback(undefined))}
+              onClick={() => (setLoading(true), callbackAddMidterm(undefined))}
             >
               Cancelar
             </button>

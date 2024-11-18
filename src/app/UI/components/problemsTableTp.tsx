@@ -38,7 +38,7 @@ export default function ProblemsTable({ tpList }: { tpList: tps[] }) {
           <TpsSkeleton />
         ) : tpList.length == 0 ? (
           <li className="w-full h-full flex justify-center items-center text-3xl">
-            <p>No hay datos :,c</p>
+            <p>No hay Tps :,c</p>
           </li>
         ) : (
           tpList.map((tp) => (

@@ -1,25 +1,6 @@
 'use server';
 import prisma from './db';
 
-// export async function createContributor(
-//   dni: number,
-//   name: string,
-//   instagram?: string
-// ) {
-//   const contributor = await prisma.contributors.create({
-//     data: {
-//       dni: dni,
-//       name: name,
-//       ...(instagram
-//         ? {
-//             instagram: instagram,
-//           }
-//         : {}),
-//     },
-//   });
-//   return contributor;
-// }
-
 export async function createMidterm({
   name,
   date,
@@ -42,32 +23,50 @@ export async function createMidterm({
     });
     return midterm;
   } catch (error) {
-    console.error('No se pudo subir el parcial');
+    throw new Error('No se pudo subir el parcial');
   }
 }
 
-export async function addResponseMidterm({
+export async function createResponseMidterm({
   idUser,
   idMidterm,
+  number,
+  type,
+  text,
 }: {
   idUser: number;
   idMidterm: number;
+  number: number;
+  type: number;
+  text?: string;
 }) {
   try {
-    const addResponse = await prisma.midterms.update({
+    const validation = await prisma.midterms_responses.findFirst({
       where: {
-        id: idMidterm,
-      },
-      data: {
-        response: idUser,
+        id_midterm: idMidterm,
+        id_user: idUser,
+        number: number,
       },
     });
+    if (!validation) {
+      const addResponse = await prisma.midterms_responses.create({
+        data: {
+          id_midterm: idMidterm,
+          number: number,
+          type: type,
+          id_user: idUser,
+          ...(text && { text: text }),
+        },
+      });
+      return addResponse;
+    } else
+      throw new Error('No puedes tener mas de una respueste a un problema!');
   } catch (error) {
-    console.error('No se pudo editar el parcial');
+    throw new Error('No se pudo editar el parcial');
   }
 }
 
-export async function addResponseTp({
+export async function createResponseTp({
   idUser,
   idTp,
   number,
@@ -102,7 +101,11 @@ export async function addResponseTp({
     } else
       throw new Error('No puedes tener mas de una respueste a un problema!');
   } catch (error) {
-    throw error;
+    if (error instanceof Error) {
+      return error;
+    } else {
+      throw new Error('Error en validacioon de usuario');
+    }
   }
 }
 
@@ -131,7 +134,7 @@ export async function createTp({
     });
     return tp;
   } catch (error) {
-    console.error('No se pudo subir el TP');
+    throw new Error('No se pudo subir el TP');
   }
 }
 
@@ -143,25 +146,22 @@ export async function deleteTP({ id }: { id: number }) {
       },
     });
 
-    // Eliminar todas las reacciones asociadas a las respuestas del TP
     await Promise.all(
       tpsResponses.map((response) =>
         prisma.tps_reactions.deleteMany({
           where: {
-            id_problem: response.id,
+            id_response: response.id,
           },
         })
       )
     );
 
-    // Eliminar las respuestas del TP
     await prisma.tps_responses.deleteMany({
       where: {
         id_tp: id,
       },
     });
 
-    // Eliminar el TP
     const deleteTP = await prisma.tps.delete({
       where: {
         id: id,
@@ -178,7 +178,7 @@ export async function deleteTpResponse({ id }: { id: number }) {
   try {
     const deleteTpsReactions = await prisma.tps_reactions.deleteMany({
       where: {
-        id_problem: id,
+        id_response: id,
       },
     });
     const deleteTpResponse = await prisma.tps_responses.delete({
@@ -188,86 +188,65 @@ export async function deleteTpResponse({ id }: { id: number }) {
     });
     return deleteTpResponse;
   } catch (error) {
-    throw new Error('No se pudo eliminar el TP');
+    throw new Error('No se pudo eliminar la respuesta');
   }
 }
 
 export async function deleteMidterm({ id }: { id: number }) {
   try {
-    const deleteReactions = await prisma.midterms_reactions.deleteMany({
+    const midtermsResponses = await prisma.midterms_responses.findMany({
       where: {
         id_midterm: id,
       },
     });
+
+    await Promise.all(
+      midtermsResponses.map((response) =>
+        prisma.midterms_reactions.deleteMany({
+          where: {
+            id_response: response.id,
+          },
+        })
+      )
+    );
+
+    await prisma.midterms_responses.deleteMany({
+      where: {
+        id_midterm: id,
+      },
+    });
+
     const deleteMidterm = await prisma.midterms.delete({
       where: {
         id: id,
       },
     });
+
     return deleteMidterm;
   } catch (error) {
-    console.error('No se pudo eliminar el TP');
+    throw new Error('No se pudo eliminar el Parcial');
   }
 }
 
 export async function deleteMidtermResponse({ id }: { id: number }) {
   try {
-    const deleteReactions = await prisma.midterms_reactions.deleteMany({
+    await prisma.midterms_reactions.deleteMany({
       where: {
-        id_midterm: id,
+        id_response: id,
       },
     });
-    const updateMidterm = await prisma.midterms.update({
+
+    const deleteMidtermResponse = await prisma.midterms_responses.delete({
       where: {
         id: id,
       },
-      data: {
-        response: null,
-      },
     });
-    return deleteMidterm;
+
+    return deleteMidtermResponse;
   } catch (error) {
-    console.error('No se pudo eliminar el TP');
+    throw new Error('No se pudo eliminar la respuesta');
   }
 }
-
-// export async function createAnonymus() {
-//   const existingContributor = await prisma.users.findUnique({
-//     where: {
-//       id: 0, // Verificamos si el dni ya existe
-//     },
-//   });
-
-//   if (!existingContributor) {
-//     // Si no existe, lo creamos
-//     const contributor = await prisma.users.create({
-//       data: {
-//         id: 0,
-//         email: 'Anonymous',
-//         name: 'Anonymous',
-//         tier: 0,
-//       },
-//     });
-//     return contributor;
-//   }
-
-//   // Si ya existe, retornamos el registro existente
-//   return existingContributor;
-// }
-
-// export async function AddContributor(idProblem: number, id: number) {
-//   const problem = await prisma.problems.update({
-//     where: {
-//       id: idProblem,
-//     },
-//     data: {
-//       id_user: id,
-//       response: false,
-//     },
-//   });
-//   return problem;
-// }
-
 export async function createUser({
   name,
   email,
@@ -277,18 +256,22 @@ export async function createUser({
   email: string;
   image: string;
 }) {
-  const user = await prisma.users.create({
-    data: {
-      email: email,
-      name: name,
-      image: image,
-      tier: 0,
-    },
-  });
-  return user;
+  try {
+    const user = await prisma.users.create({
+      data: {
+        email: email,
+        name: name,
+        image: image,
+        tier: 0,
+      },
+    });
+    return user;
+  } catch (error) {
+    throw new Error('Error en la creación de usuario');
+  }
 }
 
-export async function addReaction({
+export async function addReactionTp({
   id,
   id_response,
   reaction,
@@ -297,85 +280,93 @@ export async function addReaction({
   id_response: number;
   reaction: number;
 }) {
-  const reactionSearch = await prisma.tps_reactions.findFirst({
-    where: {
-      id_problem: id_response,
-      id_user: id,
-    },
-  });
-  if (reactionSearch) {
-    if (reaction != reactionSearch.reaction) {
-      const updateReaction = await prisma.tps_reactions.update({
-        where: {
-          id: reactionSearch.id,
-        },
+  try {
+    const reactionSearch = await prisma.tps_reactions.findFirst({
+      where: {
+        id_response: id_response,
+        id_user: id,
+      },
+    });
+    if (reactionSearch) {
+      if (reaction != reactionSearch.reaction) {
+        const updateReaction = await prisma.tps_reactions.update({
+          where: {
+            id: reactionSearch.id,
+          },
+          data: {
+            reaction: reaction,
+          },
+        });
+        return updateReaction;
+      } else {
+        const deleteReaction = await prisma.tps_reactions.delete({
+          where: {
+            id: reactionSearch.id,
+          },
+        });
+        return deleteReaction;
+      }
+    } else {
+      const createReaction = await prisma.tps_reactions.create({
         data: {
+          id_response: id_response,
+          id_user: id,
           reaction: reaction,
         },
       });
-      return updateReaction;
-    } else {
-      const deleteReaction = await prisma.tps_reactions.delete({
-        where: {
-          id: reactionSearch.id,
-        },
-      });
-      return deleteReaction;
+      return createReaction;
     }
-  } else {
-    const createReaction = await prisma.tps_reactions.create({
-      data: {
-        id_problem: id_response,
-        id_user: id,
-        reaction: reaction,
-      },
-    });
-    return createReaction;
+  } catch (error) {
+    throw new Error('Error en modificar la reaccion de usuario');
   }
 }
 
 export async function addReactionMidterm({
   id,
-  id_midterm,
+  id_response,
   reaction,
 }: {
   id: number;
-  id_midterm: number;
+  id_response: number;
   reaction: number;
 }) {
-  const reactionSearch = await prisma.midterms_reactions.findFirst({
-    where: {
-      id_midterm: id_midterm,
-      id_user: id,
-    },
-  });
-  if (reactionSearch) {
-    if (reaction != reactionSearch.reaction) {
-      const updateReaction = await prisma.midterms_reactions.update({
-        where: {
-          id: reactionSearch.id,
-        },
+  try {
+    const reactionSearch = await prisma.midterms_reactions.findFirst({
+      where: {
+        id_response: id_response,
+        id_user: id,
+      },
+    });
+    if (reactionSearch) {
+      if (reaction != reactionSearch.reaction) {
+        const updateReaction = await prisma.midterms_reactions.update({
+          where: {
+            id: reactionSearch.id,
+          },
+          data: {
+            reaction: reaction,
+          },
+        });
+        return updateReaction;
+      } else {
+        const deleteReaction = await prisma.midterms_reactions.delete({
+          where: {
+            id: reactionSearch.id,
+          },
+        });
+        return deleteReaction;
+      }
+    } else {
+      const createReaction = await prisma.midterms_reactions.create({
         data: {
+          id_response: id_response,
+          id_user: id,
           reaction: reaction,
         },
       });
-      return updateReaction;
-    } else {
-      const deleteReaction = await prisma.midterms_reactions.delete({
-        where: {
-          id: reactionSearch.id,
-        },
-      });
-      return deleteReaction;
+      return createReaction;
     }
-  } else {
-    const createReaction = await prisma.midterms_reactions.create({
-      data: {
-        id_midterm: id_midterm,
-        id_user: id,
-        reaction: reaction,
-      },
-    });
-    return createReaction;
+  } catch (error) {
+    throw new Error('Error en modificar reaccion de usuario');
   }
 }

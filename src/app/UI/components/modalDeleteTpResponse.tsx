@@ -1,7 +1,7 @@
 // 'src/app/components/ModalImportImage.tsx'
 'use client';
-import { deleteTP, deleteTpResponse } from '@/app/lib/actions';
-import { tps, tps_responses } from '@prisma/client';
+import { deleteTpResponse } from '@/app/lib/actions';
+import { tps_responses } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { FormEvent, useState } from 'react';
 
@@ -42,12 +42,12 @@ export default function ModalDeleteTpResponse({
             body: formData,
           });
           if (res.ok) {
-            const deleteResponse = await deleteTpResponse({ id: response.id });
+            await deleteTpResponse({ id: response.id });
             callback(undefined);
             window.location.reload();
           } else throw new Error('Error al eliminar respuesta');
         } else {
-          const deleteResponse = await deleteTpResponse({ id: response.id });
+          await deleteTpResponse({ id: response.id });
           callback(undefined);
           window.location.reload();
         }

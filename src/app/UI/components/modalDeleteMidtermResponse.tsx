@@ -1,17 +1,16 @@
 // 'src/app/components/ModalImportImage.tsx'
 'use client';
-
-import { deleteMidterm, deleteMidtermResponse } from '@/app/lib/actions';
-import { midterms } from '@prisma/client';
+import { deleteMidtermResponse } from '@/app/lib/actions';
+import { midterms_responses } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { FormEvent, useState } from 'react';
 
 export default function ModalDeleteMidtermResponse({
-  midterm,
+  response,
   callback,
 }: {
-  midterm: midterms;
-  callback: (midterm: midterms | undefined) => void;
+  response: midterms_responses;
+  callback: (midterm: midterms_responses | undefined) => void;
 }) {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -19,7 +18,9 @@ export default function ModalDeleteMidtermResponse({
 
   const formValidate = (): boolean => {
     if (!session?.user || session?.user.tier < 2) {
-      setError('Debes iniciar sesion y ser administrador para eliminar un TP');
+      setError(
+        'Debes iniciar sesion y ser administrador para eliminar una respuesta'
+      );
       return false;
     }
     return true;
@@ -29,22 +30,28 @@ export default function ModalDeleteMidtermResponse({
     e.preventDefault();
     if (formValidate() && session && session?.user?.tier == 2) {
       try {
-        const formData = new FormData();
-        formData.set('id', midterm.id.toString());
-        formData.set('subFolder', 'respuestas');
-
-        const response = await fetch('/api/destroy', {
-          method: 'POST',
-          body: formData,
-        });
-        if (response.ok) {
-          const deleteMidterms = await deleteMidtermResponse({
-            id: midterm.id,
+        if (response.type == 1 || response.type == 2) {
+          const formData = new FormData();
+          formData.set('id', response.id_user.toString());
+          formData.set(
+            'subFolder',
+            `parciales/respuestas/${response.id_midterm}/${response.number}`
+          );
+          const res = await fetch('/api/destroy', {
+            method: 'POST',
+            body: formData,
           });
+          if (res.ok) {
+            await deleteMidtermResponse({
+              id: response.id,
+            });
+            callback(undefined);
+            window.location.reload();
+          } else throw new Error('Error al eliminar la respuesta');
+        } else {
+          await deleteMidtermResponse({ id: response.id });
           callback(undefined);
           window.location.reload();
-        } else {
-          throw new Error('Error el na eliminacion el cloudinary');
         }
       } catch (err) {
         setError('Ocurrio un error al querer eliminar el parcial');
@@ -65,12 +72,12 @@ export default function ModalDeleteMidtermResponse({
           </h3>
           <div className="flex flex-col [&>*]:flex [&>*]:gap-1">
             <p>
-              <b>Nombre:</b>
-              {midterm.name}
+              <b>Numero:</b>
+              {response.number}
             </p>
             <p>
-              <b>Fecha:</b>
-              {`${midterm.date.getMonth()}/${midterm.date.getFullYear()}`}
+              <b>Usuario:</b>
+              {response.id_user}
             </p>
           </div>
         </div>

@@ -1,48 +1,10 @@
 'use server';
-import { tps_responses } from '@prisma/client';
 import prisma from './db';
 
 const cache = {
   ttl: 7200,
   swr: 300,
 };
-
-// // fetching de contribuidores
-// export async function fetchContributor(id: number) {
-//   const contributor = await prisma.contributors.findFirstOrThrow({
-//     where: {
-//       dni: id,
-//     },
-//     cacheStrategy: cache,
-//   });
-//   return contributor;
-// }
-
-// export async function fetchContributors() {
-//   const contributors = await prisma.users.findMany({
-//     where: {
-//       problems: {
-//         some: {
-//           response: true,
-//         },
-//       },
-//     },
-//     include: {
-//       _count: {
-//         select: {
-//           problems: true,
-//         },
-//       },
-//     },
-//     orderBy: {
-//       problems: {
-//         _count: 'desc',
-//       },
-//     },
-//     cacheStrategy: cache,
-//   });
-//   return contributors;
-// }
 
 // fetching de materias
 export async function fetchCourse(id: number) {
@@ -315,25 +277,25 @@ export async function fetchUser(id: number | string) {
   return user;
 }
 
-export async function fetchUserReaction(id_response: number) {
+export async function fetchUserReactionTp(id_response: number) {
   const userReactions = await prisma.tps_reactions.findMany({
     where: {
-      id_problem: id_response,
+      id_response: id_response,
     },
   });
   return userReactions;
 }
 
-export async function fetchUserReactionMidterm(id: number) {
+export async function fetchUserReactionMidterm(id_response: number) {
   const userReactions = await prisma.midterms_reactions.findMany({
     where: {
-      id_midterm: id,
+      id_response: id_response,
     },
   });
   return userReactions;
 }
 
-export async function fetchResponses({ id_tp }: { id_tp: number }) {
+export async function fetchResponsesTp({ id_tp }: { id_tp: number }) {
   const responses = await prisma.tps_responses.findMany({
     where: {
       id_tp: id_tp,
@@ -372,12 +334,46 @@ export async function fetchResponses({ id_tp }: { id_tp: number }) {
   return groupedResponses;
 }
 
-// export async function fetchProblem({ id }: { id: number }) {
-//   const problem = await prisma.problems.findUniqueOrThrow({
-//     where: {
-//       id: id,
-//     },
-//     cacheStrategy: cache,
-//   });
-//   return problem;
-// }
+export async function fetchResponsesMidterm({
+  id_midterm,
+}: {
+  id_midterm: number;
+}) {
+  const responses = await prisma.midterms_responses.findMany({
+    where: {
+      id_midterm: id_midterm,
+    },
+    include: {
+      _count: {
+        select: {
+          midterms_reactions: {
+            where: {
+              reaction: 1,
+            },
+          },
+        },
+      },
+    },
+    orderBy: {
+      number: 'asc',
+    },
+  });
+  const groupedResponses = responses.reduce<Record<number, typeof responses>>(
+    (acc, response) => {
+      const { number } = response;
+      if (!acc[number]) {
+        acc[number] = [];
+      }
+      acc[number].push(response);
+      acc[number].sort(
+        (a, b) =>
+          (b._count?.midterms_reactions || 0) -
+          (a._count?.midterms_reactions || 0)
+      );
+      return acc;
+    },
+    {}
+  );
+
+  return groupedResponses;
+}

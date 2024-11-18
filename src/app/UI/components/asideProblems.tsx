@@ -5,16 +5,18 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { CgClose, CgMenu } from 'react-icons/cg';
 import {
-  TbSquareRoundedNumber0Filled,
-  TbSquareRoundedNumber1Filled,
-  TbSquareRoundedNumber2Filled,
-  TbSquareRoundedNumber3Filled,
-  TbSquareRoundedNumber4Filled,
-  TbSquareRoundedNumber5Filled,
-  TbSquareRoundedNumber6Filled,
-  TbSquareRoundedNumber7Filled,
-  TbSquareRoundedNumber8Filled,
-  TbSquareRoundedNumber9Filled,
+  TbSquareNumber1Filled,
+  TbSquareNumber2Filled,
+  TbSquareNumber3Filled,
+  TbSquareNumber4Filled,
+  TbSquareNumber5Filled,
+  TbSquareNumber6Filled,
+  TbSquareNumber7Filled,
+  TbSquareNumber8Filled,
+  TbSquareNumber9Filled,
+  TbSquareMinusFilled,
+  TbSquareAsteriskFilled,
+  TbSquareDotFilled,
 } from 'react-icons/tb';
 import ModalAddTp from './modalAddTp';
 
@@ -29,26 +31,27 @@ export default function AsideProblems({
   const pathname = usePathname();
   const { replace } = useRouter();
   const numberIcons = [
-    <TbSquareRoundedNumber0Filled />,
-    <TbSquareRoundedNumber1Filled />,
-    <TbSquareRoundedNumber2Filled />,
-    <TbSquareRoundedNumber3Filled />,
-    <TbSquareRoundedNumber4Filled />,
-    <TbSquareRoundedNumber5Filled />,
-    <TbSquareRoundedNumber6Filled />,
-    <TbSquareRoundedNumber7Filled />,
-    <TbSquareRoundedNumber8Filled />,
-    <TbSquareRoundedNumber9Filled />,
+    <TbSquareDotFilled />,
+    <TbSquareNumber1Filled />,
+    <TbSquareNumber2Filled />,
+    <TbSquareNumber3Filled />,
+    <TbSquareNumber4Filled />,
+    <TbSquareNumber5Filled />,
+    <TbSquareNumber6Filled />,
+    <TbSquareNumber7Filled />,
+    <TbSquareNumber8Filled />,
+    <TbSquareNumber9Filled />,
   ];
   const [tpsState, setTpsState] = useState<boolean>(false);
-  const [modal, setModal] = useState<number | undefined>();
+  const [modalAddTp, setModalAddTp] = useState<number | undefined>();
   const { data: session } = useSession();
 
   const handleTpsState = () => {
     setTpsState(!tpsState);
   };
 
-  const handleModal = (idCourse: number | undefined) => setModal(idCourse);
+  const handleModalAddTp = (idCourse: number | undefined) =>
+    setModalAddTp(idCourse);
 
   const handleTps = (tp: string) => {
     setTpsState(false);
@@ -133,16 +136,14 @@ export default function AsideProblems({
               ' grid grid-cols-[1.2rem,1fr] gap-1 p-1 rounded-md [&>svg]:self-start [&>svg]:h-max [&>svg]:w-full transform-gpu transition-transform sm:hover:scale-105'
             }
           >
-            {numberIcons[0]}
+            <TbSquareAsteriskFilled />
             <button
               className="text-start"
               onClick={() => handleTps('')}
               aria-label="Mostrar todos"
             >
               <h2 className="text-base leading-4">Mostrar todos</h2>
-              <p className="text-xs text-[--silver]">
-                {`Todos los TPs disponibles`}{' '}
-              </p>
+              <p className="text-xs text-[--silver]">{`Todos los TPs`} </p>
             </button>
           </li>
           {tpList.map(({ id, name, number, year }) => (
@@ -150,14 +151,17 @@ export default function AsideProblems({
               key={id}
               className={
                 (searchParams.get('tps') == id.toString()
-                  ? 'bg-[#3D4731]'
+                  ? 'bg-[#3D4731] '
                   : '') +
-                ' grid grid-cols-[1.2rem,1fr] gap-1 p-1 rounded-md [&>svg]:self-start [&>svg]:h-max [&>svg]:w-full transform-gpu transition-transform sm:hover:scale-105'
+                (number == 0 ? 'order-last ' : '') +
+                'grid grid-cols-[1.2rem,1fr] gap-1 p-1 rounded-md [&>svg]:self-start [&>svg]:h-max [&>svg]:w-full transform-gpu transition-transform sm:hover:scale-105'
               }
             >
-              {number && numberIcons[number]
-                ? numberIcons[number]
-                : numberIcons[0]}
+              {number != undefined && numberIcons[number] ? (
+                numberIcons[number]
+              ) : (
+                <TbSquareMinusFilled />
+              )}
               <button
                 className="text-start"
                 aria-label={`Tp número ${number} con nombre ${name}`}
@@ -171,13 +175,13 @@ export default function AsideProblems({
           {session?.user && (
             <li
               className={
-                'gap-1 p-1 rounded-md transform-gpu text-center transition-transform sm:hover:scale-105'
+                'order-last gap-1 p-1 rounded-md transform-gpu text-center transition-transform sm:hover:scale-105'
               }
             >
               <button
                 className="text-start bg-[--white] py-1 px-2 rounded-md"
+                onClick={() => handleModalAddTp(idCourse)}
                 aria-label="Agregar Tp"
-                onClick={() => handleModal(idCourse)}
               >
                 <p className="text-base text-[--black-olive] leading-4">
                   Agregar TP
@@ -187,7 +191,9 @@ export default function AsideProblems({
           )}
         </ul>
       </aside>
-      {modal && <ModalAddTp idCourse={modal} callback={handleModal} />}
+      {modalAddTp && (
+        <ModalAddTp idCourse={modalAddTp} callbackAddTp={handleModalAddTp} />
+      )}
     </>
   );
 }

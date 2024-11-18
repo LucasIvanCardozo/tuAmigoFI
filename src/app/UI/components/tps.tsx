@@ -11,7 +11,7 @@ import {
   TbSquareRoundedNumber8Filled,
   TbSquareRoundedNumber9Filled,
 } from 'react-icons/tb';
-import { fetchResponses } from '@/app/lib/data';
+import { fetchResponsesTp } from '@/app/lib/data';
 import { useEffect, useState } from 'react';
 import { tps_responses, tps } from '@prisma/client';
 import { useSession } from 'next-auth/react';
@@ -51,7 +51,7 @@ export default function Tps({
   useEffect(() => {
     setLoading(true);
     const searchProblems = async () => {
-      const responses = await fetchResponses({ id_tp: tp.id });
+      const responses = await fetchResponsesTp({ id_tp: tp.id });
       setResponses(responses);
       setLoading(false);
     };
@@ -59,59 +59,55 @@ export default function Tps({
   }, []);
 
   return (
-    <>
-      <li
-        className={'relative ' + `${display && display != tp.id && 'hidden'}`}
-      >
-        <div className="flex items-center text-xl sticky top-0 z-20 bg-[--platinum] py-1 ">
-          {tp.number && numberIcons[tp.number]
-            ? numberIcons[tp.number]
-            : numberIcons[0]}
-          <h2>
-            {tp.name} <p className="inline-block text-base">{`(${tp.year})`}</p>
-          </h2>
+    <li className={'relative ' + `${display && display != tp.id && 'hidden'}`}>
+      <div className="flex items-center text-xl sticky top-0 z-20 bg-[--platinum] py-1 ">
+        {tp.number && numberIcons[tp.number]
+          ? numberIcons[tp.number]
+          : numberIcons[0]}
+        <h2>
+          {tp.name} <p className="inline-block text-base">{`(${tp.year})`}</p>
+        </h2>
 
-          <div className="flex gap-1 px-1 ml-auto [&>*]:aspect-square">
-            {session && session.user.tier == 2 && (
-              <button title="Eliminar TP" onClick={() => callbackDeleteTp(tp)}>
-                <MdDelete />
-              </button>
-            )}
-            <button
-              title="Añadir una respuesta"
-              onClick={() => callbackAddResponse(tp)}
-            >
-              <MdOutlineAddBox />
+        <div className="flex gap-1 px-1 ml-auto [&>*]:aspect-square">
+          {session && session.user.tier == 2 && (
+            <button title="Eliminar TP" onClick={() => callbackDeleteTp(tp)}>
+              <MdDelete />
             </button>
-          </div>
+          )}
+          <button
+            title="Añadir una respuesta"
+            onClick={() => callbackAddResponse(tp)}
+          >
+            <MdOutlineAddBox />
+          </button>
         </div>
-        <div className="bg-[--white] p-2 text-base leading-5 drop-shadow-md flex flex-col gap-1">
-          <div className="relative overflow-hidden bg-[#C8E0E4] h-min py-1 rounded-md sm:p-1">
-            <PdfView id={tp.id} url="tps/problemas" />
-          </div>
-          <ul className="flex flex-col gap-1 pl-2">
-            {responses == undefined || loading ? (
-              <li className="pl-3">
-                <p>Cargando respuestas...</p>
-              </li>
-            ) : Object.keys(responses).length == 0 ? (
-              <li className="pl-3">
-                <p>Sin respuestas :c</p>
-              </li>
-            ) : (
-              <>
-                {Object.entries(responses).map((response, index) => (
-                  <ResponseTp
-                    key={response[0]}
-                    response={response}
-                    callbackDeleteResponse={callbackDeleteResponse}
-                  />
-                ))}
-              </>
-            )}
-          </ul>
+      </div>
+      <div className="bg-[--white] p-2 text-base leading-5 drop-shadow-md flex flex-col gap-1">
+        <div className="relative overflow-hidden bg-[#C8E0E4] h-min py-1 rounded-md sm:p-1">
+          <PdfView id={tp.id} url="tps/problemas" />
         </div>
-      </li>
-    </>
+        <ul className="flex flex-col gap-1 pl-2">
+          {responses == undefined || loading ? (
+            <li className="pl-3">
+              <p>Cargando respuestas...</p>
+            </li>
+          ) : Object.keys(responses).length == 0 ? (
+            <li className="pl-3">
+              <p>Sin respuestas :c</p>
+            </li>
+          ) : (
+            <>
+              {Object.entries(responses).map((response) => (
+                <ResponseTp
+                  key={response[0]}
+                  response={response}
+                  callbackDeleteResponse={callbackDeleteResponse}
+                />
+              ))}
+            </>
+          )}
+        </ul>
+      </div>
+    </li>
   );
 }

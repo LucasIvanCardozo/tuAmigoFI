@@ -1,8 +1,7 @@
 'use client';
-import ButtonReaction from './buttonReaction';
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CldImage } from 'next-cloudinary';
-import { tps_responses, users } from '@prisma/client';
+import { midterms_responses, tps_responses, users } from '@prisma/client';
 import 'katex/dist/katex.min.css';
 import { fetchUser } from '@/app/lib/data';
 import PdfView from './pdfView';
@@ -12,13 +11,14 @@ import {
 } from 'react-icons/bi';
 import { useSession } from 'next-auth/react';
 import { MdDelete } from 'react-icons/md';
+import ButtonReactionMidterm from './buttonReactionMidterm';
 
-export default function ResponseTp({
+export default function ResponseMidterm({
   response,
   callbackDeleteResponse,
 }: {
-  response: [string, tps_responses[]];
-  callbackDeleteResponse: (response: tps_responses | undefined) => void;
+  response: [string, midterms_responses[]];
+  callbackDeleteResponse: (response: midterms_responses | undefined) => void;
 }) {
   const [indexResponse, setIndexResponse] = useState<number>(0);
   const [user, setUser] = useState<users>();
@@ -94,9 +94,11 @@ export default function ResponseTp({
             <CldImage
               src={`https://res.cloudinary.com/donzj5rlf/image/upload/f_auto,q_auto/v${Math.floor(
                 Date.now() / (1000 * 60 * 60 * 24 * 7)
-              )}/tps/respuestas/${response[1][indexResponse].id_tp}/${
-                response[1][indexResponse].number
-              }/${response[1][indexResponse].id_user}`}
+              )}/parciales/respuestas/${
+                response[1][indexResponse].id_midterm
+              }/${response[1][indexResponse].number}/${
+                response[1][indexResponse].id_user
+              }`}
               alt=""
               width="500"
               height="500"
@@ -111,7 +113,7 @@ export default function ResponseTp({
           <div className="relative overflow-hidden bg-[#C8E0E4] h-min max-w-full py-1 rounded-md sm:p-1">
             <PdfView
               id={response[1][indexResponse].id_user}
-              url={`tps/respuestas/${response[1][indexResponse].id_tp}/${response[1][indexResponse].number}`}
+              url={`parciales/respuestas/${response[1][indexResponse].id_midterm}/${response[1][indexResponse].number}`}
             />
           </div>
         ) : response[1][indexResponse].type == 3 ? (
@@ -120,7 +122,7 @@ export default function ResponseTp({
           </div>
         ) : null
       }
-      <ButtonReaction response={response[1][indexResponse]} />
+      <ButtonReactionMidterm response={response[1][indexResponse]} />
     </li>
   );
 }
