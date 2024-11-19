@@ -268,7 +268,7 @@ export async function fetchLinks({
       id_course: id_materia,
       official: official,
     },
-    cacheStrategy: cache,
+    // cacheStrategy: cache,
   });
   return links;
 }

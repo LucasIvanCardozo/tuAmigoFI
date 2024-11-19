@@ -143,7 +143,7 @@ export default function ModalAddLink({
           </div>
         ) : (
           <div className="flex gap-4 justify-center">
-            <button type="submit">Eliminar</button>
+            <button type="submit">Agregar</button>
             <button
               type="button"
               onClick={() => (setLoading(true), callback(undefined))}
