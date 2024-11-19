@@ -1,6 +1,6 @@
 'use client';
 import { fetchDegrees } from '@/app/lib/data';
-import { degrees, degrees_plans } from '@prisma/client';
+import { degrees } from '@prisma/client';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -61,7 +61,7 @@ export default function DegreeCourse() {
           ))}
         </>
       ) : (
-        <option hidden>Cargando...</option>
+        <option hidden>-</option>
       )}
     </select>
   );

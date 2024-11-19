@@ -230,7 +230,23 @@ export async function fetchDegrees() {
 
   return degrees;
 }
-
+export async function fetchDegreesWithCourse({
+  id_course,
+}: {
+  id_course: number;
+}) {
+  const degrees = await prisma.degrees.findMany({
+    where: {
+      courses_degrees: {
+        some: {
+          courses_id: id_course,
+        },
+      },
+    },
+    cacheStrategy: cache,
+  });
+  return degrees;
+}
 //fetch de años -- 1°, 2°, etc
 export async function fetchYears() {
   const years = await prisma.years.findMany({

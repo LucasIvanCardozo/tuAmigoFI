@@ -1,8 +1,11 @@
 'use client';
 import { links } from '@prisma/client';
+import { useSession } from 'next-auth/react';
 import { useState } from 'react';
-import { CgArrowRightO } from 'react-icons/cg';
 import { VscTriangleDown, VscTriangleRight } from 'react-icons/vsc';
+import { MdDelete } from 'react-icons/md';
+import { deleteLink } from '@/app/lib/actions';
+
 export default function CourseLinks({
   links,
   official,
@@ -11,9 +14,17 @@ export default function CourseLinks({
   official: boolean;
 }) {
   const [viewState, setViewState] = useState<boolean>(false);
+  const { data: session } = useSession();
+
   const handleClick = () => {
     setViewState(!viewState);
   };
+
+  const handleDeleteLink = async (idLink: number) => {
+    await deleteLink(idLink);
+    window.location.reload();
+  };
+
   return (
     <>
       <button
@@ -27,19 +38,20 @@ export default function CourseLinks({
         <ul
           className={
             (viewState ? 'h-auto' : 'h-0') +
-            '  ease-linear duration-100 pl-2 transform-gpu w-min'
+            '  ease-linear duration-100 pl-5 transform-gpu w-min flex'
           }
         >
-          {links.map(({ link, name }, index) => (
-            <li key={index} className="text-sm flex gap-1">
-              <span className="overflow-clip w-24 text-nowrap text-ellipsis">
-                {' '}
+          {links.map(({ id, link, name }, index) => (
+            <li key={index} className="relative text-sm text-nowrap pl-1 flex">
+              <a href={link} target="_blanck" className="hover:underline">
                 {name}
-              </span>
-              <CgArrowRightO className="self-center text-[--midnight-green]" />
-              <a className="hover:underline" href={link}>
-                {link}
               </a>
+              {session?.user.tier == 2 && (
+                <button className="h-full" onClick={() => handleDeleteLink(id)}>
+                  <MdDelete className="h-full" />
+                </button>
+              )}
+              {index !== links.length - 1 && ' -'}
             </li>
           ))}
         </ul>

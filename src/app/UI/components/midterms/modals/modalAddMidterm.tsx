@@ -115,7 +115,7 @@ export default function ModalAddMidterm({
             onChange={(e) => setNameMidterm(e.target.value)}
             required
           >
-            <option value="">Selecciona el tipo de parcial</option>
+            <option hidden>Selecciona el tipo de parcial</option>
             <option value="Primer parcial">Primer parcial</option>
             <option value="Segundo parcial">Segundo parcial</option>
             <option value="Tercer Parcial">Tercer Parcial</option>

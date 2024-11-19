@@ -52,7 +52,7 @@ export default function YearCourse() {
           ))}
         </>
       ) : (
-        <option hidden>Cargando...</option>
+        <option hidden>-</option>
       )}
     </select>
   );

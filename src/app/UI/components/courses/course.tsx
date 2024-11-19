@@ -1,10 +1,11 @@
-import { fetchLinks } from '@/app/lib/data';
+import { fetchDegreesWithCourse, fetchLinks } from '@/app/lib/data';
 import CorrelativeTable from './correlativeTable';
 import Link from 'next/link';
 import CourseLinks from './courseLinks';
 import { courses } from '@prisma/client';
 import { Suspense } from 'react';
 import CorrelativeTableSkeleton from '../skeletons/correlativeTableSkeleton';
+import ButtonAddLink from './buttonAddLink';
 
 export default async function Course({
   course,
@@ -16,6 +17,8 @@ export default async function Course({
   const { id, name, cg, hs, optional } = course;
   const officialLinks = await fetchLinks({ official: true, id_materia: id });
   const unofficialLinks = await fetchLinks({ official: false, id_materia: id });
+  const degrees = await fetchDegreesWithCourse({ id_course: id });
+
   return (
     <li className="relative flex flex-col w-full h-min bg-[--white] shadow-md p-2 transform-gpu transition-transform sm:hover:scale-105 sm:w-11/12">
       <div className="absolute top-0 right-0 flex flex-col text-center py-1 px-2">
@@ -49,13 +52,23 @@ export default async function Course({
           />
         </Suspense>
       </div>
-      {officialLinks.length >= 0 ? (
+      {officialLinks.length >= 0 && (
         <CourseLinks official={true} links={officialLinks} />
-      ) : null}
-      {unofficialLinks.length >= 0 ? (
+      )}
+      {unofficialLinks.length >= 0 && (
         <CourseLinks official={false} links={unofficialLinks} />
-      ) : null}
-      <div className="flex justify-end gap-1 pt-1 text-[--white] text-sm sm:text-base">
+      )}
+      <div className="text-sm flex-wrap flex gap-x-1 opacity-75 leading-4 pt-2">
+        <b>Está en:</b>
+        {degrees.map(({ name, id }, index) => (
+          <span key={index} className="text-nowrap">
+            {`${name}`}
+            {index !== degrees.length - 1 && ' -'}
+          </span>
+        ))}
+      </div>
+      <div className="flex justify-end gap-1 pt-1 text-[--white] items-center text-sm sm:text-base">
+        <ButtonAddLink course={course} />
         <Link
           href={`./materias/parciales/${id}`}
           className="w-max self-end py-1 px-2 rounded-sm bg-[--midnight-green]"

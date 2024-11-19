@@ -1,4 +1,5 @@
 'use server';
+import Link from 'next/link';
 import prisma from './db';
 
 export async function createMidterm({
@@ -369,4 +370,42 @@ export async function addReactionMidterm({
   } catch (error) {
     throw new Error('Error en modificar reaccion de usuario');
   }
+}
+
+export async function addLink({
+  idCourse,
+  name,
+  link,
+  official,
+  idUser,
+}: {
+  idCourse: number;
+  name: string;
+  link: string;
+  official: boolean;
+  idUser: number;
+}) {
+  try {
+    const createLink = await prisma.links.create({
+      data: {
+        id_course: idCourse,
+        name: name,
+        link: link,
+        official: official,
+        id_user: idUser,
+      },
+    });
+    return createLink;
+  } catch (error) {
+    throw new Error('Error en la creación del link');
+  }
+}
+
+export async function deleteLink(id: number) {
+  const deleteLink = await prisma.links.delete({
+    where: {
+      id: id,
+    },
+  });
+  return deleteLink;
 }

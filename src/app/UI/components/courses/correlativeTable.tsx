@@ -33,11 +33,7 @@ export default async function CorrelativeTable({
       <div className="flex flex-wrap">
         {data.length != 0 ? (
           data.map(({ id, name }, index) => (
-            <CorrelativeList
-              key={id}
-              index={index}
-              name={name}
-            />
+            <CorrelativeList key={id} index={index} name={name} />
           ))
         ) : (
           <p className="opacity-75">No se encuentran datos</p>

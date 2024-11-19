@@ -76,7 +76,9 @@ model links {
   name      String  @db.VarChar
   link      String  @db.VarChar
   official  Boolean
+  id_user   Int
   courses   courses @relation(fields: [id_course], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users     users   @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model midterms {
@@ -174,6 +176,7 @@ model users {
   name               String               @db.VarChar
   image              String               @db.VarChar
   tier               Int
+  links              links[]
   midterms           midterms[]
   midterms_reactions midterms_reactions[]
   tps                tps[]
