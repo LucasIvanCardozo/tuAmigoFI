@@ -45,7 +45,7 @@ export default function DegreeCourse() {
     <select
       name="carreras"
       id="carreras"
-      className="w-full sm:w-28"
+      className="w-full sm:w-40"
       value={degree}
       onChange={(e) => handleDegree(e.target.value)}
     >

@@ -37,7 +37,7 @@ export default function YearCourse() {
     <select
       name="years"
       id="years"
-      className="w-full sm:w-28"
+      className="w-full sm:w-16"
       value={year}
       onChange={(e) => handleYears(e.target.value)}
     >
