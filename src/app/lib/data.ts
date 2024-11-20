@@ -177,7 +177,7 @@ export async function fetchEnabler({
       name: true,
       name_normalized: true,
     },
-    cacheStrategy: cache,
+    // cacheStrategy: cache,
   });
   return enabler;
 }
