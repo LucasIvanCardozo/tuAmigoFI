@@ -21,7 +21,7 @@ export default async function Course({
   const degrees = await fetchDegreesWithCourse({ id_course: id });
 
   return (
-    <li className="relative flex flex-col w-full h-min bg-[--white] shadow-md p-2 transform-gpu transition-transform sm:hover:scale-105 sm:w-11/12">
+    <li className="relative flex flex-col w-full h-min bg-[--white] shadow-md p-2 transform-gpu transition-transform sm:w-11/12 sm:will-change-transform">
       <div className="absolute top-0 right-0 flex flex-col text-center py-1 px-2">
         <span>{`${cg}CG / ${hs}Hs`}</span>
       </div>
@@ -59,7 +59,7 @@ export default async function Course({
       {unofficialLinks.length >= 0 && (
         <CourseLinks official={false} links={unofficialLinks} />
       )}
-      <div className="text-sm h-8 items-center w-full flex overflow-y-hidden overflow-x-scroll gap-x-1 opacity-75 leading-4 sm:pt-2 sm:flex-wrap sm:overflow-visible sm:h-auto">
+      <div className="text-sm h-8 items-center w-full flex overflow-y-hidden overflow-x-auto gap-x-1 opacity-75 leading-4 sm:pt-2 sm:flex-wrap sm:overflow-visible sm:h-auto">
         <b className="text-nowrap">Está en:</b>
         {degrees.map(({ name, id }, index) => (
           <span key={index} className="text-nowrap">

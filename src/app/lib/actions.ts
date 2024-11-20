@@ -401,13 +401,23 @@ export async function addLink({
   }
 }
 
-export async function deleteLink(id: number) {
-  const deleteLink = await prisma.links.delete({
-    where: {
-      id: id,
-    },
-  });
-  return deleteLink;
+export async function deleteLink({ id_link }: { id_link: number }) {
+  try {
+    const deleteReports = await prisma.links_reports.deleteMany({
+      where: {
+        id_link: id_link,
+      },
+    });
+
+    const deleteLink = await prisma.links.delete({
+      where: {
+        id: id_link,
+      },
+    });
+    return deleteLink;
+  } catch (error) {
+    throw new Error('Error en eliminacion de link');
+  }
 }
 
 export async function createCorrelative({
@@ -424,9 +434,28 @@ export async function createCorrelative({
         id_correlative: id_correlative,
       },
     });
+    return createCorrelative;
   } catch (error) {
     throw new Error('Error en la creacion de una correlativa');
   }
+}
 
-  return deleteLink;
+export async function addReportLink({
+  id_link,
+  id_user,
+}: {
+  id_link: number;
+  id_user: number;
+}) {
+  try {
+    const createReport = await prisma.links_reports.create({
+      data: {
+        id_link: id_link,
+        id_user: id_user,
+      },
+    });
+    return createReport;
+  } catch (error) {
+    throw new Error('No poders reportar un link mas de una vez');
+  }
 }

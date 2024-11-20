@@ -1,10 +1,9 @@
 // 'src/app/components/ModalImportImage.tsx'
 'use client';
 
-import { addLink, deleteMidterm } from '@/app/lib/actions';
-import { courses, midterms } from '@prisma/client';
+import { addLink } from '@/app/lib/actions';
+import { courses } from '@prisma/client';
 import { useSession } from 'next-auth/react';
-import { off } from 'process';
 import { FormEvent, useState } from 'react';
 
 export default function ModalAddLink({
@@ -28,11 +27,14 @@ export default function ModalAddLink({
     } else if (!link) {
       setError('Tenes que poner la direccion web');
       return false;
+    } else if (!link.startsWith('https://')) {
+      setError('El link debe comenzar con "https://"');
+      return false;
     } else if (official == undefined) {
       setError('Tenes que decir si el link es oficial o no');
       return false;
     }
-    if (!session?.user || session?.user.tier < 1) {
+    if (!session?.user) {
       setError('Debes iniciar sesion y ser administrador para eliminar un TP');
       return false;
     }
@@ -41,14 +43,7 @@ export default function ModalAddLink({
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (
-      formValidate() &&
-      session &&
-      session?.user?.tier > 0 &&
-      name &&
-      link &&
-      official != undefined
-    ) {
+    if (formValidate() && session && name && link && official != undefined) {
       try {
         await addLink({
           idCourse: course.id,
@@ -86,6 +81,7 @@ export default function ModalAddLink({
                 type="text"
                 name="name"
                 id="name"
+                autoComplete="ÑÖcompletes"
                 placeholder={'Ingresa el titulo del link'}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -98,6 +94,7 @@ export default function ModalAddLink({
                 type="url"
                 name="link"
                 id="link"
+                autoComplete="off"
                 placeholder={'Ingresa el link'}
                 onChange={(e) => setLink(e.target.value)}
                 required

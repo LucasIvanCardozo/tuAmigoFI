@@ -45,3 +45,7 @@ indice par en tps y midterms,indice id_r y id_u a midterms_reaction, lo mismo pa
 -------------
 
 agregar id_user a links
+
+-------------
+
+agregar reports a links
