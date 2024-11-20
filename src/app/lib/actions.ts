@@ -409,3 +409,24 @@ export async function deleteLink(id: number) {
   });
   return deleteLink;
 }
+
+export async function createCorrelative({
+  id,
+  id_correlative,
+}: {
+  id: number;
+  id_correlative: number;
+}) {
+  try {
+    const createCorrelative = await prisma.correlatives.create({
+      data: {
+        id: id,
+        id_correlative: id_correlative,
+      },
+    });
+  } catch (error) {
+    throw new Error('Error en la creacion de una correlativa');
+  }
+
+  return deleteLink;
+}

@@ -1,35 +1,41 @@
 // 'src/app/components/ModalImportImage.tsx'
 'use client';
 
-import { addLink, deleteMidterm } from '@/app/lib/actions';
+import { addLink, createCorrelative, deleteMidterm } from '@/app/lib/actions';
+import { fetchAllCourses, fetchCourse, fetchCourses } from '@/app/lib/data';
 import { courses, midterms } from '@prisma/client';
 import { useSession } from 'next-auth/react';
-import { off } from 'process';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 
-export default function ModalAddLink({
+export default function ModalCreateCorrelative({
   course,
   callback,
 }: {
   course: courses;
   callback: (course: courses | undefined) => void;
 }) {
-  const [name, setName] = useState<string | undefined>();
-  const [link, setLink] = useState<string | undefined>();
-  const [official, setOfficial] = useState<boolean | undefined>();
+  const [idCorrelative, setIdCorrelative] = useState<number | undefined>();
+  const [courses, setCourses] = useState<
+    {
+      id: number;
+      name: string;
+    }[]
+  >();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const { data: session } = useSession();
 
+  useEffect(() => {
+    const fetch = async () => {
+      const coursesAux = await fetchAllCourses();
+      setCourses(coursesAux);
+    };
+    fetch();
+  }, []);
+
   const formValidate = (): boolean => {
-    if (!name) {
+    if (!idCorrelative) {
       setError('Tenes que ponerle un nomber al link');
-      return false;
-    } else if (!link) {
-      setError('Tenes que poner la direccion web');
-      return false;
-    } else if (official == undefined) {
-      setError('Tenes que decir si el link es oficial o no');
       return false;
     }
     if (!session?.user || session?.user.tier < 1) {
@@ -41,21 +47,11 @@ export default function ModalAddLink({
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (
-      formValidate() &&
-      session &&
-      session?.user?.tier > 0 &&
-      name &&
-      link &&
-      official != undefined
-    ) {
+    if (formValidate() && session && session?.user?.tier > 0 && idCorrelative) {
       try {
-        await addLink({
-          idCourse: course.id,
-          link: link,
-          name: name,
-          official: official,
-          idUser: session.user.id,
+        await createCorrelative({
+          id: course.id,
+          id_correlative: idCorrelative,
         });
         callback(undefined);
         window.location.reload();
@@ -80,44 +76,26 @@ export default function ModalAddLink({
           </h3>
           <div className="flex flex-col [&>*]:flex [&>*]:gap-1">
             <div className="flex flex-col">
-              <label htmlFor="name">Titulo del link</label>
-              <input
-                className="text-black"
-                type="text"
-                name="name"
-                id="name"
-                placeholder={'Ingresa el titulo del link'}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-            </div>
-            <div className="flex flex-col">
-              <label htmlFor="link">Link</label>
-              <input
-                className="text-black"
-                type="url"
-                name="link"
-                id="link"
-                placeholder={'Ingresa el link'}
-                onChange={(e) => setLink(e.target.value)}
-                required
-              />
-            </div>
-            <div className="flex flex-col">
-              <label htmlFor="official">Título</label>
+              <label htmlFor="correlative">Correlativa</label>
               <select
                 className="text-black"
-                name="official"
-                id="official"
-                onChange={(e) => (
-                  console.log(Boolean(e.target.value)),
-                  setOfficial(Boolean(e.target.value))
-                )}
+                name="correlative"
+                id="correlative"
+                onChange={(e) => setIdCorrelative(Number(e.target.value))}
                 required
               >
-                <option hidden>Selecciona el tipo de link</option>
-                <option value="1">Oficial</option>
-                <option value="">No oficial</option>
+                {courses ? (
+                  <>
+                    <option hidden>Selecciona la materia correlativa</option>
+                    {courses.map(({ id, name }) => (
+                      <option key={id} value={id}>
+                        {name}
+                      </option>
+                    ))}
+                  </>
+                ) : (
+                  <option hidden>Cargando...</option>
+                )}
               </select>
             </div>
           </div>

@@ -6,6 +6,7 @@ import { courses } from '@prisma/client';
 import { Suspense } from 'react';
 import CorrelativeTableSkeleton from '../skeletons/correlativeTableSkeleton';
 import ButtonAddLink from './buttonAddLink';
+import ButtonAddCorrelative from './buttonAddCorrelative';
 
 export default async function Course({
   course,
@@ -58,8 +59,8 @@ export default async function Course({
       {unofficialLinks.length >= 0 && (
         <CourseLinks official={false} links={unofficialLinks} />
       )}
-      <div className="text-sm flex-wrap flex gap-x-1 opacity-75 leading-4 pt-2">
-        <b>Está en:</b>
+      <div className="text-sm h-8 items-center w-full flex overflow-y-hidden overflow-x-scroll gap-x-1 opacity-75 leading-4 sm:pt-2 sm:flex-wrap sm:overflow-visible sm:h-auto">
+        <b className="text-nowrap">Está en:</b>
         {degrees.map(({ name, id }, index) => (
           <span key={index} className="text-nowrap">
             {`${name}`}
@@ -68,6 +69,7 @@ export default async function Course({
         ))}
       </div>
       <div className="flex justify-end gap-1 pt-1 text-[--white] items-center text-sm sm:text-base">
+        <ButtonAddCorrelative course={course} />
         <ButtonAddLink course={course} />
         <Link
           href={`./materias/parciales/${id}`}

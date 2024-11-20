@@ -51,6 +51,20 @@ export async function fetchCourseCount(query: {
   return count;
 }
 
+export async function fetchAllCourses() {
+  const courses = await prisma.courses.findMany({
+    select: {
+      id: true,
+      name: true,
+    },
+    orderBy: {
+      name: 'asc',
+    },
+    cacheStrategy: cache,
+  });
+  return courses;
+}
+
 export async function fetchCourses({
   search,
   year,

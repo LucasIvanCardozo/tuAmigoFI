@@ -15,7 +15,7 @@ export default function ButtonAddLink({ course }: { course: courses }) {
     session &&
     session?.user.tier > 0 && (
       <>
-        <div className="text-[--black]">
+        <div className="text-[--black] border-2 rounded-md border-[--black-olive] px-1">
           <button onClick={() => handleModalAddLink(course)}>
             Añadir Link
           </button>
