@@ -143,7 +143,7 @@ export async function fetchCorrelatives({
       id: true,
       name: true,
     },
-    cacheStrategy: cache,
+    // cacheStrategy: cache,
   });
   return correlatives;
 }
