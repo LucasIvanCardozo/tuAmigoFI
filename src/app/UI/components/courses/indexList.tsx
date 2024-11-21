@@ -99,6 +99,8 @@ export default function IndexList({
         />
       </ul>
     ) : null
+  ) : pageCount != undefined ? (
+    <p className="opacity-75">No se encuentran datos</p>
   ) : (
     <p>Cargando</p>
   );

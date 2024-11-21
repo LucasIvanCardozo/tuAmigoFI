@@ -80,3 +80,6 @@ Generación de Energía Eléctrica A - ing. electrica
 Sistemas de distribución de Energía Eléctrica - ing. electrica
 Accionamientos con Motor Eléctrico - ing. electrica
 Control I - ing.electrica
+----
+
+ingenieria de procesos biotecnologicos - ing alimentos
