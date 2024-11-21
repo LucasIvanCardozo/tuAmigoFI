@@ -407,3 +407,23 @@ export async function fetchResponsesMidterm({
 
   return groupedResponses;
 }
+
+export async function fetchContributors() {
+  const users = await prisma.users.findMany({
+    include: {
+      _count: {
+        select: {
+          links: true,
+          midterms: true,
+          tps: true,
+          tps_responses: true,
+          tps_reactions: {
+            where: {
+              reaction: true,
+            },
+          },
+        },
+      },
+    },
+  });
+}

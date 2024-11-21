@@ -1,7 +1,8 @@
-// import { fetchContributors } from '@/app/lib/data';
+
+import { fetchContributors } from '@/app/lib/data';
 
 export default async function Contributors() {
-  // const contributors = await fetchContributors();
+  const contributors = await fetchContributors();
   return (
     <></>
     // <section className="text-[--black] relative max-w-screen-md m-auto w-11/12">

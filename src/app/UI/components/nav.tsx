@@ -124,7 +124,7 @@ export default function Nav() {
                     src={session.user.image}
                     width={100}
                     height={100}
-                    alt="Picture of the author"
+                    alt="Imagen del usuario"
                   />
                 </div>
               )}
