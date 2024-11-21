@@ -49,3 +49,34 @@ agregar id_user a links
 -------------
 
 agregar reports a links
+
+
+---------------
+cambiar nombre de auditoria y homologacion calidad de software a por auditoria y homologacion
+
+
+agregar programacion- ing ingcomputacion
+agregar sistema de base de datos - ing ingcomputacion
+
+
+operaciones unitarias lll - ing quimica
+introduccion a la ing mecanica - ing mecanica
+administracion estrategica - ing industrial
+ingles profesional b - ing industrial
+proyecto de ing - ing industrial
+Gestión Integral del Matenimiento - ing.industrial
+Empresas y Servicios Basadas en el Conocimiento - ing.industrial
+Sistemas de Repres. en Plantas de Procesos - ing alimentos
+ermodinamica de Alimentos II - ing alimentos
+Operaciones Unitarias III - ing alimentos
+Microbiologia - ing alimentos
+Sistemas de Comunicaciones - ing electronica
+Instrumentación y Mediciones Electrónicas I - ing electronica
+Máquinas Electricas A .in electromecanica
+Control I - .in electromecanica
+maquinas electricas - ing. electrica
+verificar que mediciones electricas a sea correlativa de maquinas electricas b
+Generación de Energía Eléctrica A - ing. electrica
+Sistemas de distribución de Energía Eléctrica - ing. electrica
+Accionamientos con Motor Eléctrico - ing. electrica
+Control I - ing.electrica

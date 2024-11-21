@@ -12,7 +12,7 @@ export async function fetchCourse(id: number) {
     where: {
       id: id,
     },
-    cacheStrategy: cache,
+    // cacheStrategy: cache,
   });
   return course;
 }
@@ -60,7 +60,7 @@ export async function fetchAllCourses() {
     orderBy: {
       name: 'asc',
     },
-    cacheStrategy: cache,
+    // cacheStrategy: cache,
   });
   return courses;
 }
@@ -110,7 +110,7 @@ export async function fetchCourses({
           skip: (page - 1) * 5,
         }
       : { take: 5, skip: 0 }),
-    cacheStrategy: cache,
+    // cacheStrategy: cache,
   });
   return courses;
 }
