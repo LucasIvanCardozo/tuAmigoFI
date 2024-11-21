@@ -61,12 +61,19 @@ export default function RootLayout({
             ))}
           </div>
           {children}
-          <footer className="w-full h-20 flex justify-center items-center gap-1 bg-black self-end">
-            <p>Creada por</p>
-            <a className="underline" href="">
-              Lucas Cardozo
+          <footer className="w-full h-20 flex flex-col justify-center items-center gap-1 bg-black self-end">
+            <div className="flex gap-1">
+              <p>Creada por</p>
+              <a className="underline" href="">
+                Lucas Cardozo
+              </a>
+            </div>
+            <a
+              className="text-sm underline sm:hover:underline sm:no-underline"
+              href="/privacidad"
+            >
+              Politica y privacidad
             </a>
-            <a href="/privacidad">Politica y privacidad</a>
           </footer>
         </Providers>
       </body>

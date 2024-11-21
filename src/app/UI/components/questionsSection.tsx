@@ -29,7 +29,7 @@ export default function QuestionsSection() {
 
   return (
     <section className="text-[--black] relative max-w-screen-md m-auto w-11/12">
-      <h2 className="w-full font-bold -z-10 text-3xl mb-2 sm:text-4xl">
+      <h2 className="w-full text-center font-bold -z-10 text-3xl mb-2 sm:text-4xl">
         Consultas
       </h2>
       <div className="flex flex-col gap-2 w-full sm:flex-row">

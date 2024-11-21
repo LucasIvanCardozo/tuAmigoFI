@@ -1,34 +1,51 @@
-
 import { fetchContributors } from '@/app/lib/data';
+import { FaStar } from 'react-icons/fa';
+import { IoIosInformationCircle } from 'react-icons/io';
+import ButtonInfoScore from './buttonInfoScore';
 
 export default async function Contributors() {
   const contributors = await fetchContributors();
   return (
-    <></>
-    // <section className="text-[--black] relative max-w-screen-md m-auto w-11/12">
-    //   <h2 className="font-bold text-3xl my-2">Colaboradores</h2>
-    //   <ul>
-    //     {contributors.map(({ _count, name }, index) =>
-    //       index == 0 ? (
-    //         <li
-    //           className="text-2xl"
-    //           key={index}
-    //         >{`🥇${name} resolvió ${_count.problems} problemas!`}</li>
-    //       ) : index == 1 ? (
-    //         <li
-    //           className="text-xl"
-    //           key={index}
-    //         >{`🥈${name} resolvió ${_count.problems} problemas!`}</li>
-    //       ) : index == 2 ? (
-    //         <li
-    //           className="text-lg"
-    //           key={index}
-    //         >{`🥉${name} resolvió ${_count.problems} problemas!`}</li>
-    //       ) : (
-    //         <li key={index}>{`${name} resolvió ${_count} problemas`}</li>
-    //       )
-    //     )}
-    //   </ul>
-    // </section>
+    <>
+      <section className="text-[--black] relative max-w-screen-md m-auto w-11/12">
+        <h2 className="font-bold text-3xl my-2 flex gap-1 items-center justify-center">
+          Colaboradores
+          <ButtonInfoScore />
+        </h2>
+        <p className="text-balance pb-2 text-center">
+          Gracias a quienes suman su esfuerzo compartiendo recursos y
+          soluciones, ayudando a construir una comunidad más fuerte para todos
+          los estudiantes. ¡Tu aporte marca la diferencia! 💖
+        </p>
+        <ul className="flex flex-col gap-1 w-full items-center">
+          {contributors.map(({ name, score }, index) => (
+            <li
+              className={
+                (index == 0
+                  ? 'text-2xl'
+                  : index == 1
+                  ? 'text-xl'
+                  : index == 2
+                  ? 'text-lg'
+                  : 'text-base') + ` flex gap-1`
+              }
+              key={index}
+            >
+              <div className="flex gap-1 items-center bg-[--white] rounded-md px-1">
+                {index == 0 ? (
+                  <FaStar className="text-amber-400" />
+                ) : index == 1 ? (
+                  <FaStar className="text-slate-300" />
+                ) : index == 2 ? (
+                  <FaStar className="text-amber-600" />
+                ) : null}
+                {name}
+              </div>
+              {`con ${score}Pts.`}
+            </li>
+          ))}
+        </ul>
+      </section>
+    </>
   );
 }
