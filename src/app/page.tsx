@@ -18,10 +18,10 @@ export default async function Home() {
             height={200}
             alt=""
           />
-          <h1 className="font-bold text-nowrap absolute text-4xl top-0 left-full text-left bg-[#F3F4F6] ml-1 p-1 rounded-2xl rounded-es-none shadow-md sm:ml-6 sm:p-2">
-            Hola Palo!
+          <h1 className="font-bold absolute text-4xl top-0 left-full text-left bg-[#F3F4F6] ml-1 p-1 rounded-2xl rounded-es-none shadow-md sm:ml-6 sm:p-2">
+            Bienvenido!
             <p className="text-nowrap text-xl font-normal">
-              Organizamos alguna salida?
+              Aquí tu amigo 'FI'
             </p>
           </h1>
         </div>
