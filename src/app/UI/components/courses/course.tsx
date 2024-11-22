@@ -26,7 +26,7 @@ export default async function Course({
         <span>{`${cg}CG / ${hs}Hs`}</span>
       </div>
       <div className="flex relative w-3/4">
-        <h2 className="w-fit leading-6 text-lg text-balance text-[--white] bg-[--dark-cyan]">
+        <h2 className="font-bold w-fit leading-6 text-lg text-balance text-[--white] bg-[--dark-cyan] sm:font-normal">
           {name}
         </h2>
         {optional ? (
@@ -73,13 +73,13 @@ export default async function Course({
         <ButtonAddLink course={course} />
         <Link
           href={`./materias/parciales/${id}`}
-          className="w-max self-end py-1 px-2 rounded-sm bg-[--midnight-green]"
+          className="font-bold w-max self-end py-1 px-2 rounded-sm bg-[--midnight-green] sm:font-normal"
         >
           Ver parciales
         </Link>
         <Link
           href={`./materias/practica/${id}`}
-          className="w-max self-end py-1 px-2 rounded-sm bg-[--midnight-green]"
+          className="font-bold w-max self-end py-1 px-2 rounded-sm bg-[--midnight-green] sm:font-normal"
         >
           Ir a la práctica
         </Link>

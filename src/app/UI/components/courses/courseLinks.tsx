@@ -50,7 +50,9 @@ export default function CourseLinks({
         onClick={handleClick}
       >
         {viewState ? <VscTriangleDown /> : <VscTriangleRight />}
-        <h3>{official ? 'Links oficiales' : 'Links no oficiales'}</h3>
+        <h3>
+          <b>{official ? 'Links oficiales' : 'Links no oficiales'}</b>
+        </h3>
       </button>
       <div className="overflow-hidden">
         <div

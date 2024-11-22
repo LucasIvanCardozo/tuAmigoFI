@@ -27,9 +27,9 @@ export default function CorrelativeList({
 
   return (
     <div className="flex">
-      {index != 0 ? <p>&nbsp;-&nbsp;</p> : ''}
+      {index != 0 && <span className="flex whitespace-pre"> - </span>}
       <button
-        className="hover:text-[--midnight-green] hover:underline"
+        className="text-nowrap hover:text-[--midnight-green] hover:underline"
         onClick={() => handleClick(name)}
       >
         {name}

@@ -25,12 +25,12 @@ export default async function CorrelativeTable({
   }
 
   return (
-    <div className="flex gap-1 text-sm text-[--black-olive]">
-      <div className="flex justify-between gap-1 self-start w-19">
+    <div className="flex h-6 gap-1 text-sm text-[--black-olive] sm:h-auto">
+      <div className="flex items-center h-full justify-between gap-1 self-start w-19">
         <p>{title}</p>
         <CgArrowRightO className="self-center text-[--midnight-green]" />
       </div>
-      <div className="flex flex-wrap">
+      <div className="flex items-center overflow-x-auto overflow-y-hidden sm:overflow-hidden sm:flex-wrap">
         {data.length != 0 ? (
           data.map(({ id, name }, index) => (
             <CorrelativeList key={id} index={index} name={name} />
