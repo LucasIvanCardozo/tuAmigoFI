@@ -33,7 +33,8 @@ export default function ModalInfoScore({
                 Comparte links útiles y obtendrás <b>1 punto</b>.
               </li>
             </ul>
-            ¡Colabora y construyamos juntos una comunidad más fuerte!
+            ¡Colabora y construyamos juntos una comunidad más fuerte! Los datos
+            se actualizan cada 2 hs.
           </p>
         </div>
         <button
