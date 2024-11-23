@@ -1,5 +1,7 @@
+import { Suspense } from 'react';
 import ButtonInfoScore from './buttonInfoScore';
 import ContributorsList from './contrubutorsList';
+import ContributorsListSkeleton from './skeletons/contributorsListSkeleton.tsx';
 
 export default async function Contributors() {
   return (

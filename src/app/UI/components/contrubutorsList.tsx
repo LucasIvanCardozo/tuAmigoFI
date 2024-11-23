@@ -2,6 +2,8 @@
 import { FaStar } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { fetchContributors } from '@/app/lib/data';
+import ContributorsSkeleton from './skeletons/contributorsSkeleton';
+import ContributorsListSkeleton from './skeletons/contributorsListSkeleton.tsx';
 
 export default function ContributorsList() {
   const [contributors, setContributors] = useState<
@@ -44,32 +46,36 @@ export default function ContributorsList() {
 
   return (
     <ul className="flex flex-col gap-1 w-full items-center">
-      {contributors?.map(({ name, score }, index) => (
-        <li
-          className={
-            (index == 0
-              ? 'text-2xl'
-              : index == 1
-              ? 'text-xl'
-              : index == 2
-              ? 'text-lg'
-              : 'text-base') + ` flex gap-1`
-          }
-          key={index}
-        >
-          <div className="flex gap-1 items-center bg-[--white] rounded-md px-1">
-            {index == 0 ? (
-              <FaStar className="text-amber-400" />
-            ) : index == 1 ? (
-              <FaStar className="text-slate-300" />
-            ) : index == 2 ? (
-              <FaStar className="text-amber-600" />
-            ) : null}
-            {name}
-          </div>
-          {`con ${score}Pts.`}
-        </li>
-      ))}
+      {contributors ? (
+        contributors.map(({ name, score }, index) => (
+          <li
+            className={
+              (index == 0
+                ? 'text-2xl'
+                : index == 1
+                ? 'text-xl'
+                : index == 2
+                ? 'text-lg'
+                : 'text-base') + ` flex gap-1`
+            }
+            key={index}
+          >
+            <div className="flex gap-1 items-center bg-[--white] rounded-md px-1">
+              {index == 0 ? (
+                <FaStar className="text-amber-400" />
+              ) : index == 1 ? (
+                <FaStar className="text-slate-300" />
+              ) : index == 2 ? (
+                <FaStar className="text-amber-600" />
+              ) : null}
+              {name}
+            </div>
+            {`con ${score}Pts.`}
+          </li>
+        ))
+      ) : (
+        <ContributorsListSkeleton />
+      )}
     </ul>
   );
 }
