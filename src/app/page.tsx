@@ -5,7 +5,7 @@ import QuestionsSection from './UI/components/questionsSection';
 import Contributors from './UI/components/contributors';
 import { Suspense } from 'react';
 import ContributorsSkeleton from './UI/components/skeletons/contributorsSkeleton';
-export const revalidate = 10;
+export const revalidate = 7400;
 export default async function Home() {
   return (
     <>
