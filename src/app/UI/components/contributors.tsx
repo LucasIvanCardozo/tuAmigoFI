@@ -33,7 +33,7 @@ export default async function Contributors() {
                 }
                 key={index}
               >
-                <div className="flex gap-1 items-center bg-[--white] rounded-md px-1">
+                <div className="flex gap-1 max-w-56 items-center bg-[--white] rounded-md px-1 text-nowrap overflow-hidden text-ellipsis">
                   {index == 0 ? (
                     <FaStar className="text-amber-400" />
                   ) : index == 1 ? (
@@ -41,9 +41,9 @@ export default async function Contributors() {
                   ) : index == 2 ? (
                     <FaStar className="text-amber-600" />
                   ) : null}
-                  {name}
+                  <span className="truncate">{name}</span>
                 </div>
-                {`con ${score}Pts.`}
+                <span className="text-nowrap">{`con ${score}Pts.`}</span>
               </li>
             ))
           ) : (
