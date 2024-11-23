@@ -2,8 +2,8 @@
 import prisma from './db';
 
 const cache = {
-  ttl: 7200,
-  swr: 300,
+  ttl: 10,
+  swr: 10,
 };
 
 // fetching de materias
@@ -426,7 +426,7 @@ export async function fetchContributors() {
         },
       },
     },
-    //cacheStrategy: cache,
+    cacheStrategy: cache,
   });
 
   const prepareUsers = users
