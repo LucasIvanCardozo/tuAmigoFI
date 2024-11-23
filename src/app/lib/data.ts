@@ -2,8 +2,8 @@
 import prisma from './db';
 
 const cache = {
-  ttl: 10,
-  swr: 10,
+  ttl: 7200,
+  swr: 300,
 };
 
 // fetching de materias
@@ -426,24 +426,8 @@ export async function fetchContributors() {
         },
       },
     },
-    // cacheStrategy: {
-    //   ttl: 0,
-    //   swr: 0,
-    // },
+    cacheStrategy: cache,
   });
 
-  const prepareUsers = users
-    .map((user) => ({
-      ...user,
-      score:
-        user._count.links * 1 +
-        user._count.midterms * 5 +
-        user._count.tps * 6 +
-        user._count.tps_reactions * 1 +
-        user._count.tps_responses * 3,
-    }))
-    .filter((user) => user.score > 0)
-    .sort((a, b) => b.score - a.score);
-
-  return prepareUsers;
+  return users;
 }
