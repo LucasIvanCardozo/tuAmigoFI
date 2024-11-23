@@ -4,6 +4,7 @@ import ButtonInfoScore from './buttonInfoScore';
 
 export default async function Contributors() {
   const contributors = await fetchContributors();
+  console.log(contributors);
   return (
     <>
       <section className="text-[--black] relative max-w-screen-md m-auto w-11/12">
