@@ -1,6 +1,5 @@
 import { fetchContributors } from '@/app/lib/data';
 import { FaStar } from 'react-icons/fa';
-import { IoIosInformationCircle } from 'react-icons/io';
 import ButtonInfoScore from './buttonInfoScore';
 
 export default async function Contributors() {
