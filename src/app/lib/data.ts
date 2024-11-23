@@ -426,7 +426,10 @@ export async function fetchContributors() {
         },
       },
     },
-    cacheStrategy: cache,
+    cacheStrategy: {
+      ttl: 0,
+      swr: 0,
+    },
   });
 
   const prepareUsers = users
