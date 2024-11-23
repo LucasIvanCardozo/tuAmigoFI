@@ -25,18 +25,17 @@ export default function ContributorsList() {
   useEffect(() => {
     const fetchUsers = async () => {
       const users = await fetchContributors();
-      const prepareUsers = users
-        .map((user) => ({
-          ...user,
-          score:
-            user._count.links * 1 +
-            user._count.midterms * 5 +
-            user._count.tps * 6 +
-            user._count.tps_reactions * 1 +
-            user._count.tps_responses * 3,
-        }))
-        .filter((user) => user.score > 0)
-        .sort((a, b) => b.score - a.score);
+      const prepareUsers = users.map((user) => ({
+        ...user,
+        score:
+          user._count.links * 1 +
+          user._count.midterms * 5 +
+          user._count.tps * 6 +
+          user._count.tps_reactions * 1 +
+          user._count.tps_responses * 3,
+      }));
+      // .filter((user) => user.score > 0)
+      // .sort((a, b) => b.score - a.score);
       console.log(prepareUsers);
       setContributors(prepareUsers);
     };
