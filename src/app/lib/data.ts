@@ -426,7 +426,7 @@ export async function fetchContributors() {
         },
       },
     },
-    // cacheStrategy: cache,
+    //cacheStrategy: cache,
   });
 
   const prepareUsers = users

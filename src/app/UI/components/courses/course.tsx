@@ -69,7 +69,7 @@ export default async function Course({
         ))}
       </div>
       <div className="flex justify-end gap-1 pt-1 text-[--white] items-center text-sm sm:text-base">
-        <ButtonAddCorrelative course={course} />
+        {/* <ButtonAddCorrelative course={course} /> */}
         <ButtonAddLink course={course} />
         <Link
           href={`./materias/parciales/${id}`}
