@@ -1,9 +1,13 @@
 import { Suspense } from 'react';
 import ButtonInfoScore from './buttonInfoScore';
 import ContributorsList from './contrubutorsList';
-import ContributorsListSkeleton from './skeletons/contributorsListSkeleton.tsx';
+import { fetchContributors } from '@/app/lib/data';
+
+export const revalidate = 10;
 
 export default async function Contributors() {
+  const contributors = await fetchContributors();
+
   return (
     <section className="text-[--black] relative max-w-screen-md m-auto w-11/12">
       <h2 className="font-bold text-3xl my-2 flex gap-1 items-center justify-center">
@@ -15,7 +19,27 @@ export default async function Contributors() {
         ayudando a construir una comunidad más fuerte para todos los
         estudiantes. ¡Tu aporte marca la diferencia! 💖
       </p>
-      <ContributorsList />
+      {contributors.map(({ name }, index) => (
+        <li
+          className={
+            (index == 0
+              ? 'text-2xl'
+              : index == 1
+              ? 'text-xl'
+              : index == 2
+              ? 'text-lg'
+              : 'text-base') + ` flex gap-1`
+          }
+          key={index}
+        >
+          <div className="flex gap-1 items-center bg-[--white] rounded-md px-1">
+            {name}
+          </div>
+        </li>
+      ))}
+      <Suspense fallback={<ContributorsList></ContributorsList>}>
+        <ContributorsList />
+      </Suspense>
     </section>
   );
 }
