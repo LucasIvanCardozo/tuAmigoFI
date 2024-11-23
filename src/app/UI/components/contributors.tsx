@@ -3,8 +3,6 @@ import ButtonInfoScore from './buttonInfoScore';
 import ContributorsList from './contrubutorsList';
 import { fetchContributors } from '@/app/lib/data';
 
-export const revalidate = 10;
-
 export default async function Contributors() {
   const contributors = await fetchContributors();
 
@@ -19,7 +17,7 @@ export default async function Contributors() {
         ayudando a construir una comunidad más fuerte para todos los
         estudiantes. ¡Tu aporte marca la diferencia! 💖
       </p>
-      {contributors.map(({ name }, index) => (
+      {contributors.map(({ name, score }, index) => (
         <li
           className={
             (index == 0
@@ -35,6 +33,7 @@ export default async function Contributors() {
           <div className="flex gap-1 items-center bg-[--white] rounded-md px-1">
             {name}
           </div>
+          {`con ${score}Pts.`}
         </li>
       ))}
       <Suspense fallback={<ContributorsList></ContributorsList>}>
