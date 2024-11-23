@@ -37,6 +37,7 @@ export default function ContributorsList() {
         }))
         .filter((user) => user.score > 0)
         .sort((a, b) => b.score - a.score);
+      console.log(prepareUsers);
       setContributors(prepareUsers);
     };
     fetchUsers();
