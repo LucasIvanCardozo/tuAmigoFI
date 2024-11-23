@@ -426,10 +426,7 @@ export async function fetchContributors() {
         },
       },
     },
-    cacheStrategy: {
-      ttl: 10,
-      swr: 10,
-    },
+    cacheStrategy: cache,
   });
   const prepareUsers = users
     .map((user) => ({
