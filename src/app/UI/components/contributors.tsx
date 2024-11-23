@@ -3,7 +3,6 @@ import ButtonInfoScore from './buttonInfoScore';
 import ContributorsList from './contrubutorsList';
 import { fetchContributors } from '@/app/lib/data';
 
-export const revalidate = 10;
 
 export default async function Contributors() {
   const contributors = await fetchContributors();
