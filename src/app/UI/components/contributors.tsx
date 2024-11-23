@@ -1,32 +1,19 @@
-import { fetchContributors } from '@/app/lib/data';
-import { FaStar } from 'react-icons/fa';
 import ButtonInfoScore from './buttonInfoScore';
 import ContributorsList from './contrubutorsList';
 
 export default async function Contributors() {
-  const contributors = await fetchContributors();
   return (
-    <>
-      <section className="text-[--black] relative max-w-screen-md m-auto w-11/12">
-        <h2 className="font-bold text-3xl my-2 flex gap-1 items-center justify-center">
-          Colaboradores
-          <ButtonInfoScore />
-        </h2>
-        <p className="text-balance pb-2 text-center">
-          Gracias a quienes suman su esfuerzo compartiendo recursos y
-          soluciones, ayudando a construir una comunidad más fuerte para todos
-          los estudiantes. ¡Tu aporte marca la diferencia! 💖
-        </p>
-        <ul className="flex flex-col gap-1 w-full items-center">
-          {contributors.map((contributor, index) => (
-            <ContributorsList
-              key={index}
-              contributors={contributor}
-              index={index}
-            />
-          ))}
-        </ul>
-      </section>
-    </>
+    <section className="text-[--black] relative max-w-screen-md m-auto w-11/12">
+      <h2 className="font-bold text-3xl my-2 flex gap-1 items-center justify-center">
+        Colaboradores
+        <ButtonInfoScore />
+      </h2>
+      <p className="text-balance pb-2 text-center">
+        Gracias a quienes suman su esfuerzo compartiendo recursos y soluciones,
+        ayudando a construir una comunidad más fuerte para todos los
+        estudiantes. ¡Tu aporte marca la diferencia! 💖
+      </p>
+      <ContributorsList />
+    </section>
   );
 }
