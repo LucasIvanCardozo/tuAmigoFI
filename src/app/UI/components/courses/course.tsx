@@ -7,6 +7,8 @@ import { Suspense } from 'react';
 import CorrelativeTableSkeleton from '../skeletons/correlativeTableSkeleton';
 import ButtonAddLink from './buttonAddLink';
 import ButtonAddCorrelative from './buttonAddCorrelative';
+import DegreesList from './modals/degreesList';
+import DegreesListSkeleton from '../skeletons/degreesListSkeleton';
 
 export default async function Course({
   course,
@@ -18,7 +20,6 @@ export default async function Course({
   const { id, name, cg, hs, optional } = course;
   const officialLinks = await fetchLinks({ official: true, id_materia: id });
   const unofficialLinks = await fetchLinks({ official: false, id_materia: id });
-  const degrees = await fetchDegreesWithCourse({ id_course: id });
 
   return (
     <li className="relative flex flex-col w-full h-min bg-[--white] shadow-md p-2 transform-gpu transition-transform sm:w-11/12 sm:will-change-transform">
@@ -61,12 +62,9 @@ export default async function Course({
       )}
       <div className="text-sm h-8 items-center w-full flex overflow-y-hidden overflow-x-auto gap-x-1 opacity-75 leading-4 sm:pt-2 sm:flex-wrap sm:overflow-visible sm:h-auto">
         <b className="text-nowrap">Está en:</b>
-        {degrees.map(({ name, id }, index) => (
-          <span key={index} className="text-nowrap">
-            {`${name}`}
-            {index !== degrees.length - 1 && ' -'}
-          </span>
-        ))}
+        <Suspense fallback={<DegreesListSkeleton />}>
+          <DegreesList idCourse={id} />
+        </Suspense>
       </div>
       <div className="flex justify-end gap-1 pt-1 text-[--white] items-center text-sm sm:text-base">
         {/* <ButtonAddCorrelative course={course} /> */}

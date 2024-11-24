@@ -13,13 +13,11 @@ export default async function CoursesTable({
 
   return (
     <ul className="w-full flex flex-col gap-3 items-center my-5 text-[--black]">
-      <Suspense>
-        {courses?.map((course) => (
-          <Suspense key={course.id} fallback={<CourseSkeleton />}>
-            <Course course={course} id_carrera={query.degree} />
-          </Suspense>
-        ))}
-      </Suspense>
+      {courses.map((course) => (
+        <Suspense key={course.id} fallback={<CourseSkeleton />}>
+          <Course course={course} id_carrera={query.degree} />
+        </Suspense>
+      ))}
       <IndexList query={query} />
     </ul>
   );

@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { VscTriangleDown, VscTriangleRight } from 'react-icons/vsc';
 import { MdOutlineReport } from 'react-icons/md';
 import { MdDelete } from 'react-icons/md';
-import { deleteLink } from '@/app/lib/actions';
 import ModalReportLink from './modals/modalReportLink';
 import ModalDeleteLink from './modals/modalDeleteLink';
 

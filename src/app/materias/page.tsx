@@ -5,6 +5,7 @@ import YearCourse from '../UI/components/yearCourse';
 import Image from 'next/image';
 import { Suspense } from 'react';
 import CoursesSkeleton from '../UI/components/skeletons/coursesSkeleton';
+import YearSkeleton from '../UI/components/skeletons/yearSkeleton';
 
 export default async function Materias({
   searchParams,
@@ -44,8 +45,12 @@ export default async function Materias({
       <section className="flex flex-col max-w-screen-md w-11/12 m-auto grow items-center">
         <div className="flex flex-col w-full gap-1 text-[--black] sm:flex-row">
           <SearchCourses />
-          <YearCourse />
-          <DegreeCourse />
+          <Suspense fallback={<YearSkeleton />}>
+            <YearCourse />
+          </Suspense>
+          <Suspense fallback={<YearSkeleton />}>
+            <DegreeCourse />
+          </Suspense>
         </div>
         <Suspense fallback={<CoursesSkeleton />}>
           <CoursesTable query={query} />
