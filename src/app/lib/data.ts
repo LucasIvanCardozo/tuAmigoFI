@@ -6,6 +6,10 @@ const cache = {
   swr: 300,
 };
 
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 // fetching de materias
 export async function fetchCourse(id: number) {
   const course = await prisma.courses.findFirstOrThrow({

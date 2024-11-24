@@ -1,7 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { Calendar } from 'react-multi-date-picker';
-import CoursesSkeleton from './skeletons/coursesSkeleton';
 
 const spanish_es = {
   name: 'gregorian_es',
@@ -185,7 +184,10 @@ export default function CalendarSection() {
       <div className="w-full">
         {loading ? (
           <div className="w-full h-72 flex justify-center items-center">
-            <div className="w-16 h-16 border-dashed border-l-4 border-t-4 border-black rounded-full animate-spin"></div>
+            <div className="relative">
+              <div className="absolute h-10 w-10 border-[--black] border-x-2 rounded-full animate-spin"></div>
+              <div className="h-10 w-10 border-[--black] border-2 opacity-40 rounded-full animate-ping"></div>
+            </div>
           </div>
         ) : (
           <Calendar

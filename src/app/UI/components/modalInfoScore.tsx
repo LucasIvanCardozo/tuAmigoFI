@@ -34,7 +34,7 @@ export default function ModalInfoScore({
               </li>
             </ul>
             ¡Colabora y construyamos juntos una comunidad más fuerte! Los datos
-            se actualizan cada 2 hs.
+            <b>se actualizan cada 24 hs</b>.
           </p>
         </div>
         <button

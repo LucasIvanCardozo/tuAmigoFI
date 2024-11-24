@@ -1,11 +1,15 @@
-import 'katex/dist/katex.min.css';
 import Image from 'next/image';
 import CalendarSection from './UI/components/calendar';
 import QuestionsSection from './UI/components/questionsSection';
 import Contributors from './UI/components/contributors';
 import { Suspense } from 'react';
 import ContributorsSkeleton from './UI/components/skeletons/contributorsSkeleton';
-export const revalidate = 7400;
+import ButtonInfoScore from './UI/components/buttonInfoScore';
+import { FaArrowRight } from 'react-icons/fa';
+import QuestionSkeleton from './UI/components/skeletons/questionSkeleton';
+
+export const revalidate = 3600 * 24;
+
 export default async function Home() {
   return (
     <>
@@ -59,18 +63,68 @@ export default async function Home() {
         académico y mucho más. Todo pensado para darte una mano en tu carrera de
         ingeniería.
       </section>
-      <section className="hidden text-[--black] max-w-screen-md m-auto w-full text-balance text-center sm:visible sm:block">
+      <section className="hidden text-[--black] max-w-screen-md m-auto w-full text-balance text-center sm:block">
         En Tu-Amigo-FI tenés todo lo que necesitás para avanzar en ingeniería:
         finales, trabajos prácticos resueltos, guías y mucho más para
         facilitarte el estudio. También podés consultar el calendario académico
         y subir tus propios aportes para ayudar a otros estudiantes. Todo en un
         solo lugar para que tu paso por la facu sea más llevadero.
       </section>
-      <QuestionsSection />
+      <section className="text-[--black] relative max-w-screen-md m-auto w-11/12">
+        <h2 className="w-full text-center font-bold -z-10 text-3xl mb-2 sm:text-4xl">
+          Consultas
+        </h2>
+        <Suspense fallback={<QuestionSkeleton />}>
+          <QuestionsSection />
+        </Suspense>
+        <ul className="w-full overflow-hidden my-2 flex flex-col gap-1">
+          {[
+            {
+              question: '¿En que aula curso hoy?',
+              link: 'https://www3.fi.mdp.edu.ar/salas2022/day.php?area=2&room=1',
+              value: 'fi.mdp.edu.ar',
+            },
+            {
+              question: '¿Dónde me inscribo a las matrerias?',
+              link: 'https://portalsiu.mdp.edu.ar/autogestion/cursada',
+              value: 'portalsiu.mdp.edu.ar',
+            },
+            {
+              question: '¿Novedades?',
+              link: 'https://www.instagram.com/cei_unmdp/',
+              value: 'instagram.com/cei',
+            },
+          ].map(({ question, link, value }, index) => (
+            <li
+              key={index}
+              className="flex flex-nowrap gap-1 items-center text-nowrap "
+            >
+              <span className="w-max">
+                <b>{question}</b>
+              </span>
+              <FaArrowRight />
+              <a className="underline" target="_blank" href={link}>
+                {value}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
       <CalendarSection />
-      <Suspense fallback={<ContributorsSkeleton />}>
-        <Contributors />
-      </Suspense>
+      <section className="text-[--black] relative max-w-screen-md m-auto w-11/12">
+        <h2 className="font-bold text-3xl my-2 flex gap-1 items-center justify-center">
+          Colaboradores
+          <ButtonInfoScore />
+        </h2>
+        <p className="text-balance pb-2 text-center">
+          Gracias a quienes suman su esfuerzo compartiendo recursos y
+          soluciones, ayudando a construir una comunidad más fuerte para todos
+          los estudiantes. ¡Tu aporte marca la diferencia! 💖
+        </p>
+        <Suspense fallback={<ContributorsSkeleton />}>
+          <Contributors />
+        </Suspense>
+      </section>
       <section className="flex text-[--black] justify-center  max-w-screen-md m-auto w-11/12">
         <Image
           className="object-contain w-1/4 min-w-24"
