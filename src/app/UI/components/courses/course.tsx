@@ -20,9 +20,9 @@ export default async function Course({
   const { id, name, cg, hs, optional } = course;
 
   return (
-    <li className="relative flex flex-col w-full h-min bg-[--white] shadow-md p-2 transform-gpu transition-transform sm:w-11/12 sm:will-change-transform">
+    <li className="relative select-none flex flex-col w-full h-min bg-[--white] shadow-md p-2 transform-gpu transition-transform sm:w-11/12 sm:will-change-transform">
       <div className="relative flex gap-1 justify-between w-full">
-        <div className="font-bold text-nowrap overflow-x-auto text-lg text-[--white] bg-[--dark-cyan] sm:font-normal sm:leading-6">
+        <div className="font-bold text-nowrap overflow-x-auto text-lg text-[--white] bg-[--dark-cyan] sm:font-normal sm:text-wrap sm:leading-6">
           {name}
         </div>
         {optional ? (

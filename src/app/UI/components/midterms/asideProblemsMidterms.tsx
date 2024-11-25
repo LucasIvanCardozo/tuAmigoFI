@@ -26,8 +26,11 @@ export default function AsideProblemsMidterms({
     setMidtermsState(!midtermsState);
   };
 
-  const handleModalAddMidterm = (idCourse: number | undefined) =>
-    setModalAddMidterm(idCourse);
+  const handleModalAddMidterm = (idCourse: number | undefined) => {
+    session
+      ? setModalAddMidterm(idCourse)
+      : window.alert('Necesitas iniciar sesion para subir un link.');
+  };
 
   const handleMidterms = (midterm: string) => {
     setMidtermsState(false);
@@ -147,23 +150,21 @@ export default function AsideProblemsMidterms({
               </button>
             </li>
           ))}
-          {session?.user && (
-            <li
-              className={
-                'gap-1 p-1 rounded-md transform-gpu text-center transition-transform sm:hover:scale-105'
-              }
+          <li
+            className={
+              'gap-1 p-1 rounded-md transform-gpu text-center transition-transform sm:hover:scale-105'
+            }
+          >
+            <button
+              className="text-start bg-[--white] py-1 px-2 rounded-md"
+              onClick={() => handleModalAddMidterm(idCourse)}
+              aria-label="Agregar parcial"
             >
-              <button
-                className="text-start bg-[--white] py-1 px-2 rounded-md"
-                onClick={() => handleModalAddMidterm(idCourse)}
-                aria-label="Agregar parcial"
-              >
-                <p className="text-base text-[--black-olive] leading-4">
-                  Agregar Parcial
-                </p>
-              </button>
-            </li>
-          )}
+              <p className="text-base text-[--black-olive] leading-4">
+                Agregar Parcial
+              </p>
+            </button>
+          </li>
         </ul>
       </aside>
       {modalAddMidterm && (

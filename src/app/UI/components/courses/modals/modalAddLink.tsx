@@ -22,20 +22,20 @@ export default function ModalAddLink({
 
   const formValidate = (): boolean => {
     if (!name) {
-      setError('Tenes que ponerle un nomber al link');
+      setError('Tenés que ponerle un nomber al link');
       return false;
     } else if (!link) {
-      setError('Tenes que poner la direccion web');
+      setError('Tenés que poner la direccion web');
       return false;
     } else if (!link.startsWith('https://')) {
       setError('El link debe comenzar con "https://"');
       return false;
     } else if (official == undefined) {
-      setError('Tenes que decir si el link es oficial o no');
+      setError('Tenés que decir si el link es oficial o no');
       return false;
     }
     if (!session?.user) {
-      setError('Debes iniciar sesion y ser administrador para eliminar un TP');
+      setError('Debes iniciar sesion para añadir un link');
       return false;
     }
     return true;

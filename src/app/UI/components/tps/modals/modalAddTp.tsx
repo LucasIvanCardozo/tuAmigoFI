@@ -1,4 +1,3 @@
-// 'src/app/components/ModalImportImage.tsx'
 'use client';
 import { createTp } from '@/app/lib/actions';
 import { useSession } from 'next-auth/react';
@@ -35,7 +34,7 @@ export default function ModalAddTp({
       return false;
     }
     if (!session?.user) {
-      setError('Debes iniciar sesion y ser administrador para subir un TP');
+      setError('Debes iniciar sesion para subir un TP');
       return false;
     }
     return true;
@@ -45,9 +44,9 @@ export default function ModalAddTp({
     const file = e.target.files?.[0];
     if (file) {
       if (file.type == 'application/pdf') {
-        if (file.size > 1048576) {
+        if (file.size > 5242880) {
           e.target.value = '';
-          setError('El archivo pesa más de 1 MB');
+          setError('El archivo pesa más de 5 MB');
         } else {
           setFile(file);
           setError(null);

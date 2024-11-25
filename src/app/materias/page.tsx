@@ -7,6 +7,8 @@ import { Suspense } from 'react';
 import CoursesSkeleton from '../UI/components/skeletons/coursesSkeleton';
 import YearSkeleton from '../UI/components/skeletons/yearSkeleton';
 
+export const revalidate = 3600 * 24 * 30;
+
 export default async function Materias({
   searchParams,
 }: {
@@ -26,7 +28,7 @@ export default async function Materias({
   return (
     <>
       <main className="relative flex justify-center pb-4 w-10/12 max-w-screen-sm pt-12 m-auto gap-2 h-auto text-[--black] sm:pt-16">
-        <div>
+        <div className="select-none">
           <Image
             className="object-contain h-full"
             src="/FI.svg"
@@ -43,7 +45,7 @@ export default async function Materias({
         </h1>
       </main>
       <section className="flex flex-col max-w-screen-md w-11/12 m-auto grow items-center">
-        <div className="flex flex-col w-full gap-1 text-[--black] sm:flex-row">
+        <div className="flex select-none flex-col w-full gap-1 text-[--black] sm:flex-row">
           <SearchCourses />
           <Suspense fallback={<YearSkeleton />}>
             <YearCourse />

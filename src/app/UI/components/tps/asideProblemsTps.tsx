@@ -50,8 +50,11 @@ export default function AsideProblemsTps({
     setTpsState(!tpsState);
   };
 
-  const handleModalAddTp = (idCourse: number | undefined) =>
-    setModalAddTp(idCourse);
+  const handleModalAddTp = (idCourse: number | undefined) => {
+    session
+      ? setModalAddTp(idCourse)
+      : window.alert('Necesitas iniciar sesion para subir un link.');
+  };
 
   const handleTps = (tp: string) => {
     setTpsState(false);
@@ -172,23 +175,21 @@ export default function AsideProblemsTps({
               </button>
             </li>
           ))}
-          {session?.user && (
-            <li
-              className={
-                'order-last gap-1 p-1 rounded-md transform-gpu text-center transition-transform sm:hover:scale-105'
-              }
+          <li
+            className={
+              'order-last gap-1 p-1 rounded-md transform-gpu text-center transition-transform sm:hover:scale-105'
+            }
+          >
+            <button
+              className="text-start bg-[--white] py-1 px-2 rounded-md"
+              onClick={() => handleModalAddTp(idCourse)}
+              aria-label="Agregar Tp"
             >
-              <button
-                className="text-start bg-[--white] py-1 px-2 rounded-md"
-                onClick={() => handleModalAddTp(idCourse)}
-                aria-label="Agregar Tp"
-              >
-                <p className="text-base text-[--black-olive] leading-4">
-                  Agregar TP
-                </p>
-              </button>
-            </li>
-          )}
+              <p className="text-base text-[--black-olive] leading-4">
+                Agregar TP
+              </p>
+            </button>
+          </li>
         </ul>
       </aside>
       {modalAddTp && (
