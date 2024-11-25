@@ -180,7 +180,6 @@ export async function fetchEnabler({
     select: {
       id: true,
       name: true,
-      name_normalized: true,
     },
     cacheStrategy: cache,
   });

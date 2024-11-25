@@ -1,4 +1,4 @@
-import { fetchDegreesWithCourse, fetchLinks } from '@/app/lib/data';
+import { fetchLinks } from '@/app/lib/data';
 import CorrelativeTable from './correlativeTable';
 import Link from 'next/link';
 import CourseLinks from './courseLinks';
@@ -6,9 +6,9 @@ import { courses } from '@prisma/client';
 import { Suspense } from 'react';
 import CorrelativeTableSkeleton from '../skeletons/correlativeTableSkeleton';
 import ButtonAddLink from './buttonAddLink';
-import ButtonAddCorrelative from './buttonAddCorrelative';
 import DegreesList from './modals/degreesList';
 import DegreesListSkeleton from '../skeletons/degreesListSkeleton';
+import CourseLinksSkeleton from '../skeletons/courseLinksSkeleton';
 
 export default async function Course({
   course,
@@ -18,8 +18,6 @@ export default async function Course({
   id_carrera?: number;
 }) {
   const { id, name, cg, hs, optional } = course;
-  const officialLinks = await fetchLinks({ official: true, id_materia: id });
-  const unofficialLinks = await fetchLinks({ official: false, id_materia: id });
 
   return (
     <li className="relative flex flex-col w-full h-min bg-[--white] shadow-md p-2 transform-gpu transition-transform sm:w-11/12 sm:will-change-transform">
@@ -36,30 +34,12 @@ export default async function Course({
           ''
         )}
       </div>
-      <div className="pl-2 my-1">
-        <Suspense fallback={CorrelativeTableSkeleton('Necesitas')}>
-          <CorrelativeTable
-            id={id}
-            id_carreras={id_carrera}
-            type="correlative"
-            title="Necesitas"
-          />
-        </Suspense>
-        <Suspense fallback={CorrelativeTableSkeleton('Habilita')}>
-          <CorrelativeTable
-            id={id}
-            id_carreras={id_carrera}
-            type="enabler"
-            title="Habilita"
-          />
-        </Suspense>
-      </div>
-      {officialLinks.length >= 0 && (
-        <CourseLinks official={true} links={officialLinks} />
-      )}
-      {unofficialLinks.length >= 0 && (
-        <CourseLinks official={false} links={unofficialLinks} />
-      )}
+      <Suspense fallback={CorrelativeTableSkeleton()}>
+        <CorrelativeTable id={id} id_carreras={id_carrera} />
+      </Suspense>
+      <Suspense fallback={<CourseLinksSkeleton />}>
+        <CourseLinks id={id} />
+      </Suspense>
       <div className="text-sm h-8 items-center w-full flex overflow-y-hidden overflow-x-auto gap-x-1 opacity-75 leading-4 sm:pt-2 sm:flex-wrap sm:overflow-visible sm:h-auto">
         <b className="text-nowrap">Está en:</b>
         <Suspense fallback={<DegreesListSkeleton />}>
