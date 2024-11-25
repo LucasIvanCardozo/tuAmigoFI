@@ -21,19 +21,20 @@ export default async function Course({
 
   return (
     <li className="relative flex flex-col w-full h-min bg-[--white] shadow-md p-2 transform-gpu transition-transform sm:w-11/12 sm:will-change-transform">
-      <div className="absolute top-0 right-0 flex flex-col text-center py-1 px-2">
-        <span>{`${cg}CG / ${hs}Hs`}</span>
-      </div>
-      <div className="flex relative w-3/4">
-        <h2 className="font-bold w-fit leading-6 text-lg text-balance text-[--white] bg-[--dark-cyan] sm:font-normal">
+      <div className="relative flex gap-1 justify-between w-full">
+        <span className="font-bold text-nowrap overflow-x-auto text-lg text-[--white] bg-[--dark-cyan] sm:font-normal sm:leading-6 inline-block">
           {name}
-        </h2>
+        </span>
         {optional ? (
           <span className="absolute left-full text-sm">{`(Opcional)`}</span>
         ) : (
           ''
         )}
+        <div className="text-center text-nowrap py-1 px-1">
+          <span>{`${cg}CG / ${hs}Hs`}</span>
+        </div>
       </div>
+
       <Suspense fallback={CorrelativeTableSkeleton()}>
         <CorrelativeTable id={id} id_carreras={id_carrera} />
       </Suspense>
