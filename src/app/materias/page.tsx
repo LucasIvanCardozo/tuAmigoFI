@@ -7,7 +7,6 @@ import { Suspense } from 'react';
 import CoursesSkeleton from '../UI/components/skeletons/coursesSkeleton';
 import YearSkeleton from '../UI/components/skeletons/yearSkeleton';
 
-export const revalidate = 3600 * 24 * 30;
 
 export default async function Materias({
   searchParams,
