@@ -27,14 +27,14 @@ export default function ProblemsTable({ tpList }: { tpList: tps[] }) {
 
   const handleModalDeleteTp = (tp: tps | undefined) => setModalDeleteTp(tp);
 
-  const handleModalAddResponse = (tp: tps | undefined) =>
-    setModalAddResponse(tp);
-
-  const handleModalDeleteResponse = (response: tps_responses | undefined) => {
+  const handleModalAddResponse = (tp: tps | undefined) => {
     session
-      ? setModalDeleteResponse(response)
+      ? setModalAddResponse(tp)
       : window.alert('Necesitas iniciar sesion para subir una respuesta.');
   };
+
+  const handleModalDeleteResponse = (response: tps_responses | undefined) =>
+    setModalDeleteResponse(response);
 
   return (
     <>
