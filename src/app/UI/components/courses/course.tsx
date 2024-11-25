@@ -22,15 +22,15 @@ export default async function Course({
   return (
     <li className="relative flex flex-col w-full h-min bg-[--white] shadow-md p-2 transform-gpu transition-transform sm:w-11/12 sm:will-change-transform">
       <div className="relative flex gap-1 justify-between w-full">
-        <span className="font-bold text-nowrap overflow-x-auto text-lg text-[--white] bg-[--dark-cyan] sm:font-normal sm:leading-6 inline-block">
+        <div className="font-bold text-nowrap overflow-x-auto text-lg text-[--white] bg-[--dark-cyan] sm:font-normal sm:leading-6">
           {name}
-        </span>
+        </div>
         {optional ? (
           <span className="absolute left-full text-sm">{`(Opcional)`}</span>
         ) : (
           ''
         )}
-        <div className="text-center text-nowrap py-1 px-1">
+        <div className="flex items-center text-center text-nowrap px-1">
           <span>{`${cg}CG / ${hs}Hs`}</span>
         </div>
       </div>
