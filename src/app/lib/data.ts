@@ -281,22 +281,20 @@ export async function fetchLinks({
   official: boolean;
   id_materia: number;
 }) {
-  const links = await prisma.links.findMany(
-    {
-      where: {
-        id_course: id_materia,
-        official: official,
-      },
-      include: {
-        _count: {
-          select: {
-            links_reports: true,
-          },
+  const links = await prisma.links.findMany({
+    where: {
+      id_course: id_materia,
+      official: official,
+    },
+    include: {
+      _count: {
+        select: {
+          links_reports: true,
         },
       },
-    }
-    // cacheStrategy: cache,
-  );
+    },
+    cacheStrategy: cache,
+  });
   return links;
 }
 
