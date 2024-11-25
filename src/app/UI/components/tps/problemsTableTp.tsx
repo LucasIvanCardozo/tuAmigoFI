@@ -7,6 +7,7 @@ import TpsSkeleton from '../skeletons/tpsSkeleton';
 import ModalDeleteTp from './modals/modalDeleteTP';
 import ModalAddTpResponse from './modals/modalAddTpResponse';
 import ModalDeleteTpResponse from './modals/modalDeleteTpResponse';
+import { useSession } from 'next-auth/react';
 
 export default function ProblemsTable({ tpList }: { tpList: tps[] }) {
   const searchParams = useSearchParams();
@@ -18,6 +19,7 @@ export default function ProblemsTable({ tpList }: { tpList: tps[] }) {
   const [showTp, setShowTp] = useState<number | undefined>(
     Number(searchParams.get('tps')) || undefined
   );
+  const { data: session } = useSession();
 
   useEffect(() => {
     setShowTp(Number(searchParams.get('tps')) || undefined);
@@ -28,8 +30,11 @@ export default function ProblemsTable({ tpList }: { tpList: tps[] }) {
   const handleModalAddResponse = (tp: tps | undefined) =>
     setModalAddResponse(tp);
 
-  const handleModalDeleteResponse = (response: tps_responses | undefined) =>
-    setModalDeleteResponse(response);
+  const handleModalDeleteResponse = (response: tps_responses | undefined) => {
+    session
+      ? setModalDeleteResponse(response)
+      : window.alert('Necesitas iniciar sesion para subir una respuesta.');
+  };
 
   return (
     <>
