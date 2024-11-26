@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { Suspense } from 'react';
 import CoursesSkeleton from '../UI/components/skeletons/coursesSkeleton';
 import YearSkeleton from '../UI/components/skeletons/yearSkeleton';
-
+import DegreeCourseSkeleton from '../UI/components/skeletons/degreeCourseSkeleton';
 
 export default async function Materias({
   searchParams,
@@ -49,7 +49,7 @@ export default async function Materias({
           <Suspense fallback={<YearSkeleton />}>
             <YearCourse />
           </Suspense>
-          <Suspense fallback={<YearSkeleton />}>
+          <Suspense fallback={<DegreeCourseSkeleton />}>
             <DegreeCourse />
           </Suspense>
         </div>
