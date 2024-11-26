@@ -141,28 +141,6 @@ export async function createTp({
 
 export async function deleteTP({ id }: { id: number }) {
   try {
-    const tpsResponses = await prisma.tps_responses.findMany({
-      where: {
-        id_tp: id,
-      },
-    });
-
-    await Promise.all(
-      tpsResponses.map((response) =>
-        prisma.tps_reactions.deleteMany({
-          where: {
-            id_response: response.id,
-          },
-        })
-      )
-    );
-
-    await prisma.tps_responses.deleteMany({
-      where: {
-        id_tp: id,
-      },
-    });
-
     const deleteTP = await prisma.tps.delete({
       where: {
         id: id,
@@ -171,17 +149,13 @@ export async function deleteTP({ id }: { id: number }) {
 
     return deleteTP;
   } catch (error) {
-    throw new Error('No se pudo eliminar el TP');
+    if (error instanceof Error) throw new Error(error.message);
+    else throw new Error('No se pudo eliminar el TP');
   }
 }
 
 export async function deleteTpResponse({ id }: { id: number }) {
   try {
-    const deleteTpsReactions = await prisma.tps_reactions.deleteMany({
-      where: {
-        id_response: id,
-      },
-    });
     const deleteTpResponse = await prisma.tps_responses.delete({
       where: {
         id: id,
@@ -195,28 +169,6 @@ export async function deleteTpResponse({ id }: { id: number }) {
 
 export async function deleteMidterm({ id }: { id: number }) {
   try {
-    const midtermsResponses = await prisma.midterms_responses.findMany({
-      where: {
-        id_midterm: id,
-      },
-    });
-
-    await Promise.all(
-      midtermsResponses.map((response) =>
-        prisma.midterms_reactions.deleteMany({
-          where: {
-            id_response: response.id,
-          },
-        })
-      )
-    );
-
-    await prisma.midterms_responses.deleteMany({
-      where: {
-        id_midterm: id,
-      },
-    });
-
     const deleteMidterm = await prisma.midterms.delete({
       where: {
         id: id,
@@ -231,12 +183,6 @@ export async function deleteMidterm({ id }: { id: number }) {
 
 export async function deleteMidtermResponse({ id }: { id: number }) {
   try {
-    await prisma.midterms_reactions.deleteMany({
-      where: {
-        id_response: id,
-      },
-    });
-
     const deleteMidtermResponse = await prisma.midterms_responses.delete({
       where: {
         id: id,
@@ -403,12 +349,6 @@ export async function addLink({
 
 export async function deleteLink({ id_link }: { id_link: number }) {
   try {
-    const deleteReports = await prisma.links_reports.deleteMany({
-      where: {
-        id_link: id_link,
-      },
-    });
-
     const deleteLink = await prisma.links.delete({
       where: {
         id: id_link,
@@ -457,5 +397,45 @@ export async function addReportLink({
     return createReport;
   } catch (error) {
     throw new Error('No poders reportar un link mas de una vez');
+  }
+}
+
+export async function addReportTp({
+  id_tp,
+  id_user,
+}: {
+  id_tp: number;
+  id_user: number;
+}) {
+  try {
+    const createReport = await prisma.tps_reports.create({
+      data: {
+        id_tp: id_tp,
+        id_user: id_user,
+      },
+    });
+    return createReport;
+  } catch (error) {
+    throw new Error('No poders reportar un TP mas de una vez');
+  }
+}
+
+export async function addReportMidterm({
+  id_midterm,
+  id_user,
+}: {
+  id_midterm: number;
+  id_user: number;
+}) {
+  try {
+    const createReport = await prisma.midterms_reports.create({
+      data: {
+        id_midterms: id_midterm,
+        id_user: id_user,
+      },
+    });
+    return createReport;
+  } catch (error) {
+    throw new Error('No poders reportar un parcial mas de una vez');
   }
 }

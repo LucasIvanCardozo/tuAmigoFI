@@ -11,12 +11,13 @@ import {
   TbSquareRoundedNumber8Filled,
   TbSquareRoundedNumber9Filled,
 } from 'react-icons/tb';
-import { fetchResponsesTp } from '@/app/lib/data';
+import { fetchResponsesTp, fetchUser } from '@/app/lib/data';
 import { useEffect, useState } from 'react';
-import { tps_responses, tps } from '@prisma/client';
+import { tps_responses, tps, users } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { MdOutlineAddBox } from 'react-icons/md';
 import { MdDelete } from 'react-icons/md';
+import { MdOutlineReport } from 'react-icons/md';
 import PdfView from '../pdfView';
 import ResponseTp from './responseTp';
 export default function Tps({
@@ -25,11 +26,13 @@ export default function Tps({
   callbackDeleteTp,
   callbackAddResponse,
   callbackDeleteResponse,
+  callbackReportTp,
 }: {
   tp: tps;
   display: number | undefined;
   callbackDeleteTp: (tp: tps | undefined) => void;
   callbackAddResponse: (tp: tps | undefined) => void;
+  callbackReportTp: (tp: tps | undefined) => void;
   callbackDeleteResponse: (response: tps_responses | undefined) => void;
 }) {
   const numberIcons = [
@@ -46,6 +49,7 @@ export default function Tps({
   ];
   const [responses, setResponses] = useState<Record<number, tps_responses[]>>();
   const [loading, setLoading] = useState<boolean>(false);
+  const [user, setUser] = useState<users>();
   const { data: session } = useSession();
 
   useEffect(() => {
@@ -55,6 +59,11 @@ export default function Tps({
       setResponses(responses);
       setLoading(false);
     };
+    const searchUser = async () => {
+      const userAux = await fetchUser(tp.id_user);
+      setUser(userAux);
+    };
+    searchUser();
     searchProblems();
   }, []);
 
@@ -74,6 +83,7 @@ export default function Tps({
               <MdDelete />
             </button>
           )}
+
           <button
             title="Añadir una respuesta"
             onClick={() => callbackAddResponse(tp)}
@@ -84,6 +94,18 @@ export default function Tps({
       </div>
       <div className="bg-[--white] p-2 text-base leading-5 drop-shadow-md flex flex-col gap-1">
         <div className="relative overflow-hidden bg-[#C8E0E4] h-min py-1 rounded-md sm:p-1">
+          {user && (
+            <div className="absolute z-10 bg-[--white] rounded-md m-2 opacity-65 top-0 left-0">{`Por ${user.name}`}</div>
+          )}
+          {session && (
+            <button
+              className="absolute z-10 m-2 bottom-0 right-0 w-6 h-6"
+              title="Reportar TP"
+              onClick={() => callbackReportTp(tp)}
+            >
+              <MdOutlineReport className="h-full w-full text-red-700" />
+            </button>
+          )}
           <PdfView id={tp.id} url="tps/problemas" />
         </div>
         <ul className="flex flex-col gap-1 pl-1">

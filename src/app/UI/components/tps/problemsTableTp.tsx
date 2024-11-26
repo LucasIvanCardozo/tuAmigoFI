@@ -8,10 +8,12 @@ import ModalDeleteTp from './modals/modalDeleteTP';
 import ModalAddTpResponse from './modals/modalAddTpResponse';
 import ModalDeleteTpResponse from './modals/modalDeleteTpResponse';
 import { useSession } from 'next-auth/react';
+import ModalReportTp from './modals/modalReportTp';
 
 export default function ProblemsTable({ tpList }: { tpList: tps[] }) {
   const searchParams = useSearchParams();
   const [modalDeleteTp, setModalDeleteTp] = useState<tps | undefined>();
+  const [modalReportTp, setModalReportTp] = useState<tps | undefined>();
   const [modalAddResponse, setModalAddResponse] = useState<tps | undefined>();
   const [modalDeleteResponse, setModalDeleteResponse] = useState<
     tps_responses | undefined
@@ -31,6 +33,12 @@ export default function ProblemsTable({ tpList }: { tpList: tps[] }) {
     session
       ? setModalAddResponse(tp)
       : window.alert('Necesitas iniciar sesion para subir una respuesta.');
+  };
+
+  const handleModalReportTp = (tp: tps | undefined) => {
+    session
+      ? setModalReportTp(tp)
+      : window.alert('Necesitas iniciar sesion para reportar un TP.');
   };
 
   const handleModalDeleteResponse = (response: tps_responses | undefined) =>
@@ -54,6 +62,7 @@ export default function ProblemsTable({ tpList }: { tpList: tps[] }) {
               callbackDeleteTp={handleModalDeleteTp}
               callbackAddResponse={handleModalAddResponse}
               callbackDeleteResponse={handleModalDeleteResponse}
+              callbackReportTp={handleModalReportTp}
             />
           ))
         )}
@@ -72,6 +81,9 @@ export default function ProblemsTable({ tpList }: { tpList: tps[] }) {
           response={modalDeleteResponse}
           callback={handleModalDeleteResponse}
         />
+      )}
+      {modalReportTp && (
+        <ModalReportTp tp={modalReportTp} callback={handleModalReportTp} />
       )}
     </>
   );

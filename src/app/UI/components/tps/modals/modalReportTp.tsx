@@ -1,16 +1,16 @@
 // 'src/app/components/ModalImportImage.tsx'
 'use client';
-import { addReportLink } from '@/app/lib/actions';
-import { links } from '@prisma/client';
+import { addReportTp } from '@/app/lib/actions';
+import { tps, tps_responses } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { FormEvent, useState } from 'react';
 
-export default function ModalReportLink({
-  link,
+export default function ModalReportTp({
+  tp,
   callback,
 }: {
-  link: links;
-  callback: (link: links | undefined) => void;
+  tp: tps;
+  callback: (tp: tps | undefined) => void;
 }) {
   const [check, setCheck] = useState<boolean>();
   const [confirmed, setConfirmed] = useState<boolean>(false);
@@ -20,11 +20,11 @@ export default function ModalReportLink({
 
   const formValidate = (): boolean => {
     if (!check) {
-      setError('Debes estar de acuerdo con la eliminacion del link');
+      setError('Debes estar de acuerdo el reporte a este TP');
       return false;
     }
     if (!session?.user) {
-      setError('Debes iniciar sesion y ser administrador para eliminar un TP');
+      setError('Debes iniciar sesion y reportar un TP');
       return false;
     }
     return true;
@@ -34,7 +34,7 @@ export default function ModalReportLink({
     e.preventDefault();
     if (formValidate() && session) {
       try {
-        await addReportLink({ id_link: link.id, id_user: session.user.id });
+        await addReportTp({ id_tp: tp.id, id_user: session.user.id });
         setConfirmed(true);
         setTimeout(() => {
           callback(undefined);
@@ -49,25 +49,27 @@ export default function ModalReportLink({
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 drop-shadow-2xl text-white flex justify-center items-center">
+    <div className="fixed z-50 inset-0 bg-slate-800 bg-opacity-30 text-white flex justify-center items-center">
       <form
         className="flex flex-col max-w-80 w-11/12 bg-slate-800 p-5 rounded-lg gap-3 "
         onSubmit={(e) => (setLoading(true), handleSubmit(e))}
       >
         <div>
           <h3 className="text-lg mb-4">
-            <b>{`Reportar link`}</b>
+            <b>{`Reportar TP`}</b>
           </h3>
           <div className="flex flex-col gap-1 [&>*]:flex [&>*]:gap-1">
             <span>
               <b>Nombre:</b>
-              {link.name}
+              {tp.name}
             </span>
             <span>
-              <b>Link:</b>
-              <a href={link.link} className="hover:underline">
-                {link.link}
-              </a>
+              <b>Número:</b>
+              {tp.number}
+            </span>
+            <span>
+              <b>Año:</b>
+              {tp.year}
             </span>
             <div>
               <input
@@ -84,7 +86,7 @@ export default function ModalReportLink({
         <div>
           <h3 className="text-sm">Recuerda!</h3>
           <p className="text-xs">
-            Por favor sea reporte el link solo si considera que este no debería
+            Por favor sea reporte el TP solo si considera que este no debería
             estar presente en la pagina. En caso de cualquier problema podes
             contactarme:{' '}
             <a

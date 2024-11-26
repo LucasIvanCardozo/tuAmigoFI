@@ -1,4 +1,5 @@
 'use server';
+import { users } from '@prisma/client';
 import prisma from './db';
 
 const cache = {
@@ -202,9 +203,21 @@ export async function fetchMidterms({
     orderBy: {
       id: 'asc',
     },
+    include: {
+      _count: {
+        select: {
+          midterms_reports: true,
+        },
+      },
+    },
     // cacheStrategy: cache,
   });
-  return midterms;
+
+  const filteredMidterms = midterms.filter(
+    (midterm) => midterm._count?.midterms_reports < 5
+  );
+
+  return filteredMidterms;
 }
 
 //fetchs a TPs
@@ -223,9 +236,18 @@ export async function fetchTps({
     orderBy: {
       number: 'asc',
     },
-    // cacheStrategy: cache,
+    include: {
+      _count: {
+        select: {
+          tps_reports: true, 
+        },
+      },
+    },
   });
-  return tps;
+
+  const filteredTps = tps.filter((tp) => tp._count?.tps_reports < 5);
+
+  return filteredTps;
 }
 
 //fetch de carreras
@@ -299,21 +321,18 @@ export async function fetchLinks({
 }
 
 export async function fetchUser(id: number | string) {
-  let user;
-  if (typeof id === 'number') {
-    user = await prisma.users.findFirst({
+  try {
+    const user = await prisma.users.findFirstOrThrow({
       where: {
-        id: id,
+        ...(typeof id === 'number'
+          ? { id: id }
+          : typeof id === 'string' && { email: id }),
       },
     });
-  } else if (typeof id === 'string') {
-    user = await prisma.users.findFirst({
-      where: {
-        email: id,
-      },
-    });
+    return user;
+  } catch (error) {
+    throw new Error('No se encontro nignun usuario');
   }
-  return user;
 }
 
 export async function fetchUserReactionTp(id_response: number) {

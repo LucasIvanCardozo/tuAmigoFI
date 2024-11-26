@@ -77,8 +77,8 @@ model links {
   link          String          @db.VarChar
   official      Boolean
   id_user       Int
-  courses       courses         @relation(fields: [id_course], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users         users           @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  courses       courses         @relation(fields: [id_course], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users         users           @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: NoAction)
   links_reports links_reports[]
 }
 
@@ -87,8 +87,8 @@ model links_reports {
   id_user    Int
   id_link    Int
   created_at DateTime? @default(now()) @db.Timestamp(6)
-  links      links     @relation(fields: [id_link], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users      users     @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  links      links     @relation(fields: [id_link], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users      users     @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([id_user, id_link], map: "links_reports_id_user_id_link_idx")
   @@index([id_link])
@@ -100,9 +100,10 @@ model midterms {
   id_course          Int
   name               String               @db.VarChar
   date               DateTime             @db.Date
-  id_user            Int?
-  courses            courses              @relation(fields: [id_course], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users              users?               @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id_user            Int
+  courses            courses              @relation(fields: [id_course], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users              users                @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  midterms_reports   midterms_reports[]
   midterms_responses midterms_responses[]
 
   @@unique([id, id_course], map: "midterms_id_id_course_idx")
@@ -112,14 +113,26 @@ model midterms_reactions {
   id                 Int                @id @default(autoincrement())
   id_user            Int
   id_response        Int
-  created_at         DateTime?          @default(now()) @db.Timestamp(6)
   reaction           Boolean
-  midterms_responses midterms_responses @relation(fields: [id_response], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users              users              @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  created_at         DateTime?          @default(now()) @db.Timestamp(6)
+  midterms_responses midterms_responses @relation(fields: [id_response], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users              users              @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([id_user, id_response], map: "midterms_reactions_id_user_id_response_idx")
-  @@unique([id_user, id_response], map: "midterms_reactions_id_user_id_response_idx1")
   @@index([id_response])
+  @@index([id_user])
+}
+
+model midterms_reports {
+  id          Int       @id @default(autoincrement())
+  id_user     Int
+  id_midterms Int
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+  users       users     @relation(fields: [id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  midterms    midterms  @relation(fields: [id_midterms], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([id_user, id_midterms], map: "midterms_reports_id_user_id_midterms_idx")
+  @@index([id_midterms])
   @@index([id_user])
 }
 
@@ -131,7 +144,8 @@ model midterms_responses {
   text               String?              @db.VarChar
   id_user            Int
   midterms_reactions midterms_reactions[]
-  midterms           midterms             @relation(fields: [id_midterm], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  midterms           midterms             @relation(fields: [id_midterm], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users              users                @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model plans {
@@ -146,27 +160,39 @@ model tps {
   name          String          @db.VarChar
   number        Int?
   year          Int
-  id_user       Int?
-  courses       courses         @relation(fields: [id_course], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users         users?          @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id_user       Int
+  courses       courses         @relation(fields: [id_course], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users         users           @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  tps_reports   tps_reports[]
   tps_responses tps_responses[]
 
   @@unique([id, id_course], map: "tps_id_id_course_idx")
-  @@unique([name, year], map: "tps_name_year_idx")
 }
 
 model tps_reactions {
   id            Int           @id @default(autoincrement())
   id_user       Int
   id_response   Int
-  created_at    DateTime?     @default(now()) @db.Timestamp(6)
   reaction      Boolean
-  tps_responses tps_responses @relation(fields: [id_response], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users         users         @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  created_at    DateTime?     @default(now()) @db.Timestamp(6)
+  tps_responses tps_responses @relation(fields: [id_response], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users         users         @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([id_user, id_response], map: "tps_reactions_id_user_id_response_idx")
-  @@unique([id_user, id_response], map: "tps_reactions_id_user_id_response_idx1")
   @@index([id_response])
+  @@index([id_user])
+}
+
+model tps_reports {
+  id         Int       @id @default(autoincrement())
+  id_user    Int
+  id_tp      Int
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  users      users     @relation(fields: [id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  tps        tps       @relation(fields: [id_tp], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([id_user, id_tp], map: "tps_reports_id_user_id_tp_idx")
+  @@index([id_tp])
   @@index([id_user])
 }
 
@@ -178,10 +204,8 @@ model tps_responses {
   text          String?         @db.VarChar
   id_user       Int
   tps_reactions tps_reactions[]
-  tps           tps             @relation(fields: [id_tp], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users         users           @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@index([id])
+  tps           tps             @relation(fields: [id_tp], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users         users           @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model users {
@@ -194,8 +218,11 @@ model users {
   links_reports      links_reports[]
   midterms           midterms[]
   midterms_reactions midterms_reactions[]
+  midterms_reports   midterms_reports?
+  midterms_responses midterms_responses[]
   tps                tps[]
   tps_reactions      tps_reactions[]
+  tps_reports        tps_reports?
   tps_responses      tps_responses[]
 
   @@index([id])

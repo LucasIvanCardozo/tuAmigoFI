@@ -7,6 +7,7 @@ import TpsSkeleton from '../skeletons/tpsSkeleton';
 import ModalDeleteMidterm from './modals/modalDeleteMidterm';
 import ModalAddMidtermResponse from './modals/modalAddMidtermResponse';
 import ModalDeleteMidtermResponse from './modals/modalDeleteMidtermResponse';
+import ModalReportMidterm from './modals/modalReportMidterm';
 
 export default function ProblemsTableMidterms({
   midtermsList,
@@ -15,6 +16,9 @@ export default function ProblemsTableMidterms({
 }) {
   const searchParams = useSearchParams();
   const [modalDeleteMidterm, setModalDeleteMidterm] = useState<
+    midterms | undefined
+  >();
+  const [modalReportMidterm, setModalReportMidterm] = useState<
     midterms | undefined
   >();
   const [modalDeleteResponse, setModalDeleteResponse] = useState<
@@ -36,6 +40,9 @@ export default function ProblemsTableMidterms({
 
   const handleModalAddResponse = (midterm: midterms | undefined) =>
     setModalAddResponse(midterm);
+
+  const handleModalReportMidterm = (midterm: midterms | undefined) =>
+    setModalReportMidterm(midterm);
 
   const handleModalDeleteResponse = (
     response: midterms_responses | undefined
@@ -59,6 +66,7 @@ export default function ProblemsTableMidterms({
               callbackDeleteMidterm={handleModalDeleteMidterm}
               callbackAddResponse={handleModalAddResponse}
               callbackDeleteResponse={handleModalDeleteResponse}
+              callbackReportMidterm={handleModalReportMidterm}
             />
           ))
         )}
@@ -79,6 +87,12 @@ export default function ProblemsTableMidterms({
         <ModalAddMidtermResponse
           midterm={modalAddResponse}
           callback={handleModalAddResponse}
+        />
+      )}
+      {modalReportMidterm && (
+        <ModalReportMidterm
+          midterm={modalReportMidterm}
+          callback={handleModalReportMidterm}
         />
       )}
     </>
