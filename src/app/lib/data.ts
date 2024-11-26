@@ -3,8 +3,8 @@ import { users } from '@prisma/client';
 import prisma from './db';
 
 const cache = {
-  ttl: 7200,
-  swr: 300,
+  ttl: 0,
+  swr: 0,
 };
 
 function sleep(ms: number): Promise<void> {
