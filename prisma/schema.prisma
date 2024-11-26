@@ -214,6 +214,7 @@ model users {
   name               String               @db.VarChar
   image              String               @db.VarChar
   tier               Int
+  banned             Boolean
   links              links[]
   links_reports      links_reports[]
   midterms           midterms[]

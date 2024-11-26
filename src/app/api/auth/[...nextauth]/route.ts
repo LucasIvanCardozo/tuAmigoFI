@@ -63,12 +63,12 @@ const authOptions = NextAuth({
             email: user.email!,
             image: user.image!,
           });
-        }
+        } else if (existingUser.banned)
+          throw new Error('Estas baneado de esta pagina');
         user.idUser = existingUser.id;
         user.tier = existingUser.tier;
         return true;
       } catch (error) {
-        console.error('Error en signIn:', error);
         return false;
       }
     },
@@ -99,6 +99,11 @@ const authOptions = NextAuth({
       return token;
     },
     async session({ session, token }: { session: any; token: JWT }) {
+      const existingUser = await fetchUser(token.idUser);
+      if (existingUser.banned) {
+        console.warn(`Usuario baneado detectado: ${session.user.email}`);
+        return null;
+      }
       session.user = {
         id: token.idUser,
         tier: token.tier,

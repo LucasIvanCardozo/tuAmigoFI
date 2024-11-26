@@ -210,6 +210,7 @@ export async function createUser({
         name: name,
         image: image,
         tier: 0,
+        banned: false,
       },
     });
     return user;
