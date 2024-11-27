@@ -20,6 +20,8 @@ export const metadata: Metadata = {
     'Creada para ayudar a ingresantes y avanzados alumnos, en la Facultad de Ingenieria de Mar del Plata, con su desafiante carrera.',
 };
 
+export const revalidate = 3600 * 24;
+
 export default function RootLayout({
   children,
 }: Readonly<{
