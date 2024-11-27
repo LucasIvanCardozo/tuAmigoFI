@@ -8,6 +8,8 @@ import CoursesSkeleton from '../UI/components/skeletons/coursesSkeleton';
 import YearSkeleton from '../UI/components/skeletons/yearSkeleton';
 import DegreeCourseSkeleton from '../UI/components/skeletons/degreeCourseSkeleton';
 
+export const revalidate = 3600 * 24;
+
 export default async function Materias({
   searchParams,
 }: {
