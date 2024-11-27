@@ -1,10 +1,9 @@
 'use server';
-import { users } from '@prisma/client';
 import prisma from './db';
 
 const cache = {
-  ttl: 0,
-  swr: 0,
+  ttl: 3600 * 24,
+  swr: 3600,
 };
 
 function sleep(ms: number): Promise<void> {
