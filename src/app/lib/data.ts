@@ -2,8 +2,10 @@
 import prisma from './db';
 
 const cache = {
-  ttl: 3600 * 24,
-  swr: 3600,
+  // ttl: 3600 * 24,
+  // swr: 3600,
+  ttl: 0,
+  swr: 0,
 };
 
 function sleep(ms: number): Promise<void> {
@@ -238,7 +240,7 @@ export async function fetchTps({
     include: {
       _count: {
         select: {
-          tps_reports: true, 
+          tps_reports: true,
         },
       },
     },
