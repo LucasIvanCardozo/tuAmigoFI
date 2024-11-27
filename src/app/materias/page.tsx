@@ -53,9 +53,9 @@ export default async function Materias({
             <DegreeCourse />
           </Suspense>
         </div>
-        {/* <Suspense fallback={<CoursesSkeleton />}> */}
-        <CoursesTable query={query} />
-        {/* </Suspense> */}
+        <Suspense fallback={<CoursesSkeleton />}>
+          <CoursesTable query={query} />
+        </Suspense>
       </section>
     </>
   );
