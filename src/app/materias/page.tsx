@@ -7,7 +7,6 @@ import { Suspense } from 'react';
 import CoursesSkeleton from '../UI/components/skeletons/coursesSkeleton';
 import YearSkeleton from '../UI/components/skeletons/yearSkeleton';
 import DegreeCourseSkeleton from '../UI/components/skeletons/degreeCourseSkeleton';
-import { fetchCourses } from '../lib/data';
 
 export default async function Materias({
   searchParams,
@@ -25,7 +24,6 @@ export default async function Materias({
     degree: searchParams?.degree ? Number(searchParams.degree) : undefined,
     page: searchParams?.page ? Number(searchParams.page) : undefined,
   };
-  const courses = await fetchCourses(query);
   return (
     <>
       <main className="relative flex justify-center pb-4 w-10/12 max-w-screen-sm pt-12 m-auto gap-2 h-auto text-[--black] sm:pt-16">
@@ -45,7 +43,6 @@ export default async function Materias({
           </p>
         </h1>
       </main>
-      <div>{courses[0].name}</div>
       <section className="flex flex-col max-w-screen-md w-11/12 m-auto grow items-center">
         <div className="flex select-none flex-col w-full gap-1 text-[--black] sm:flex-row">
           <SearchCourses />

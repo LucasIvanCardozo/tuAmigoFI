@@ -9,9 +9,9 @@ import { FaArrowRight } from 'react-icons/fa';
 import QuestionSkeleton from './UI/components/skeletons/questionSkeleton';
 import { fetchCourses } from './lib/data';
 
-export default async function Home() {
-  const courses = await fetchCourses({});
+export const revalidate = 3600 * 24;
 
+export default async function Home() {
   return (
     <>
       <main className="pt-14 relative flex text-[--black] min-h-36 h-auto w-11/12 justify-between mx-auto max-w-screen-md my-10 sm:pt-20 sm:justify-around">
@@ -59,7 +59,6 @@ export default async function Home() {
           </ul>
         </div>
       </main>
-      <div>{courses[0].name}</div>
       <section className="text-[--black] max-w-screen-md m-auto w-full text-balance text-center sm:hidden">
         En Tu-Amigo-FI encontrás finales, trabajos prácticos, un calendario
         académico y mucho más. Todo pensado para darte una mano en tu carrera de
