@@ -10,11 +10,13 @@ export default async function CoursesTable({
   const courses = await fetchCourses(query);
 
   return (
-    <ul className="w-full flex flex-col gap-3 items-center my-5 text-[--black]">
-      {courses.map((course) => (
-        <Course key={course.id} course={course} id_carrera={query.degree} />
-      ))}
+    <>
+      <ul className="w-full flex flex-col gap-3 items-center mt-5 mb-2 text-[--black]">
+        {courses.map((course) => (
+          <Course key={course.id} course={course} id_carrera={query.degree} />
+        ))}
+      </ul>
       <IndexList query={query} />
-    </ul>
+    </>
   );
 }

@@ -48,7 +48,7 @@ export default function IndexList({
 
   return pageCount ? (
     pageCount > 1 ? (
-      <ul className="flex items-center select-none">
+      <ul className="flex items-center text-[--black] select-none">
         <IndexLi index={1} page={page} modifier={0} callback={handlePage} />
         {pageCount > 8 && page > 5 ? <span>...</span> : null}
         {pageCount <= 8
