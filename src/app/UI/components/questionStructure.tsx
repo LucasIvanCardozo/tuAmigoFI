@@ -25,6 +25,7 @@ export default function QuestionsStructure({
           <select
             name="degree"
             id="degree"
+            aria-label="Elegir carrera"
             className="w-full grow shadow-sm p-1"
             onChange={(e) => setDegreeState(Number(e.target.value))}
           >
@@ -40,6 +41,7 @@ export default function QuestionsStructure({
               name="plan"
               id="plan"
               className="w-24"
+              aria-label="Elegir plan"
               onChange={(e) => setPlanState(Number(e.target.value))}
             >
               <option hidden>Plan</option>

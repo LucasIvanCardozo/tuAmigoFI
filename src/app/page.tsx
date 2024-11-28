@@ -33,14 +33,20 @@ export default async function Home() {
           <span>Canales oficiales</span>
           <ul className="flex justify-around w-full drop-shadow-sm">
             {[
-              { link: 'https://www.fi.mdp.edu.ar/', src: '/unmdpfi.jpg' },
+              {
+                link: 'https://www.fi.mdp.edu.ar/',
+                src: '/unmdpfi.webp',
+                name: 'UNMDP de Ingenieria',
+              },
               {
                 link: 'https://www.instagram.com/cei_unmdp/',
-                src: '/unmdpcei.png',
+                src: '/unmdpcei.webp',
+                name: 'centro de estudiates de la UNMDP de Ingenieria',
               },
               {
                 link: 'https://campus.fi.mdp.edu.ar/',
                 src: '/campus.ico',
+                name: 'campus de la UNMDP de Ingenieria',
               },
             ].map((data, index) => (
               <li key={index}>
@@ -50,7 +56,8 @@ export default async function Home() {
                     src={data.src}
                     width={25}
                     height={25}
-                    alt=""
+                    alt={`Logo de ${data.name}`}
+                    aria-label={`Ir a la pagina de ${data.name}`}
                   />
                 </a>
               </li>
