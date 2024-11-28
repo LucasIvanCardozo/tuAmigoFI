@@ -13,12 +13,15 @@ export default function IndexLi({
   return (
     <li
       className={
-        (page == index + modifier
-          ? 'font-bold text-xl text-[--black-olive]'
-          : 'opacity-60') + ' px-1'
+        page == index + modifier
+          ? 'font-bold text-2xl text-[--black-olive]'
+          : 'opacity-60 text-lg' + ' sm:hover:scale-110'
       }
     >
-      <button onClick={() => callback((index + modifier).toString())}>
+      <button
+        className="min-h-6 min-w-6"
+        onClick={() => callback((index + modifier).toString())}
+      >
         {index + modifier}
       </button>
     </li>
