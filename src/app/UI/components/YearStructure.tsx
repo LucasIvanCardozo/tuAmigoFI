@@ -29,6 +29,7 @@ export default function YearStructures({ years }: { years: years[] }) {
       id="years"
       className="w-full sm:w-16"
       value={year}
+      aria-label="Elegir año de la materia"
       onChange={(e) => handleYears(e.target.value)}
     >
       <option hidden>Año</option>

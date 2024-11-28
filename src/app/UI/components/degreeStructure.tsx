@@ -39,6 +39,7 @@ export default function DegreeStructure({
       id="carreras"
       className="w-full sm:w-40"
       value={degree}
+      aria-label="Elegir carrera de la materia"
       onChange={(e) => handleDegree(e.target.value)}
     >
       <option hidden>Carrera</option>
