@@ -18,7 +18,11 @@ export default function ButtonAddCorrelative({ course }: { course: courses }) {
     session?.user.tier > 0 && (
       <>
         <div className="text-[--black] border-2 rounded-md border-[--black-olive] px-1">
-          <button onClick={() => handleModalAddCorrelative(course)}>
+          <button
+            aria-label="Añadir correlativa"
+            title="Añadir correlativa"
+            onClick={() => handleModalAddCorrelative(course)}
+          >
             Añadir correlativa
           </button>
         </div>

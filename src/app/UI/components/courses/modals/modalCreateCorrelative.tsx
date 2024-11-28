@@ -124,7 +124,13 @@ export default function ModalCreateCorrelative({
           </div>
         ) : (
           <div className="flex gap-4 justify-center">
-            <button type="submit">Agregar</button>
+            <button
+              aria-label="Agregar correlativa"
+              title="Agregar"
+              type="submit"
+            >
+              Agregar
+            </button>
             <button
               type="button"
               onClick={() => (setLoading(true), callback(undefined))}

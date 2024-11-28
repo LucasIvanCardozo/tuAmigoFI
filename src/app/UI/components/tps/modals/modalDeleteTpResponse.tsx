@@ -102,9 +102,17 @@ export default function ModalDeleteTpResponse({
           </div>
         ) : (
           <div className="flex gap-4 justify-center">
-            <button type="submit">Eliminar</button>
+            <button
+              aria-label="Eliminar respuesta"
+              title="Eliminar respuesta"
+              type="submit"
+            >
+              Eliminar
+            </button>
             <button
               type="button"
+              aria-label="Cancelar formulario"
+              title="Cancelar"
               onClick={() => (setLoading(true), callback(undefined))}
             >
               Cancelar

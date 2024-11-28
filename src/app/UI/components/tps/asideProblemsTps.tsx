@@ -103,6 +103,7 @@ export default function AsideProblemsTps({
         className="fixed top-0 left-0 m-1 h-8 bg-[--black-olive] rounded-md aspect-square rounded-e-none z-50 sm:hidden"
         aria-label="Abrir o cerrar menú"
         onClick={handleTpsState}
+        title="Menú"
       >
         <CgMenu
           className={
@@ -144,6 +145,7 @@ export default function AsideProblemsTps({
               className="text-start"
               onClick={() => handleTps('')}
               aria-label="Mostrar todos"
+              title="Mostrar todos los TPs"
             >
               <h2 className="text-base leading-4">Mostrar todos</h2>
               <p className="text-xs text-[--silver]">{`Todos los TPs`} </p>
@@ -168,6 +170,7 @@ export default function AsideProblemsTps({
               <button
                 className="text-start"
                 aria-label={`Tp número ${number} con nombre ${name}`}
+                title={`Mostrar TP ${name}`}
                 onClick={() => handleTps(id.toString())}
               >
                 <h2 className="text-base leading-4">{name}</h2>
@@ -184,6 +187,7 @@ export default function AsideProblemsTps({
               className="text-start bg-[--white] py-1 px-2 rounded-md"
               onClick={() => handleModalAddTp(idCourse)}
               aria-label="Agregar Tp"
+              title="Agregar TP"
             >
               <p className="text-base text-[--black-olive] leading-4">
                 Agregar TP

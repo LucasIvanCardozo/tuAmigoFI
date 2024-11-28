@@ -79,6 +79,7 @@ export default function AsideProblemsMidterms({
         className="fixed top-0 left-0 m-1 h-8 bg-[--black-olive] rounded-md aspect-square rounded-e-none z-50 sm:hidden"
         onClick={handleMidtermsState}
         aria-label="Abrir o cerrar menú"
+        title="Menú"
       >
         <CgMenu
           className={
@@ -120,6 +121,7 @@ export default function AsideProblemsMidterms({
               className="text-start"
               onClick={() => handleMidterms('')}
               aria-label="Mostrar todos"
+              title="Mostrar todos"
             >
               <h2 className="text-base leading-4">Mostrar todos</h2>
               <p className="text-xs text-[--silver]">
@@ -142,6 +144,7 @@ export default function AsideProblemsMidterms({
                 className="text-start"
                 onClick={() => handleMidterms(id.toString())}
                 aria-label={`${name} del ${date}`}
+                title={`${name} del ${date}`}
               >
                 <h2 className="text-base leading-4">{name}</h2>
                 <p className="text-xs text-[--silver]">
@@ -159,6 +162,7 @@ export default function AsideProblemsMidterms({
               className="text-start bg-[--white] py-1 px-2 rounded-md"
               onClick={() => handleModalAddMidterm(idCourse)}
               aria-label="Agregar parcial"
+              title="Agregar parcial"
             >
               <p className="text-base text-[--black-olive] leading-4">
                 Agregar Parcial

@@ -143,9 +143,13 @@ export default function ModalAddLink({
           </div>
         ) : (
           <div className="flex gap-4 justify-center">
-            <button type="submit">Agregar</button>
+            <button aria-label="Agregar link" title="Agregar" type="submit">
+              Agregar
+            </button>
             <button
               type="button"
+              aria-label="Cancelar formulario"
+              title="Cancelar"
               onClick={() => (setLoading(true), callback(undefined))}
             >
               Cancelar

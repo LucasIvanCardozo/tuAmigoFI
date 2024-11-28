@@ -79,13 +79,18 @@ export default function Tps({
 
         <div className="flex gap-1 px-1 ml-auto [&>*]:aspect-square">
           {session && session.user.tier == 2 && (
-            <button title="Eliminar TP" onClick={() => callbackDeleteTp(tp)}>
+            <button
+              title="Eliminar TP"
+              aria-label="Eliminar TP"
+              onClick={() => callbackDeleteTp(tp)}
+            >
               <MdDelete />
             </button>
           )}
 
           <button
             title="Añadir una respuesta"
+            aria-label="Añadir una respuesta"
             onClick={() => callbackAddResponse(tp)}
           >
             <MdOutlineAddBox />
@@ -101,6 +106,7 @@ export default function Tps({
             <button
               className="absolute z-10 m-2 bottom-0 right-0 w-6 h-6"
               title="Reportar TP"
+              aria-label="Reportar TP"
               onClick={() => callbackReportTp(tp)}
             >
               <MdOutlineReport className="h-full w-full text-red-700" />

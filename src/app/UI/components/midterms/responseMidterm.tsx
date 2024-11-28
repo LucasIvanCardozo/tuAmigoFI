@@ -58,6 +58,7 @@ export default function ResponseMidterm({
           {session && session.user.tier == 2 && (
             <button
               title="Eliminar respuesta"
+              aria-label="Eliminar respuesta"
               onClick={() => callbackDeleteResponse(response[1][indexResponse])}
             >
               <MdDelete className="h-full w-full" />
@@ -67,6 +68,8 @@ export default function ResponseMidterm({
           <div className="flex gap-1">
             <button
               className="h-full aspect-square text-[--black-olive] opacity-90"
+              aria-label="Cambiar usuario que respondió hacia la izquierda"
+              title="Cambiar hacia izquierda"
               onClick={() => handlePageUser(-1)}
             >
               <BiSolidLeftArrowSquare className="h-full w-full" />
@@ -74,6 +77,8 @@ export default function ResponseMidterm({
             {`${indexResponse + 1} de ${response[1].length}`}
             <button
               className="h-full aspect-square text-[--black-olive] opacity-90"
+              aria-label="Cambiar usuario que respondió hacia la derecha"
+              title="Cambiar hacia derecha"
               onClick={() => handlePageUser(1)}
             >
               <BiSolidRightArrowSquare className="h-full w-full" />

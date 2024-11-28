@@ -55,6 +55,8 @@ export default function PdfView({ id, url }: { id: number; url: string }) {
             {pageNumber != 1 && (
               <button
                 className="absolute h-full right-full top-0 bottom-0"
+                aria-label="Ir a página izquierda"
+                title="Ir a izquierda"
                 onClick={() => handlePage(pageNumber - 1)}
               >
                 <MdOutlineKeyboardArrowLeft />
@@ -64,6 +66,8 @@ export default function PdfView({ id, url }: { id: number; url: string }) {
             {pageNumber != lastPage && (
               <button
                 className="absolute h-full left-full top-0 bottom-0"
+                aria-label="Ir a página derecha"
+                title="Ir a derecha"
                 onClick={() => handlePage(pageNumber + 1)}
               >
                 <MdOutlineKeyboardArrowRight />
@@ -83,6 +87,8 @@ export default function PdfView({ id, url }: { id: number; url: string }) {
       <button
         className="absolute h-9 w-9 top-0 right-0 p-2"
         onClick={downloadFile}
+        aria-label="Descargar PDF"
+        title="Descargar PDF"
       >
         <MdDownload className="h-full w-full" />
       </button>

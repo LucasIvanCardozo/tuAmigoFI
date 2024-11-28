@@ -12,7 +12,8 @@ export default function ButtonInfoScore() {
   return (
     <>
       <button
-        title="Info sobre como obtener puntos"
+        title="Como obtener puntos?"
+        aria-label="Info sobre como obtener puntos"
         onClick={() => handleModalInfoScore(true)}
       >
         <IoIosInformationCircle className="text-2xl opacity-75" />

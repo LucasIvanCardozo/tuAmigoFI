@@ -57,6 +57,7 @@ export default function ResponseTp({
         <div className="w-full h-5 relative flex justify-between">
           {session && session.user.tier == 2 && (
             <button
+              aria-label="Eliminar respuesta"
               title="Eliminar respuesta"
               onClick={() => callbackDeleteResponse(response[1][indexResponse])}
             >
@@ -67,6 +68,8 @@ export default function ResponseTp({
           <div className="flex gap-1">
             <button
               className="h-full aspect-square text-[--black-olive] opacity-90"
+              aria-label="Cambiar usuario que respondió hacia la izquierda"
+              title="Cambiar hacia izquierda"
               onClick={() => handlePageUser(-1)}
             >
               <BiSolidLeftArrowSquare className="h-full w-full" />
@@ -74,6 +77,8 @@ export default function ResponseTp({
             {`${indexResponse + 1} de ${response[1].length}`}
             <button
               className="h-full aspect-square text-[--black-olive] opacity-90"
+              aria-label="Cambiar usuario que respondió hacia la derecha"
+              title="Cambiar hacia derecha"
               onClick={() => handlePageUser(1)}
             >
               <BiSolidRightArrowSquare className="h-full w-full" />

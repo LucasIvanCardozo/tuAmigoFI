@@ -61,6 +61,8 @@ export default function Nav() {
       </Link>
       <button
         className="relative m-1 bg-[--dark-cyan] rounded-md aspect-square sm:hidden"
+        aria-label="Menú"
+        title="Menú"
         onClick={handleNavState}
       >
         <CgMenu

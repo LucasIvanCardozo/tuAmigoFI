@@ -17,7 +17,13 @@ export default function ButtonAddLink({ course }: { course: courses }) {
   return (
     <>
       <div className="text-[--black] border-2 rounded-md border-[--black-olive] px-1">
-        <button onClick={() => handleModalAddLink(course)}>Añadir Link</button>
+        <button
+          aria-label="Añadir link"
+          title="Añadir link"
+          onClick={() => handleModalAddLink(course)}
+        >
+          Añadir Link
+        </button>
       </div>
       {modalAddLink && (
         <ModalAddLink course={modalAddLink} callback={handleModalAddLink} />

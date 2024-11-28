@@ -64,6 +64,8 @@ export default function CourseLinksStructure({
       <button
         className="flex items-center cursor-pointer w-fit"
         onClick={handleClickOfficial}
+        aria-label="Ver links oficiales"
+        title="Links oficiales"
       >
         {viewStateOfficial ? <VscTriangleDown /> : <VscTriangleRight />}
         <h3>
@@ -92,6 +94,7 @@ export default function CourseLinksStructure({
                   {session && (
                     <button
                       className="h-full text-red-700"
+                      aria-label="Reportar link"
                       onClick={() => handleModalReportLink(link)}
                       title="Reportar link"
                     >
@@ -102,6 +105,7 @@ export default function CourseLinksStructure({
                     <button
                       className="h-full"
                       onClick={() => handleModalDeleteLink(link)}
+                      aria-label="Eliminar link"
                       title="Eliminar link"
                     >
                       <MdDelete className="h-full" />
@@ -114,6 +118,8 @@ export default function CourseLinksStructure({
         </div>
       </div>
       <button
+        aria-label="Ver links no oficiales"
+        title="Links no oficiales"
         className="flex items-center cursor-pointer w-fit"
         onClick={handleClickUnofficial}
       >
@@ -145,6 +151,7 @@ export default function CourseLinksStructure({
                     <button
                       className="h-full text-red-700"
                       onClick={() => handleModalReportLink(link)}
+                      aria-label="Reportar link"
                       title="Reportar link"
                     >
                       <MdOutlineReport className="h-full" />
@@ -154,6 +161,7 @@ export default function CourseLinksStructure({
                     <button
                       className="h-full"
                       onClick={() => handleModalDeleteLink(link)}
+                      aria-label="Eliminar link"
                       title="Eliminar link"
                     >
                       <MdDelete className="h-full" />

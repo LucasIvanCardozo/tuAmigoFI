@@ -104,9 +104,13 @@ export default function ModalDeleteLink({
           </div>
         ) : (
           <div className="flex gap-4 justify-center">
-            <button type="submit">Eliminar</button>
+            <button aria-label="Eliminar link" title="Eliminar" type="submit">
+              Eliminar
+            </button>
             <button
               type="button"
+              aria-label="Cancelar formulario"
+              title="Cancelar"
               onClick={() => (setLoading(true), callback(undefined))}
             >
               Cancelar

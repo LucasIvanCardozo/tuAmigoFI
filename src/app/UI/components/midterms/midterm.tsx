@@ -63,6 +63,7 @@ export default function Midterm({
           {session && session.user.tier == 2 && (
             <button
               title="Eliminar Parcial"
+              aria-label="Eliminar Parcial"
               onClick={() => callbackDeleteMidterm(midterm)}
             >
               <MdDelete />
@@ -71,6 +72,7 @@ export default function Midterm({
 
           <button
             title="Añadir una respuesta"
+            aria-label="Añadir respuesta"
             onClick={() => callbackAddResponse(midterm)}
           >
             <MdOutlineAddBox />
@@ -86,6 +88,7 @@ export default function Midterm({
             <button
               className="absolute z-10 m-2 bottom-0 right-0 w-6 h-6"
               title="Reportar Parcial"
+              aria-label="Reportar parcial"
               onClick={() => callbackReportMidterm(midterm)}
             >
               <MdOutlineReport className="h-full w-full text-red-700" />

@@ -177,9 +177,13 @@ export default function ModalAddTp({
           </div>
         ) : (
           <div className="flex gap-4 justify-center">
-            <button type="submit">Enviar</button>
+            <button aria-label="Enviar formulario" title="Enviar" type="submit">
+              Enviar
+            </button>
             <button
               type="button"
+              aria-label="Cancelar"
+              title="Cancelar"
               onClick={() => (setLoading(true), callbackAddTp(undefined))}
             >
               Cancelar

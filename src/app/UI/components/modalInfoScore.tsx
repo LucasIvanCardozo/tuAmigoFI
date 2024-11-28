@@ -43,6 +43,8 @@ export default function ModalInfoScore({
         </div>
         <button
           className="mt-4 py-2 px-4 text-base font-semibold rounded-lg"
+          aria-label="Cerrar modal"
+          title="Atrás"
           onClick={() => callback(false)}
         >
           Atrás

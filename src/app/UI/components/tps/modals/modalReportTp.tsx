@@ -109,9 +109,17 @@ export default function ModalReportTp({
         ) : (
           !confirmed && (
             <div className="flex gap-4 justify-center">
-              <button type="submit">Reportar</button>
+              <button
+                aria-label="Reportar TP"
+                title="Reportar TP"
+                type="submit"
+              >
+                Reportar
+              </button>
               <button
                 type="button"
+                aria-label="Cancelar formulario"
+                title="Cancelar"
                 onClick={() => (setLoading(true), callback(undefined))}
               >
                 Cancelar
