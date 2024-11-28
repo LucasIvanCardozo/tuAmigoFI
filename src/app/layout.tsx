@@ -61,7 +61,10 @@ export default function RootLayout({
             ))}
           </div>
           {children}
-          <footer className="w-full h-20 flex flex-col justify-center items-center gap-1 bg-black self-end">
+          <footer
+            className="w-full h-20 flex flex-col justify-center items-center gap-1 bg-black self-end"
+            role="Info"
+          >
             <div className="flex gap-1">
               <p>Creada por</p>
               <a className="underline" href="">
