@@ -13,7 +13,7 @@ export default async function CorrelativeTable({
   const dataEnabler = await fetchEnabler({ id, id_carreras });
   return (
     <div className="pl-2 my-1">
-      <div className="flex min-h-6 gap-1 text-sm text-[--black-olive] sm:h-auto">
+      <div className="flex h-6 min-h-6 gap-1 text-sm text-[--black-olive] sm:h-auto">
         <div className="flex items-center h-full justify-between gap-1 self-start w-19">
           <p>Necesitas</p>
           <CgArrowRightO className="self-center text-[--midnight-green]" />
