@@ -13,15 +13,11 @@ export default function CorrelativeList({
   const { replace } = useRouter();
 
   const handleClick = (search: string) => {
+    const normalizedSearch = search
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
     const params = new URLSearchParams(searchParams);
-    if (search) {
-      params.set(
-        'search',
-        search.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      );
-    } else {
-      params.delete('search');
-    }
+    params.set('search', normalizedSearch);
     replace(`${pathname}?${params.toString()}`);
   };
 
