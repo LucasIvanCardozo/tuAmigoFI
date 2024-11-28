@@ -50,7 +50,7 @@ export default function IndexList({
     pageCount > 1 ? (
       <ul className="flex items-center text-[--black] select-none">
         <IndexLi index={1} page={page} modifier={0} callback={handlePage} />
-        {pageCount > 8 && page > 5 ? <span>...</span> : null}
+        {pageCount > 8 && page > 5 && <li>...</li>}
         {pageCount <= 8
           ? [...Array(pageCount - 2)].map((_, index) => (
               <IndexLi
@@ -90,7 +90,7 @@ export default function IndexList({
                 callback={handlePage}
               />
             ))}
-        {pageCount > 8 && page < pageCount - 4 ? <span>...</span> : null}
+        {pageCount > 8 && page < pageCount - 4 && <li>...</li>}
         <IndexLi
           index={pageCount}
           page={page}
@@ -100,8 +100,8 @@ export default function IndexList({
       </ul>
     ) : null
   ) : pageCount != undefined ? (
-    <p className="opacity-75">No se encuentran datos</p>
+    <p className="opacity-75 text-[--black]">No se encuentran datos</p>
   ) : (
-    <p>Cargando</p>
+    <p className="text-[--black]">Cargando</p>
   );
 }
