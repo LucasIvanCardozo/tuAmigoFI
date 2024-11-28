@@ -9,6 +9,7 @@ import ButtonAddLink from './buttonAddLink';
 import DegreesList from './modals/degreesList';
 import DegreesListSkeleton from '../skeletons/degreesListSkeleton';
 import CourseLinksSkeleton from '../skeletons/courseLinksSkeleton';
+import ButtonAddCorrelative from './buttonAddCorrelative';
 
 export default async function Course({
   course,
@@ -48,7 +49,7 @@ export default async function Course({
         </Suspense>
       </div>
       <div className="flex justify-end gap-1 pt-1 text-[--white] items-center text-sm sm:text-base">
-        {/* <ButtonAddCorrelative course={course} /> */}
+        <ButtonAddCorrelative course={course} />
         <ButtonAddLink course={course} />
         <Link
           href={`./materias/parciales/${id}`}
