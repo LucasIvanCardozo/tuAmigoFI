@@ -12,12 +12,12 @@ export default function Footer() {
           Lucas Cardozo
         </a>
       </div>
-      <Link
+      <a
         className="text-sm underline sm:hover:underline sm:no-underline"
-        href="/politica-de-privacidad"
+        href="https://tu-amigo-fi.vercel.app/politica-de-privacidad"
       >
         Política de Privacidad
-      </Link>
+      </a>
     </footer>
   );
 }
