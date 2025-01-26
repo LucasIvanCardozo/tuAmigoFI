@@ -26,6 +26,7 @@
     "use-debounce": "10.0.4"
   },
   "devDependencies": {
+    "@electron-forge/maker-rpm": "^7.6.1",
     "@types/node": "20.17.9",
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1",
