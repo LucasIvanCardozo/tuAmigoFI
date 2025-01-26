@@ -73,9 +73,9 @@ export default function RootLayout({
             </div>
             <a
               className="text-sm underline sm:hover:underline sm:no-underline"
-              href="/privacidad"
+              href="/politica-de-privacidad"
             >
-              Politica y privacidad
+              Política de Privacidad
             </a>
           </footer>
         </Providers>
