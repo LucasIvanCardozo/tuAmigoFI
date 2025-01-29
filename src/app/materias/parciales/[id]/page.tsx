@@ -1,6 +1,5 @@
 import { fetchCourse, fetchMidterms, fetchTps } from '@/app/lib/data';
 import AsideProblemsMidterms from '@/app/UI/components/midterms/asideProblemsMidterms';
-
 import ProblemsTableMidterms from '@/app/UI/components/midterms/problemsTableMidterms';
 
 export default async function Practica({ params }: { params: { id: string } }) {

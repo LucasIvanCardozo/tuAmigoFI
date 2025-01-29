@@ -1,5 +1,5 @@
 import { createUser } from '@/app/lib/actions';
-import { fetchUser } from '@/app/lib/data';
+import { fetchUser, fetchUserWithoutThrow } from '@/app/lib/data';
 import NextAuth from 'next-auth';
 import { JWT } from 'next-auth/jwt';
 import GoogleProvider from 'next-auth/providers/google';
@@ -56,7 +56,7 @@ const authOptions = NextAuth({
           console.error('Datos del usuario incompletos');
           return false;
         }
-        let existingUser = await fetchUser(user.email);
+        let existingUser = await fetchUserWithoutThrow(user.email);
         if (!existingUser) {
           existingUser = await createUser({
             name: user.name!,
@@ -69,6 +69,7 @@ const authOptions = NextAuth({
         user.tier = existingUser.tier;
         return true;
       } catch (error) {
+        console.log(error);
         return false;
       }
     },

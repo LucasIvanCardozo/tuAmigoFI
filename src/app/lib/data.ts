@@ -334,6 +334,21 @@ export async function fetchUser(id: number | string) {
   }
 }
 
+export async function fetchUserWithoutThrow(id: number | string) {
+  try {
+    const user = await prisma.users.findFirst({
+      where: {
+        ...(typeof id === 'number'
+          ? { id: id }
+          : typeof id === 'string' && { email: id }),
+      },
+    });
+    return user;
+  } catch (error) {
+    throw new Error('No se encontro nignun usuario');
+  }
+}
+
 export async function fetchUserReactionTp(id_response: number) {
   const userReactions = await prisma.tps_reactions.findMany({
     where: {
