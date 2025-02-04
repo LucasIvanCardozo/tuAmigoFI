@@ -44,7 +44,7 @@ export async function createResponseMidterm({
   try {
     const validation = await prisma.midterms_responses.findFirst({
       where: {
-        id_midterm: idMidterm,
+        id_module: idMidterm,
         id_user: idUser,
         number: number,
       },
@@ -52,7 +52,7 @@ export async function createResponseMidterm({
     if (!validation) {
       const addResponse = await prisma.midterms_responses.create({
         data: {
-          id_midterm: idMidterm,
+          id_module: idMidterm,
           number: number,
           type: type,
           id_user: idUser,
@@ -83,7 +83,7 @@ export async function createResponseTp({
   try {
     const validation = await prisma.tps_responses.findFirst({
       where: {
-        id_tp: idTp,
+        id_module: idTp,
         id_user: idUser,
         number: number,
       },
@@ -91,7 +91,7 @@ export async function createResponseTp({
     if (!validation) {
       const addResponse = await prisma.tps_responses.create({
         data: {
-          id_tp: idTp,
+          id_module: idTp,
           number: number,
           type: type,
           id_user: idUser,
@@ -103,7 +103,7 @@ export async function createResponseTp({
       throw new Error('No puedes tener mas de una respueste a un problema!');
   } catch (error) {
     if (error instanceof Error) {
-      return error;
+      throw new Error(error.message);
     } else {
       throw new Error('Error en validacioon de usuario');
     }
@@ -411,7 +411,7 @@ export async function addReportTp({
   try {
     const createReport = await prisma.tps_reports.create({
       data: {
-        id_tp: id_tp,
+        id_module: id_tp,
         id_user: id_user,
       },
     });
@@ -431,7 +431,7 @@ export async function addReportMidterm({
   try {
     const createReport = await prisma.midterms_reports.create({
       data: {
-        id_midterms: id_midterm,
+        id_module: id_midterm,
         id_user: id_user,
       },
     });

@@ -187,66 +187,49 @@ export async function fetchEnabler({
 }
 
 //fetch a parciales
-export async function fetchMidterms({
-  id_midterm,
-  id_materias,
-}: {
-  id_midterm?: number;
-  id_materias: number;
-}) {
+export async function fetchMidterms(id_materias: number) {
   const midterms = await prisma.midterms.findMany({
     where: {
-      id: id_midterm,
       id_course: id_materias,
     },
     orderBy: {
       id: 'asc',
     },
-    include: {
-      _count: {
-        select: {
-          midterms_reports: true,
-        },
-      },
-    },
-    // cacheStrategy: cache,
   });
-
-  const filteredMidterms = midterms.filter(
-    (midterm) => midterm._count?.midterms_reports < 5
-  );
-
-  return filteredMidterms;
+  return midterms;
 }
 
 //fetchs a TPs
-export async function fetchTps({
-  id_tps,
-  id_materias,
-}: {
-  id_tps?: number;
-  id_materias: number;
-}) {
+export async function fetchTps(id_materias: number) {
   const tps = await prisma.tps.findMany({
     where: {
-      id: id_tps,
       id_course: id_materias,
     },
     orderBy: {
       number: 'asc',
     },
-    include: {
-      _count: {
-        select: {
-          tps_reports: true,
-        },
-      },
+  });
+  return tps;
+}
+
+//fetch contador de reposrtes a los TPs
+export async function fetchReportsTps(id_tps: number) {
+  const countReports = await prisma.tps_reports.count({
+    where: {
+      id_module: id_tps,
     },
   });
+  return countReports;
+}
 
-  const filteredTps = tps.filter((tp) => tp._count?.tps_reports < 5);
-
-  return filteredTps;
+//fetch contador de reposrtes a los parciales
+export async function fetchReportsMidterms(id_midterms: number) {
+  const countReports = await prisma.midterms_reports.count({
+    where: {
+      id_module: id_midterms,
+    },
+  });
+  return countReports;
 }
 
 //fetch de carreras
@@ -367,80 +350,29 @@ export async function fetchUserReactionMidterm(id_response: number) {
   return userReactions;
 }
 
-export async function fetchResponsesTp({ id_tp }: { id_tp: number }) {
+export async function fetchResponsesTp(id_tp: number) {
   const responses = await prisma.tps_responses.findMany({
     where: {
-      id_tp: id_tp,
-    },
-    include: {
-      tps_reactions: true,
+      id_module: id_tp,
     },
     orderBy: {
       number: 'asc',
     },
   });
-
-  const groupedResponses = responses.reduce<Record<number, any>>(
-    (acc, response) => {
-      const { number, tps_reactions } = response;
-
-      const score =
-        tps_reactions.filter((reaction) => reaction.reaction == true).length -
-        tps_reactions.filter((reaction) => reaction.reaction == false).length;
-
-      if (!acc[number]) {
-        acc[number] = [];
-      }
-
-      acc[number].push({ ...response, score });
-      acc[number].sort((a: any, b: any) => b.score - a.score);
-      return acc;
-    },
-    {}
-  );
-
-  return groupedResponses;
+  return responses;
 }
 
-export async function fetchResponsesMidterm({
-  id_midterm,
-}: {
-  id_midterm: number;
-}) {
+export async function fetchResponsesMidterm(id_midterm: number) {
   const responses = await prisma.midterms_responses.findMany({
     where: {
-      id_midterm: id_midterm,
-    },
-    include: {
-      midterms_reactions: true,
+      id_module: id_midterm,
     },
     orderBy: {
       number: 'asc',
     },
   });
 
-  const groupedResponses = responses.reduce<Record<number, any>>(
-    (acc, response) => {
-      const { number, midterms_reactions } = response;
-
-      const score =
-        midterms_reactions.filter((reaction) => reaction.reaction == true)
-          .length -
-        midterms_reactions.filter((reaction) => reaction.reaction == false)
-          .length;
-
-      if (!acc[number]) {
-        acc[number] = [];
-      }
-
-      acc[number].push({ ...response, score });
-      acc[number].sort((a: any, b: any) => b.score - a.score);
-      return acc;
-    },
-    {}
-  );
-
-  return groupedResponses;
+  return responses;
 }
 
 export async function fetchContributors() {

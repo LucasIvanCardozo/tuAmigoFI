@@ -1,0 +1,213 @@
+'use client';
+import { useEffect, useState } from 'react';
+import { CldImage } from 'next-cloudinary';
+import 'katex/dist/katex.min.css';
+import PdfView from '../pdfView';
+import {
+  BiSolidRightArrowSquare,
+  BiSolidLeftArrowSquare,
+} from 'react-icons/bi';
+import { MdDelete } from 'react-icons/md';
+import { DataModuleProblem, TypeValues } from '@/app/types';
+import { useFormContext, useMainContext } from '@/app/lib/context';
+import ButtonReaction from './buttonReaction';
+import { InputCustom } from './input';
+import { createTp } from '@/app/lib/actions';
+
+export default function ModuleResponse({
+  problem,
+}: {
+  problem: DataModuleProblem;
+}) {
+  const [responses, setResponses] = useState(problem.responses);
+  const [indexResponse, setIndexResponse] = useState<number>(0);
+
+  const { session, dataModal, setDataModal, course } = useMainContext();
+
+  const handlePageUser = (add: number) => {
+    const suma = indexResponse + add;
+    if (!(suma >= problem.responses.length || suma < 0)) {
+      setIndexResponse(suma);
+    }
+  };
+
+  const submitButton = async (values: TypeValues[]) => {
+    const nameTP = values.find((val) => val.id == 'nameTP');
+    const numberTP = values.find((val) => val.id == 'numberTP');
+    const yearTP = values.find((val) => val.id == 'yearTP');
+    const check = values.find((val) => val.id == 'check');
+    if (
+      nameTP &&
+      numberTP &&
+      yearTP &&
+      check &&
+      typeof nameTP.value === 'string' &&
+      typeof numberTP.value === 'string' &&
+      typeof yearTP.value === 'string' &&
+      typeof check.value === 'boolean'
+    ) {
+      console.log('Se añadio un TP');
+      // const tp = await createTp({
+      //   name: nameTP.value,
+      //   number: Number(numberTP.value),
+      //   year: Number(yearTP.value),
+      //   idUser: session.user.id,
+      //   idCourse: course.id,
+      // });
+    } else {
+      console.log('No se añadio nada TP');
+    }
+  };
+
+  return (
+    <li className="relative bg-[--white] p-1 text-base leading-5 shadow-md flex flex-col min-h-32">
+      <div>
+        <p className="bg-[#C8E0E4] p-1 rounded-md flex justify-between">
+          <b className="bg-[#92C1C9] rounded-sm">{`Respuesta ${problem.number}:`}</b>
+          <br />
+          {/* {user ? ( */}
+          <span className="opacity-75">
+            Por {`${responses[indexResponse].user.name}`}
+          </span>
+          {/* ) : (
+            <UserResponseSkeleton />
+          )} */}
+        </p>
+
+        <div className="w-full h-5 relative flex justify-between">
+          {session?.user.tier == 2 && (
+            <button
+              aria-label="Eliminar respuesta"
+              title="Eliminar respuesta"
+              onClick={() =>
+                setDataModal({
+                  dataForm: {
+                    title: 'Eliminar respuesta',
+                    children: (
+                      <>
+                        <InputCustom
+                          type="text"
+                          id="nameTP"
+                          name="nameTP"
+                          placeholder="Nombre del TP"
+                          required={true}
+                        />
+                        <InputCustom
+                          type="number"
+                          id="numberTP"
+                          name="numberTP"
+                          min={0}
+                          max={30}
+                          placeholder="Número del TP"
+                          required={true}
+                        />
+                        <InputCustom
+                          type="number"
+                          id="yearTP"
+                          name="yearTP"
+                          min={2000}
+                          max={new Date().getFullYear()}
+                          placeholder="Año del TP"
+                          required={true}
+                        />
+                        <InputCustom
+                          type="checkbox"
+                          id="check"
+                          name="check"
+                          placeholder="Datos confirmados."
+                          required={true}
+                        />
+                      </>
+                    ),
+                    onSubmit: submitButton,
+                  },
+                  viewModal: true,
+                })
+              }
+            >
+              <MdDelete className="h-full w-full" />
+            </button>
+          )}
+          <span></span>
+          <div className="flex gap-1">
+            <button
+              className="h-full aspect-square text-[--black-olive] opacity-90"
+              aria-label="Cambiar usuario que respondió hacia la izquierda"
+              title="Cambiar hacia izquierda"
+              onClick={() => handlePageUser(-1)}
+            >
+              <BiSolidLeftArrowSquare className="h-full w-full" />
+            </button>
+            {`${indexResponse + 1} de ${responses.length}`}
+            <button
+              className="h-full aspect-square text-[--black-olive] opacity-90"
+              aria-label="Cambiar usuario que respondió hacia la derecha"
+              title="Cambiar hacia derecha"
+              onClick={() => handlePageUser(1)}
+            >
+              <BiSolidRightArrowSquare className="h-full w-full" />
+            </button>
+          </div>
+        </div>
+      </div>
+      {
+        // 0 -> texto ; 1 -> imagen ; 2 -> pdf ; 3 -> codigo
+        responses[indexResponse].response.type == 0 ? (
+          <div className="text-balance">
+            <p>{responses[indexResponse].response.text}</p>
+          </div>
+        ) : responses[indexResponse].response.type == 1 ? (
+          <div className="relative flex justify-center w-full max-h-250">
+            <CldImage
+              src={`https://res.cloudinary.com/donzj5rlf/image/upload/f_auto,q_auto/v${Math.floor(
+                Date.now() / (1000 * 60 * 60 * 24 * 7)
+              )}/${
+                'id_tp' in responses[indexResponse].response
+                  ? 'tps'
+                  : 'parciales'
+              }/respuestas/${
+                'id_tp' in responses[indexResponse].response
+                  ? responses[indexResponse].response.id_tp
+                  : responses[indexResponse].response.id_midterm
+              }/${responses[indexResponse].response.number}/${
+                responses[indexResponse].response.id_user
+              }`}
+              alt=""
+              width="500"
+              height="500"
+              style={{
+                objectFit: 'cover',
+                width: '100%',
+                height: 'auto',
+              }}
+            />
+          </div>
+        ) : responses[indexResponse].response.type == 2 ? (
+          <div className="relative overflow-hidden bg-[#C8E0E4] h-min max-w-full py-1 rounded-md sm:p-1">
+            <PdfView
+              id={responses[indexResponse].response.id_user}
+              url={`${
+                'id_tp' in responses[indexResponse].response
+                  ? 'tps'
+                  : 'parciales'
+              }/respuestas/${
+                'id_tp' in responses[indexResponse].response
+                  ? responses[indexResponse].response.id_tp
+                  : responses[indexResponse].response.id_midterm
+              }/${responses[indexResponse].response.number}`}
+            />
+          </div>
+        ) : responses[indexResponse].response.type == 3 ? (
+          <div className="whitespace-pre-wrap">
+            <p>{responses[indexResponse].response.text}</p>
+          </div>
+        ) : null
+      }
+      <ButtonReaction
+        indexResponse={indexResponse}
+        responses={responses}
+        setResponses={setResponses}
+      />
+    </li>
+  );
+}

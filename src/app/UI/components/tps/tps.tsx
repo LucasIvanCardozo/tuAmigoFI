@@ -11,8 +11,6 @@ import {
   TbSquareRoundedNumber8Filled,
   TbSquareRoundedNumber9Filled,
 } from 'react-icons/tb';
-import { fetchResponsesTp, fetchUser } from '@/app/lib/data';
-import { useEffect, useState } from 'react';
 import { tps_responses, tps, users } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { MdOutlineAddBox } from 'react-icons/md';
@@ -20,15 +18,16 @@ import { MdDelete } from 'react-icons/md';
 import { MdOutlineReport } from 'react-icons/md';
 import PdfView from '../pdfView';
 import ResponseTp from './responseTp';
+import { dataTps } from '@/app/types';
 export default function Tps({
-  tp,
+  dataTp,
   display,
   callbackDeleteTp,
   callbackAddResponse,
   callbackDeleteResponse,
   callbackReportTp,
 }: {
-  tp: tps;
+  dataTp: dataTps;
   display: number | undefined;
   callbackDeleteTp: (tp: tps | undefined) => void;
   callbackAddResponse: (tp: tps | undefined) => void;
@@ -47,25 +46,10 @@ export default function Tps({
     <TbSquareRoundedNumber8Filled />,
     <TbSquareRoundedNumber9Filled />,
   ];
-  const [responses, setResponses] = useState<Record<number, tps_responses[]>>();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [user, setUser] = useState<users>();
   const { data: session } = useSession();
-
-  useEffect(() => {
-    setLoading(true);
-    const searchProblems = async () => {
-      const responses = await fetchResponsesTp({ id_tp: tp.id });
-      setResponses(responses);
-      setLoading(false);
-    };
-    const searchUser = async () => {
-      const userAux = await fetchUser(tp.id_user);
-      setUser(userAux);
-    };
-    searchUser();
-    searchProblems();
-  }, []);
+  const user = dataTp.user;
+  const tp = dataTp.tp;
+  const problems = dataTp.problems;
 
   return (
     <li className={'relative ' + `${display && display != tp.id && 'hidden'}`}>
@@ -99,9 +83,7 @@ export default function Tps({
       </div>
       <div className="bg-[--white] p-2 text-base leading-5 drop-shadow-md flex flex-col gap-1">
         <div className="relative overflow-hidden bg-[#C8E0E4] h-min py-1 rounded-md sm:p-1">
-          {user && (
-            <div className="absolute z-10 bg-[--white] rounded-md m-2 opacity-65 top-0 left-0">{`Por ${user.name}`}</div>
-          )}
+          <div className="absolute z-10 bg-[--white] rounded-md m-2 opacity-65 top-0 left-0">{`Por ${user.name}`}</div>
           {session && (
             <button
               className="absolute z-10 m-2 bottom-0 right-0 w-6 h-6"
@@ -115,25 +97,28 @@ export default function Tps({
           <PdfView id={tp.id} url="tps/problemas" />
         </div>
         <ul className="flex flex-col gap-1 pl-1">
-          {responses == undefined || loading ? (
-            <li className="pl-3">
-              <p>Cargando respuestas...</p>
-            </li>
-          ) : Object.keys(responses).length == 0 ? (
-            <li className="pl-3">
-              <p>Sin respuestas :c</p>
-            </li>
-          ) : (
-            <>
-              {Object.entries(responses).map((response) => (
-                <ResponseTp
-                  key={response[0]}
-                  response={response}
-                  callbackDeleteResponse={callbackDeleteResponse}
-                />
-              ))}
-            </>
-          )}
+          {
+            // responses == undefined || loading ? (
+            //   <li className="pl-3">
+            //     <p>Cargando respuestas...</p>
+            //   </li>
+            // ) :
+            problems.length == 0 ? (
+              <li className="pl-3">
+                <p>Sin respuestas :c</p>
+              </li>
+            ) : (
+              <>
+                {problems.map((problem, index) => (
+                  <ResponseTp
+                    key={index}
+                    problem={problem}
+                    callbackDeleteResponse={callbackDeleteResponse}
+                  />
+                ))}
+              </>
+            )
+          }
         </ul>
       </div>
     </li>

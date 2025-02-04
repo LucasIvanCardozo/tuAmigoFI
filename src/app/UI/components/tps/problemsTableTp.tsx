@@ -9,8 +9,15 @@ import ModalAddTpResponse from './modals/modalAddTpResponse';
 import ModalDeleteTpResponse from './modals/modalDeleteTpResponse';
 import { useSession } from 'next-auth/react';
 import ModalReportTp from './modals/modalReportTp';
+import { dataTps } from '@/app/types';
 
-export default function ProblemsTable({ tpList }: { tpList: tps[] }) {
+export default function ProblemsTable({
+  tpList,
+  dataTps,
+}: {
+  tpList: tps[];
+  dataTps: dataTps[];
+}) {
   const searchParams = useSearchParams();
   const [modalDeleteTp, setModalDeleteTp] = useState<tps | undefined>();
   const [modalReportTp, setModalReportTp] = useState<tps | undefined>();
@@ -47,25 +54,28 @@ export default function ProblemsTable({ tpList }: { tpList: tps[] }) {
   return (
     <>
       <ul className="flex flex-col gap-1 grow relative overflow-y-auto">
-        {tpList == undefined ? (
-          <TpsSkeleton />
-        ) : tpList.length == 0 ? (
-          <li className="w-full h-full flex justify-center items-center text-3xl">
-            <p>No hay Tps :,c</p>
-          </li>
-        ) : (
-          tpList.map((tp) => (
-            <Tps
-              key={tp.id}
-              tp={tp}
-              display={showTp}
-              callbackDeleteTp={handleModalDeleteTp}
-              callbackAddResponse={handleModalAddResponse}
-              callbackDeleteResponse={handleModalDeleteResponse}
-              callbackReportTp={handleModalReportTp}
-            />
-          ))
-        )}
+        {
+          // tpList == undefined ? (
+          //   <TpsSkeleton />
+          // ) :
+          dataTps.length == 0 ? (
+            <li className="w-full h-full flex justify-center items-center text-3xl">
+              <p>No hay Tps :,c</p>
+            </li>
+          ) : (
+            dataTps.map((dataTp) => (
+              <Tps
+                key={dataTp.tp.id}
+                dataTp={dataTp}
+                display={showTp}
+                callbackDeleteTp={handleModalDeleteTp}
+                callbackAddResponse={handleModalAddResponse}
+                callbackDeleteResponse={handleModalDeleteResponse}
+                callbackReportTp={handleModalReportTp}
+              />
+            ))
+          )
+        }
       </ul>
       {modalDeleteTp && (
         <ModalDeleteTp tp={modalDeleteTp} callback={handleModalDeleteTp} />

@@ -1,30 +1,67 @@
-import { fetchCourse, fetchMidterms, fetchTps } from '@/app/lib/data';
-import AsideProblemsMidterms from '@/app/UI/components/midterms/asideProblemsMidterms';
-import ProblemsTableMidterms from '@/app/UI/components/midterms/problemsTableMidterms';
+import {
+  fetchCourse,
+  fetchMidterms,
+  fetchReportsMidterms,
+  fetchResponsesMidterm,
+  fetchUser,
+  fetchUserReactionMidterm,
+} from '@/app/lib/data';
+import { DataModule, DataModuleProblem } from '@/app/types';
+import { MainPractica } from '@/app/UI/components/practica/main';
 
 export default async function Practica({ params }: { params: { id: string } }) {
   const id_materia = Number(params.id);
   const course = await fetchCourse(id_materia);
-  const midtermsList = await fetchMidterms({ id_materias: id_materia });
+  const moduleList = await fetchMidterms(id_materia);
+  let modules: DataModule[] = [];
+
+  for (const module of moduleList) {
+    const countReposrts = await fetchReportsMidterms(module.id);
+    const user = await fetchUser(module.id_user);
+    const responses = await fetchResponsesMidterm(module.id);
+    let dataModuleProblems: DataModuleProblem[] = [];
+    let numAux: number = responses[0]?.number;
+    let i = 0;
+
+    if (responses[0])
+      dataModuleProblems.push({ number: responses[i].number, responses: [] });
+
+    for (const response of responses) {
+      const user = await fetchUser(response.id_user);
+      const reactions = await fetchUserReactionMidterm(response.id);
+      if (numAux != response.number) {
+        dataModuleProblems.push({ number: response.number, responses: [] });
+        numAux = response.number;
+        i++;
+      }
+      dataModuleProblems[i].responses.push({
+        response: response,
+        user: user,
+        reactions: reactions,
+      });
+    }
+
+    for (const moduleProblem of dataModuleProblems) {
+      moduleProblem.responses.sort((a, b) => {
+        const likesA = a.reactions.filter((rea) => rea.reaction).length;
+        const disLikesA = a.reactions.length - likesA;
+        const likesB = b.reactions.filter((rea) => rea.reaction).length;
+        const disLikesB = b.reactions.length - likesA;
+        return likesB - disLikesB - (likesA - disLikesA);
+      });
+    }
+
+    modules.push({
+      module: module,
+      countReports: countReposrts,
+      user: user,
+      problems: dataModuleProblems,
+    });
+  }
 
   return (
     <>
-      <main className="h-screen w-full pt-8 flex gap-2 max-w-screen-lg m-auto sm:pb-3 sm:px-2 sm:pt-16">
-        <AsideProblemsMidterms
-          midtermsList={midtermsList}
-          idCourse={id_materia}
-        />
-        <section className="text-[--black] max-w-full flex flex-col grow relative h-full p-3 sm:p-0">
-          <div>
-            <div className="flex justify-between items-end">
-              <h1 className="text-2xl sm:text-3xl font-bold">
-                <b>{course.name}</b>
-              </h1>
-            </div>
-          </div>
-          <ProblemsTableMidterms midtermsList={midtermsList} />
-        </section>
-      </main>
+      <MainPractica modules={modules} course={course} />
     </>
   );
 }
