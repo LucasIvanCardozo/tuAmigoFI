@@ -1,6 +1,7 @@
 import {
   fetchCourse,
   fetchMidterms,
+  fetchMidtermsWithAllData,
   fetchReportsMidterms,
   fetchResponsesMidterm,
   fetchUser,
@@ -12,13 +13,13 @@ import { MainPractica } from '@/app/UI/components/practica/main';
 export default async function Practica({ params }: { params: { id: string } }) {
   const id_materia = Number(params.id);
   const course = await fetchCourse(id_materia);
-  const moduleList = await fetchMidterms(id_materia);
+  const moduleList = await fetchMidtermsWithAllData(id_materia);
   let modules: DataModule[] = [];
 
   for (const module of moduleList) {
-    const countReposrts = await fetchReportsMidterms(module.id);
-    const user = await fetchUser(module.id_user);
-    const responses = await fetchResponsesMidterm(module.id);
+    const countReposrts = module.midterms_reports.length;
+    const user = module.users;
+    const responses = module.midterms_responses;
     let dataModuleProblems: DataModuleProblem[] = [];
     let numAux: number = responses[0]?.number;
     let i = 0;
@@ -27,8 +28,8 @@ export default async function Practica({ params }: { params: { id: string } }) {
       dataModuleProblems.push({ number: responses[i].number, responses: [] });
 
     for (const response of responses) {
-      const user = await fetchUser(response.id_user);
-      const reactions = await fetchUserReactionMidterm(response.id);
+      const user = response.users;
+      const reactions = response.midterms_reactions;
       if (numAux != response.number) {
         dataModuleProblems.push({ number: response.number, responses: [] });
         numAux = response.number;
@@ -58,10 +59,9 @@ export default async function Practica({ params }: { params: { id: string } }) {
       problems: dataModuleProblems,
     });
   }
-
   return (
     <>
-      <MainPractica modules={modules} course={course} />
+      <MainPractica modules={modules} course={course} typeModule="Practica" />
     </>
   );
 }

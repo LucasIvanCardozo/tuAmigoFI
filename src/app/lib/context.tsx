@@ -12,6 +12,7 @@ interface TypeMainContext {
   modules: DataModule[];
   setModules: (dataModules: DataModule[]) => void;
   course: courses;
+  typeModule: 'TP' | 'Practica';
 }
 
 export const MainContext = createContext<TypeMainContext>({
@@ -33,6 +34,7 @@ export const MainContext = createContext<TypeMainContext>({
     hs: 0,
     optional: false,
   },
+  typeModule: 'TP',
 });
 
 interface TypeFromContext {

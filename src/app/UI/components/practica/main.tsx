@@ -11,9 +11,10 @@ import { AsideModules } from './asideModules';
 interface Params {
   modules: DataModule[];
   course: courses;
+  typeModule: 'TP' | 'Practica';
 }
 
-export const MainPractica = ({ modules, course }: Params) => {
+export const MainPractica = ({ modules, course, typeModule }: Params) => {
   const [modulesAux, setModulesAux] = useState(modules);
   const [viewModule, setViewModule] = useState<number | null>(null);
   const [dataModal, setDataModal] = useState<TypeModal>({
@@ -38,10 +39,11 @@ export const MainPractica = ({ modules, course }: Params) => {
           modules: modulesAux,
           setModules: setModulesAux,
           course,
+          typeModule,
         }}
       >
         <MainModal />
-        <AsideModules typeModule="TP" />
+        <AsideModules />
         <section className="text-[--black] flex flex-col grow relative h-full p-3 sm:p-0">
           <div>
             <div className="flex justify-between items-end">

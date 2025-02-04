@@ -11,11 +11,7 @@ import { SiGoogledocs } from 'react-icons/si';
 import { InputCustom } from './input';
 import { createMidterm, createTp } from '@/app/lib/actions';
 
-interface Params {
-  typeModule: 'TP' | 'Parcial';
-}
-
-export const AsideModules = ({ typeModule }: Params) => {
+export const AsideModules = () => {
   const {
     session,
     viewModule,
@@ -25,6 +21,7 @@ export const AsideModules = ({ typeModule }: Params) => {
     modules,
     setModules,
     course,
+    typeModule,
   } = useMainContext();
   const [asideState, setAsideState] = useState(false);
   const isTp = typeModule == 'TP';
@@ -159,7 +156,7 @@ export const AsideModules = ({ typeModule }: Params) => {
           }
         />
         <div className="absolute h-8 left-full top-0 text-xl bg-[--black-olive] drop-shadow-sm rounded-md px-1 flex items-center justify-center rounded-s-none text-nowrap sm:hidden">
-          {typeModule == 'TP' ? <b>Busca tu TP</b> : <b>Busca tu Parcial</b>}
+          {isTp ? <b>Busca tu TP</b> : <b>Busca tu Parcial</b>}
         </div>
       </button>
       <aside
@@ -169,7 +166,7 @@ export const AsideModules = ({ typeModule }: Params) => {
         }
       >
         <h1 className="text-xl hidden sm:block">
-          <b>Busca tu TP</b>
+          {isTp ? <b>Busca tu TP</b> : <b>Busca tu Parcial</b>}
         </h1>
         <ul
           className="flex flex-col gap-3 overflow-y-auto overflow-x-hidden"

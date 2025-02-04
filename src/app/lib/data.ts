@@ -199,11 +199,47 @@ export async function fetchMidterms(id_materias: number) {
   return midterms;
 }
 
+export async function fetchMidtermsWithAllData(id_materias: number) {
+  const tps = await prisma.midterms.findMany({
+    where: {
+      id_course: id_materias,
+    },
+    include: {
+      midterms_reports: true,
+      users: true,
+      midterms_responses: {
+        include: { midterms_reactions: true, users: true },
+      },
+    },
+    orderBy: {
+      id: 'asc',
+    },
+  });
+  return tps;
+}
+
 //fetchs a TPs
 export async function fetchTps(id_materias: number) {
   const tps = await prisma.tps.findMany({
     where: {
       id_course: id_materias,
+    },
+    orderBy: {
+      number: 'asc',
+    },
+  });
+  return tps;
+}
+
+export async function fetchTpsWithAllData(id_materias: number) {
+  const tps = await prisma.tps.findMany({
+    where: {
+      id_course: id_materias,
+    },
+    include: {
+      tps_reports: true,
+      users: true,
+      tps_responses: { include: { tps_reactions: true, users: true } },
     },
     orderBy: {
       number: 'asc',
