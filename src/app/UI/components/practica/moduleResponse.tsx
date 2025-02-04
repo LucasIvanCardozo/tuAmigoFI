@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CldImage } from 'next-cloudinary';
 import 'katex/dist/katex.min.css';
 import PdfView from '../pdfView';
@@ -214,8 +214,7 @@ export default function ModuleResponse({
                 Date.now() / (1000 * 60 * 60 * 24 * 7)
               )}/${isTp ? 'tps' : 'parciales'}/respuestas/${
                 responses[indexResponse].response.id_module
-              }
-              /${responses[indexResponse].response.number}/${
+              }/${responses[indexResponse].response.number}/${
                 responses[indexResponse].response.id_user
               }`}
               alt=""
