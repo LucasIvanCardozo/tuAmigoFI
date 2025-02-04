@@ -146,9 +146,14 @@ export const ModuleProblems = ({ module }: Params) => {
     try {
       if (
         number &&
-        selectResponse &&
         typeof number.value === 'string' &&
-        typeof selectResponse.value == 'string'
+        selectResponse &&
+        (((selectResponse.inputType == '0' ||
+          selectResponse.inputType == '3') &&
+          typeof selectResponse.value == 'string') ||
+          ((selectResponse.inputType == '1' ||
+            selectResponse.inputType == '2') &&
+            selectResponse.value instanceof File))
       ) {
         if (session) {
           let addResponse;
@@ -158,7 +163,11 @@ export const ModuleProblems = ({ module }: Params) => {
               idUser: session.user.id,
               idTp: moduleInd.id,
               number: Number(number.value),
-              text: selectResponse.value,
+              text:
+                selectResponse.inputType == '0' ||
+                selectResponse.inputType == '3'
+                  ? (selectResponse.value as string)
+                  : undefined,
               type: typeResponse,
             });
           } else {
@@ -166,12 +175,15 @@ export const ModuleProblems = ({ module }: Params) => {
               idUser: session.user.id,
               idMidterm: moduleInd.id,
               number: Number(number.value),
-              text: selectResponse.value,
+              text:
+                selectResponse.inputType == '0' ||
+                selectResponse.inputType == '3'
+                  ? (selectResponse.value as string)
+                  : undefined,
               type: typeResponse,
             });
           }
           if (typeResponse == 1 || typeResponse == 2) {
-            console.log(typeResponse);
             if (selectResponse.value) {
               if (addResponse) {
                 const formData = new FormData();
