@@ -193,7 +193,7 @@ export const ModuleProblems = ({ module }: Params) => {
                   'subFolder',
                   `${isTp ? 'tps' : 'parciales'}/respuestas/${
                     moduleInd.id
-                  }/${number}`
+                  }/${Number(number.value)}`
                 );
                 await fetch('/api/upload', {
                   method: 'POST',
