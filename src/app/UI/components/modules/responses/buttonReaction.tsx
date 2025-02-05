@@ -1,6 +1,6 @@
 'use client';
 import { addReactionTp } from '@/app/lib/actions';
-import { useMainContext } from '@/app/lib/context';
+import { useMainContext } from '@/app/lib/contexts';
 import { DataModuleResponse } from '@/app/types';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { AiFillLike } from 'react-icons/ai';

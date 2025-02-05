@@ -1,17 +1,17 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { CldImage } from 'next-cloudinary';
 import 'katex/dist/katex.min.css';
-import PdfView from '../pdfView';
+import PdfView from '../../pdfView';
 import {
   BiSolidRightArrowSquare,
   BiSolidLeftArrowSquare,
 } from 'react-icons/bi';
 import { MdDelete } from 'react-icons/md';
 import { DataModuleProblem, TypeValues } from '@/app/types';
-import { useMainContext } from '@/app/lib/context';
+import { useMainContext } from '@/app/lib/contexts';
 import ButtonReaction from './buttonReaction';
-import { InputCustom } from './input';
+import { HandlerInputs } from '../../form/inputs/handlerInputs';
 import { deleteMidtermResponse, deleteTpResponse } from '@/app/lib/actions';
 
 export default function ModuleResponse({
@@ -22,9 +22,9 @@ export default function ModuleResponse({
   const [responses, setResponses] = useState(problem.responses);
   const [indexResponse, setIndexResponse] = useState<number>(0);
 
-  const { session, setDataModal, modules, setModules } = useMainContext();
+  const { session, stateModal, stateModules, stateForm } = useMainContext();
 
-  const isTp = 'number' in modules[0].module;
+  const isTp = 'number' in stateModules.modules[0].module;
 
   const handlePageUser = (add: number) => {
     const suma = indexResponse + add;
@@ -51,8 +51,8 @@ export default function ModuleResponse({
             try {
               const indexResponseAux = indexResponse;
               setIndexResponse((indexResponse) => 0);
-              setModules(
-                modules.map((mod) =>
+              stateModules.setModules(
+                stateModules.modules.map((mod) =>
                   mod.module.id ==
                   responses[indexResponseAux].response.id_module
                     ? {
@@ -127,54 +127,54 @@ export default function ModuleResponse({
             <button
               aria-label="Eliminar respuesta"
               title="Eliminar respuesta"
-              onClick={() =>
-                setDataModal({
-                  dataForm: {
-                    title: 'Eliminar respuesta',
-                    children: (
-                      <>
-                        <div>
-                          <div className="flex flex-col [&>*]:flex [&>*]:gap-1">
-                            <p>
-                              <b>Numero del problema:</b>
-                              {responses[indexResponse].response.number}
-                            </p>
-                            <p>
-                              <b>Subida por:</b>
-                              {responses[indexResponse].user.name}
-                            </p>
-                          </div>
-                        </div>
-                        <div>
-                          <h3 className="text-sm">Recuerda!</h3>
-                          <p className="text-xs">
-                            Por favor asegurate de que la respuesta sea la que
-                            quieres eliminar. Se borrara esta misma con todas
-                            sus reacciones. En caso de cualquier problema podés
-                            contactarme:{' '}
-                            <a
-                              className="underline"
-                              target="_blank"
-                              href="https://wa.me/+5492235319564"
-                            >
-                              2235319564
-                            </a>
+              onClick={() => {
+                stateForm.setDataForm({
+                  onSubmit: submitDeleteResponse,
+                  children: (
+                    <>
+                      <div>
+                        <div className="flex flex-col [&>*]:flex [&>*]:gap-1">
+                          <p>
+                            <b>Numero del problema:</b>
+                            {responses[indexResponse].response.number}
+                          </p>
+                          <p>
+                            <b>Subida por:</b>
+                            {responses[indexResponse].user.name}
                           </p>
                         </div>
-                        <InputCustom
-                          type="checkbox"
-                          id="check"
-                          name="check"
-                          placeholder="Confirmo la eliminación."
-                          required={true}
-                        />
-                      </>
-                    ),
-                    onSubmit: submitDeleteResponse,
-                  },
+                      </div>
+                      <div>
+                        <h3 className="text-sm">Recuerda!</h3>
+                        <p className="text-xs">
+                          Por favor asegurate de que la respuesta sea la que
+                          quieres eliminar. Se borrara esta misma con todas sus
+                          reacciones. En caso de cualquier problema podés
+                          contactarme:{' '}
+                          <a
+                            className="underline"
+                            target="_blank"
+                            href="https://wa.me/+5492235319564"
+                          >
+                            2235319564
+                          </a>
+                        </p>
+                      </div>
+                      <HandlerInputs
+                        type="checkbox"
+                        id="check"
+                        name="check"
+                        placeholder="Confirmo la eliminación."
+                        required={true}
+                      />
+                    </>
+                  ),
+                });
+                stateModal.setDataModal({
+                  title: 'Eliminar respuesta',
                   viewModal: true,
-                })
-              }
+                });
+              }}
             >
               <MdDelete className="h-full w-full" />
             </button>

@@ -13,7 +13,7 @@ import {
   TbSquareDotFilled,
 } from 'react-icons/tb';
 
-export const numberIconsTp = [
+export const numberIconsModules = [
   <TbSquareDotFilled />,
   <TbSquareNumber1Filled />,
   <TbSquareNumber2Filled />,

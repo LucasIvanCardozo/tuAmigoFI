@@ -10,7 +10,7 @@ export interface TypeValues {
 }
 
 export interface DataForm {
-  children: ReactNode;
-  title: string;
-  onSubmit: (values: TypeValues[]) => Promise<void>;
+  children: ReactNode; // Todos los inputs + submits que estarán dentro del formulario
+  onSubmit: (values: TypeValues[]) => Promise<void>; // Se ejecuta una vez se hace submit al formulario
+  onEnd?: () => void; //Se ejecuta una vez terminan todas las acciones del formulario
 }

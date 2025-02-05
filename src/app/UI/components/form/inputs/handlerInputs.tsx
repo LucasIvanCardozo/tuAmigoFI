@@ -1,9 +1,19 @@
-import { useFormContext } from '@/app/lib/context';
+import { useFormContext } from '@/app/lib/contexts';
 import { TypeInput, TypeResponse, TypeValues } from '@/app/types';
 import { ChangeEvent, useEffect, useState } from 'react';
+import {
+  InputText,
+  InputNumber,
+  InputFile,
+  InputSelect,
+  InputTextarea,
+  InputCheckbox,
+  InputSelectResponse,
+  InputDate,
+} from './index';
 
-export const InputCustom = (params: TypeInput) => {
-  const inputType = params.type;
+export const HandlerInputs = (input: TypeInput) => {
+  const inputType = input.type;
   const { values, setValues } = useFormContext();
   const [typeResponse, setTypeResponse] = useState<TypeResponse>('');
   const [value, setValue] = useState('');
@@ -63,10 +73,10 @@ export const InputCustom = (params: TypeInput) => {
 
   useEffect(() => {
     setValues((validates: TypeValues[]) => {
-      const validate = values.find((val) => val.id == params.id);
+      const validate = values.find((val) => val.id == input.id);
       if (!validate) {
         const thisvalidate: TypeValues = {
-          id: params.id,
+          id: input.id,
           value:
             inputType == 'text' ||
             inputType == 'number' ||
@@ -78,7 +88,7 @@ export const InputCustom = (params: TypeInput) => {
               ? undefined
               : false,
           inputType: typeResponse,
-          validate: !params.required,
+          validate: !input.required,
         };
         return [...validates, thisvalidate];
       } else return validates;
@@ -86,13 +96,13 @@ export const InputCustom = (params: TypeInput) => {
   }, []);
 
   useEffect(() => {
-    if (params.required) {
-      const validate = values.find((val) => val.id == params.id);
+    if (input.required) {
+      const validate = values.find((val) => val.id == input.id);
       if (validate) {
         if (value || file || checkbox || date) {
           setValues(
             values.map((val) =>
-              val.id == params.id
+              val.id == input.id
                 ? {
                     ...val,
                     value:
@@ -120,7 +130,7 @@ export const InputCustom = (params: TypeInput) => {
         } else {
           setValues(
             values.map((val) =>
-              val.id == params.id
+              val.id == input.id
                 ? {
                     ...val,
                     validate: false,
@@ -153,138 +163,29 @@ export const InputCustom = (params: TypeInput) => {
   return (
     <div className="relative flex flex-col text-black">
       {inputType == 'text' ? (
-        <input
-          id={params.id}
-          name={params.name}
-          type={params.type}
-          placeholder={params.placeholder}
-          required={params.required}
-          onChange={(e) => setValue(e.target.value)}
-        />
+        <InputText input={input} onChange={setValue} />
       ) : inputType == 'number' ? (
-        <input
-          id={params.id}
-          name={params.name}
-          type={params.type}
-          min={params.min}
-          max={params.max}
-          placeholder={params.placeholder}
-          required={params.required}
-          onChange={(e) => setValue(e.target.value)}
-        />
+        <InputNumber input={input} onChange={setValue} />
       ) : inputType == 'file' ? (
-        <input
-          className="text-white"
-          type="file"
-          accept={params.accept}
-          required={params.required}
-          onChange={(e) => handlePDF(e)}
-        />
+        <InputFile input={input} onChange={handlePDF} />
       ) : inputType == 'select' ? (
-        <select
-          name={params.name}
-          id={params.id}
-          required={params.required}
-          onChange={(e) => setValue(e.target.value)}
-        >
-          <option value="">{params.placeholder}</option>
-          {params.children}
-        </select>
+        <InputSelect input={input} onChange={setValue} />
       ) : inputType == 'textarea' ? (
-        <textarea
-          id={params.id}
-          name={params.name}
-          rows={params.rows}
-          cols={params.cols}
-          placeholder={params.placeholder}
-          required={params.required}
-          onChange={(e) => setValue(e.target.value)}
-        />
+        <InputTextarea input={input} onChange={setValue} />
       ) : inputType == 'checkbox' ? (
-        <div className="flex gap-2 items-center text-white">
-          <input
-            type="checkbox"
-            name={params.name}
-            id={params.id}
-            onChange={(e) => setCheckbox(e.target.checked)}
-            required={params.required}
-          />
-          {params.placeholder && (
-            <label htmlFor={params.name}>{params.placeholder}</label>
-          )}
-        </div>
+        <InputCheckbox input={input} onChange={setCheckbox} />
       ) : inputType == 'selectResponse' ? (
-        <>
-          <div className="flex flex-col">
-            <label className="text-white" htmlFor="type">
-              Tipo de respuesta
-            </label>
-            <select
-              className="text-black mb-2"
-              name="type"
-              id="type"
-              onChange={(e) =>
-                handleSelectResponse(e.target.value as TypeResponse)
-              }
-              required
-            >
-              <option value="">Selecciona el tipo respuesta</option>
-              <option value="0">Texto</option>
-              <option value="1">Imagen</option>
-              <option value="2">Pdf</option>
-              <option value="3">Código</option>
-            </select>
-          </div>
-          {typeResponse == '0' ? (
-            <div className="flex flex-col">
-              <input
-                className="text-black"
-                type="text"
-                name="text"
-                id="text"
-                placeholder={'Ingresa tu respuesta'}
-                onChange={(e) => setValue(e.target.value)}
-                required
-              />
-            </div>
-          ) : typeResponse == '1' ? (
-            <input
-              className="text-white"
-              type="file"
-              accept="image/*"
-              required
-              onChange={(e) => handleImage(e)}
-            />
-          ) : typeResponse == '2' ? (
-            <input
-              className="text-white"
-              type="file"
-              accept="application/pdf"
-              required
-              onChange={(e) => handlePDF(e)}
-            />
-          ) : typeResponse == '3' ? (
-            <div className="flex flex-col text-[--black]">
-              <textarea
-                name="code"
-                id="code"
-                rows={10}
-                cols={50}
-                placeholder="Pega tu código aquí..."
-                onChange={(e) => setValue(e.target.value)}
-              ></textarea>
-            </div>
-          ) : null}
-        </>
-      ) : (
-        <input
-          type="date"
-          id={params.id}
-          name={params.name}
-          required={params.required}
-          onChange={(e) => setDate(new Date(e.target.value))}
+        <InputSelectResponse
+          input={input}
+          typeResponse={typeResponse}
+          onChange={handleSelectResponse}
+          setImage={handleImage}
+          setPDF={handlePDF}
+          setValue={setValue}
         />
-      )}
+      ) : inputType == 'date' ? (
+        <InputDate input={input} onChange={setDate} />
+      ) : null}
       {error && <p className="text-red-600 text-sm">{error}</p>}
     </div>
   );

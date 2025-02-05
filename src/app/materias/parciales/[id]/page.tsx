@@ -1,14 +1,6 @@
-import {
-  fetchCourse,
-  fetchMidterms,
-  fetchMidtermsWithAllData,
-  fetchReportsMidterms,
-  fetchResponsesMidterm,
-  fetchUser,
-  fetchUserReactionMidterm,
-} from '@/app/lib/data';
+import { fetchCourse, fetchMidtermsWithAllData } from '@/app/lib/data';
 import { DataModule, DataModuleProblem } from '@/app/types';
-import { MainPractica } from '@/app/UI/components/practica/main';
+import { MainModule } from '@/app/UI/components/modules/mainModule';
 
 export default async function Practica({ params }: { params: { id: string } }) {
   const id_materia = Number(params.id);
@@ -59,9 +51,6 @@ export default async function Practica({ params }: { params: { id: string } }) {
       problems: dataModuleProblems,
     });
   }
-  return (
-    <>
-      <MainPractica modules={modules} course={course} typeModule="Practica" />
-    </>
-  );
+
+  return <MainModule modules={modules} course={course} typeModule="Practica" />;
 }

@@ -1,1 +1,1 @@
-export * from './tps';
+export * from './modules';

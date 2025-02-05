@@ -1,33 +1,31 @@
 'use client';
 
-import { useMainContext } from '@/app/lib/context';
-import { DataModule, TypeValues } from '@/app/types';
-import { courses } from '@prisma/client';
+import { AsideContext, useMainContext } from '@/app/lib/contexts';
+import { TypeValues } from '@/app/types';
 import { useEffect, useState } from 'react';
-import { numberIconsTp } from '../../assets/icons';
-import { CgClose, CgMenu } from 'react-icons/cg';
+import { numberIconsModules } from '../../../assets/icons';
 import { TbSquareAsteriskFilled, TbSquareMinusFilled } from 'react-icons/tb';
 import { SiGoogledocs } from 'react-icons/si';
-import { InputCustom } from './input';
+import { HandlerInputs } from '../../form/inputs/handlerInputs';
 import { createMidterm, createTp } from '@/app/lib/actions';
+import { AsideMainButton } from './asideMainButton';
 
 export const AsideModules = () => {
   const {
     session,
-    viewModule,
-    setViewModule,
-    dataModal,
-    setDataModal,
-    modules,
-    setModules,
+    stateViewModule,
+    stateModules,
+    stateModal,
+    stateForm,
     course,
     typeModule,
   } = useMainContext();
-  const [asideState, setAsideState] = useState(false);
+  const [viewAside, setViewAside] = useState(false);
   const isTp = typeModule == 'TP';
+
   const handleViewModules = (module: number | null) => {
-    setAsideState(false);
-    setViewModule(module);
+    setViewAside(false);
+    stateViewModule.setViewModule(module);
   };
 
   const submitAddModule = async (values: TypeValues[]) => {
@@ -86,8 +84,8 @@ export const AsideModules = () => {
               body: formData,
             });
             try {
-              setModules([
-                ...modules,
+              stateModules.setModules([
+                ...stateModules.modules,
                 {
                   countReports: 0,
                   user: {
@@ -112,9 +110,9 @@ export const AsideModules = () => {
   };
 
   useEffect(() => {
-    if (asideState) document.body.style.overflow = 'hidden';
+    if (viewAside) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = '';
-  }, [asideState]);
+  }, [viewAside]);
 
   //no bloquear el scroll en pantallas escritorio
   useEffect(() => {
@@ -122,7 +120,7 @@ export const AsideModules = () => {
 
     const handleMediaChange = (e: MediaQueryListEvent) => {
       if (e.matches) {
-        setAsideState(false);
+        setViewAside(false);
       }
     };
 
@@ -136,32 +134,11 @@ export const AsideModules = () => {
   }, []);
 
   return (
-    <>
-      <button
-        className="fixed top-0 left-0 m-1 h-8 bg-[--black-olive] rounded-md aspect-square rounded-e-none z-50 sm:hidden"
-        aria-label="Abrir o cerrar menú"
-        onClick={() => setAsideState(!asideState)}
-        title="Menú"
-      >
-        <CgMenu
-          className={
-            (asideState ? 'opacity-0' : 'opacity-100') +
-            ' transform-gpu transition-opacity absolute top-0 left-0 w-full h-full p-1'
-          }
-        />
-        <CgClose
-          className={
-            (asideState ? 'opacity-100' : 'opacity-0') +
-            ' transform-gpu transition-opacity absolute top-0 left-0 w-full h-full p-1'
-          }
-        />
-        <div className="absolute h-8 left-full top-0 text-xl bg-[--black-olive] drop-shadow-sm rounded-md px-1 flex items-center justify-center rounded-s-none text-nowrap sm:hidden">
-          {isTp ? <b>Busca tu TP</b> : <b>Busca tu Parcial</b>}
-        </div>
-      </button>
+    <AsideContext.Provider value={{ stateAside: { viewAside, setViewAside } }}>
+      <AsideMainButton onClick={() => setViewAside(!viewAside)} />
       <aside
         className={
-          (asideState ? 'translate-x-full' : 'translate-x-0') +
+          (viewAside ? 'translate-x-full' : 'translate-x-0') +
           ' fixed z-40 top-0 right-full  transform-gpu transition-transform bg-[--black-olive] w-max min-w-40  rounded-md mt-10 py-4 px-3 flex flex-col max-h-[80vh] gap-3 sm:max-h-none sm:relative sm:h-full sm:m-0 sm:max-w-52 sm:right-auto '
         }
       >
@@ -174,7 +151,7 @@ export const AsideModules = () => {
         >
           <li
             className={
-              (!viewModule ? 'bg-[#3D4731]' : '') +
+              (!stateViewModule.viewModule ? 'bg-[#3D4731]' : '') +
               ' grid grid-cols-[1.2rem,1fr] gap-1 p-1 rounded-md [&>svg]:self-start [&>svg]:h-max [&>svg]:w-full transform-gpu transition-transform sm:hover:scale-105'
             }
           >
@@ -189,17 +166,20 @@ export const AsideModules = () => {
               <p className="text-xs text-[--silver]">{`Todos los TPs`} </p>
             </button>
           </li>
-          {modules.map(({ module }) => (
+          {stateModules.modules.map(({ module }) => (
             <li
               key={module.id}
               className={
-                (viewModule == module.id ? 'bg-[#3D4731] ' : '') +
+                (stateViewModule.viewModule == module.id
+                  ? 'bg-[#3D4731] '
+                  : '') +
                 'grid grid-cols-[1.2rem,1fr] gap-1 p-1 rounded-md [&>svg]:self-start [&>svg]:h-max [&>svg]:w-full transform-gpu transition-transform sm:hover:scale-105'
               }
             >
               {'number' in module ? (
-                module.number != undefined && numberIconsTp[module.number] ? (
-                  numberIconsTp[module.number]
+                module.number != undefined &&
+                numberIconsModules[module.number] ? (
+                  numberIconsModules[module.number]
                 ) : (
                   <TbSquareMinusFilled />
                 )
@@ -239,112 +219,112 @@ export const AsideModules = () => {
             <button
               className="text-start bg-[--white] py-1 px-2 rounded-md"
               onClick={() => {
-                setDataModal({
-                  dataForm: {
-                    title: isTp ? 'Agregar TP' : 'Agregar Parcial',
-                    children: (
-                      <>
-                        {isTp ? (
-                          <>
-                            <div className="flex flex-col">
-                              <label htmlFor="name">Titulo</label>
-                              <InputCustom
-                                id="name"
-                                name="name"
-                                type="text"
-                                placeholder="Título del TP"
-                                required={true}
-                              />
-                            </div>
-                            <div className="flex flex-col">
-                              <label htmlFor="number">Número</label>
-                              <InputCustom
-                                id="number"
-                                name="number"
-                                type="number"
-                                placeholder="Número del TP"
-                                min={0}
-                                max={30}
-                                required={true}
-                              />
-                            </div>
-                            <div className="flex flex-col">
-                              <label htmlFor="year">Año</label>
-                              <InputCustom
-                                id="year"
-                                name="year"
-                                type="number"
-                                placeholder="Año del TP"
-                                min={2000}
-                                max={new Date().getFullYear()}
-                                required={true}
-                              />
-                            </div>
-                          </>
-                        ) : (
-                          <>
-                            <div className="flex flex-col">
-                              <label htmlFor="name">Título</label>
-                              <InputCustom
-                                type="select"
-                                placeholder="Selecciona el tipo de parcial"
-                                id="name"
-                                name="name"
-                                required={true}
-                                children={
-                                  <>
-                                    <option value="Primer parcial">
-                                      Primer parcial
-                                    </option>
-                                    <option value="Segundo parcial">
-                                      Segundo parcial
-                                    </option>
-                                    <option value="Tercer Parcial">
-                                      Tercer Parcial
-                                    </option>
-                                    <option value="Final">Final</option>
-                                    <option value="Otros">Otros</option>
-                                  </>
-                                }
-                              />
-                            </div>
-                            <div className="flex flex-col">
-                              <label htmlFor="date">Fecha</label>
-                              <InputCustom
-                                type="date"
-                                name="date"
-                                id="date"
-                                required={true}
-                              />
-                            </div>
-                          </>
-                        )}
-                        <InputCustom
-                          type="file"
-                          id="file"
-                          accept="application/pdf"
-                          required={true}
-                        />
-                        <div>
-                          <h3 className="text-sm">Recuerda!</h3>
-                          <p className="text-xs">
-                            Por favor asegurate de que el modulo que quieres
-                            agregar no se encuentre ya disponible en la lista.
-                            En caso de cualquier problema podes contactarme:{' '}
-                            <a
-                              className="underline"
-                              target="_blank"
-                              href="https://wa.me/+5492235319564"
-                            >
-                              2235319564
-                            </a>
-                          </p>
-                        </div>
-                      </>
-                    ),
-                    onSubmit: submitAddModule,
-                  },
+                stateModal.setDataModal({
+                  title: isTp ? 'Agregar TP' : 'Agregar Parcial',
                   viewModal: true,
+                });
+                stateForm.setDataForm({
+                  onSubmit: submitAddModule,
+                  children: (
+                    <>
+                      {isTp ? (
+                        <>
+                          <div className="flex flex-col">
+                            <label htmlFor="name">Titulo</label>
+                            <HandlerInputs
+                              id="name"
+                              name="name"
+                              type="text"
+                              placeholder="Título del TP"
+                              required={true}
+                            />
+                          </div>
+                          <div className="flex flex-col">
+                            <label htmlFor="number">Número</label>
+                            <HandlerInputs
+                              id="number"
+                              name="number"
+                              type="number"
+                              placeholder="Número del TP"
+                              min={0}
+                              max={30}
+                              required={true}
+                            />
+                          </div>
+                          <div className="flex flex-col">
+                            <label htmlFor="year">Año</label>
+                            <HandlerInputs
+                              id="year"
+                              name="year"
+                              type="number"
+                              placeholder="Año del TP"
+                              min={2000}
+                              max={new Date().getFullYear()}
+                              required={true}
+                            />
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="flex flex-col">
+                            <label htmlFor="name">Título</label>
+                            <HandlerInputs
+                              type="select"
+                              placeholder="Selecciona el tipo de parcial"
+                              id="name"
+                              name="name"
+                              required={true}
+                              children={
+                                <>
+                                  <option value="Primer parcial">
+                                    Primer parcial
+                                  </option>
+                                  <option value="Segundo parcial">
+                                    Segundo parcial
+                                  </option>
+                                  <option value="Tercer Parcial">
+                                    Tercer Parcial
+                                  </option>
+                                  <option value="Final">Final</option>
+                                  <option value="Otros">Otros</option>
+                                </>
+                              }
+                            />
+                          </div>
+                          <div className="flex flex-col">
+                            <label htmlFor="date">Fecha</label>
+                            <HandlerInputs
+                              type="date"
+                              name="date"
+                              id="date"
+                              required={true}
+                            />
+                          </div>
+                        </>
+                      )}
+                      <HandlerInputs
+                        type="file"
+                        id="file"
+                        accept="application/pdf"
+                        required={true}
+                      />
+                      <div>
+                        <h3 className="text-sm">Recuerda!</h3>
+                        <p className="text-xs">
+                          Por favor asegurate de que el modulo que quieres
+                          agregar no se encuentre ya disponible en la lista. En
+                          caso de cualquier problema podes contactarme:{' '}
+                          <a
+                            className="underline"
+                            target="_blank"
+                            href="https://wa.me/+5492235319564"
+                          >
+                            2235319564
+                          </a>
+                        </p>
+                      </div>
+                    </>
+                  ),
                 });
               }}
               aria-label={isTp ? 'Agregar TP' : 'Agregar Parcial'}
@@ -357,6 +337,6 @@ export const AsideModules = () => {
           </li>
         </ul>
       </aside>
-    </>
+    </AsideContext.Provider>
   );
 };

@@ -1,34 +1,14 @@
 'use client';
-import {
-  TbSquareRoundedNumber0Filled,
-  TbSquareRoundedNumber1Filled,
-  TbSquareRoundedNumber2Filled,
-  TbSquareRoundedNumber3Filled,
-  TbSquareRoundedNumber4Filled,
-  TbSquareRoundedNumber5Filled,
-  TbSquareRoundedNumber6Filled,
-  TbSquareRoundedNumber7Filled,
-  TbSquareRoundedNumber8Filled,
-  TbSquareRoundedNumber9Filled,
-} from 'react-icons/tb';
-import { tps_responses, tps, users } from '@prisma/client';
-import { useSession } from 'next-auth/react';
+import { numberIconsModules } from '../../../assets/icons';
 import { MdOutlineAddBox } from 'react-icons/md';
 import { MdDelete } from 'react-icons/md';
 import { MdOutlineReport } from 'react-icons/md';
-import PdfView from '../pdfView';
-// import ResponseTp from './responseTp';
-import {
-  DataModule,
-  DataModuleProblem,
-  TypeModule,
-  TypeModuleResponses,
-  TypeValues,
-} from '@/app/types';
-import { useMainContext } from '@/app/lib/context';
+import PdfView from '../../pdfView';
+import { DataModule, DataModuleProblem, TypeValues } from '@/app/types';
+import { useMainContext } from '@/app/lib/contexts';
 import { SiGoogledocs } from 'react-icons/si';
-import ModuleResponse from './moduleResponse';
-import { InputCustom } from './input';
+import ModuleResponse from '../responses/moduleResponse';
+import { HandlerInputs } from '../../form/inputs/handlerInputs';
 import {
   addReportMidterm,
   addReportTp,
@@ -38,34 +18,19 @@ import {
   deleteTP,
 } from '@/app/lib/actions';
 import {
-  fetchMidterms,
   fetchResponsesMidterm,
   fetchResponsesTp,
-  fetchTps,
   fetchUser,
   fetchUserReactionMidterm,
   fetchUserReactionTp,
 } from '@/app/lib/data';
-import { useEffect } from 'react';
 
 interface Params {
   module: DataModule;
 }
 
-export const ModuleProblems = ({ module }: Params) => {
-  const numberIcons = [
-    <TbSquareRoundedNumber0Filled />,
-    <TbSquareRoundedNumber1Filled />,
-    <TbSquareRoundedNumber2Filled />,
-    <TbSquareRoundedNumber3Filled />,
-    <TbSquareRoundedNumber4Filled />,
-    <TbSquareRoundedNumber5Filled />,
-    <TbSquareRoundedNumber6Filled />,
-    <TbSquareRoundedNumber7Filled />,
-    <TbSquareRoundedNumber8Filled />,
-    <TbSquareRoundedNumber9Filled />,
-  ];
-  const { session, viewModule, setDataModal, modules, setModules, course } =
+export const ModuleContainer = ({ module }: Params) => {
+  const { session, stateViewModule, stateModal, stateModules, stateForm } =
     useMainContext();
 
   const user = module.user;
@@ -101,8 +66,10 @@ export const ModuleProblems = ({ module }: Params) => {
             if (isTp) await deleteTP({ id: moduleInd.id });
             else await deleteMidterm({ id: moduleInd.id });
             try {
-              setModules(
-                modules.filter((mod) => mod.module.id != module.module.id)
+              stateModules.setModules(
+                stateModules.modules.filter(
+                  (mod) => mod.module.id != module.module.id
+                )
               );
             } catch (error) {
               window.location.reload();
@@ -232,8 +199,8 @@ export const ModuleProblems = ({ module }: Params) => {
               reactions: reactions,
             });
           }
-          setModules(
-            modules.map((mod) =>
+          stateModules.setModules(
+            stateModules.modules.map((mod) =>
               mod.module.id == module.module.id
                 ? { ...mod, problems: newProblems }
                 : mod
@@ -253,15 +220,19 @@ export const ModuleProblems = ({ module }: Params) => {
     <li
       className={
         'relative ' +
-        `${viewModule != null && viewModule != moduleInd.id && 'hidden'}`
+        `${
+          stateViewModule.viewModule != null &&
+          stateViewModule.viewModule != moduleInd.id &&
+          'hidden'
+        }`
       }
     >
       <div className="flex items-center text-xl sticky top-0 z-20 bg-[--platinum] py-1 ">
         {isTp ? (
-          moduleInd.number && numberIcons[moduleInd.number] ? (
-            numberIcons[moduleInd.number]
+          moduleInd.number && numberIconsModules[moduleInd.number] ? (
+            numberIconsModules[moduleInd.number]
           ) : (
-            numberIcons[0]
+            numberIconsModules[0]
           )
         ) : (
           <SiGoogledocs />
@@ -282,69 +253,69 @@ export const ModuleProblems = ({ module }: Params) => {
             <button
               title={`Eliminar ${isTp ? 'TP' : 'Parcial'}`}
               aria-label={`Eliminar ${isTp ? 'TP' : 'Parcial'}`}
-              onClick={() =>
-                setDataModal({
-                  dataForm: {
-                    title: `Eliminar ${isTp ? 'TP' : 'Parcial'}`,
-                    children: (
-                      <>
-                        <div className="flex flex-col [&>*]:flex [&>*]:gap-1">
-                          <p>
-                            <b>Nombre:</b>
-                            {moduleInd.name}
-                          </p>
-                          <p>
-                            <b>Subido por:</b>
-                            {module.user.name}
-                          </p>
-                          {isTp ? (
-                            <>
-                              <p>
-                                <b>Año:</b>
-                                {moduleInd.year}
-                              </p>
-                              <p>
-                                <b>Numero:</b>
-                                {moduleInd.number || 'No tiene'}
-                              </p>
-                            </>
-                          ) : (
-                            <p>
-                              <b>Fecha:</b>
-                              {`${moduleInd.date.getMonth()}/${moduleInd.date.getFullYear()}`}
-                            </p>
-                          )}
-                        </div>
-                        <div>
-                          <h3 className="text-sm">Recuerda!</h3>
-                          <p className="text-xs">
-                            Por favor asegurate de que el modulo que quieres
-                            eliminar sea el correcto. Se eliminaran todos los
-                            problemas, las respuestas y sus reacciones. En caso
-                            de cualquier problema podes contactarme:{' '}
-                            <a
-                              className="underline"
-                              target="_blank"
-                              href="https://wa.me/+5492235319564"
-                            >
-                              2235319564
-                            </a>
-                          </p>
-                        </div>
-                        <InputCustom
-                          type="checkbox"
-                          id="check"
-                          name="check"
-                          placeholder="Confirmo la eliminación."
-                          required={true}
-                        />
-                      </>
-                    ),
-                    onSubmit: submitDeleteModule,
-                  },
+              onClick={() => {
+                stateModal.setDataModal({
+                  title: `Eliminar ${isTp ? 'TP' : 'Parcial'}`,
                   viewModal: true,
-                })
-              }
+                });
+                stateForm.setDataForm({
+                  onSubmit: submitDeleteModule,
+                  children: (
+                    <>
+                      <div className="flex flex-col [&>*]:flex [&>*]:gap-1">
+                        <p>
+                          <b>Nombre:</b>
+                          {moduleInd.name}
+                        </p>
+                        <p>
+                          <b>Subido por:</b>
+                          {module.user.name}
+                        </p>
+                        {isTp ? (
+                          <>
+                            <p>
+                              <b>Año:</b>
+                              {moduleInd.year}
+                            </p>
+                            <p>
+                              <b>Numero:</b>
+                              {moduleInd.number || 'No tiene'}
+                            </p>
+                          </>
+                        ) : (
+                          <p>
+                            <b>Fecha:</b>
+                            {`${moduleInd.date.getMonth()}/${moduleInd.date.getFullYear()}`}
+                          </p>
+                        )}
+                      </div>
+                      <div>
+                        <h3 className="text-sm">Recuerda!</h3>
+                        <p className="text-xs">
+                          Por favor asegurate de que el modulo que quieres
+                          eliminar sea el correcto. Se eliminaran todos los
+                          problemas, las respuestas y sus reacciones. En caso de
+                          cualquier problema podes contactarme:{' '}
+                          <a
+                            className="underline"
+                            target="_blank"
+                            href="https://wa.me/+5492235319564"
+                          >
+                            2235319564
+                          </a>
+                        </p>
+                      </div>
+                      <HandlerInputs
+                        type="checkbox"
+                        id="check"
+                        name="check"
+                        placeholder="Confirmo la eliminación."
+                        required={true}
+                      />
+                    </>
+                  ),
+                });
+              }}
             >
               <MdDelete />
             </button>
@@ -355,56 +326,55 @@ export const ModuleProblems = ({ module }: Params) => {
             aria-label="Añadir una respuesta"
             onClick={() =>
               session
-                ? setDataModal({
-                    dataForm: {
-                      title: 'Añadir una respuesta',
-                      children: (
-                        <>
-                          <div className="flex flex-col">
-                            <label htmlFor="number">Número</label>
-                            <InputCustom
-                              type="number"
-                              id="number"
-                              name="number"
-                              min={0}
-                              max={100}
-                              placeholder="Número del problema"
-                              required={true}
-                            />
-                          </div>
-                          <InputCustom
-                            type="selectResponse"
-                            id="selectResponse"
+                ? (stateForm.setDataForm({
+                    onSubmit: submitAddResponse,
+                    children: (
+                      <>
+                        <div className="flex flex-col">
+                          <label htmlFor="number">Número</label>
+                          <HandlerInputs
+                            type="number"
+                            id="number"
+                            name="number"
+                            min={0}
+                            max={100}
+                            placeholder="Número del problema"
                             required={true}
-                            name="selectResponse"
                           />
-                          <div>
-                            <p>
-                              Esta respuesta se añadirá al modulo{' '}
-                              {moduleInd.name}
-                            </p>
-                          </div>
-                          <div>
-                            <h3 className="text-sm">Recuerda!</h3>
-                            <p className="text-xs">
-                              Por favor asegurate de que las respuestas estén
-                              legibles y sean para este modulo. En caso de
-                              cualquier problema podes contactarme:{' '}
-                              <a
-                                className="underline"
-                                target="_blank"
-                                href="https://wa.me/+5492235319564"
-                              >
-                                2235319564
-                              </a>
-                            </p>
-                          </div>
-                        </>
-                      ),
-                      onSubmit: submitAddResponse,
-                    },
+                        </div>
+                        <HandlerInputs
+                          type="selectResponse"
+                          id="selectResponse"
+                          required={true}
+                          name="selectResponse"
+                        />
+                        <div>
+                          <p>
+                            Esta respuesta se añadirá al modulo {moduleInd.name}
+                          </p>
+                        </div>
+                        <div>
+                          <h3 className="text-sm">Recuerda!</h3>
+                          <p className="text-xs">
+                            Por favor asegurate de que las respuestas estén
+                            legibles y sean para este modulo. En caso de
+                            cualquier problema podes contactarme:{' '}
+                            <a
+                              className="underline"
+                              target="_blank"
+                              href="https://wa.me/+5492235319564"
+                            >
+                              2235319564
+                            </a>
+                          </p>
+                        </div>
+                      </>
+                    ),
+                  }),
+                  stateModal.setDataModal({
+                    title: 'Añadir una respuesta',
                     viewModal: true,
-                  })
+                  }))
                 : window.alert('Debes iniciar sesion para subir una respuesta.')
             }
           >
@@ -420,68 +390,68 @@ export const ModuleProblems = ({ module }: Params) => {
               className="absolute z-10 m-2 bottom-0 right-0 w-6 h-6"
               title="Reportar TP"
               aria-label="Reportar TP"
-              onClick={() =>
-                setDataModal({
-                  dataForm: {
-                    title: `Reportar  ${isTp ? 'TP' : 'Parcial'}`,
-                    children: (
-                      <>
-                        <div className="flex flex-col [&>*]:flex [&>*]:gap-1">
-                          <p>
-                            <b>Nombre:</b>
-                            {moduleInd.name}
-                          </p>
-                          <p>
-                            <b>Subido por:</b>
-                            {module.user.name}
-                          </p>
-                          {isTp ? (
-                            <>
-                              <p>
-                                <b>Año:</b>
-                                {moduleInd.year}
-                              </p>
-                              <p>
-                                <b>Numero:</b>
-                                {moduleInd.number || 'No tiene'}
-                              </p>
-                            </>
-                          ) : (
+              onClick={() => {
+                stateForm.setDataForm({
+                  onSubmit: submitReportModule,
+                  children: (
+                    <>
+                      <div className="flex flex-col [&>*]:flex [&>*]:gap-1">
+                        <p>
+                          <b>Nombre:</b>
+                          {moduleInd.name}
+                        </p>
+                        <p>
+                          <b>Subido por:</b>
+                          {module.user.name}
+                        </p>
+                        {isTp ? (
+                          <>
                             <p>
-                              <b>Fecha:</b>
-                              {`${moduleInd.date.getMonth()}/${moduleInd.date.getFullYear()}`}
+                              <b>Año:</b>
+                              {moduleInd.year}
                             </p>
-                          )}
-                        </div>
-                        <div>
-                          <h3 className="text-sm">Recuerda!</h3>
-                          <p className="text-xs">
-                            Por favor asegurate de que el modulo que quieres
-                            reportar sea el correcto. En caso de cualquier
-                            problema podes contactarme:{' '}
-                            <a
-                              className="underline"
-                              target="_blank"
-                              href="https://wa.me/+5492235319564"
-                            >
-                              2235319564
-                            </a>
+                            <p>
+                              <b>Numero:</b>
+                              {moduleInd.number || 'No tiene'}
+                            </p>
+                          </>
+                        ) : (
+                          <p>
+                            <b>Fecha:</b>
+                            {`${moduleInd.date.getMonth()}/${moduleInd.date.getFullYear()}`}
                           </p>
-                        </div>
-                        <InputCustom
-                          type="checkbox"
-                          id="check"
-                          name="check"
-                          placeholder="Confirmo mi reporte."
-                          required={true}
-                        />
-                      </>
-                    ),
-                    onSubmit: submitReportModule,
-                  },
+                        )}
+                      </div>
+                      <div>
+                        <h3 className="text-sm">Recuerda!</h3>
+                        <p className="text-xs">
+                          Por favor asegurate de que el modulo que quieres
+                          reportar sea el correcto. En caso de cualquier
+                          problema podes contactarme:{' '}
+                          <a
+                            className="underline"
+                            target="_blank"
+                            href="https://wa.me/+5492235319564"
+                          >
+                            2235319564
+                          </a>
+                        </p>
+                      </div>
+                      <HandlerInputs
+                        type="checkbox"
+                        id="check"
+                        name="check"
+                        placeholder="Confirmo mi reporte."
+                        required={true}
+                      />
+                    </>
+                  ),
+                });
+                stateModal.setDataModal({
+                  title: `Reportar  ${isTp ? 'TP' : 'Parcial'}`,
                   viewModal: true,
-                })
-              }
+                });
+              }}
             >
               <MdOutlineReport className="h-full w-full text-red-700" />
             </button>
