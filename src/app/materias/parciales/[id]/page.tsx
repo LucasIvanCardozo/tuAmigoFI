@@ -1,6 +1,6 @@
 import { fetchCourse, fetchMidtermsWithAllData } from '@/app/lib/data';
-import { DataModule, DataModuleProblem } from '@/app/types';
-import { MainModule } from '@/app/UI/components/modules/mainModule';
+import { DataModule, DataModuleProblem } from '@/app/assets/types';
+import { MainModule } from '../../components/mainModule';
 
 export default async function Practica({ params }: { params: { id: string } }) {
   const id_materia = Number(params.id);

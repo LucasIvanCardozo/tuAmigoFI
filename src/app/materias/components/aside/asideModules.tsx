@@ -1,12 +1,12 @@
 'use client';
 
 import { AsideContext, useMainContext } from '@/app/lib/contexts';
-import { TypeValues } from '@/app/types';
+import { TypeValues } from '@/app/assets/types';
 import { useEffect, useState } from 'react';
-import { numberIconsModules } from '../../../assets/icons';
+import { numberIconsModules } from '../../assets/icons';
 import { TbSquareAsteriskFilled, TbSquareMinusFilled } from 'react-icons/tb';
 import { SiGoogledocs } from 'react-icons/si';
-import { HandlerInputs } from '../../form/inputs/handlerInputs';
+import { HandlerInputs } from '@/app/components/form/inputs/handlerInputs';
 import { createMidterm, createTp } from '@/app/lib/actions';
 import { AsideMainButton } from './asideMainButton';
 

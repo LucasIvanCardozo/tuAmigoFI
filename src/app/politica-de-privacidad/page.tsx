@@ -1,4 +1,5 @@
-import PrivacitySection from '../UI/components/privacitySection';
+import PrivacitySection from '../components/privacitySection';
+
 export default async function Privacidad() {
   return (
     <>

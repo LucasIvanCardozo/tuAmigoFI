@@ -1,4 +1,4 @@
-import { inputCheckbox } from '@/app/types';
+import { inputCheckbox } from '@/app/assets/types';
 
 interface Params {
   input: inputCheckbox;

@@ -1,7 +1,7 @@
 'use client';
 import { addReactionTp } from '@/app/lib/actions';
 import { useMainContext } from '@/app/lib/contexts';
-import { DataModuleResponse } from '@/app/types';
+import { DataModuleResponse } from '@/app/assets/types';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { AiFillLike } from 'react-icons/ai';
 import { TbAlertHexagon } from 'react-icons/tb';

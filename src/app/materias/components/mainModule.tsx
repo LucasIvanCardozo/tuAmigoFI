@@ -4,10 +4,15 @@ import { ProblemsTable } from './problemsTable';
 import { useSession } from 'next-auth/react';
 import { MainContext } from '@/app/lib/contexts';
 import { useState } from 'react';
-import { DataForm, DataModule, TypeModal, TypeValues } from '@/app/types';
-import { MainModal } from '../modals/mainModal';
+import {
+  DataForm,
+  DataModule,
+  TypeModal,
+  TypeValues,
+} from '@/app/assets/types';
+import { MainModal } from '@/app/components/modals/mainModal';
 import { AsideModules } from './aside/asideModules';
-import { Form } from '../form/form';
+import { Form } from '@/app/components/form/form';
 
 interface Params {
   modules: DataModule[];

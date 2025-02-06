@@ -4,11 +4,11 @@ import Link from 'next/link';
 import CourseLinks from './courseLinks';
 import { courses } from '@prisma/client';
 import { Suspense } from 'react';
-import CorrelativeTableSkeleton from '../skeletons/correlativeTableSkeleton';
+import CorrelativeTableSkeleton from '@/app/components/skeletons/correlativeTableSkeleton';
 import ButtonAddLink from './buttonAddLink';
 import DegreesList from './modals/degreesList';
-import DegreesListSkeleton from '../skeletons/degreesListSkeleton';
-import CourseLinksSkeleton from '../skeletons/courseLinksSkeleton';
+import DegreesListSkeleton from '@/app/components/skeletons/degreesListSkeleton';
+import CourseLinksSkeleton from '@/app/components/skeletons/courseLinksSkeleton';
 import ButtonAddCorrelative from './buttonAddCorrelative';
 
 export default async function Course({

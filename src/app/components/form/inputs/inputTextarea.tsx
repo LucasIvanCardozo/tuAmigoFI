@@ -1,4 +1,4 @@
-import { inputTextArea } from '@/app/types';
+import { inputTextArea } from '@/app/assets/types';
 
 interface Params {
   input: inputTextArea;

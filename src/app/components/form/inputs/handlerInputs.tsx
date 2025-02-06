@@ -1,5 +1,5 @@
 import { useFormContext } from '@/app/lib/contexts';
-import { TypeInput, TypeResponse, TypeValues } from '@/app/types';
+import { TypeInput, TypeResponse, TypeValues } from '@/app/assets/types';
 import { ChangeEvent, useEffect, useState } from 'react';
 import {
   InputText,

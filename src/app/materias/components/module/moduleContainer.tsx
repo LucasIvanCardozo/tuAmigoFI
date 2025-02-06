@@ -1,19 +1,19 @@
 'use client';
-import { numberIconsModules } from '../../../assets/icons';
+import { numberIconsModules } from '../../assets/icons';
 import { MdOutlineAddBox } from 'react-icons/md';
 import { MdDelete } from 'react-icons/md';
 import { MdOutlineReport } from 'react-icons/md';
-import PdfView from '../../pdfView';
+import PdfView from '@/app/components/pdfView';
 import {
   DataModule,
   DataModuleProblem,
   DataModuleResponse,
   TypeValues,
-} from '@/app/types';
+} from '@/app/assets/types';
 import { useMainContext } from '@/app/lib/contexts';
 import { SiGoogledocs } from 'react-icons/si';
 import ModuleResponse from '../responses/moduleResponse';
-import { HandlerInputs } from '../../form/inputs/handlerInputs';
+import { HandlerInputs } from '@/app/components/form/inputs/handlerInputs';
 import {
   addReportMidterm,
   addReportTp,
@@ -22,13 +22,6 @@ import {
   deleteMidterm,
   deleteTP,
 } from '@/app/lib/actions';
-import {
-  fetchResponsesMidterm,
-  fetchResponsesTp,
-  fetchUser,
-  fetchUserReactionMidterm,
-  fetchUserReactionTp,
-} from '@/app/lib/data';
 
 interface Params {
   module: DataModule;

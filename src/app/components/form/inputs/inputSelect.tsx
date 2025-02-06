@@ -1,4 +1,4 @@
-import { inputSelect, TypeInput } from '@/app/types';
+import { inputSelect, TypeInput } from '@/app/assets/types';
 
 interface Params {
   input: inputSelect;

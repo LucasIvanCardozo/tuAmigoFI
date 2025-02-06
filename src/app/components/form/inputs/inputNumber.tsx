@@ -1,16 +1,17 @@
-import { inputText } from '@/app/types';
+import { inputNumber } from '@/app/assets/types';
 
 interface Params {
-  input: inputText;
+  input: inputNumber;
   onChange: (val: string) => void;
 }
-
-export const InputText = ({ input, onChange }: Params) => {
+export const InputNumber = ({ input, onChange }: Params) => {
   return (
     <input
       id={input.id}
       name={input.name}
       type={input.type}
+      min={input.min}
+      max={input.max}
       placeholder={input.placeholder}
       required={input.required}
       onChange={(e) => onChange(e.target.value)}

@@ -1,5 +1,5 @@
 import { FormContext } from '@/app/lib/contexts';
-import { DataForm, TypeValues } from '@/app/types';
+import { DataForm, TypeValues } from '@/app/assets/types';
 import { FormEvent, useState } from 'react';
 import { Loading } from '../others/loading';
 

@@ -1,12 +1,12 @@
 import Image from 'next/image';
-import CalendarSection from './UI/components/calendar';
-import QuestionsSection from './UI/components/questionsSection';
-import Contributors from './UI/components/contributors';
+import CalendarSection from './components/calendar';
+import QuestionsSection from './components/questionsSection';
+import Contributors from './components/contributors';
 import { Suspense } from 'react';
-import ContributorsSkeleton from './UI/components/skeletons/contributorsSkeleton';
-import ButtonInfoScore from './UI/components/buttonInfoScore';
+import ContributorsSkeleton from './components/skeletons/contributorsSkeleton';
+import ButtonInfoScore from './components/buttonInfoScore';
 import { FaArrowRight } from 'react-icons/fa';
-import QuestionSkeleton from './UI/components/skeletons/questionSkeleton';
+import QuestionSkeleton from './components/skeletons/questionSkeleton';
 
 export const revalidate = 3600 * 24;
 

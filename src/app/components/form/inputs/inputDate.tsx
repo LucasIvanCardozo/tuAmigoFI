@@ -1,4 +1,4 @@
-import { inputDate } from '@/app/types';
+import { inputDate } from '@/app/assets/types';
 
 interface Params {
   input: inputDate;

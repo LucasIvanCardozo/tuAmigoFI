@@ -1,4 +1,4 @@
-import { inputFile } from '@/app/types';
+import { inputFile } from '@/app/assets/types';
 import { ChangeEvent } from 'react';
 
 interface Params {

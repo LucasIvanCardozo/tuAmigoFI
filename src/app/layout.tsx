@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { cabin } from './UI/fonts';
-import Nav from './UI/components/nav';
+import { cabin } from './assets/fonts';
+import Nav from './components/nav';
 import {
   TbTools,
   TbRulerMeasure,
@@ -11,8 +11,8 @@ import {
   TbMathFunction,
   TbMathIntegral,
 } from 'react-icons/tb';
-import Providers from './UI/components/providers';
-import Footer from './UI/components/footer';
+import Providers from './components/providers';
+import Footer from './components/footer';
 
 export const metadata: Metadata = {
   title: 'Tu amigo FI',

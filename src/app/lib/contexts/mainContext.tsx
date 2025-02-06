@@ -1,4 +1,4 @@
-import { DataForm, DataModule, TypeModal } from '@/app/types';
+import { DataForm, DataModule, TypeModal } from '@/app/assets/types';
 import { courses } from '@prisma/client';
 import { Session } from 'next-auth';
 import { createContext, useContext } from 'react';

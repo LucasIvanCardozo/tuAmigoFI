@@ -2,16 +2,16 @@
 import { useState } from 'react';
 import { CldImage } from 'next-cloudinary';
 import 'katex/dist/katex.min.css';
-import PdfView from '../../pdfView';
+import PdfView from '@/app/components/pdfView';
 import {
   BiSolidRightArrowSquare,
   BiSolidLeftArrowSquare,
 } from 'react-icons/bi';
 import { MdDelete } from 'react-icons/md';
-import { DataModuleProblem, TypeValues } from '@/app/types';
+import { DataModuleProblem, TypeValues } from '@/app/assets/types';
 import { useMainContext } from '@/app/lib/contexts';
 import ButtonReaction from './buttonReaction';
-import { HandlerInputs } from '../../form/inputs/handlerInputs';
+import { HandlerInputs } from '@/app/components/form/inputs/handlerInputs';
 import { deleteMidtermResponse, deleteTpResponse } from '@/app/lib/actions';
 
 export default function ModuleResponse({

@@ -1,4 +1,4 @@
-import { TypeValues } from '@/app/types';
+import { TypeValues } from '@/app/assets/types';
 import { createContext, useContext } from 'react';
 
 interface TypeFromContext {

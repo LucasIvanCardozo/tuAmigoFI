@@ -1,4 +1,4 @@
-import { inputSelectResponse, TypeInput, TypeResponse } from '@/app/types';
+import { inputSelectResponse, TypeInput, TypeResponse } from '@/app/assets/types';
 import { ChangeEvent } from 'react';
 
 interface Params {
