@@ -66,7 +66,14 @@ export const MainModule = ({ modules, course, typeModule }: Params) => {
         }}
       >
         {dataModal.viewModal && (
-          <MainModal>
+          <MainModal
+            closeModal={() => {
+              setDataModal({
+                ...dataModal,
+                viewModal: false,
+              });
+            }}
+          >
             <h2 className="text-lg">{dataModal.title}</h2>
             <Form
               children={dataForm.children}

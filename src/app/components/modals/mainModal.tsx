@@ -6,17 +6,18 @@ import { CgClose } from 'react-icons/cg';
 
 interface Params {
   children: ReactNode; // Todo lo que esta dentro del modal
+  closeModal: () => void;
 }
 
-export const MainModal = ({ children }: Params) => {
+export const MainModal = ({ children, closeModal }: Params) => {
   const { stateModal } = useMainContext();
 
-  const closeModal = () => {
-    stateModal.setDataModal({
-      ...stateModal.dataModal,
-      viewModal: false,
-    });
-  };
+  // const closeModal = () => {
+  //   stateModal.setDataModal({
+  //     ...stateModal.dataModal,
+  //     viewModal: false,
+  //   });
+  // };
 
   useEffect(() => {
     document.body.classList.add('no-scroll');
