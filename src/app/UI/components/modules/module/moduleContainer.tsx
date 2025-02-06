@@ -4,7 +4,12 @@ import { MdOutlineAddBox } from 'react-icons/md';
 import { MdDelete } from 'react-icons/md';
 import { MdOutlineReport } from 'react-icons/md';
 import PdfView from '../../pdfView';
-import { DataModule, DataModuleProblem, TypeValues } from '@/app/types';
+import {
+  DataModule,
+  DataModuleProblem,
+  DataModuleResponse,
+  TypeValues,
+} from '@/app/types';
 import { useMainContext } from '@/app/lib/contexts';
 import { SiGoogledocs } from 'react-icons/si';
 import ModuleResponse from '../responses/moduleResponse';
@@ -171,44 +176,48 @@ export const ModuleContainer = ({ module }: Params) => {
               }
             } else throw new Error('No se encontro ningun archivo');
           }
-        }
-        try {
-          const newResponses = isTp
-            ? await fetchResponsesTp(moduleInd.id)
-            : await fetchResponsesMidterm(moduleInd.id);
-          let newProblems: DataModuleProblem[] = [];
-          let numAux: number = newResponses[0]?.number;
-          let i = 0;
-
-          if (newResponses[0])
-            newProblems.push({ number: newResponses[i].number, responses: [] });
-
-          for (const response of newResponses) {
-            const user = await fetchUser(response.id_user);
-            const reactions = isTp
-              ? await fetchUserReactionTp(response.id)
-              : await fetchUserReactionMidterm(response.id);
-            if (numAux != response.number) {
-              newProblems.push({ number: response.number, responses: [] });
-              numAux = response.number;
-              i++;
-            }
-            newProblems[i].responses.push({
-              response: response,
-              user: user,
-              reactions: reactions,
-            });
+          try {
+            const responseAux: DataModuleResponse = {
+              user: {
+                id: session.user.id,
+                email: '',
+                image: '',
+                name: session.user.name as string,
+                tier: 0,
+                banned: false,
+              },
+              response: addResponse,
+              reactions: [],
+            };
+            stateModules.setModules(
+              stateModules.modules.map((mod) => {
+                let newProblems: DataModuleProblem[];
+                if (
+                  mod.problems.some((pro) => pro.number == addResponse.number)
+                ) {
+                  newProblems = mod.problems.map((pro) =>
+                    pro.number == addResponse.number
+                      ? {
+                          ...pro,
+                          responses: [...pro.responses, responseAux],
+                        }
+                      : pro
+                  );
+                } else {
+                  newProblems = [
+                    ...mod.problems,
+                    { number: addResponse.number, responses: [responseAux] },
+                  ];
+                }
+                return mod.module.id == module.module.id
+                  ? { ...mod, problems: newProblems }
+                  : mod;
+              })
+            );
+          } catch (error) {
+            window.location.reload();
           }
-          stateModules.setModules(
-            stateModules.modules.map((mod) =>
-              mod.module.id == module.module.id
-                ? { ...mod, problems: newProblems }
-                : mod
-            )
-          );
-        } catch (error) {
-          window.location.reload();
-        }
+        } else throw new Error('Debes iniciar sesion.');
       } else throw new Error('Faltan completar datos.');
     } catch (error) {
       if (error instanceof Error) throw new Error(error.message);

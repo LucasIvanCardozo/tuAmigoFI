@@ -72,7 +72,7 @@ export const AsideModules = () => {
           }
           if (module) {
             const formData = new FormData();
-            formData.set('file', file);
+            formData.set('file', file.value);
             formData.set('id', module.id.toString());
             formData.set(
               'subFolder',

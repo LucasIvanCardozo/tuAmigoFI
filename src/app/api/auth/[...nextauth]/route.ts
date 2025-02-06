@@ -1,5 +1,6 @@
 import { createUser } from '@/app/lib/actions';
 import { fetchUser, fetchUserWithoutThrow } from '@/app/lib/data';
+import { users } from '@prisma/client';
 import NextAuth from 'next-auth';
 import { JWT } from 'next-auth/jwt';
 import GoogleProvider from 'next-auth/providers/google';
@@ -53,8 +54,7 @@ const authOptions = NextAuth({
     async signIn({ user }) {
       try {
         if (!user?.email || !user?.name || !user?.image) {
-          console.error('Datos del usuario incompletos');
-          return false;
+          throw new Error('Datos del usuario incompletos');
         }
         let existingUser = await fetchUserWithoutThrow(user.email);
         if (!existingUser) {
@@ -69,8 +69,7 @@ const authOptions = NextAuth({
         user.tier = existingUser.tier;
         return true;
       } catch (error) {
-        console.log(error);
-        return false;
+        throw error;
       }
     },
     async jwt({
