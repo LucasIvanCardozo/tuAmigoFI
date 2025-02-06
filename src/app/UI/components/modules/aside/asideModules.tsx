@@ -106,7 +106,10 @@ export const AsideModules = () => {
           }
         }
       } else throw new Error('Faltan completar datos.');
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof Error) throw new Error(error.message);
+      else throw new Error('Error inesperado.');
+    }
   };
 
   useEffect(() => {
