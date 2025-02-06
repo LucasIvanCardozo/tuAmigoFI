@@ -42,15 +42,15 @@ export const AsideModules = () => {
           name &&
           file &&
           typeof name.value == 'string' &&
-          file instanceof File &&
+          file.value instanceof File &&
           typeof year.value == 'string' &&
           typeof number.value == 'string') ||
         (date &&
           name &&
           file &&
           typeof name.value == 'string' &&
-          file instanceof File &&
-          date instanceof Date)
+          file.value instanceof File &&
+          date.value instanceof Date)
       ) {
         if (session) {
           let module;
