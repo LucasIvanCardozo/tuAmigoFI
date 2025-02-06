@@ -11,8 +11,8 @@ export const ProblemsTable = () => {
             <p>No hay datos :,c</p>
           </li>
         ) : (
-          stateModules.modules.map((module, index) => (
-            <ModuleContainer key={index} module={module} />
+          stateModules.modules.map((module) => (
+            <ModuleContainer key={module.module.id} module={module} />
           ))
         )}
       </ul>
