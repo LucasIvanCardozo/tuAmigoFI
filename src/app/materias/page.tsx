@@ -26,7 +26,7 @@ export default async function Materias({
   };
   return (
     <>
-      <main className="relative flex justify-center pb-4 w-10/12 max-w-screen-sm pt-12 m-auto gap-2 h-auto text-[--black] sm:pt-16">
+      <main className="relative flex justify-center pb-4 w-10/12 max-w-screen-sm pt-12 m-auto my-6 gap-2 h-auto text-[--black] sm:pt-16">
         <div className="select-none">
           <Image
             className="object-contain h-full"
@@ -43,7 +43,7 @@ export default async function Materias({
           </p>
         </h1>
       </main>
-      <section className="flex flex-col max-w-screen-md w-11/12 m-auto grow items-center">
+      <section className="flex flex-col max-w-screen-md w-11/12 mb-4 m-auto grow items-center">
         <div className="flex select-none flex-col w-full gap-1 text-[--black] sm:flex-row">
           <SearchCourses />
           <Suspense fallback={<YearSkeleton />}>

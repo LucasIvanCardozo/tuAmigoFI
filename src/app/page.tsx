@@ -13,8 +13,8 @@ export const revalidate = 3600 * 24;
 export default async function Home() {
   return (
     <>
-      <main className="pt-14 relative flex text-[--black] min-h-36 h-auto w-11/12 justify-between mx-auto max-w-screen-md my-10 sm:pt-20 sm:justify-around">
-        <div className="relative w-2/5 max-w-52">
+      <main className="pt-14 relative flex text-[--black] h-max w-11/12 justify-between mx-auto max-w-screen-md my-6 sm:pt-20 sm:justify-around">
+        <div className="relative h-max w-2/5 max-w-52">
           <Image
             className="object-contain w-full "
             src="/FI.svg"
@@ -65,19 +65,19 @@ export default async function Home() {
           </ul>
         </div>
       </main>
-      <section className="text-[--black] max-w-screen-md m-auto w-full text-balance text-center sm:hidden">
+      <section className="text-[--black] max-w-screen-md m-auto my-4 w-full text-balance text-center sm:hidden">
         En Tu-Amigo-FI encontrás finales, trabajos prácticos, un calendario
         académico y mucho más. Todo pensado para darte una mano en tu carrera de
         ingeniería.
       </section>
-      <section className="hidden text-[--black] max-w-screen-md m-auto w-full text-balance text-center sm:block">
+      <section className="hidden text-[--black] max-w-screen-md my-4 m-auto w-full text-balance text-center sm:block">
         En Tu-Amigo-FI tenés todo lo que necesitás para avanzar en ingeniería:
         finales, trabajos prácticos resueltos, guías y mucho más para
         facilitarte el estudio. También podés consultar el calendario académico
         y subir tus propios aportes para ayudar a otros estudiantes. Todo en un
         solo lugar para que tu paso por la facu sea más llevadero.
       </section>
-      <section className="text-[--black] relative max-w-screen-md m-auto w-11/12">
+      <section className="text-[--black] my-4 relative max-w-screen-md m-auto w-11/12">
         <h2 className="w-full text-center font-bold -z-10 text-3xl mb-2 sm:text-4xl">
           Consultas
         </h2>
@@ -118,7 +118,7 @@ export default async function Home() {
         </ul>
       </section>
       <CalendarSection />
-      <section className="text-[--black] relative max-w-screen-md m-auto w-11/12">
+      <section className="text-[--black] relative max-w-screen-md m-auto w-11/12 my-4">
         <h2 className="font-bold text-3xl my-2 flex gap-1 items-center justify-center">
           Colaboradores
           <ButtonInfoScore />
@@ -132,7 +132,7 @@ export default async function Home() {
           <Contributors />
         </Suspense>
       </section>
-      <section className="flex text-[--black] justify-center  max-w-screen-md m-auto w-11/12">
+      <section className="flex text-[--black] justify-center  max-w-screen-md m-auto my-4 w-11/12">
         <Image
           className="object-contain w-1/4 min-w-24"
           src="/FI.svg"
