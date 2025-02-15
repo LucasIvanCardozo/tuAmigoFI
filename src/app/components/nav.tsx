@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { CgMenu, CgClose } from 'react-icons/cg';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
+import { handleLoader } from '../utils/handleLoader';
 
 export default function Nav() {
   const [navState, setNavState] = useState<boolean>(false);
@@ -55,7 +56,14 @@ export default function Nav() {
       <Link
         className="text-xl bg-[--dark-cyan] drop-shadow-sm rounded-md m-1 px-1 flex items-center justify-center sm:hidden"
         href="/"
-        onClick={() => setNavState(false)}
+        onClick={
+          pathname != '/'
+            ? () => {
+                handleLoader(true);
+                setNavState(false);
+              }
+            : undefined
+        }
       >
         <b className="">Tu Amigo FI</b>
       </Link>
@@ -102,7 +110,14 @@ export default function Nav() {
             <Link
               href={href}
               className="inline-block text-center w-40 py-2 font-bold px-3 sm:w-28 sm:font-normal"
-              onClick={handleNavState}
+              onClick={
+                pathname != href
+                  ? () => {
+                      handleLoader(true);
+                      handleNavState();
+                    }
+                  : undefined
+              }
             >
               {name}
             </Link>

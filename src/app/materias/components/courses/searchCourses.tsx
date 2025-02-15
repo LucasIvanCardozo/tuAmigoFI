@@ -1,4 +1,5 @@
 'use client';
+import { handleLoader } from '@/app/utils/handleLoader';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
@@ -45,7 +46,9 @@ export default function SearchCourses() {
       className="p-1 grow"
       value={search}
       onChange={(e) => (
-        setSearch(e.target.value), handleSearch(e.target.value)
+        setSearch(e.target.value),
+        handleLoader(true),
+        handleSearch(e.target.value)
       )}
     />
   );

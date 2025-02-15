@@ -1,6 +1,7 @@
 import { fetchCourses } from '@/app/lib/data';
 import Course from './course';
 import IndexList from './indexList';
+import { UpdateLoader } from './updateLoader';
 
 export default async function CoursesTable({
   query,
@@ -11,6 +12,7 @@ export default async function CoursesTable({
 
   return (
     <>
+      <UpdateLoader query={courses} />
       <ul className="w-full flex flex-col gap-3 items-center mt-5 mb-2 text-[--black]">
         {courses.map((course) => (
           <Course key={course.id} course={course} id_carrera={query.degree} />

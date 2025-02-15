@@ -1,6 +1,4 @@
-import { fetchLinks } from '@/app/lib/data';
 import CorrelativeTable from './correlativeTable';
-import Link from 'next/link';
 import CourseLinks from './courseLinks';
 import { courses } from '@prisma/client';
 import { Suspense } from 'react';
@@ -10,6 +8,7 @@ import DegreesList from './modals/degreesList';
 import DegreesListSkeleton from '@/app/components/skeletons/degreesListSkeleton';
 import CourseLinksSkeleton from '@/app/components/skeletons/courseLinksSkeleton';
 import ButtonAddCorrelative from './buttonAddCorrelative';
+import { ButtonUrl } from './buttonUrl';
 
 export default async function Course({
   course,
@@ -51,18 +50,8 @@ export default async function Course({
       <div className="flex justify-end gap-1 pt-1 text-[--white] items-center text-sm sm:text-base">
         <ButtonAddCorrelative course={course} />
         <ButtonAddLink course={course} />
-        <Link
-          href={`./materias/parciales/${id}`}
-          className="font-bold w-max self-end py-1 px-2 rounded-sm bg-[--midnight-green] sm:font-normal"
-        >
-          Ver parciales
-        </Link>
-        <Link
-          href={`./materias/practica/${id}`}
-          className="font-bold w-max self-end py-1 px-2 rounded-sm bg-[--midnight-green] sm:font-normal"
-        >
-          Ir a la práctica
-        </Link>
+        <ButtonUrl url={`./materias/parciales/${id}`} label="Ver parciales" />
+        <ButtonUrl url={`./materias/practica/${id}`} label="Ir a la práctica" />
       </div>
     </li>
   );

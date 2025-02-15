@@ -13,6 +13,7 @@ import {
 } from 'react-icons/tb';
 import Providers from './components/providers';
 import Footer from './components/footer';
+import { Loader } from './components/loader';
 
 export const metadata: Metadata = {
   title: 'Tu amigo FI',
@@ -62,6 +63,7 @@ export default function RootLayout({
           </div>
           {children}
           <Footer />
+          <Loader />
         </Providers>
       </body>
     </html>

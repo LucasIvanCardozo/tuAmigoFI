@@ -28,6 +28,10 @@ body {
   background: var(--platinum);
 }
 
+.displayBlock {
+  display: block;
+}
+
 .no-scroll {
   overflow: hidden;
 }
