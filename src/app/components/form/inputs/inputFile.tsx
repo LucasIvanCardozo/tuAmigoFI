@@ -8,7 +8,7 @@ interface Params {
 export const InputFile = ({ input, onChange }: Params) => {
   return (
     <input
-      className="text-white"
+      className="text-white my-2"
       type="file"
       accept={input.accept}
       required={input.required}

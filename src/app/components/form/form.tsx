@@ -36,19 +36,23 @@ export const Form = ({ children, onSubmit, onEnd }: DataForm) => {
   return (
     <FormContext.Provider value={{ values, setValues }}>
       <form
-        className="relative flex flex-col"
+        className="relative flex flex-col w-full"
         onSubmit={(e) => handleSubmit(e)}
       >
         {children}
-        {values.some((val) => !val.validate) ? 'Falta algo.' : 'Correcto!'}
         {error && <p className="text-red-500">{`Error: ${error}`}</p>}
-        <div className="flex gap-4 justify-center">
+        <div className="flex gap-4 justify-center mt-4">
           {thanks ? (
             <p>Muchas gracias por tu aporte! ❤️</p>
           ) : loading ? (
             <Loading size={6} mode={1} />
           ) : (
-            <button type="submit">Aceptar</button>
+            <button
+              className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700  transition-colors"
+              type="submit"
+            >
+              Aceptar
+            </button>
           )}
         </div>
       </form>

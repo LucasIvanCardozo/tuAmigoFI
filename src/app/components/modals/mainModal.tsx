@@ -12,13 +12,6 @@ interface Params {
 export const MainModal = ({ children, closeModal }: Params) => {
   const { stateModal } = useMainContext();
 
-  // const closeModal = () => {
-  //   stateModal.setDataModal({
-  //     ...stateModal.dataModal,
-  //     viewModal: false,
-  //   });
-  // };
-
   useEffect(() => {
     document.body.classList.add('no-scroll');
     return () => document.body.classList.remove('no-scroll');
