@@ -1,6 +1,7 @@
 'use client';
 import { numberIconsModules } from '../../assets/icons';
 import { MdOutlineAddBox } from 'react-icons/md';
+import { FaPlus } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { MdOutlineReport } from 'react-icons/md';
 import PdfView from '@/app/components/pdfView';
@@ -326,6 +327,7 @@ export const ModuleContainer = ({ module }: Params) => {
           )}
 
           <button
+            className="flex flex-col gap-1"
             title="Añadir una respuesta"
             aria-label="Añadir una respuesta"
             onClick={() =>
@@ -383,7 +385,8 @@ export const ModuleContainer = ({ module }: Params) => {
                 : window.alert('Debes iniciar sesion para subir una respuesta.')
             }
           >
-            <MdOutlineAddBox />
+            <FaPlus />
+            <span>Respuesta</span>
           </button>
         </div>
       </div>

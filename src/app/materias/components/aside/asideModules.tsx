@@ -146,7 +146,7 @@ export const AsideModules = () => {
         }
       >
         <h1 className="text-xl hidden text-nowrap sm:block">
-          {isTp ? <b>Busca tu TP</b> : <b>Busca tu Examen</b>}
+          {isTp ? <b>Busca tu TP</b> : <b>Exámenes</b>}
         </h1>
         <ul
           className="flex flex-col gap-3 overflow-y-auto overflow-x-hidden"
