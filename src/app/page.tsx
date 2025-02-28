@@ -88,8 +88,8 @@ export default async function Home() {
           {[
             {
               question: '¿En que aula curso hoy?',
-              link: 'https://www3.fi.mdp.edu.ar/salas2022/day.php?area=2&room=1',
-              value: 'fi.mdp.edu.ar',
+              link: 'https://salas.fi.mdp.edu.ar/',
+              value: 'salas.fi.mdp.edu.ar',
             },
             {
               question: '¿Dónde me inscribo a las matrerias?',

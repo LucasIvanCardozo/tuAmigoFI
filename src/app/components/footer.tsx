@@ -8,7 +8,10 @@ export default function Footer() {
     >
       <div className="flex gap-1">
         <p>Creada por</p>
-        <a className="underline" href="">
+        <a
+          className="underline"
+          href="https://www.linkedin.com/in/lucas-ivan-cardozo/"
+        >
           Lucas Cardozo
         </a>
       </div>

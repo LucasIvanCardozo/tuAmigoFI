@@ -6,6 +6,7 @@ import { CgMenu, CgClose } from 'react-icons/cg';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { handleLoader } from '../utils/handleLoader';
+import { Loading } from './others/loading';
 
 export default function Nav() {
   const [navState, setNavState] = useState<boolean>(false);
@@ -125,10 +126,7 @@ export default function Nav() {
         <li className="rounded-md border-t-2 border-[#31969B] hover:bg-[--midnight-green] sm:border-l-2 sm:border-t-0">
           {session === undefined ? (
             <div className="flex justify-center w-40 py-2 px-3 sm:w-28">
-              <div className="relative">
-                <div className="absolute h-6 w-6 border-x-2 rounded-full animate-spin"></div>
-                <div className="h-6 w-6 border-2 opacity-40 rounded-full animate-ping"></div>
-              </div>
+              <Loading size={6} mode="white" />
             </div>
           ) : session?.user ? (
             <Link
