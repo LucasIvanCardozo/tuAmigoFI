@@ -145,7 +145,7 @@ export const AsideModules = () => {
           ' fixed z-40 top-0 right-full  transform-gpu transition-transform bg-[--black-olive] w-max min-w-40  rounded-md mt-10 py-4 px-3 flex flex-col max-h-[80vh] gap-3 sm:max-h-none sm:relative sm:h-full sm:m-0 sm:max-w-52 sm:right-auto '
         }
       >
-        <h1 className="text-xl hidden sm:block">
+        <h1 className="text-xl hidden text-nowrap sm:block">
           {isTp ? <b>Busca tu TP</b> : <b>Busca tu Examen</b>}
         </h1>
         <ul

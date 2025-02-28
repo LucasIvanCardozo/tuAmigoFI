@@ -30,7 +30,7 @@ export const AsideMainButton = ({ onClick }: Params) => {
         }
       />
       <div className="absolute h-8 left-full top-0 text-xl bg-[--black-olive] drop-shadow-sm rounded-md px-1 flex items-center justify-center rounded-s-none text-nowrap sm:hidden">
-        {isTp ? <b>Busca tu TP</b> : <b>Busca tu Parcial</b>}
+        {isTp ? <b>Busca tu TP</b> : <b>Busca tu Examen</b>}
       </div>
     </button>
   );
