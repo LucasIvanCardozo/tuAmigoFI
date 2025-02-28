@@ -2,6 +2,8 @@
 import { numberIconsModules } from '../../assets/icons';
 import { MdOutlineAddBox } from 'react-icons/md';
 import { FaPlus } from 'react-icons/fa';
+import { IoAddOutline } from 'react-icons/io5';
+import { CgMathPlus } from 'react-icons/cg';
 import { MdDelete } from 'react-icons/md';
 import { MdOutlineReport } from 'react-icons/md';
 import PdfView from '@/app/components/pdfView';
@@ -327,7 +329,7 @@ export const ModuleContainer = ({ module }: Params) => {
           )}
 
           <button
-            className="flex flex-col gap-1"
+            className="flex text-base h-6 pr-1 items-center border-2 border-black rounded-md hover:bg-[--white] transition-colors"
             title="Añadir una respuesta"
             aria-label="Añadir una respuesta"
             onClick={() =>
@@ -385,7 +387,7 @@ export const ModuleContainer = ({ module }: Params) => {
                 : window.alert('Debes iniciar sesion para subir una respuesta.')
             }
           >
-            <FaPlus />
+            <CgMathPlus />
             <span>Respuesta</span>
           </button>
         </div>
