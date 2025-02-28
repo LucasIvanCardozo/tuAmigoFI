@@ -10,6 +10,7 @@ export default function Footer() {
         <p>Creada por</p>
         <a
           className="underline"
+          target="_blank"
           href="https://www.linkedin.com/in/lucas-ivan-cardozo/"
         >
           Lucas Cardozo
