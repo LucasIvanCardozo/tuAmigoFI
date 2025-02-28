@@ -314,6 +314,7 @@ export const AsideModules = () => {
                       <div>
                         <a
                           href="https://www.ilovepdf.com/es/eliminar-paginas"
+                          target="_blank"
                           className="underline"
                         >
                           <h3 className="text-sm">
@@ -324,6 +325,7 @@ export const AsideModules = () => {
                       <div>
                         <a
                           href="https://tools.pdf24.org/es/convertidor-pdf"
+                          target="_blank"
                           className="underline"
                         >
                           <h3 className="text-sm">
