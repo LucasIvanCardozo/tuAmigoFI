@@ -3,7 +3,7 @@ import PrivacitySection from '../components/privacitySection';
 export default async function Privacidad() {
   return (
     <>
-      <main className="pt-14 text-[--black] w-11/12 mx-auto max-w-screen-md my-10 sm:pt-20">
+      <main className="pt-14 text-[--black] w-11/12 mx-auto max-w-screen-md my-5 sm:pt-20">
         <h1 className="text-3xl">
           <b>Política de Privacidad de Tu-Amigo-FI</b>
         </h1>
@@ -11,20 +11,20 @@ export default async function Privacidad() {
           description={
             <>
               <p>
-                <b>Última actualización:</b> 8/11/2024
+                <b>Última actualización:</b> 28/02/2025
               </p>
               <p>
                 Bienvenido a Tu-Amigo-FI. Valoro tu privacidad y estoy
                 comprometido a proteger tus datos personales. Esta Política de
                 Privacidad describe cómo recopilo, utilizo y protejo tu
                 información cuando usas mi sitio, diseñado para ayudar a
-                estudiantes de ingeniería en Argentina.
+                estudiantes de ingeniería en Mar del Plata.
               </p>
             </>
           }
         />
       </main>
-      <article className="flex flex-col gap-4 text-[--black] w-11/12 mx-auto max-w-screen-md">
+      <article className="flex flex-col py-8 gap-4 text-[--black] w-11/12 mx-auto max-w-screen-md">
         <PrivacitySection
           header="Información que recopilo"
           description={
@@ -41,9 +41,9 @@ export default async function Privacidad() {
                 </li>
                 <li>
                   <strong>Información de uso:</strong> Recolecto datos sobre
-                  cómo accedes y usas Tu-Amigo-FI, incluyendo tu dirección IP,
-                  tipo de dispositivo, navegador, y comportamiento de navegación
-                  en el sitio.
+                  cómo accedes y usas Tu-Amigo-FI, incluyendo el tipo de tu
+                  dispositivo, navegador, y comportamiento de navegación en el
+                  sitio.
                 </li>
                 <li>
                   <strong>Contenido generado por el usuario:</strong> Todo el
@@ -71,10 +71,6 @@ export default async function Privacidad() {
                   usuarios.
                 </li>
                 <li>Personalizar tu experiencia en Tu-Amigo-FI.</li>
-                <li>
-                  Enviarte comunicaciones relacionadas con la plataforma y
-                  notificaciones sobre actualizaciones o cambios importantes.
-                </li>
               </ul>
             </>
           }
@@ -89,12 +85,6 @@ export default async function Privacidad() {
                 situaciones:
               </p>
               <ul>
-                <li>
-                  <strong>Proveedores de servicios:</strong> Trabajo con algunos
-                  proveedores externos para el mantenimiento y la mejora del
-                  sitio. Estos proveedores tienen acceso a tus datos únicamente
-                  para realizar estas tareas.
-                </li>
                 <li>
                   <strong>Cumplimiento legal:</strong> En caso de que la ley lo
                   requiera, podré divulgar tu información para cumplir con
@@ -111,7 +101,7 @@ export default async function Privacidad() {
             <>
               <p>
                 La información se almacena de manera segura en los servidores de
-                la plataforma, ubicados en Argentina. Implemento medidas de
+                la plataforma, ubicados en Estados Unidos. Implemento medidas de
                 seguridad físicas, electrónicas y de procedimiento para proteger
                 tus datos contra el acceso no autorizado. No obstante, debes
                 saber que ningún sistema de seguridad es completamente
@@ -147,6 +137,10 @@ export default async function Privacidad() {
                   href="mailto:lucasivancardozo27@gmail.com"
                 >
                   lucasivancardozo27@gmail.com
+                </a>{' '}
+                o a través de mi Whatsapp personal{' '}
+                <a className="underline" href="https://wa.me/2235319564">
+                  +542235319564
                 </a>
                 .
               </p>
@@ -173,9 +167,8 @@ export default async function Privacidad() {
             <>
               <p>
                 Esta política puede actualizarse para reflejar cambios en el
-                sitio o en la legislación aplicable. Te notificaré sobre
-                cualquier cambio significativo a través del correo electrónico
-                registrado o mediante un aviso en Tu-Amigo-FI.
+                sitio o en la legislación aplicable. La fecha de la última
+                actualizacion estará al principio de esta página.
               </p>
             </>
           }
@@ -192,6 +185,10 @@ export default async function Privacidad() {
                   href="mailto:lucasivancardozo27@gmail.com"
                 >
                   lucasivancardozo27@gmail.com
+                </a>{' '}
+                o a través de mi Whatsapp personal{' '}
+                <a className="underline" href="https://wa.me/2235319564">
+                  +542235319564
                 </a>
                 .
               </p>

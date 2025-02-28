@@ -66,17 +66,21 @@ export default async function Home() {
         </div>
       </main>
       <section className="text-[--black] max-w-screen-md m-auto my-4 w-full text-balance text-center sm:hidden">
-        En Tu-Amigo-FI encontrás finales, trabajos prácticos, un calendario
-        académico y mucho más. Todo pensado para darte una mano en tu carrera de
-        ingeniería.
+        En <strong>Tu-Amigo-FI</strong> encontrás <strong>finales</strong>,{' '}
+        <strong>trabajos prácticos</strong>, un{' '}
+        <strong>calendario académico</strong> y mucho más. Todo pensado para
+        darte una mano en tu carrera de ingeniería.
       </section>
       <section className="hidden text-[--black] max-w-screen-md my-4 m-auto w-full text-balance text-center sm:block">
-        En Tu-Amigo-FI tenés todo lo que necesitás para avanzar en ingeniería:
-        finales, trabajos prácticos resueltos, guías y mucho más para
-        facilitarte el estudio. También podés consultar el calendario académico
-        y subir tus propios aportes para ayudar a otros estudiantes. Todo en un
-        solo lugar para que tu paso por la facu sea más llevadero.
+        En <strong>Tu-Amigo-FI</strong> tenés todo lo que necesitás para avanzar
+        en ingeniería: <strong>finales</strong>,{' '}
+        <strong>trabajos prácticos resueltos por la comunidad</strong>, y
+        mucho más para facilitarte el estudio. También podés consultar el{' '}
+        <strong>calendario académico</strong> y subir tus propios aportes para
+        ayudar a otros estudiantes. Todo en un solo lugar para que tu paso por
+        la facu sea más llevadero.
       </section>
+
       <section className="text-[--black] my-4 relative max-w-screen-md m-auto w-11/12">
         <h2 className="w-full text-center font-bold -z-10 text-3xl mb-2 sm:text-4xl">
           Consultas
