@@ -312,11 +312,33 @@ export const AsideModules = () => {
                         required={true}
                       />
                       <div>
+                        <a
+                          href="https://www.ilovepdf.com/es/eliminar-paginas"
+                          className="underline"
+                        >
+                          <h3 className="text-sm">
+                            Click aquí para eliminar páginas de tu PDF
+                          </h3>
+                        </a>
+                      </div>
+                      <div>
+                        <a
+                          href="https://tools.pdf24.org/es/convertidor-pdf"
+                          className="underline"
+                        >
+                          <h3 className="text-sm">
+                            Click aquí para convertir a PDF
+                          </h3>
+                        </a>
+                      </div>
+                      <div>
                         <h3 className="text-sm">Recuerda!</h3>
                         <p className="text-xs">
-                          Por favor asegurate de que el modulo que quieres
-                          agregar no se encuentre ya disponible en la lista. En
-                          caso de cualquier problema podes contactarme:{' '}
+                          Solo se admite formato PDF y solo con los problemas
+                          (sin las respuestas). Por favor asegurate de que el
+                          modulo que quieres agregar no se encuentre ya
+                          disponible en la lista. En caso de cualquier problema
+                          podes contactarme:{' '}
                           <a
                             className="underline"
                             target="_blank"
