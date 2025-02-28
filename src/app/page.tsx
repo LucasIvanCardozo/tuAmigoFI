@@ -8,7 +8,7 @@ import ButtonInfoScore from './components/buttonInfoScore';
 import { FaArrowRight } from 'react-icons/fa';
 import QuestionSkeleton from './components/skeletons/questionSkeleton';
 
-export const revalidate = 3600 * 24;
+// export const revalidate = 3600 * 24;
 
 export default async function Home() {
   return (
@@ -74,8 +74,8 @@ export default async function Home() {
       <section className="hidden text-[--black] max-w-screen-md my-4 m-auto w-full text-balance text-center sm:block">
         En <strong>Tu-Amigo-FI</strong> tenés todo lo que necesitás para avanzar
         en ingeniería: <strong>finales</strong>,{' '}
-        <strong>trabajos prácticos resueltos por la comunidad</strong>, y
-        mucho más para facilitarte el estudio. También podés consultar el{' '}
+        <strong>trabajos prácticos resueltos por la comunidad</strong>, y mucho
+        más para facilitarte el estudio. También podés consultar el{' '}
         <strong>calendario académico</strong> y subir tus propios aportes para
         ayudar a otros estudiantes. Todo en un solo lugar para que tu paso por
         la facu sea más llevadero.
