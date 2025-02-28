@@ -253,11 +253,11 @@ export const ModuleContainer = ({ module }: Params) => {
         <div className="flex gap-1 px-1 ml-auto [&>*]:aspect-square">
           {session && session.user.tier == 2 && (
             <button
-              title={`Eliminar ${isTp ? 'TP' : 'Parcial'}`}
-              aria-label={`Eliminar ${isTp ? 'TP' : 'Parcial'}`}
+              title={`Eliminar ${isTp ? 'TP' : 'Examen'}`}
+              aria-label={`Eliminar ${isTp ? 'TP' : 'Examen'}`}
               onClick={() => {
                 stateModal.setDataModal({
-                  title: `Eliminar ${isTp ? 'TP' : 'Parcial'}`,
+                  title: `Eliminar ${isTp ? 'TP' : 'Examen'}`,
                   viewModal: true,
                 });
                 stateForm.setDataForm({
@@ -287,14 +287,16 @@ export const ModuleContainer = ({ module }: Params) => {
                         ) : (
                           <p>
                             <b>Fecha:</b>
-                            {`${moduleInd.date.getMonth()}/${moduleInd.date.getFullYear()}`}
+                            {`${
+                              moduleInd.date.getMonth() + 1
+                            }/${moduleInd.date.getFullYear()}`}
                           </p>
                         )}
                       </div>
                       <div>
                         <h3 className="text-sm">Recuerda!</h3>
                         <p className="text-xs">
-                          Por favor asegurate de que el modulo que quieres
+                          Por favor asegurate de que el examen que quieres
                           eliminar sea el correcto. Se eliminaran todos los
                           problemas, las respuestas y sus reacciones. En caso de
                           cualquier problema podes contactarme:{' '}
@@ -352,14 +354,15 @@ export const ModuleContainer = ({ module }: Params) => {
                         />
                         <div>
                           <p>
-                            Esta respuesta se añadirá al modulo {moduleInd.name}
+                            Esta respuesta se añadirá al examen "
+                            {moduleInd.name}"
                           </p>
                         </div>
                         <div>
                           <h3 className="text-sm">Recuerda!</h3>
                           <p className="text-xs">
                             Por favor asegurate de que las respuestas estén
-                            legibles y sean para este modulo. En caso de
+                            legibles y sean para este examen. En caso de
                             cualquier problema podes contactarme:{' '}
                             <a
                               className="underline"
@@ -427,7 +430,7 @@ export const ModuleContainer = ({ module }: Params) => {
                       <div>
                         <h3 className="text-sm">Recuerda!</h3>
                         <p className="text-xs">
-                          Por favor asegurate de que el modulo que quieres
+                          Por favor asegurate de que el examen que quieres
                           reportar sea el correcto. En caso de cualquier
                           problema podes contactarme:{' '}
                           <a
@@ -450,7 +453,7 @@ export const ModuleContainer = ({ module }: Params) => {
                   ),
                 });
                 stateModal.setDataModal({
-                  title: `Reportar  ${isTp ? 'TP' : 'Parcial'}`,
+                  title: `Reportar  ${isTp ? 'TP' : 'Examen'}`,
                   viewModal: true,
                 });
               }}
