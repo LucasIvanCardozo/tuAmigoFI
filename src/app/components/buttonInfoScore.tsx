@@ -28,10 +28,11 @@ export default function ButtonInfoScore() {
                   Añade TPs para sumar <b>6 puntos</b>.
                 </li>
                 <li>
-                  Sube parciales para ganar <b>5 puntos</b>.
+                  Añade exámenes para ganar <b>5 puntos</b>.
                 </li>
                 <li>
-                  Responde consultas de TPs y obtendrás <b>3 puntos</b>.
+                  Responde consultas de TPs y/o exámenes y obtendrás{' '}
+                  <b>3 puntos</b>.
                 </li>
                 <li>
                   Recibe likes en tus respuestas para sumar <b>1 punto</b> por

@@ -50,11 +50,11 @@ export default function PdfView({ id, url }: { id: number; url: string }) {
         />
       </div>
       <div className="absolute bottom-0 left-0 flex justify-center w-full">
-        <div className="flex items-center">
-          <span className="relative py-1">
+        <div className="flex items-cente">
+          <span className="relative my-1 bg-white bg-opacity-65 rounded-md">
             {pageNumber != 1 && (
               <button
-                className="absolute h-full right-full top-0 bottom-0"
+                className="absolute h-full right-full top-0 bottom-0 bg-white bg-opacity-65 rounded-md"
                 aria-label="Ir a página izquierda"
                 title="Ir a izquierda"
                 onClick={() => handlePage(pageNumber - 1)}
@@ -74,7 +74,7 @@ export default function PdfView({ id, url }: { id: number; url: string }) {
               </button>
             )}
             {loadingImage && (
-              <div className="absolute bottom-full flex justify-center w-full sm:w-full">
+              <div className="absolute bottom-full flex justify-center w-full sm:w-full bg-white bg-opacity-65 rounded-md">
                 <div className="relative">
                   <div className="absolute h-3 w-3 border-[--black] border-x-2 rounded-full animate-spin"></div>
                   <div className="h-3 w-3 border-[--black] border-2 opacity-40 rounded-full animate-ping"></div>
@@ -85,7 +85,7 @@ export default function PdfView({ id, url }: { id: number; url: string }) {
         </div>
       </div>
       <button
-        className="absolute h-9 w-9 top-0 right-0 p-2"
+        className="absolute h-9 w-9 top-0 right-0 p-2 bg-white bg-opacity-65 rounded-md"
         onClick={downloadFile}
         aria-label="Descargar PDF"
         title="Descargar PDF"

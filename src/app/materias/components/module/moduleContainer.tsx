@@ -358,7 +358,7 @@ export const ModuleContainer = ({ module }: Params) => {
                         />
                         <div>
                           <p>
-                            Esta respuesta se añadirá al examen "
+                            Esta respuesta se añadirá al módulo "
                             {moduleInd.name}"
                           </p>
                         </div>
@@ -366,7 +366,7 @@ export const ModuleContainer = ({ module }: Params) => {
                           <h3 className="text-sm">Recuerda!</h3>
                           <p className="text-xs">
                             Por favor asegurate de que las respuestas estén
-                            legibles y sean para este examen. En caso de
+                            legibles y sean para este módulo. En caso de
                             cualquier problema podes contactarme:{' '}
                             <a
                               className="underline"
@@ -397,7 +397,7 @@ export const ModuleContainer = ({ module }: Params) => {
           <div className="absolute z-10 bg-[--white] rounded-md m-2 opacity-65 top-0 left-0">{`Por ${user.name}`}</div>
           {session && (
             <button
-              className="absolute z-10 m-2 bottom-0 right-0 w-6 h-6"
+              className="absolute z-10 m-2 bottom-0 right-0 w-6 h-6 bg-white bg-opacity-65 rounded-md"
               title="Reportar TP"
               aria-label="Reportar TP"
               onClick={() => {
