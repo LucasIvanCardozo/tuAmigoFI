@@ -146,7 +146,7 @@ export const AsideModules = () => {
         }
       >
         <h1 className="text-xl hidden sm:block">
-          {isTp ? <b>Busca tu TP</b> : <b>Busca tu Parcial</b>}
+          {isTp ? <b>Busca tu TP</b> : <b>Busca tu Examen</b>}
         </h1>
         <ul
           className="flex flex-col gap-3 overflow-y-auto overflow-x-hidden"
@@ -223,7 +223,7 @@ export const AsideModules = () => {
               className="text-start bg-[--white] py-1 px-2 rounded-md"
               onClick={() => {
                 stateModal.setDataModal({
-                  title: isTp ? 'Agregar TP' : 'Agregar Parcial',
+                  title: isTp ? 'Agregar TP' : 'Agregar Examen',
                   viewModal: true,
                 });
                 stateForm.setDataForm({
@@ -285,8 +285,8 @@ export const AsideModules = () => {
                                   <option value="Segundo parcial">
                                     Segundo parcial
                                   </option>
-                                  <option value="Tercer Parcial">
-                                    Tercer Parcial
+                                  <option value="Tercer parcial">
+                                    Tercer parcial
                                   </option>
                                   <option value="Final">Final</option>
                                   <option value="Otros">Otros</option>
@@ -330,11 +330,11 @@ export const AsideModules = () => {
                   ),
                 });
               }}
-              aria-label={isTp ? 'Agregar TP' : 'Agregar Parcial'}
-              title={isTp ? 'Agregar TP' : 'Agregar Parcial'}
+              aria-label={isTp ? 'Agregar TP' : 'Agregar Examen'}
+              title={isTp ? 'Agregar TP' : 'Agregar Examen'}
             >
               <p className="text-base text-[--black-olive] leading-4">
-                {isTp ? 'Agregar TP' : 'Agregar Parcial'}
+                {isTp ? 'Agregar TP' : 'Agregar Examen'}
               </p>
             </button>
           </li>
