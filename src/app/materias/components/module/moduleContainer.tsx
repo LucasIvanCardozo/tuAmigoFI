@@ -458,7 +458,10 @@ export const ModuleContainer = ({ module }: Params) => {
               <MdOutlineReport className="h-full w-full text-red-700" />
             </button>
           )}
-          <PdfView id={moduleInd.id} url="tps/problemas" />
+          <PdfView
+            id={moduleInd.id}
+            url={isTp ? `tps/problemas` : `parciales/problemas`}
+          />
         </div>
         <ul className="flex flex-col gap-1 pl-1">
           {problems.length == 0 ? (

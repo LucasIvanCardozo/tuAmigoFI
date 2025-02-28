@@ -197,9 +197,16 @@ export default function CalendarSection() {
             mapDays={({ date, today }) => {
               let dateStr = date.toString().split('T')[0];
               if (allDays.includes(dateStr)) {
+                const add =
+                  date.toDate().toDateString() == today.toDate().toDateString()
+                    ? {
+                        border: '2px solid yellow',
+                      }
+                    : {};
                 if (recessDays.includes(dateStr)) {
                   return {
                     style: {
+                      ...add,
                       backgroundColor: '#9A031E',
                       color: 'white',
                       borderRadius: '20%',
@@ -208,6 +215,7 @@ export default function CalendarSection() {
                 } else if (midtermsDays.includes(dateStr))
                   return {
                     style: {
+                      ...add,
                       backgroundColor: '#5F0F40',
                       color: 'white',
                       borderRadius: '20%',
@@ -216,6 +224,7 @@ export default function CalendarSection() {
                 else if (holidays.includes(dateStr))
                   return {
                     style: {
+                      ...add,
                       backgroundColor: '#0F4C5C',
                       color: 'white',
                       borderRadius: '20%',
@@ -224,6 +233,7 @@ export default function CalendarSection() {
                 else
                   return {
                     style: {
+                      ...add,
                       backgroundColor: '#5192A4',
                       color: 'white',
                       borderRadius: '20%',
@@ -237,6 +247,7 @@ export default function CalendarSection() {
                     backgroundColor: 'yellow',
                     color: 'black',
                     fontWeight: 'bold',
+                    border: '2px solid red',
                     borderRadius: '20%',
                   },
                 };
@@ -260,6 +271,10 @@ export default function CalendarSection() {
           <div className=" h-4 relative flex items-center gap-1">
             <div className="h-4/5 aspect-video  bg-[#5192A4]"></div>
             <span>Inicio/Fin de cuatrimestre</span>
+          </div>
+          <div className=" h-4 relative flex items-center gap-1">
+            <div className="h-4/5 aspect-video  bg-[yellow]"></div>
+            <span>Hoy</span>
           </div>
         </div>
       </div>
