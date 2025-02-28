@@ -94,7 +94,6 @@ export default function Nav() {
       >
         {[
           { href: '/', name: 'Inicio' },
-          { href: '/ingresantes', name: 'Ingresantes' },
           { href: '/materias', name: 'Materias' },
           { href: '/contactame', name: 'Contáctame' },
         ].map(({ href, name }, index) => (

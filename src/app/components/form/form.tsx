@@ -45,7 +45,7 @@ export const Form = ({ children, onSubmit, onEnd }: DataForm) => {
           {thanks ? (
             <p>Muchas gracias por tu aporte! ❤️</p>
           ) : loading ? (
-            <Loading size={6} mode={1} />
+            <Loading size={6} mode="white" />
           ) : (
             <button
               className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700  transition-colors"
