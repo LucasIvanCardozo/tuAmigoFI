@@ -39,7 +39,7 @@ export default function CalendarSection() {
   const [countCalendar, setCountCalendar] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
   const yearCurrent: number = new Date().getFullYear();
-  const recessDays: string[] = [
+  const recessDays = new Set([
     `${yearCurrent}/01/01`,
     `${yearCurrent}/01/02`,
     `${yearCurrent}/01/03`,
@@ -83,8 +83,8 @@ export default function CalendarSection() {
     `${yearCurrent}/07/24`,
     `${yearCurrent}/07/25`,
     `${yearCurrent}/07/26`,
-  ];
-  const holidays: string[] = [
+  ]);
+  const holidays = new Set([
     `${yearCurrent}/02/12`,
     `${yearCurrent}/02/13`,
     `${yearCurrent}/03/28`,
@@ -101,8 +101,8 @@ export default function CalendarSection() {
     `${yearCurrent}/10/12`,
     `${yearCurrent}/11/20`,
     `${yearCurrent}/12/25`,
-  ];
-  const midtermsDays: string[] = [
+  ]);
+  const midtermsDays = new Set([
     `${yearCurrent}/02/14`,
     `${yearCurrent}/02/15`,
     `${yearCurrent}/02/16`,
@@ -139,16 +139,17 @@ export default function CalendarSection() {
     `${yearCurrent}/12/19`,
     `${yearCurrent}/12/20`,
     `${yearCurrent}/12/21`,
-  ];
-  const startEndDays: string[] = [
+  ]);
+  const startEndDays = new Set([
     `${yearCurrent}/03/04`,
     `${yearCurrent}/08/12`,
-    `${yearCurrent}/11  /30`,
-  ];
-  const allDays: string[] = recessDays
-    .concat(holidays)
-    .concat(midtermsDays)
-    .concat(startEndDays);
+    `${yearCurrent}/11/30`,
+  ]);
+
+  // const allDays: string[] = recessDays
+  //   .concat(holidays)
+  //   .concat(midtermsDays)
+  //   .concat(startEndDays);
 
   useEffect(() => {
     const updateCountCalendar = () => {
@@ -194,60 +195,60 @@ export default function CalendarSection() {
             multiple
             numberOfMonths={countCalendar}
             readOnly
+            minDate={`${yearCurrent}/01/01`}
+            maxDate={`${yearCurrent}/12/31`}
             mapDays={({ date, today }) => {
               let dateStr = date.toString().split('T')[0];
-              if (allDays.includes(dateStr)) {
-                const add =
-                  date.toDate().toDateString() == today.toDate().toDateString()
-                    ? {
-                        border: '2px solid yellow',
-                      }
-                    : {};
-                if (recessDays.includes(dateStr)) {
-                  return {
-                    style: {
-                      ...add,
-                      backgroundColor: '#9A031E',
-                      color: 'white',
-                      borderRadius: '20%',
-                    },
-                  };
-                } else if (midtermsDays.includes(dateStr))
-                  return {
-                    style: {
-                      ...add,
-                      backgroundColor: '#5F0F40',
-                      color: 'white',
-                      borderRadius: '20%',
-                    },
-                  };
-                else if (holidays.includes(dateStr))
-                  return {
-                    style: {
-                      ...add,
-                      backgroundColor: '#0F4C5C',
-                      color: 'white',
-                      borderRadius: '20%',
-                    },
-                  };
-                else
-                  return {
-                    style: {
-                      ...add,
-                      backgroundColor: '#5192A4',
-                      color: 'white',
-                      borderRadius: '20%',
-                    },
-                  };
-              } else if (
+              const add =
+                date.toDate().toDateString() == today.toDate().toDateString()
+                  ? {
+                      border: '3px solid #FFD700',
+                    }
+                  : {};
+              if (recessDays.has(dateStr)) {
+                return {
+                  style: {
+                    ...add,
+                    backgroundColor: '#4682B4',
+                    color: 'white',
+                    borderRadius: '20%',
+                  },
+                };
+              } else if (midtermsDays.has(dateStr))
+                return {
+                  style: {
+                    ...add,
+                    backgroundColor: '#663399',
+                    color: 'white',
+                    borderRadius: '20%',
+                  },
+                };
+              else if (holidays.has(dateStr))
+                return {
+                  style: {
+                    ...add,
+                    backgroundColor: '#DC143C',
+                    color: 'white',
+                    borderRadius: '20%',
+                  },
+                };
+              else if (startEndDays.has(dateStr))
+                return {
+                  style: {
+                    ...add,
+                    backgroundColor: '#228B22',
+                    color: 'white',
+                    borderRadius: '20%',
+                  },
+                };
+              else if (
                 date.toDate().toDateString() == today.toDate().toDateString()
               ) {
                 return {
                   style: {
-                    backgroundColor: 'yellow',
+                    backgroundColor: '#FFD700',
                     color: 'black',
                     fontWeight: 'bold',
-                    border: '2px solid red',
                     borderRadius: '20%',
                   },
                 };
@@ -257,23 +258,23 @@ export default function CalendarSection() {
         )}
         <div className="text-nowrap flex justify-center gap-2 flex-wrap m-2">
           <div className=" h-4 relative flex items-center gap-1">
-            <div className="h-4/5 aspect-video  bg-[#9A031E]"></div>
+            <div className="h-4/5 aspect-video  bg-[#4682B4]"></div>
             <span>Receso</span>
           </div>
           <div className=" h-4 relative flex items-center gap-1">
-            <div className="h-4/5 aspect-video  bg-[#5F0F40]"></div>
+            <div className="h-4/5 aspect-video  bg-[#663399]"></div>
             <span>Totalizadores</span>
           </div>
           <div className=" h-4 relative flex items-center gap-1">
-            <div className="h-4/5 aspect-video  bg-[#0F4C5C]"></div>
+            <div className="h-4/5 aspect-video  bg-[#DC143C]"></div>
             <span>Feriado</span>
           </div>
           <div className=" h-4 relative flex items-center gap-1">
-            <div className="h-4/5 aspect-video  bg-[#5192A4]"></div>
+            <div className="h-4/5 aspect-video  bg-[#228B22]"></div>
             <span>Inicio/Fin de cuatrimestre</span>
           </div>
           <div className=" h-4 relative flex items-center gap-1">
-            <div className="h-4/5 aspect-video  bg-[yellow]"></div>
+            <div className="h-4/5 aspect-video  bg-[#FFD700]"></div>
             <span>Hoy</span>
           </div>
         </div>

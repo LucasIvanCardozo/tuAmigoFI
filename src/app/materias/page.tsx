@@ -30,10 +30,11 @@ export default async function Materias({
         <div className="select-none">
           <Image
             className="object-contain h-full"
-            src="/FI.svg"
+            src="/FI.gif"
             width={200}
             height={200}
             alt=""
+            unoptimized
           />
         </div>
         <h1 className="font-bold bg-[#F3F4F6] ml-1 p-1 rounded-2xl text-4xl text-balance h-fit max-w-72 rounded-es-none shadow-md sm:ml-6 sm:p-2">
