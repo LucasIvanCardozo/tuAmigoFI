@@ -23,16 +23,19 @@ export default function Contactame() {
       <section className="grow flex flex-col justify-start items-center text-[--black] w-11/12 mx-auto max-w-screen-md">
         <div className="text-center text-base sm:text-base m-6">
           <p className="mb-4">
-            Si tenés alguna consulta, querés reportar un error, saber cómo hice
-            esta página o simplemente charlar, no dudes en contactarme. Estoy
+            Si tenés alguna <strong>consulta</strong>, querés{' '}
+            <strong>reportar un error</strong>, saber cómo hice esta página o
+            simplemente <strong>charlar</strong>, no dudes en contactarme. Estoy
             más que dispuesto a ayudarte en lo que necesites.
           </p>
           <p className="mb-4">
-            También me encantaría recibir tus ideas o sugerencias para mejorar.
-            ¡Toda opinión es bienvenida y me ayuda a hacer que esta página sea
-            más útil para vos y para toda la comunidad!
+            También me encantaría recibir tus <strong>ideas</strong> o{' '}
+            <strong>sugerencias</strong> para mejorar. ¡Toda{' '}
+            <strong>opinión</strong> es bienvenida y me ayuda a hacer que esta
+            página sea más útil para vos y para toda la comunidad!
           </p>
         </div>
+
         <div className="flex flex-wrap justify-center gap-4 w-full mt-4">
           <a
             href="https://www.instagram.com/lucardozo27/"
