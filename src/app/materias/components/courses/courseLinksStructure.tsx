@@ -7,6 +7,7 @@ import { MdOutlineReport } from 'react-icons/md';
 import { MdDelete } from 'react-icons/md';
 import ModalReportLink from './modals/modalReportLink';
 import ModalDeleteLink from './modals/modalDeleteLink';
+import ReactDOM from 'react-dom';
 
 interface Params {
   linksOfficial: ({
@@ -178,18 +179,22 @@ export default function CourseLinksStructure({
           )}
         </div>
       </div>
-      {modalReportLink && (
-        <ModalReportLink
-          link={modalReportLink}
-          callback={handleModalReportLink}
-        />
-      )}
-      {modalDeleteLink && (
-        <ModalDeleteLink
-          link={modalDeleteLink}
-          callback={handleModalDeleteLink}
-        />
-      )}
+      {modalReportLink &&
+        ReactDOM.createPortal(
+          <ModalReportLink
+            link={modalReportLink}
+            callback={handleModalReportLink}
+          />,
+          document.body
+        )}
+      {modalDeleteLink &&
+        ReactDOM.createPortal(
+          <ModalDeleteLink
+            link={modalDeleteLink}
+            callback={handleModalDeleteLink}
+          />,
+          document.body
+        )}
     </>
   );
 }
