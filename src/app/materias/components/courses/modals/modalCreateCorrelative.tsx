@@ -1,6 +1,8 @@
 // 'src/app/components/ModalImportImage.tsx'
 'use client';
 
+import { MainModal } from '@/app/components/modals/mainModal';
+import { Loading } from '@/app/components/others/loading';
 import { addLink, createCorrelative, deleteMidterm } from '@/app/lib/actions';
 import { fetchAllCourses, fetchCourse, fetchCourses } from '@/app/lib/data';
 import { courses, midterms } from '@prisma/client';
@@ -35,11 +37,13 @@ export default function ModalCreateCorrelative({
 
   const formValidate = (): boolean => {
     if (!idCorrelative) {
-      setError('Tenes que ponerle un nomber al link');
+      setError('Tenés que seleccionar una correlativa');
       return false;
     }
     if (!session?.user || session?.user.tier < 1) {
-      setError('Debes iniciar sesion y ser administrador para eliminar un TP');
+      setError(
+        'Debes iniciar sesion y ser administrador para añadir una correlativa'
+      );
       return false;
     }
     return true;
@@ -65,82 +69,73 @@ export default function ModalCreateCorrelative({
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 drop-shadow-2xl text-white flex justify-center items-center">
-      <form
-        className="flex flex-col max-w-80 w-11/12 bg-slate-800 p-5 rounded-lg gap-3 "
-        onSubmit={(e) => (setLoading(true), handleSubmit(e))}
-      >
-        <div>
-          <h3 className="text-lg mb-4">
-            <b>{`Añadir link`}</b>
-          </h3>
-          <div className="flex flex-col [&>*]:flex [&>*]:gap-1">
-            <div className="flex flex-col">
-              <label htmlFor="correlative">Correlativa</label>
-              <select
-                className="text-black"
-                name="correlative"
-                id="correlative"
-                onChange={(e) => setIdCorrelative(Number(e.target.value))}
-                required
+    <MainModal
+      children={
+        <form
+          className="relative flex flex-col w-full"
+          onSubmit={(e) => (setLoading(true), handleSubmit(e))}
+        >
+          <div>
+            <h3 className="text-lg mb-4">
+              <b>Añadir correlativa</b>
+            </h3>
+            <div className="flex flex-col [&>*]:flex [&>*]:gap-1">
+              <div className="flex flex-col">
+                <label htmlFor="correlative">Correlativa</label>
+                <select
+                  className="text-black"
+                  name="correlative"
+                  id="correlative"
+                  onChange={(e) => setIdCorrelative(Number(e.target.value))}
+                  required
+                >
+                  {courses ? (
+                    <>
+                      <option hidden>Selecciona la materia correlativa</option>
+                      {courses.map(({ id, name }) => (
+                        <option key={id} value={id}>
+                          {name}
+                        </option>
+                      ))}
+                    </>
+                  ) : (
+                    <option hidden>Cargando...</option>
+                  )}
+                </select>
+              </div>
+            </div>
+          </div>
+          <div className="my-2">
+            <h3 className="text-sm">Recuerda!</h3>
+            <p className="text-xs">
+              Por favor verifica que el link que quiere subir sea el correcto.
+              Los links tienen que ser de alta prioridad. En caso de cualquier
+              problema podes contactarme:{' '}
+              <a
+                className="underline"
+                target="_blank"
+                href="https://wa.me/+5492235319564"
               >
-                {courses ? (
-                  <>
-                    <option hidden>Selecciona la materia correlativa</option>
-                    {courses.map(({ id, name }) => (
-                      <option key={id} value={id}>
-                        {name}
-                      </option>
-                    ))}
-                  </>
-                ) : (
-                  <option hidden>Cargando...</option>
-                )}
-              </select>
-            </div>
+                2235319564
+              </a>
+            </p>
           </div>
-        </div>
-        <div>
-          <h3 className="text-sm">Recuerda!</h3>
-          <p className="text-xs">
-            Por favor verifica que el link que quiere subir sea el correcto. Los
-            links tienen que ser de alta prioridad. En caso de cualquier
-            problema podes contactarme:{' '}
-            <a
-              className="underline"
-              target="_blank"
-              href="https://wa.me/+5492235319564"
-            >
-              2235319564
-            </a>
-          </p>
-        </div>
-        {loading ? (
           <div className="flex justify-center">
-            <div className="relative">
-              <div className="absolute h-6 w-6 border-x-2 rounded-full animate-spin"></div>
-              <div className="h-6 w-6 border-2 opacity-40 rounded-full animate-ping"></div>
-            </div>
+            {loading ? (
+              <Loading size={6} mode="white" />
+            ) : (
+              <button
+                className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700  transition-colors"
+                type="submit"
+              >
+                Aceptar
+              </button>
+            )}
           </div>
-        ) : (
-          <div className="flex gap-4 justify-center">
-            <button
-              aria-label="Agregar correlativa"
-              title="Agregar"
-              type="submit"
-            >
-              Agregar
-            </button>
-            <button
-              type="button"
-              onClick={() => (setLoading(true), callback(undefined))}
-            >
-              Cancelar
-            </button>
-          </div>
-        )}
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-      </form>
-    </div>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+        </form>
+      }
+      closeModal={() => callback(undefined)}
+    />
   );
 }

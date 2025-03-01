@@ -3,6 +3,7 @@ import { courses } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import ModalCreateCorrelative from './modals/modalCreateCorrelative';
+import ReactDOM from 'react-dom';
 
 export default function ButtonAddCorrelative({ course }: { course: courses }) {
   const [modalAddCorrelative, setModalAddCorrelative] = useState<
@@ -26,12 +27,14 @@ export default function ButtonAddCorrelative({ course }: { course: courses }) {
             Añadir correlativa
           </button>
         </div>
-        {modalAddCorrelative && (
-          <ModalCreateCorrelative
-            course={modalAddCorrelative}
-            callback={handleModalAddCorrelative}
-          />
-        )}
+        {modalAddCorrelative &&
+          ReactDOM.createPortal(
+            <ModalCreateCorrelative
+              course={modalAddCorrelative}
+              callback={handleModalAddCorrelative}
+            />,
+            document.body
+          )}
       </>
     )
   );

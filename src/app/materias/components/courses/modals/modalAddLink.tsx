@@ -1,6 +1,8 @@
 // 'src/app/components/ModalImportImage.tsx'
 'use client';
 
+import { MainModal } from '@/app/components/modals/mainModal';
+import { Loading } from '@/app/components/others/loading';
 import { addLink } from '@/app/lib/actions';
 import { courses } from '@prisma/client';
 import { useSession } from 'next-auth/react';
@@ -64,100 +66,96 @@ export default function ModalAddLink({
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 drop-shadow-2xl text-white flex justify-center items-center">
-      <form
-        className="flex flex-col max-w-80 w-11/12 bg-slate-800 p-5 rounded-lg gap-3 "
-        onSubmit={(e) => (setLoading(true), handleSubmit(e))}
-      >
-        <div>
-          <h3 className="text-lg mb-4">
-            <b>{`Añadir link`}</b>
-          </h3>
-          <div className="flex flex-col [&>*]:flex [&>*]:gap-1">
-            <div className="flex flex-col">
-              <label htmlFor="name">Titulo del link</label>
-              <input
-                className="text-black"
-                type="text"
-                name="name"
-                id="name"
-                autoComplete="ÑÖcompletes"
-                placeholder={'Ingresa el titulo del link'}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
+    <MainModal
+      children={
+        <form
+          className="relative flex flex-col w-full"
+          onSubmit={(e) => (setLoading(true), handleSubmit(e))}
+        >
+          <div>
+            <h3 className="text-lg mb-2">
+              <b>Añadir link</b>
+            </h3>
+            <p>
+              Este link será añadido a la materia <b> "{course.name}"</b>
+            </p>
+            <div className="flex flex-col gap-2 [&>*]:flex ">
+              <div className="flex flex-col">
+                <label htmlFor="name">Titulo del link</label>
+                <input
+                  className="text-black"
+                  type="text"
+                  name="name"
+                  id="name"
+                  autoComplete="ÑÖcompletes"
+                  placeholder={'Ingresa el titulo del link'}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="flex flex-col">
+                <label htmlFor="link">Link</label>
+                <input
+                  className="text-black"
+                  type="url"
+                  name="link"
+                  id="link"
+                  autoComplete="off"
+                  placeholder={'Ingresa el link'}
+                  onChange={(e) => setLink(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="flex flex-col">
+                <label htmlFor="official">Título</label>
+                <select
+                  className="text-black"
+                  name="official"
+                  id="official"
+                  onChange={(e) => (
+                    console.log(Boolean(e.target.value)),
+                    setOfficial(Boolean(e.target.value))
+                  )}
+                  required
+                >
+                  <option hidden>Selecciona el tipo de link</option>
+                  <option value="1">Oficial</option>
+                  <option value="">No oficial</option>
+                </select>
+              </div>
             </div>
-            <div className="flex flex-col">
-              <label htmlFor="link">Link</label>
-              <input
-                className="text-black"
-                type="url"
-                name="link"
-                id="link"
-                autoComplete="off"
-                placeholder={'Ingresa el link'}
-                onChange={(e) => setLink(e.target.value)}
-                required
-              />
-            </div>
-            <div className="flex flex-col">
-              <label htmlFor="official">Título</label>
-              <select
-                className="text-black"
-                name="official"
-                id="official"
-                onChange={(e) => (
-                  console.log(Boolean(e.target.value)),
-                  setOfficial(Boolean(e.target.value))
-                )}
-                required
+          </div>
+          <div className="my-2">
+            <h3 className="text-sm">Recuerda!</h3>
+            <p className="text-xs">
+              Por favor verifica que el link que quiere subir sea el correcto y
+              no este ya disponible en la lista. Los links tienen que ser de
+              alta prioridad. En caso de cualquier problema podes contactarme:{' '}
+              <a
+                className="underline"
+                target="_blank"
+                href="https://wa.me/+5492235319564"
               >
-                <option hidden>Selecciona el tipo de link</option>
-                <option value="1">Oficial</option>
-                <option value="">No oficial</option>
-              </select>
-            </div>
+                2235319564
+              </a>
+            </p>
           </div>
-        </div>
-        <div>
-          <h3 className="text-sm">Recuerda!</h3>
-          <p className="text-xs">
-            Por favor verifica que el link que quiere subir sea el correcto. Los
-            links tienen que ser de alta prioridad. En caso de cualquier
-            problema podes contactarme:{' '}
-            <a
-              className="underline"
-              target="_blank"
-              href="https://wa.me/+5492235319564"
-            >
-              2235319564
-            </a>
-          </p>
-        </div>
-        {loading ? (
           <div className="flex justify-center">
-            <div className="relative">
-              <div className="absolute h-6 w-6 border-x-2 rounded-full animate-spin"></div>
-              <div className="h-6 w-6 border-2 opacity-40 rounded-full animate-ping"></div>
-            </div>
+            {loading ? (
+              <Loading size={6} mode="white" />
+            ) : (
+              <button
+                className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700  transition-colors"
+                type="submit"
+              >
+                Aceptar
+              </button>
+            )}
           </div>
-        ) : (
-          <div className="flex gap-4 justify-center">
-            <button aria-label="Agregar link" title="Agregar" type="submit">
-              Agregar
-            </button>
-            <button
-              type="button"
-              aria-label="Cancelar formulario"
-              title="Cancelar"
-              onClick={() => (setLoading(true), callback(undefined))}
-            >
-              Cancelar
-            </button>
-          </div>
-        )}
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-      </form>
-    </div>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+        </form>
+      }
+      closeModal={() => callback(undefined)}
+    />
   );
 }

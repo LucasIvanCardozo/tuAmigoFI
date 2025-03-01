@@ -8,10 +8,7 @@ import { MdDelete } from 'react-icons/md';
 import ModalReportLink from './modals/modalReportLink';
 import ModalDeleteLink from './modals/modalDeleteLink';
 
-export default function CourseLinksStructure({
-  linksOfficial,
-  linksUnofficial,
-}: {
+interface Params {
   linksOfficial: ({
     _count: {
       links_reports: number;
@@ -36,7 +33,12 @@ export default function CourseLinksStructure({
     official: boolean;
     id_user: number;
   })[];
-}) {
+}
+
+export default function CourseLinksStructure({
+  linksOfficial,
+  linksUnofficial,
+}: Params) {
   const [modalReportLink, setModalReportLink] = useState<links | undefined>();
   const [modalDeleteLink, setModalDeleteLink] = useState<links | undefined>();
   const [viewStateOfficial, setViewStateOfficial] = useState<boolean>(false);

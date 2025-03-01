@@ -3,6 +3,7 @@ import { courses } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import ModalAddLink from './modals/modalAddLink';
+import ReactDOM from 'react-dom';
 
 export default function ButtonAddLink({ course }: { course: courses }) {
   const [modalAddLink, setModalAddLink] = useState<courses | undefined>();
@@ -25,9 +26,11 @@ export default function ButtonAddLink({ course }: { course: courses }) {
           Añadir Link
         </button>
       </div>
-      {modalAddLink && (
-        <ModalAddLink course={modalAddLink} callback={handleModalAddLink} />
-      )}
+      {modalAddLink &&
+        ReactDOM.createPortal(
+          <ModalAddLink course={modalAddLink} callback={handleModalAddLink} />,
+          document.body
+        )}
     </>
   );
 }
