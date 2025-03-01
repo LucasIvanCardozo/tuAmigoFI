@@ -1,8 +1,5 @@
 'use client';
 import { numberIconsModules } from '../../assets/icons';
-import { MdOutlineAddBox } from 'react-icons/md';
-import { FaPlus } from 'react-icons/fa';
-import { IoAddOutline } from 'react-icons/io5';
 import { CgMathPlus } from 'react-icons/cg';
 import { MdDelete } from 'react-icons/md';
 import { MdOutlineReport } from 'react-icons/md';
@@ -329,7 +326,7 @@ export const ModuleContainer = ({ module }: Params) => {
           )}
 
           <button
-            className="flex text-base h-6 pr-1 items-center border-2 border-black rounded-md hover:bg-[--white] transition-colors"
+            className="flex text-base h-6 pr-1 items-center border-2 border-gray-600 rounded-md hover:bg-[#92C1C9] transition-colors hover:border-[#92C1C9]"
             title="Añadir una respuesta"
             aria-label="Añadir una respuesta"
             onClick={() =>

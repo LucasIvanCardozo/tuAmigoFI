@@ -8,7 +8,7 @@ import ButtonInfoScore from './components/buttonInfoScore';
 import { FaArrowRight } from 'react-icons/fa';
 import QuestionSkeleton from './components/skeletons/questionSkeleton';
 
-// export const revalidate = 3600 * 24;
+export const revalidate = 3600 * 24;
 
 export default async function Home() {
   return (

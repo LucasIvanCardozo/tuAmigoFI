@@ -21,7 +21,7 @@ export default async function Course({
 
   return (
     <li className="relative select-none flex flex-col w-full h-min bg-[--white] shadow-md p-2 transform-gpu transition-transform sm:w-11/12 sm:will-change-transform">
-      <div className="relative flex gap-1 justify-between w-full">
+      <div className="relative flex gap-1 justify-between w-full select-text">
         <h2 className="font-bold text-nowrap overflow-x-auto text-lg text-[--white] bg-[--dark-cyan] sm:font-normal sm:text-wrap sm:leading-6">
           {name}
         </h2>

@@ -35,7 +35,7 @@ export default function PdfView({ id, url }: { id: number; url: string }) {
 
   return (
     <>
-      <div className="relative flex justify-center w-full">
+      <div className="relative flex justify-center w-full select-none">
         <Image
           src={imageUrl}
           alt="PDF"
@@ -50,32 +50,40 @@ export default function PdfView({ id, url }: { id: number; url: string }) {
           loading="lazy"
         />
       </div>
-      <div className="absolute bottom-0 left-0 flex justify-center w-full">
+      <div className="absolute bottom-0 left-0 flex justify-center w-full select-none">
         <div className="flex items-cente">
           <span className="relative my-1 bg-white bg-opacity-65">
-            {pageNumber != 1 && (
+            {
               <button
-                className="absolute h-full right-full top-0 bottom-0 bg-white bg-opacity-65"
+                className={`${
+                  pageNumber == 1 && 'opacity-0 pointer-events-none'
+                } absolute h-full right-full top-0 bottom-0 bg-white bg-opacity-65 transform-gpu transition-opacity rounded-tl-md rounded-bl-md`}
                 aria-label="Ir a página izquierda"
                 title="Ir a izquierda"
                 onClick={() => handlePage(pageNumber - 1)}
               >
                 <MdOutlineKeyboardArrowLeft />
               </button>
-            )}
+            }
             Página {pageNumber}
-            {pageNumber != lastPage && (
+            {
               <button
-                className="absolute h-full left-full top-0 bottom-0 bg-white bg-opacity-65"
+                className={`${
+                  pageNumber == lastPage && 'opacity-0 pointer-events-none'
+                } absolute h-full left-full top-0 bottom-0 bg-white bg-opacity-65 transform-gpu transition-opacity rounded-tr-md rounded-br-md`}
                 aria-label="Ir a página derecha"
                 title="Ir a derecha"
                 onClick={() => handlePage(pageNumber + 1)}
               >
                 <MdOutlineKeyboardArrowRight />
               </button>
-            )}
-            {loadingImage && (
-              <div className="absolute bottom-full flex justify-center w-full sm:w-full ">
+            }
+            {
+              <div
+                className={`${
+                  !loadingImage && 'opacity-0'
+                } absolute bottom-full flex justify-center w-full sm:w-full transform-gpu transition-opacity`}
+              >
                 <div
                   className="border-black inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] bg-white bg-opacity-65"
                   role="status"
@@ -85,12 +93,12 @@ export default function PdfView({ id, url }: { id: number; url: string }) {
                   </span>
                 </div>
               </div>
-            )}
+            }
           </span>
         </div>
       </div>
       <button
-        className="absolute h-9 w-9 top-0 right-0 m-2 bg-white bg-opacity-65 rounded-md"
+        className="absolute h-6 w-6 top-0 right-0 m-2 bg-white bg-opacity-65 rounded-md select-none"
         onClick={downloadFile}
         aria-label="Descargar PDF"
         title="Descargar PDF"
