@@ -1,5 +1,7 @@
 import Image from 'next/image';
 
+export const revalidate = 3600 * 24;
+
 export default function Contactame() {
   return (
     <>
