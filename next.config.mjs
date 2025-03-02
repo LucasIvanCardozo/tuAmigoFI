@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  transpilePackages: ['highlight.js'],
   images: {
-    transpilePackages: ['highlight.js'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -13,6 +13,6 @@ const nextConfig = {
       },
     ],
   },
-}; 
+};
 
 export default nextConfig;
