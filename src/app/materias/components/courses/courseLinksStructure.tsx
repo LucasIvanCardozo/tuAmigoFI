@@ -72,7 +72,8 @@ export default function CourseLinksStructure({
       >
         {viewStateOfficial ? <VscTriangleDown /> : <VscTriangleRight />}
         <h3>
-          <b>Links oficiales</b>
+          <b>Links oficiales </b>
+          {linksOfficial.length}
         </h3>
       </button>
       <div className="overflow-hidden">
@@ -132,6 +133,7 @@ export default function CourseLinksStructure({
         {viewStateUnofficial ? <VscTriangleDown /> : <VscTriangleRight />}
         <h3>
           <b>Links no oficiales</b>
+          {linksUnofficial.length}
         </h3>
       </button>
       <div className="overflow-hidden">
