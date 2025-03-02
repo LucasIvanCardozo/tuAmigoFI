@@ -51,7 +51,7 @@ export default function Nav() {
 
   return (
     <nav
-      className="fixed select-none top-0 h-10 w-full z-30 flex justify-end sm:justify-center sm:mt-2 sm:z-50"
+      className="fixed select-none top-0 h-10 w-full z-30 flex justify-end sm:justify-center sm:mx-auto sm:left-0 sm:right-0 sm:max-w-max sm:mt-2 sm:z-50"
       role="navigation"
     >
       <Link
