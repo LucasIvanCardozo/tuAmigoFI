@@ -239,7 +239,12 @@ export async function fetchTpsWithAllData(id_materias: number) {
     include: {
       tps_reports: true,
       users: true,
-      tps_responses: { include: { tps_reactions: true, users: true } },
+      tps_responses: {
+        include: { tps_reactions: true, users: true },
+        orderBy: {
+          number: 'asc',
+        },
+      },
     },
     orderBy: {
       number: 'asc',

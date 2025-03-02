@@ -238,7 +238,7 @@ export default function ModuleResponse({
             />
           </div>
         ) : responses[indexResponse].response.type == 3 ? (
-          <div className="whitespace-pre-wrap bg-gray-900 p-3 text-white rounded-md overflow-x-auto">
+          <div className="bg-gray-900 p-3 text-white rounded-md">
             <Code code={responses[indexResponse].response.text ?? ''} />
           </div>
         ) : null
