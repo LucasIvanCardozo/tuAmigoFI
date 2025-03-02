@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    transpilePackages: ['package-name'],
+    transpilePackages: ['highlight.js'],
     remotePatterns: [
       {
         protocol: 'https',
