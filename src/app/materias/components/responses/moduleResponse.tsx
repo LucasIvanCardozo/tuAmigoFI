@@ -13,6 +13,7 @@ import { useMainContext } from '@/app/lib/contexts';
 import ButtonReaction from './buttonReaction';
 import { HandlerInputs } from '@/app/components/form/inputs/handlerInputs';
 import { deleteMidtermResponse, deleteTpResponse } from '@/app/lib/actions';
+import { Code } from './Code';
 
 export default function ModuleResponse({
   problem,
@@ -237,8 +238,8 @@ export default function ModuleResponse({
             />
           </div>
         ) : responses[indexResponse].response.type == 3 ? (
-          <div className="whitespace-pre-wrap">
-            <p>{responses[indexResponse].response.text}</p>
+          <div className="whitespace-pre-wrap bg-gray-900 p-3 text-white rounded-md">
+            <Code code={responses[indexResponse].response.text ?? ''} />
           </div>
         ) : null
       }
