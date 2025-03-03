@@ -34,7 +34,7 @@ export default function SearchCourses() {
     }
     params.set('page', '1');
     replace(`${pathname}?${params.toString()}`);
-  }, 500);
+  }, 300);
 
   return (
     <input

@@ -83,7 +83,7 @@ export const MainModule = ({ modules, course, typeModule }: Params) => {
           </MainModal>
         )}
         <AsideModules />
-        <section className="text-[--black] flex flex-col grow relative h-full p-3 sm:p-0">
+        <section className="text-[--black] flex flex-col grow relative h-full p-3 overflow-hidden sm:p-0 ">
           <div>
             <div className="flex justify-between items-end">
               <h1 className="text-2xl sm:text-3xl font-bold">

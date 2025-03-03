@@ -5,7 +5,7 @@ export const ProblemsTable = () => {
   const { stateModules } = useMainContext();
   return (
     <>
-      <ul className="flex flex-col gap-1 grow relative overflow-y-auto">
+      <ul className="flex flex-col gap-1 grow relative overflow-y-auto overflow-x-hidden">
         {stateModules.modules.length == 0 ? (
           <li className="w-full h-full flex justify-center items-center text-3xl">
             <p>No hay datos :,c</p>
