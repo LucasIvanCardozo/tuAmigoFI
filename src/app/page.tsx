@@ -24,7 +24,7 @@ export default async function Home() {
           />
           <h1 className="font-bold absolute text-4xl top-0 left-full text-left bg-[#F3F4F6] ml-1 p-1 rounded-2xl rounded-es-none shadow-md sm:ml-6 sm:p-2">
             Bienvenido!
-            <p className="text-nowrap text-xl font-normal">
+            <p className="whitespace-nowrap text-xl font-normal">
               Aquí tu amigo 'FI'
             </p>
           </h1>
@@ -108,7 +108,7 @@ export default async function Home() {
           ].map(({ question, link, value }, index) => (
             <li
               key={index}
-              className="flex flex-nowrap gap-1 items-center text-nowrap "
+              className="flex flex-nowrap gap-1 items-center whitespace-nowrap "
             >
               <span className="w-max">
                 <b>{question}</b>

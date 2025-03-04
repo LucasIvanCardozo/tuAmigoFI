@@ -246,7 +246,7 @@ export default function CalendarSection() {
             }}
           />
         )}
-        <div className="text-nowrap flex justify-center gap-2 flex-wrap m-2">
+        <div className="whitespace-nowrap flex justify-center gap-2 flex-wrap m-2">
           <div className=" h-4 relative flex items-center gap-1">
             <div className="h-4/5 aspect-video  bg-[#4682B4]"></div>
             <span>Receso</span>

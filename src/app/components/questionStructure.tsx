@@ -57,7 +57,7 @@ export default function QuestionsStructure({
         </div>
         <div className="flex gap-2">
           <a
-            className="text-nowrap text-center cursor-pointer self-end py-1 px-2 text-base rounded-sm bg-[--midnight-green] text-[--white] grow"
+            className="whitespace-nowrap text-center cursor-pointer self-end py-1 px-2 text-base rounded-sm bg-[--midnight-green] text-[--white] grow"
             onClick={(e) => {
               (!degreeState || !planState) &&
                 (e.preventDefault(),
@@ -73,7 +73,7 @@ export default function QuestionsStructure({
             Plan de estudio 👀
           </a>
           <a
-            className="text-nowrap text-center cursor-pointer self-end py-1 px-2 text-base rounded-sm bg-[--midnight-green] text-[--white] grow"
+            className="whitespace-nowrap text-center cursor-pointer self-end py-1 px-2 text-base rounded-sm bg-[--midnight-green] text-[--white] grow"
             onClick={(e) => {
               !degreeState &&
                 (e.preventDefault(), window.alert('Debes elegir tu carrera.'));

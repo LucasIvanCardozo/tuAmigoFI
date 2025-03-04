@@ -29,7 +29,7 @@ export const AsideMainButton = ({ onClick }: Params) => {
           ' transform-gpu transition-opacity absolute top-0 left-0 w-full h-full p-1'
         }
       />
-      <div className="absolute h-8 left-full top-0 text-xl bg-[--black-olive] drop-shadow-sm rounded-md px-1 flex items-center justify-center rounded-s-none text-nowrap sm:hidden">
+      <div className="absolute h-8 left-full top-0 text-xl bg-[--black-olive] drop-shadow-sm rounded-md px-1 flex items-center justify-center rounded-s-none whitespace-nowrap sm:hidden">
         {isTp ? <b>Busca tu TP</b> : <b>Busca tu Examen</b>}
       </div>
     </button>

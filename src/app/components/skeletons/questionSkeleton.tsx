@@ -7,10 +7,10 @@ export default async function QuestionSkeleton() {
         </div>
       </div>
       <div className="flex gap-2">
-        <div className="text-nowrap text-center cursor-pointer self-end py-1 px-2 text-base rounded-sm bg-[--midnight-green] text-[--white] grow opacity-65">
+        <div className="whitespace-nowrap text-center cursor-pointer self-end py-1 px-2 text-base rounded-sm bg-[--midnight-green] text-[--white] grow opacity-65">
           Plan de estudio 👀
         </div>
-        <div className="text-nowrap text-center cursor-pointer self-end py-1 px-2 text-base rounded-sm bg-[--midnight-green] text-[--white] grow opacity-65">
+        <div className="whitespace-nowrap text-center cursor-pointer self-end py-1 px-2 text-base rounded-sm bg-[--midnight-green] text-[--white] grow opacity-65">
           Horarios de cursada 👀
         </div>
       </div>

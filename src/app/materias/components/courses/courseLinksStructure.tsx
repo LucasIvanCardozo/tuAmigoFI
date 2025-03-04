@@ -88,7 +88,7 @@ export default function CourseLinksStructure({
               link._count.links_reports < 5 && (
                 <span
                   key={link.id}
-                  className="relative text-sm text-nowrap flex"
+                  className="relative text-sm whitespace-nowrap flex"
                 >
                   <a
                     href={link.link}
@@ -146,7 +146,7 @@ export default function CourseLinksStructure({
           {linksUnofficial.map(
             (link, index) =>
               link._count.links_reports < 5 && (
-                <span key={index} className="relative text-sm text-nowrap flex">
+                <span key={index} className="relative text-sm whitespace-nowrap flex">
                   <a
                     href={link.link}
                     target="_blanck"

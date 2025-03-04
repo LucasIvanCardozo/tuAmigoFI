@@ -17,7 +17,7 @@ export default function Contactame() {
         </div>
         <h1 className="font-bold text-4xl text-left bg-[#F3F4F6] ml-1 p-1 h-min rounded-2xl rounded-es-none shadow-md sm:ml-6 sm:p-2">
           Hola! 🥰
-          <p className="text-nowrap text-xl font-normal">
+          <p className="whitespace-nowrap text-xl font-normal">
             Aquí podrás contactarme.
           </p>
         </h1>
