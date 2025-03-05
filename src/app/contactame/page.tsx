@@ -5,7 +5,7 @@ export const revalidate = 3600 * 24;
 export default function Contactame() {
   return (
     <>
-      <main className="pt-14 relative flex text-[--black] min-h-36 h-auto w-11/12 justify-center mx-auto max-w-screen-md my-10 sm:pt-20 sm:justify-center">
+      <main className="pt-14 relative flex text-[--black] w-11/12 justify-center mx-auto max-w-screen-md my-10 sm:pt-20 sm:justify-center">
         <div className="relative w-2/5 max-w-52">
           <Image
             className="object-contain w-full "
