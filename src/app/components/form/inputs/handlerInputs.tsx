@@ -26,7 +26,7 @@ export const HandlerInputs = (input: TypeInput) => {
     const file = e.target.files?.[0];
     if (file) {
       if (file.type == 'application/pdf') {
-        if (file.size > 3145728) {
+        if (file.size > 31457280) {
           e.target.value = '';
           setError('El archivo pesa más de 3 MB');
         } else {
