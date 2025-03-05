@@ -35,7 +35,7 @@ export default function PdfView({ id, url }: { id: number; url: string }) {
 
   return (
     <>
-      <div className="relative flex justify-center w-full select-none object-contain aspect-[1/1.4142]">
+      <div className="relative flex justify-center w-full select-none aspect-[1/1.4142]">
         <Image
           src={imageUrl}
           alt="PDF"
@@ -44,6 +44,9 @@ export default function PdfView({ id, url }: { id: number; url: string }) {
             setLastPage(pageNumber - 1);
             setPageNumber(pageNumber - 1);
             setLoadingImage(false);
+          }}
+          style={{
+            objectFit: 'contain',
           }}
           width={1200}
           height={1697}
