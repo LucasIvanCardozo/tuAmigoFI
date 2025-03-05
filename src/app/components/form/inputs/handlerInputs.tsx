@@ -47,7 +47,7 @@ export const HandlerInputs = (input: TypeInput) => {
     const file = e.target.files?.[0];
     if (file) {
       if (file.type.split('/')[0] == 'image') {
-        if (file.size > 1048576) {
+        if (file.size > 5242880) {
           e.target.value = '';
           setError('El archivo pesa más de 1 MB');
         } else {
