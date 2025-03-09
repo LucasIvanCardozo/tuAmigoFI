@@ -35,7 +35,7 @@ export default function PdfView({ id, url }: { id: number; url: string }) {
 
   return (
     <>
-      <div className="relative flex justify-center w-full select-none aspect-[1/1.4142]">
+      <div className="relative flex justify-center w-full select-none">
         <Image
           src={imageUrl}
           alt="PDF"

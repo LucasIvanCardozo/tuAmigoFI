@@ -1,6 +1,5 @@
 import { createUser } from '@/app/lib/actions';
 import { fetchUser, fetchUserWithoutThrow } from '@/app/lib/data';
-import { users } from '@prisma/client';
 import NextAuth from 'next-auth';
 import { JWT } from 'next-auth/jwt';
 import GoogleProvider from 'next-auth/providers/google';
