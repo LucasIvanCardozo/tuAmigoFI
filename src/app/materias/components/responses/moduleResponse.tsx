@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import { CldImage } from 'next-cloudinary';
-import 'katex/dist/katex.min.css';
 import PdfView from '@/app/components/pdfView';
 import {
   BiSolidRightArrowSquare,
