@@ -95,6 +95,7 @@ export const AsideModules = () => {
                     banned: false,
                     tier: session.user.tier,
                     image: '',
+                    created_at: new Date(),
                   },
                   problems: [],
                   module: module,

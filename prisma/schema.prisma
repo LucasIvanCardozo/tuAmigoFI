@@ -76,6 +76,7 @@ model links {
   link          String          @db.VarChar
   official      Boolean
   id_user       Int
+  created_at    DateTime?       @default(now()) @db.Timestamp(6)
   courses       courses         @relation(fields: [id_course], references: [id], onDelete: Cascade, onUpdate: NoAction)
   users         users           @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: NoAction)
   links_reports links_reports[]
@@ -100,6 +101,7 @@ model midterms {
   name               String               @db.VarChar
   date               DateTime             @db.Date
   id_user            Int
+  created_at         DateTime?            @default(now()) @db.Timestamp(6)
   courses            courses              @relation(fields: [id_course], references: [id], onDelete: Cascade, onUpdate: NoAction)
   users              users                @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: NoAction)
   midterms_reports   midterms_reports[]
@@ -139,6 +141,7 @@ model midterms_responses {
   type               Int
   text               String?              @db.VarChar
   id_user            Int
+  created_at         DateTime?            @default(now()) @db.Timestamp(6)
   midterms_reactions midterms_reactions[]
   midterms           midterms             @relation(fields: [id_module], references: [id], onDelete: Cascade, onUpdate: NoAction)
   users              users                @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: NoAction)
@@ -157,6 +160,7 @@ model tps {
   number        Int?
   year          Int
   id_user       Int
+  created_at    DateTime?       @default(now()) @db.Timestamp(6)
   courses       courses         @relation(fields: [id_course], references: [id], onDelete: Cascade, onUpdate: NoAction)
   users         users           @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: NoAction)
   tps_reports   tps_reports[]
@@ -196,6 +200,7 @@ model tps_responses {
   type          Int
   text          String?         @db.VarChar
   id_user       Int
+  created_at    DateTime?       @default(now()) @db.Timestamp(6)
   tps_reactions tps_reactions[]
   tps           tps             @relation(fields: [id_module], references: [id], onDelete: Cascade, onUpdate: NoAction)
   users         users           @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: NoAction)
@@ -208,6 +213,7 @@ model users {
   image              String               @db.VarChar
   tier               Int
   banned             Boolean
+  created_at         DateTime?            @default(now()) @db.Timestamp(6)
   links              links[]
   links_reports      links_reports[]
   midterms           midterms[]

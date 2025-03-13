@@ -14,26 +14,12 @@ interface Params {
     _count: {
       links_reports: number;
     };
-  } & {
-    name: string;
-    id: number;
-    id_course: number;
-    link: string;
-    official: boolean;
-    id_user: number;
-  })[];
+  } & links)[];
   linksUnofficial: ({
     _count: {
       links_reports: number;
     };
-  } & {
-    name: string;
-    id: number;
-    id_course: number;
-    link: string;
-    official: boolean;
-    id_user: number;
-  })[];
+  } & links)[];
 }
 
 export default function CourseLinksStructure({
@@ -146,7 +132,10 @@ export default function CourseLinksStructure({
           {linksUnofficial.map(
             (link, index) =>
               link._count.links_reports < 5 && (
-                <span key={index} className="relative text-sm whitespace-nowrap flex">
+                <span
+                  key={index}
+                  className="relative text-sm whitespace-nowrap flex"
+                >
                   <a
                     href={link.link}
                     target="_blanck"

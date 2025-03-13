@@ -178,6 +178,7 @@ export const ModuleContainer = ({ module }: Params) => {
                 name: session.user.name as string,
                 tier: 0,
                 banned: false,
+                created_at: new Date(),
               },
               response: addResponse,
               reactions: [],
