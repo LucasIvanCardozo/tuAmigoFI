@@ -33,7 +33,7 @@ async function refreshAccessToken(token: JWT): Promise<JWT> {
     return { ...token, error: 'RefreshAccessTokenError' };
   }
 }
-
+ 
 const authOptions = NextAuth({
   providers: [
     GoogleProvider({
