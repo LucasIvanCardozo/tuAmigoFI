@@ -14,7 +14,7 @@ export default function CorrelativeList({
       {index != 0 && <span className="flex whitespace-pre"> - </span>}
       <Link
         className="whitespace-nowrap min-h-6 hover:text-[--midnight-green] hover:underline"
-        href={`https://tu-amigo-fi.vercel.app/materias?search=${name
+        href={`https://tuamigofi.ar/materias?search=${name
           .normalize('NFD')
           .replace(/[\u0300-\u036f]/g, '')}`}
       >
