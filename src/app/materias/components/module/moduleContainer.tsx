@@ -391,7 +391,7 @@ export const ModuleContainer = ({ module }: Params) => {
         </div>
       </div>
       <div className="bg-[--white] text-base leading-5 drop-shadow-md flex flex-col gap-1">
-        <div className="relative overflow-hidden bg-[#96cad3] h-min rounded-b-lg p-2">
+        <div className="relative overflow-hidden bg-[#96cad3] h-min rounded-b-lg p-1 sm:p-2">
           <div className="absolute z-10 bg-[--white] rounded-md m-2 opacity-65 top-0 left-0">{`Por ${user.name}`}</div>
           {session && (
             <button
