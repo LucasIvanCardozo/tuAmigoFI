@@ -112,15 +112,14 @@ export default function ModuleResponse({
   };
 
   return (
-    <li className="relative bg-[--white] p-1 text-base leading-5 shadow-md flex flex-col min-h-32">
+    <li className="relative bg-[--white] text-base leading-5 shadow-[0px_0px_5px_0px_rgba(0,0,0,0.5)] mx-2 my-1 flex flex-col min-h-32">
       <div>
-        <p className="bg-[#C8E0E4] p-1 rounded-md flex justify-between">
-          <b className="bg-[#92C1C9] rounded-sm">{`Respuesta ${problem.number}:`}</b>
-          <br />
-          <span className="opacity-75">
+        <span className="bg-[#C8E0E4] flex justify-between items-center">
+          <b className="bg-[#9fc8cf] p-1">{`Respuesta ${problem.number}:`}</b>
+          <span className="opacity-75 p-1">
             Por {`${responses[indexResponse].user.name}`}
           </span>
-        </p>
+        </span>
 
         <div className="w-full h-5 relative flex justify-between">
           {session?.user.tier == 2 && (
@@ -204,11 +203,11 @@ export default function ModuleResponse({
       {
         // 0 -> texto ; 1 -> imagen ; 2 -> pdf ; 3 -> codigo
         responses[indexResponse].response.type == 0 ? (
-          <div className="text-balance">
+          <div className="whitespace-pre px-2 pb-7">
             <p>{responses[indexResponse].response.text}</p>
           </div>
         ) : responses[indexResponse].response.type == 1 ? (
-          <div className="relative flex justify-center w-full max-h-250">
+          <div className="relative flex justify-center w-full max-h-250 pb-7">
             <CldImage
               src={`https://res.cloudinary.com/donzj5rlf/image/upload/f_auto,q_auto/v${Math.floor(
                 Date.now() / (1000 * 60 * 60 * 24 * 7)
@@ -228,7 +227,7 @@ export default function ModuleResponse({
             />
           </div>
         ) : responses[indexResponse].response.type == 2 ? (
-          <div className="relative overflow-hidden bg-[#C8E0E4] h-min max-w-full py-1 rounded-md sm:p-1">
+          <div className="relative overflow-hidden bg-[#C8E0E4] h-min max-w-full py-1 pb-7 rounded-md sm:p-1">
             <PdfView
               id={responses[indexResponse].response.id_user}
               url={`${isTp ? 'tps' : 'parciales'}/respuestas/${
@@ -237,7 +236,7 @@ export default function ModuleResponse({
             />
           </div>
         ) : responses[indexResponse].response.type == 3 ? (
-          <div className="bg-gray-900 p-3 text-white rounded-md overflow-x-auto">
+          <div className="bg-gray-900 p-3 text-white rounded-md overflow-x-auto pb-7">
             <Code code={responses[indexResponse].response.text ?? ''} />
           </div>
         ) : null

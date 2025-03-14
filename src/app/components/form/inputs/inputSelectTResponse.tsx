@@ -1,4 +1,8 @@
-import { inputSelectResponse, TypeInput, TypeResponse } from '@/app/assets/types';
+import {
+  inputSelectResponse,
+  TypeInput,
+  TypeResponse,
+} from '@/app/assets/types';
 import { ChangeEvent } from 'react';
 
 interface Params {
@@ -38,16 +42,15 @@ export const InputSelectResponse = ({
         </select>
       </div>
       {typeResponse == '0' ? (
-        <div className="flex flex-col">
-          <input
-            className="text-black"
-            type="text"
-            name="text"
-            id="text"
-            placeholder={'Ingresa tu respuesta'}
+        <div className="flex flex-col text-[--black]">
+          <textarea
+            name="code"
+            id="code"
+            rows={3}
+            cols={50}
+            placeholder="Ingresa tu respuesta aquí..."
             onChange={(e) => setValue(e.target.value)}
-            required
-          />
+          ></textarea>
         </div>
       ) : typeResponse == '1' ? (
         <input
