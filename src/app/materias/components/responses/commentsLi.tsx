@@ -24,7 +24,7 @@ export const CommentsLi = ({ comments }: Params) => {
     },
   ];
   return (
-    <>
+    <div className="hidden">
       <form className="flex p-1 gap-1 bg-blue-300">
         <input
           className="grow"
@@ -38,6 +38,6 @@ export const CommentsLi = ({ comments }: Params) => {
           <Comment key={comment.id} comment={comment} />
         ))}
       </ul>
-    </>
+    </div>
   );
 };
