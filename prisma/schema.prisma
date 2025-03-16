@@ -110,6 +110,17 @@ model midterms {
   @@unique([id, id_course], map: "midterms_id_id_course_idx")
 }
 
+model midterms_comments {
+  id                          Int                           @id @default(autoincrement())
+  id_response                 Int
+  text                        String?                       @db.VarChar
+  id_user                     Int
+  created_at                  DateTime?                     @default(now()) @db.Timestamp(6)
+  midterms_responses          midterms_responses            @relation(fields: [id_response], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users                       users                         @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  midterms_comments_reactions midterms_comments_reactions[]
+}
+
 model midterms_reactions {
   id                 Int                @id @default(autoincrement())
   id_user            Int
@@ -142,6 +153,7 @@ model midterms_responses {
   text               String?              @db.VarChar
   id_user            Int
   created_at         DateTime?            @default(now()) @db.Timestamp(6)
+  midterms_comments  midterms_comments[]
   midterms_reactions midterms_reactions[]
   midterms           midterms             @relation(fields: [id_module], references: [id], onDelete: Cascade, onUpdate: NoAction)
   users              users                @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: NoAction)
@@ -167,6 +179,17 @@ model tps {
   tps_responses tps_responses[]
 
   @@unique([id, id_course], map: "tps_id_id_course_idx")
+}
+
+model tps_comments {
+  id                     Int                      @id @default(autoincrement())
+  id_response            Int
+  text                   String?                  @db.VarChar
+  id_user                Int
+  created_at             DateTime?                @default(now()) @db.Timestamp(6)
+  tps_responses          tps_responses            @relation(fields: [id_response], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users                  users                    @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  tps_comments_reactions tps_comments_reactions[]
 }
 
 model tps_reactions {
@@ -201,33 +224,64 @@ model tps_responses {
   text          String?         @db.VarChar
   id_user       Int
   created_at    DateTime?       @default(now()) @db.Timestamp(6)
+  tps_comments  tps_comments[]
   tps_reactions tps_reactions[]
   tps           tps             @relation(fields: [id_module], references: [id], onDelete: Cascade, onUpdate: NoAction)
   users         users           @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model users {
-  id                 Int                  @id @default(autoincrement())
-  email              String               @unique @db.VarChar
-  name               String               @db.VarChar
-  image              String               @db.VarChar
-  tier               Int
-  banned             Boolean
-  created_at         DateTime?            @default(now()) @db.Timestamp(6)
-  links              links[]
-  links_reports      links_reports[]
-  midterms           midterms[]
-  midterms_reactions midterms_reactions[]
-  midterms_reports   midterms_reports[]
-  midterms_responses midterms_responses[]
-  tps                tps[]
-  tps_reactions      tps_reactions[]
-  tps_reports        tps_reports[]
-  tps_responses      tps_responses[]
+  id                          Int                           @id @default(autoincrement())
+  email                       String                        @unique @db.VarChar
+  name                        String                        @db.VarChar
+  image                       String                        @db.VarChar
+  tier                        Int
+  banned                      Boolean
+  created_at                  DateTime?                     @default(now()) @db.Timestamp(6)
+  links                       links[]
+  links_reports               links_reports[]
+  midterms                    midterms[]
+  midterms_comments           midterms_comments[]
+  midterms_comments_reactions midterms_comments_reactions[]
+  midterms_reactions          midterms_reactions[]
+  midterms_reports            midterms_reports[]
+  midterms_responses          midterms_responses[]
+  tps                         tps[]
+  tps_comments                tps_comments[]
+  tps_comments_reactions      tps_comments_reactions[]
+  tps_reactions               tps_reactions[]
+  tps_reports                 tps_reports[]
+  tps_responses               tps_responses[]
 }
 
 model years {
   id            Int             @id @default(autoincrement())
   name          String          @unique @db.VarChar
   courses_years courses_years[]
+}
+
+model midterms_comments_reactions {
+  id                Int               @id @default(autoincrement())
+  id_user           Int
+  id_comment        Int
+  created_at        DateTime?         @default(now()) @db.Timestamp(6)
+  midterms_comments midterms_comments @relation(fields: [id_comment], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users             users             @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([id_user, id_comment], map: "midterms_comments_reactions_id_user_id_comment_idx")
+  @@index([id_comment])
+  @@index([id_user])
+}
+
+model tps_comments_reactions {
+  id           Int          @id @default(autoincrement())
+  id_user      Int
+  id_comment   Int
+  created_at   DateTime?    @default(now()) @db.Timestamp(6)
+  tps_comments tps_comments @relation(fields: [id_comment], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users        users        @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([id_user, id_comment], map: "tps_comments_reactions_id_user_id_comment_idx")
+  @@index([id_comment])
+  @@index([id_user])
 }

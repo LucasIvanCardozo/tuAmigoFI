@@ -13,6 +13,7 @@ import ButtonReaction from './buttonReaction';
 import { HandlerInputs } from '@/app/components/form/inputs/handlerInputs';
 import { deleteMidtermResponse, deleteTpResponse } from '@/app/lib/actions';
 import { Code } from './Code';
+import { CommentsLi } from './commentsLi';
 
 export default function ModuleResponse({
   problem,
@@ -113,7 +114,7 @@ export default function ModuleResponse({
 
   return (
     <li className="relative bg-[--white] text-base leading-5 shadow-[0px_0px_5px_0px_rgba(0,0,0,0.5)] mx-2 my-1 flex flex-col min-h-32">
-      <div>
+      <div className="relative">
         <span className="bg-[#C8E0E4] flex justify-between items-center">
           <b className="bg-[#9fc8cf] p-1">{`Respuesta ${problem.number}:`}</b>
           <span className="opacity-75 p-1">
@@ -178,7 +179,6 @@ export default function ModuleResponse({
               <MdDelete className="h-full w-full" />
             </button>
           )}
-          <span></span>
           <div className="flex gap-1">
             <button
               className="h-full aspect-square text-[--black-olive] opacity-90"
@@ -199,53 +199,54 @@ export default function ModuleResponse({
             </button>
           </div>
         </div>
+        {
+          // 0 -> texto ; 1 -> imagen ; 2 -> pdf ; 3 -> codigo
+          responses[indexResponse].response.type == 0 ? (
+            <div className="whitespace-pre px-2 pb-7">
+              <p>{responses[indexResponse].response.text}</p>
+            </div>
+          ) : responses[indexResponse].response.type == 1 ? (
+            <div className="relative flex justify-center w-full max-h-250 pb-7">
+              <CldImage
+                src={`https://res.cloudinary.com/donzj5rlf/image/upload/f_auto,q_auto/v${Math.floor(
+                  Date.now() / (1000 * 60 * 60 * 24 * 7)
+                )}/${isTp ? 'tps' : 'parciales'}/respuestas/${
+                  responses[indexResponse].response.id_module
+                }/${responses[indexResponse].response.number}/${
+                  responses[indexResponse].response.id_user
+                }`}
+                alt=""
+                width="500"
+                height="500"
+                style={{
+                  objectFit: 'cover',
+                  width: '100%',
+                  height: 'auto',
+                }}
+              />
+            </div>
+          ) : responses[indexResponse].response.type == 2 ? (
+            <div className="relative overflow-hidden bg-[#C8E0E4] h-min max-w-full py-1 pb-7 rounded-md sm:p-1">
+              <PdfView
+                id={responses[indexResponse].response.id_user}
+                url={`${isTp ? 'tps' : 'parciales'}/respuestas/${
+                  responses[indexResponse].response.id_module
+                }/${responses[indexResponse].response.number}`}
+              />
+            </div>
+          ) : responses[indexResponse].response.type == 3 ? (
+            <div className="bg-gray-900 p-3 text-white rounded-md overflow-x-auto pb-7">
+              <Code code={responses[indexResponse].response.text ?? ''} />
+            </div>
+          ) : null
+        }
+        <ButtonReaction
+          indexResponse={indexResponse}
+          responses={responses}
+          setResponses={setResponses}
+        />
       </div>
-      {
-        // 0 -> texto ; 1 -> imagen ; 2 -> pdf ; 3 -> codigo
-        responses[indexResponse].response.type == 0 ? (
-          <div className="whitespace-pre px-2 pb-7">
-            <p>{responses[indexResponse].response.text}</p>
-          </div>
-        ) : responses[indexResponse].response.type == 1 ? (
-          <div className="relative flex justify-center w-full max-h-250 pb-7">
-            <CldImage
-              src={`https://res.cloudinary.com/donzj5rlf/image/upload/f_auto,q_auto/v${Math.floor(
-                Date.now() / (1000 * 60 * 60 * 24 * 7)
-              )}/${isTp ? 'tps' : 'parciales'}/respuestas/${
-                responses[indexResponse].response.id_module
-              }/${responses[indexResponse].response.number}/${
-                responses[indexResponse].response.id_user
-              }`}
-              alt=""
-              width="500"
-              height="500"
-              style={{
-                objectFit: 'cover',
-                width: '100%',
-                height: 'auto',
-              }}
-            />
-          </div>
-        ) : responses[indexResponse].response.type == 2 ? (
-          <div className="relative overflow-hidden bg-[#C8E0E4] h-min max-w-full py-1 pb-7 rounded-md sm:p-1">
-            <PdfView
-              id={responses[indexResponse].response.id_user}
-              url={`${isTp ? 'tps' : 'parciales'}/respuestas/${
-                responses[indexResponse].response.id_module
-              }/${responses[indexResponse].response.number}`}
-            />
-          </div>
-        ) : responses[indexResponse].response.type == 3 ? (
-          <div className="bg-gray-900 p-3 text-white rounded-md overflow-x-auto pb-7">
-            <Code code={responses[indexResponse].response.text ?? ''} />
-          </div>
-        ) : null
-      }
-      <ButtonReaction
-        indexResponse={indexResponse}
-        responses={responses}
-        setResponses={setResponses}
-      />
+      <CommentsLi comments={[]} />
     </li>
   );
 }

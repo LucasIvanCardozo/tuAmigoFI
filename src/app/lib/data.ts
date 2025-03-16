@@ -208,7 +208,20 @@ export async function fetchMidtermsWithAllData(id_materias: number) {
       midterms_reports: true,
       users: true,
       midterms_responses: {
-        include: { midterms_reactions: true, users: true },
+        include: {
+          midterms_reactions: true,
+          users: true,
+          midterms_comments: {
+            include: {
+              midterms_comments_reactions: true,
+            },
+            orderBy: {
+              midterms_comments_reactions: {
+                _count: 'desc',
+              },
+            },
+          },
+        },
       },
     },
     orderBy: {
@@ -240,7 +253,20 @@ export async function fetchTpsWithAllData(id_materias: number) {
       tps_reports: true,
       users: true,
       tps_responses: {
-        include: { tps_reactions: true, users: true },
+        include: {
+          tps_reactions: true,
+          users: true,
+          tps_comments: {
+            include: {
+              tps_comments_reactions: true,
+            },
+            orderBy: {
+              tps_comments_reactions: {
+                _count: 'desc',
+              },
+            },
+          },
+        },
         orderBy: {
           number: 'asc',
         },
