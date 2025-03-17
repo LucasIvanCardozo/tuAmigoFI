@@ -2,8 +2,8 @@
 import prisma from './db';
 
 const cache = {
-  ttl: 3600 * 24,
-  swr: 3600,
+  ttl: 3600 * 24 * 30,
+  swr: 3600 * 24,
 };
 
 function sleep(ms: number): Promise<void> {
@@ -461,7 +461,10 @@ export async function fetchContributors() {
         },
       },
     },
-    cacheStrategy: cache,
+    cacheStrategy: {
+      ttl: 3600 * 24,
+      swr: 3600,
+    },
   });
   const prepareUsers = users
     .map((user) => ({
