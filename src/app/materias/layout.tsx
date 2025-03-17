@@ -1,9 +1,9 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Tu amigo FI - Materias',
+  title: 'Materias - Tu amigo FI',
   description:
-    'Creada para ayudar a ingresantes y avanzados alumnos, en la Facultad de Ingenieria de Mar del Plata, con su desafiante carrera.',
+    'Descubre todas las materias de la Facultad de Ingeniería de Mar del Plata. Realiza búsquedas, consulta correlativas y explora enlaces útiles compartidos por estudiantes.',
 };
 
 export default function Layout({
