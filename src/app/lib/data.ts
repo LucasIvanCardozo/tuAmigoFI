@@ -2,8 +2,8 @@
 import prisma from './db';
 
 const cache = {
-  ttl: 0,
-  swr: 0,
+  ttl: 3600 * 24 * 30,
+  swr: 3600 * 24,
 };
 
 function sleep(ms: number): Promise<void> {
