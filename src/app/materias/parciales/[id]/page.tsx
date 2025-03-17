@@ -18,8 +18,9 @@ async function Content({ params }: Params) {
 
 export default async function Practica({ params }: Params) {
   return (
-    <Suspense fallback={<MainSkeleton />}>
+<MainModule modules={modules} course={course} typeModule="Practica" />;
+    /*<Suspense fallback={<MainSkeleton />}>
       <Content params={params} />
-    </Suspense>
+    </Suspense>*/
   );
 }
