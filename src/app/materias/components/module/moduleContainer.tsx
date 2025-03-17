@@ -182,6 +182,7 @@ export const ModuleContainer = ({ module }: Params) => {
               },
               response: addResponse,
               reactions: [],
+              comments: [],
             };
             stateModules.setModules(
               stateModules.modules.map((mod) => {
