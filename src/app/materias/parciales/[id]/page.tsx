@@ -2,6 +2,7 @@ import { fetchCourse, fetchMidtermsWithAllData } from '@/app/lib/data';
 import { MainModule } from '../../components/mainModule';
 import { makeModules } from '../../utils/makeModules';
 import { Suspense } from 'react';
+import { MainSkeleton } from '../../components/skeletons/mainSkeleton';
 
 interface Params {
   params: { id: string };
@@ -17,7 +18,7 @@ async function Content({ params }: Params) {
 
 export default async function Practica({ params }: Params) {
   return (
-    <Suspense fallback={<div>Cargando</div>}>
+    <Suspense fallback={<MainSkeleton />}>
       <Content params={params} />
     </Suspense>
   );
