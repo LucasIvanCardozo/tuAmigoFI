@@ -19,9 +19,8 @@ async function Content({ params }: Params) {
 
 export default async function Practica({ params }: Params) {
   return (
-    <Suspense fallback={<MainSkeleton />}>
-      {/* <Content params={params} /> */}
-      <MainSkeleton />
+   <Suspense fallback={<MainSkeleton />}>
+      <Content params={params} /> 
     </Suspense>
   );
 }
