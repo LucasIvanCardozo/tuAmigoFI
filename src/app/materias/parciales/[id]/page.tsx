@@ -22,7 +22,7 @@ const id_materia = Number(params.id);
   const moduleList = await fetchMidtermsWithAllData(id_materia);
   let modules = makeModules({ moduleList: moduleList, type: 'midterms' });
   return (
-<MainModule modules={modules} course={course} typeModule="Practica" />;
+<MainModule modules={modules} course={course} typeModule="Practica" />
     /*<Suspense fallback={<MainSkeleton />}>
       <Content params={params} />
     </Suspense>*/
