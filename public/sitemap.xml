@@ -5,2508 +5,1528 @@
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
-
-
 <url>
   <loc>https://tuamigofi.ar/</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/contactame</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/politica-de-privacidad</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/839</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.64</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/839</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.64</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/32</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.64</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/32</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.64</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/697</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.64</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/697</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.64</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/825</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.64</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/825</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.64</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/428</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.64</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/428</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Instalaciones%20Electricas%20A</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Maquinas%20electricas%20A</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Propiedades%20Estructurales%20de%20Metales</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Investigacion%20de%20Operaciones</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Analisis%20y%20Diseno%20de%20Sistemas%20B</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Administracion%20estrategica</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Gestion%20de%20la%20Logistica%20Integral%20y%20Cadena%20de%20Suministros</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Formulacion%20y%20Evaluacion%20de%20Proyectos%20Productivos</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Probabilidad%20y%20Estadistica</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Etica,%20Legislacion%20y%20Propiedad%20Intelectual%20en%20el%20Ejercicio%20Profesional</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Administracion%20de%20Operaciones</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Gestion%20de%20la%20Tecnologia%20y%20la%20Innovacion</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Planificacion%20y%20Control%20de%20la%20Produccion</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Proyecto%20de%20Ingenieria%20Industrial%20II</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.64</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/104</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/104</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Electrotecnia%20B</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Estatica%20II</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Sistemas%20de%20Transmision%20de%20Energia%20Electrica</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Instalaciones%20Electricas%20B</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Componentes%20de%20los%20Sistemas%20Electricos%20de%20Potencia</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Accionamientos%20con%20Motor%20electrico</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/835</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/835</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Mediciones%20Electricas%20A</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Maquinas%20electricas%20B</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/430</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/430</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Fundamentos%20de%20Metalurgia%20Fisica</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Adquisicion%20y%20Analisis%20de%20la%20Informacion%20Experimental</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Procesamiento%20de%20Metales</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/10</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/10</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Administracion%20Empresarial%20en%20la%20Economia%20del%20Conocimiento</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/17</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/17</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Analisis%20y%20Diseno%20de%20Sistemas%20A</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Gestion%20de%20Proyectos%20Informaticos</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Diseno%20e%20Implementacion%20de%20Sistemas%20Distribuidos</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/706</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/706</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Investigacion%20Operativa%20A</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Desarrollo%20Economico%20y%20Comercio%20Internacional</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/707</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/707</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Investigacion%20Operativa%20B</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Proyecto%20de%20Ingenieria%20Industrial%20IV</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/6</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/6</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Informatica%20Basica</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Analisis%20Matematico%20II</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Teoria%20de%20Modelos%20y%20Simulacion</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Teorias%20de%20la%20Informacion%20y%20la%20Computacion</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Seguridad%20y%20Salud%20Ocupacional</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Senales%20y%20Sistemas%20de%20Tiempo%20Continuo</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/699</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/699</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Empresas%20y%20servicios%20basadas%20en%20el%20conocimiento</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/703</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/703</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.51</priority>
 </url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Comportamiento%20Organizacional%20y%20Relaciones%20del%20Trabajo</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Gestion%20Comercial%20de%20las%20Organizaciones</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Sistemas%20de%20Gestion%20y%20Mejora%20Continua</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Proyecto%20de%20Ingenieria%20Industrial%20III</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Gestion%20integral%20del%20mantenimiento</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
+
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/717</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/717</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/827</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/827</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.51</priority>
 </url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Proyecto%20de%20Ingenieria%20Industrial%20I</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
+
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/97</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/97</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Fisica%20C-I</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Electrotecnia%20A</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Mediciones%20Electricas%20B</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Electrotecnia%20C</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
+
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/143</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/143</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Analisis%20Matematico%20III</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Estatica%20I</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Introduccion%20a%20la%20Mecanica%20de%20los%20Fluidos</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Introduccion%20a%20la%20Mecanica%20del%20Continuo</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Materiales%20Estructurales</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
+
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/113</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/113</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Materiales%20Electrotecnicos</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Generacion%20de%20energia%20electrica%20A</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Sistemas%20de%20distribucion%20de%20energia%20electrica</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/114</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/114</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Tecnologia%20CAD%20Aplicada</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/144</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/144</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Introduccion%20a%20la%20Termodinamica%20y%20Maquinas%20Termicas</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/98</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/98</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Introduccion%20a%20la%20Metrologia%20y%20Fabricacion</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/101</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/101</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/420</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/420</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Quimica%20del%20Estado%20Solido</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/429</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/429</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Laboratorio%20de%20Transformacion%20de%20Materiales</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Seleccion%20de%20Materiales</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/34</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/34</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Programacion%20C</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Sistemas%20de%20Bases%20de%20Datos</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/36</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/36</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Auditoria%20y%20homologacion</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/38</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/38</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Redes%20y%20Comunicacion%20de%20Datos%20B</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/698</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/698</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/714</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/714</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Conceptos%20de%20Economia%20Industrial</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/704</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/704</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/716</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/716</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/3</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/3</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Programacion%20A</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Introduccion%20a%20la%20Matematica%20Discreta</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Metodos%20Numericos%20para%20Ingenieria</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Programacion%20I</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
+
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/22</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/22</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/40</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/40</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Algebra%20II</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Organizacion%20Empresarial%20e%20Industrial</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Economia%20para%20Ingenieria</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Etica,%20Legislacion%20y%20Ejercicio%20Profesional</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Operaciones%20Unitarias%20I</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Formulacion%20y%20Evaluacion%20de%20Proyectos%20de%20Inversion</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Mecanica%20de%20la%20Particula%20y%20Cuerpo%20Rigido</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Termodinamica%20de%20Alimentos%20I</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Maquinas%20y%20Equipos%20Industriales%20I</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Analisis%20Matematico%20I</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Fisica%20B-II</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Fisica%20C-II</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Balance%20de%20Masa%20y%20Energia</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Termodinamica%20I</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Fisicoquimica%20II</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Fundamentos%20de%20la%20Estatica%20y%20Resistencia%20de%20Materiales</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Termodinamica%20Industrial</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Mecanica%20de%20Fluidos</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Fisica%20B-I</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Introduccion%20a%20la%20Ciencia%20de%20Materiales</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Termodinamica%20de%20Materiales</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
+
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/19</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/19</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/27</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/27</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Programacion%20B</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Estructura%20y%20Organizacion%20de%20Datos</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/39</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/39</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/58</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/58</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Senales%20y%20Sistemas%20de%20Tiempo%20Discreto</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/829</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/829</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/18</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/18</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/708</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/708</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/719</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/719</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Sustentabilidad,%20Higiene%20y%20Seguridad</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/828</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/828</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Introduccion%20a%20los%20Procesos%20de%20Fabricacion</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/696</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/696</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/57</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/57</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/106</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/106</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/609</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/609</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Algebra%20I-A</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Fisica%20Experimental%20A</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Dispositivos%20Semiconductores</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Lineas%20de%20Transmision%20y%20Antenas</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Introduccion%20a%20la%20Fisica%20del%20Estado%20Solido</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
+
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/107</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/107</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Automatizacion%20A</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/109</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/109</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/112</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/112</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/134</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/134</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Fisica%20A</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Mecanica%20de%20Materiales%20y%20Componentes</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/100</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/100</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/135</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/135</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Fluidos%20y%20Maquinas%20Fluidodinamicas</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Materiales%20I</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/136</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/136</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Mantenimiento%20Industrial</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/102</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/102</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Fundamentos%20de%20Quimica</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/837</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/837</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Generacion%20de%20Energia%20Electrica%20B</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Proteccion%20y%20Analisis%20de%20Sistemas%20de%20Potencia</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/838</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/838</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Redes%20Electricas%20Inteligentes</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/110</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/110</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Sistemas%20de%20Representacion%20para%20Ingenieria</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/108</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/108</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Transferencia%20y%20Tecnologia%20del%20Calor</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/138</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/138</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Procesos%20de%20Fabricacion%20I</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/410</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/410</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Ceramica%20de%20Aplicacion%20Industrial</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/426</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/426</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Procesamiento%20de%20Compuestos</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/427</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/427</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/29</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/29</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Tecnologias%20Informaticas%20B</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Fundamentos%20de%20Sistemas%20Operativos</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Introduccion%20a%20la%20Inteligencia%20Artificial</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Calidad%20de%20Software%20A</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/14</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/14</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Sistemas%20Operativos</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Ingenieria%20de%20Soluciones</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Calidad%20de%20Software%20B</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/21</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/21</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Gestion%20de%20la%20Seguridad%20Informatica</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/16</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/16</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Redes%20y%20Computacion%20de%20Datos%20A</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/701</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/701</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/24</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/24</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Algebra%20I-B</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/25</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/25</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/74</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/74</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Fundamentos%20de%20la%20Programacion</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Ingenieria%20de%20Sistemas%20de%20Procesos</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Probabilidad,%20Estadistica%20y%20Procesos%20Estocasticos</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Fluidodinamica</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/250</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/250</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/822</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/822</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/45</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/45</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Proyecto%20Transversal%20C%20I</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Programacion%20II</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Programacion%20III</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Sistemas%20de%20Computacion%20Distribuidos%20I</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Principios%20de%20la%20Seguridad%20Informatica</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Inteligencia%20Computacional</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
+
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/23</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/23</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/811</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/811</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Introduccion%20al%20Diseno%203D</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/50</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/50</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Ingles%20II</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Sistemas%20de%20Gestion%20Integrados</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/53</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/53</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/75</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/75</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/84</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/84</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/821</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/821</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Operacion%20de%20Plantas%20de%20Procesos</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Operaciones%20Unitarias%20II</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Dinamica,%20Instrumentacion%20y%20Control%20de%20Procesos</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Transformacion%20y%20Preservacion%20de%20Alimentos</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Termodinamica%20II</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Termodinamica%20de%20alimentos%20II</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Control%20de%20Procesos%20en%20Alimentos</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
+
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/103</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/103</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/137</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/137</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/812</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/812</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/831</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/831</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Fisicoquimica%20I</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Operaciones%20unitarias%20III</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/702</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/702</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Diseno%20de%20Instalaciones%20y%20Procesos</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/1</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/1</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/26</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/26</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Tecnologia%20de%20los%20Materiales</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Electrotecnia%20D</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/70</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/70</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Quimica%20General%20e%20Inorganica</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/80</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/80</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/76</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/76</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/700</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/700</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/82</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/82</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Ingenieria%20de%20Reacciones%20Quimicas%20I</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Ingenieria%20de%20los%20Procesos%20Biotecnologicos</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Ingenieria%20de%20Procesos%20Biotecnologicos</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/96</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/96</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/705</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/705</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Mecanica%20del%20Solido</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/248</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/248</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Teoria%20de%20Circuitos</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Teoria%20de%20Senales%20y%20Sistemas</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Analisis%20de%20Circuitos</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/407</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/407</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Introduccion%20a%20Polimeros</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/416</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/416</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/7</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/7</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Fundamentos%20de%20Lenguajes%20Formales</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Fundamentos%20de%20la%20Arquitectura%20de%20Computadoras</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/11</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/11</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/44</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/44</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Control%20Discreto</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Fundamentos%20de%20Comunicaciones%20Digitales</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/710</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/710</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
+  
   <priority>0.33</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/93</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/93</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/408</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/408</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Metrologia%20e%20Introduccion%20a%20la%20Fabricacion</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/256</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/256</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Electronica%20Digital</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Electronica%20Aplicada</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/262</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/262</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Sistemas%20de%20comunicaciones</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/414</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/414</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Propiedades%20Funcionales%20de%20Materiales</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/99</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/99</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Principios%20de%20Electronica</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Automatizacion%20B</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/5</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/5</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/409</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/409</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Modelado%20y%20Simulacion%20de%20Materiales%20I</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/146</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/146</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Termodinamica%20para%20Ingenieria%20Mecanica</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/614</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/614</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/606</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/606</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/413</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/413</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/422</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/422</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Materiales%20II</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Transporte%20de%20Calor%20y%20Materia</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Modelado%20y%20Simulacion%20de%20Materiales%20II</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Tribologia,%20Friccion,%20Desgaste%20y%20Lubricacion</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/140</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/140</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/95</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/95</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/117</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/117</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/118</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/118</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/119</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/119</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/94</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/94</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Tecnologia%20de%20Control</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/145</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/145</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Sistemas%20Propulsivos%20I</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/618</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/618</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/411</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/411</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/425</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/425</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Procesamiento%20de%20Plasticos</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/8</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/8</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Tecnologias%20Informaticas%20A</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/12</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/12</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/15</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/15</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/31</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/31</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/47</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/47</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Arquitectura%20de%20Computadoras</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Sistemas%20de%20Computacion%20Distribuidos%20II</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/49</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/49</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/35</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/35</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/37</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/37</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/33</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/33</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/2</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/2</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Algebra%20II-B</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/71</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/71</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Sistemas%20Informaticos%20de%20Gestion</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Introduccion%20al%20Modelado%20Computacional</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/85</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/85</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/417</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/417</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/56</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/56</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/41</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/41</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/59</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/59</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Proyecto%20Transversal%20C%20II</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Proyecto%20Transversal%20C%20III</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Circuitos%20Digitales</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/51</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/51</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/67</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/67</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Redes%20de%20Transmision%20de%20Datos</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/62</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/62</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Mecanismos%20de%20Seguridad%20en%20Redes</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/66</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/66</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/415</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/415</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/30</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/30</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Ingles%20I</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://tuamigofi.ar/materias?search=Ingles%20Profesional%20A</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/parciales/88</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://tuamigofi.ar/materias/practica/88</loc>
-  <lastmod>2025-03-17T14:29:38+00:00</lastmod>
-  <priority>0.26</priority>
+  <priority>0.7</priority>
 </url>
-
-
 </urlset>
