@@ -108,7 +108,7 @@ export default function ButtonReaction({
   }, [session, responses, indexResponse]);
 
   return (
-    <span className="flex absolute bottom-0 right-0 z-10 gap-1 p-1 bg-[--white] rounded-md select-none">
+    <>
       <button
         className="flex"
         aria-label="Dar me gusta"
@@ -131,6 +131,6 @@ export default function ButtonReaction({
         />
         {numberDislike}
       </button>
-    </span>
+    </>
   );
 }

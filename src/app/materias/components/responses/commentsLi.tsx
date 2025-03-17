@@ -1,30 +1,14 @@
 'use client';
-import { midterms_comments, tps_comments } from '@prisma/client';
 import { Comment } from './comment';
+import { DataModuleComment } from '@/app/assets/types';
 
 interface Params {
-  comments: tps_comments[] | midterms_comments[];
+  comments: DataModuleComment[];
 }
 
 export const CommentsLi = ({ comments }: Params) => {
-  const auxComments: tps_comments[] = [
-    {
-      id: 1,
-      id_response: 1,
-      text: 'comentario 1',
-      id_user: 1,
-      created_at: new Date(),
-    },
-    {
-      id: 2,
-      id_response: 1,
-      text: 'comentario 2',
-      id_user: 1,
-      created_at: new Date(),
-    },
-  ];
   return (
-    <div className="hidden">
+    <div className="mx-2 shadow-[0px_0px_2px_0px_rgba(0,0,0,0.5)]">
       <form className="flex p-1 gap-1 bg-blue-300">
         <input
           className="grow"
@@ -33,11 +17,13 @@ export const CommentsLi = ({ comments }: Params) => {
         />
         <button type="submit">Publicar</button>
       </form>
-      <ul className="w-full bg-black flex flex-col gap-1 p-1">
-        {auxComments.map((comment: tps_comments) => (
-          <Comment key={comment.id} comment={comment} />
-        ))}
-      </ul>
+      {comments.length > 0 && (
+        <ul className="w-full flex flex-col gap-1 p-1">
+          {comments.map((comment) => (
+            <Comment key={comment.comment.id} comment={comment} />
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

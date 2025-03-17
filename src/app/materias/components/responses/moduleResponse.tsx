@@ -6,6 +6,7 @@ import {
   BiSolidRightArrowSquare,
   BiSolidLeftArrowSquare,
 } from 'react-icons/bi';
+import { FaCommentDots } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { DataModuleProblem, TypeValues } from '@/app/assets/types';
 import { useMainContext } from '@/app/lib/contexts';
@@ -14,6 +15,7 @@ import { HandlerInputs } from '@/app/components/form/inputs/handlerInputs';
 import { deleteMidtermResponse, deleteTpResponse } from '@/app/lib/actions';
 import { Code } from './Code';
 import { CommentsLi } from './commentsLi';
+import { comment } from 'postcss';
 
 export default function ModuleResponse({
   problem,
@@ -22,6 +24,7 @@ export default function ModuleResponse({
 }) {
   const [responses, setResponses] = useState(problem.responses);
   const [indexResponse, setIndexResponse] = useState<number>(0);
+  const [stateComment, setStateComment] = useState(false);
 
   const { session, stateModal, stateModules, stateForm } = useMainContext();
 
@@ -112,16 +115,20 @@ export default function ModuleResponse({
     }
   };
 
+  const handleComment = () => {
+    setStateComment(!stateComment);
+    console.log(responses[indexResponse].comments);
+  };
+
   return (
-    <li className="relative bg-[--white] text-base leading-5 shadow-[0px_0px_5px_0px_rgba(0,0,0,0.5)] mx-2 my-1 flex flex-col min-h-32">
-      <div className="relative">
+    <li className="mx-2 my-1">
+      <div className="relative bg-[--white] text-base leading-5 shadow-[0px_0px_5px_0px_rgba(0,0,0,0.5)] flex flex-col min-h-32">
         <span className="bg-[#C8E0E4] flex justify-between items-center">
           <b className="bg-[#9fc8cf] p-1">{`Respuesta ${problem.number}:`}</b>
           <span className="opacity-75 p-1">
             Por {`${responses[indexResponse].user.name}`}
           </span>
         </span>
-
         <div className="w-full h-5 relative flex justify-between">
           {session?.user.tier == 2 && (
             <button
@@ -179,6 +186,7 @@ export default function ModuleResponse({
               <MdDelete className="h-full w-full" />
             </button>
           )}
+          <span></span>
           <div className="flex gap-1">
             <button
               className="h-full aspect-square text-[--black-olive] opacity-90"
@@ -240,13 +248,64 @@ export default function ModuleResponse({
             </div>
           ) : null
         }
-        <ButtonReaction
-          indexResponse={indexResponse}
-          responses={responses}
-          setResponses={setResponses}
-        />
+        <div className="flex absolute bottom-0 right-0 z-10 gap-1 p-1 bg-[--white] rounded-md select-none">
+          <ButtonReaction
+            indexResponse={indexResponse}
+            responses={responses}
+            setResponses={setResponses}
+          />
+          |
+          <button onClick={handleComment}>
+            <FaCommentDots className="text-xl" />
+          </button>
+          {responses[indexResponse].comments.length}
+        </div>
       </div>
-      <CommentsLi comments={[]} />
+      {stateComment && (
+        <CommentsLi
+          comments={[
+            {
+              comment: {
+                id: 1,
+                id_response: 1,
+                text: 'comentario 1',
+                id_user: 1,
+                created_at: new Date(),
+              },
+              reactions: [],
+              users: {
+                id: 1,
+                name: 'Lucas',
+                email: '@gmail',
+                banned: false,
+                created_at: null,
+                image: '',
+                tier: 2,
+              },
+            },
+            {
+              comment: {
+                id: 2,
+                id_response: 1,
+                text: 'comentario 2',
+                id_user: 1,
+                created_at: new Date(),
+              },
+              reactions: [],
+              users: {
+                id: 1,
+                name: 'Lucas',
+                email: '@gmail',
+                banned: false,
+                created_at: null,
+                image: '',
+                tier: 2,
+              },
+            },
+          ]}
+        />
+        //<CommentsLi comments={responses[indexResponse].comments} />
+      )}
     </li>
   );
 }

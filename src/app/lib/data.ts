@@ -214,6 +214,7 @@ export async function fetchMidtermsWithAllData(id_materias: number) {
           midterms_comments: {
             include: {
               midterms_comments_reactions: true,
+              users: true,
             },
             orderBy: {
               midterms_comments_reactions: {
@@ -259,6 +260,7 @@ export async function fetchTpsWithAllData(id_materias: number) {
           tps_comments: {
             include: {
               tps_comments_reactions: true,
+              users: true,
             },
             orderBy: {
               tps_comments_reactions: {
