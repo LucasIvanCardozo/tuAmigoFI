@@ -46,7 +46,7 @@ export default async function Course({
         <Suspense fallback={<DegreesListSkeleton />}>
           <DegreesList idCourse={id} />
         </Suspense>
-      </div>  
+      </div>
       <div className="flex justify-end gap-1 pt-1 text-[--white] items-center text-sm sm:text-base">
         <ButtonAddCorrelative course={course} />
         <ButtonAddLink course={course} />
