@@ -28,6 +28,7 @@ interface Params {
 }
 
 export const ModuleContainer = ({ module }: Params) => {
+  
   const { session, stateViewModule, stateModal, stateModules, stateForm } =
     useMainContext();
 

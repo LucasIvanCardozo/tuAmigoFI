@@ -1,12 +1,12 @@
 import CoursesTable from './components/courses/coursesTable';
 import SearchCourses from './components/courses/searchCourses';
-import DegreeCourse from '../components/degreeCourse';
-import YearCourse from '../components/yearCourse';
+import DegreeCourse from '../../components/degreeCourse';
+import YearCourse from '../../components/yearCourse';
 import Image from 'next/image';
 import { Suspense } from 'react';
-import CoursesSkeleton from '../components/skeletons/coursesSkeleton';
-import YearSkeleton from '../components/skeletons/yearSkeleton';
-import DegreeCourseSkeleton from '../components/skeletons/degreeCourseSkeleton';
+import CoursesSkeleton from '../../components/skeletons/coursesSkeleton';
+import YearSkeleton from '../../components/skeletons/yearSkeleton';
+import DegreeCourseSkeleton from '../../components/skeletons/degreeCourseSkeleton';
 
 export default async function Materias({
   searchParams,

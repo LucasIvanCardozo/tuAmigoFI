@@ -1,6 +1,6 @@
 'use server';
 import { NextRequest, NextResponse } from 'next/server';
-import { v2 as cloudinary } from 'cloudinary';
+import { v2 as cloudinary, UploadApiResponse } from 'cloudinary';
 
 cloudinary.config({
   cloud_name: 'donzj5rlf',
@@ -21,14 +21,15 @@ export async function POST(request: NextRequest) {
   const subFolder = data.get('subFolder')?.toString() || '';
   try {
     if (type == 'pdf') {
-      const upload = await cloudinary.uploader.unsigned_upload(
-        `data:application/${type};base64,${buffer.toString('base64')}`,
-        'ml_default',
-        {
-          public_id: id,
-          folder: subFolder,
-        }
-      );
+      const upload: UploadApiResponse =
+        await cloudinary.uploader.unsigned_upload(
+          `data:application/${type};base64,${buffer.toString('base64')}`,
+          'ml_default',
+          {
+            public_id: id,
+            folder: subFolder,
+          }
+        );
     } else {
       const upload = await cloudinary.uploader.unsigned_upload(
         `data:image/${type};base64,${buffer.toString('base64')}`,
