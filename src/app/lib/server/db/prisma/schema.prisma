@@ -1,0 +1,248 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./prismaClient"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Correlative {
+  idCourse            String @map("id_course")
+  idCorrelativeCourse String @map("id_correlative")
+
+  courses_correlatives_id_correlativeTocourses Course @relation("correlatives_id_correlativeTocourses", fields: [idCorrelativeCourse], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  courses_correlatives_idTocourses             Course @relation("correlatives_idTocourses", fields: [idCourse], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@id([idCourse, idCorrelativeCourse])
+}
+
+model Course {
+  id             String  @id @default(cuid())
+  name           String  @unique
+  nameNormalized String  @map("name_normalized")
+  cg             Int?
+  hs             Int?
+  optional       Boolean @default(false)
+
+  correlatives_correlatives_id_correlativeTocourses Correlative[]  @relation("correlatives_id_correlativeTocourses")
+  correlatives_correlatives_idTocourses             Correlative[]  @relation("correlatives_idTocourses")
+  courses_degrees                                   CourseDegree[]
+  courses_years                                     CourseYear[]
+  links                                             Link[]
+  midterms                                          Midterm[]
+  tps                                               Tp[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@index([nameNormalized])
+}
+
+model CourseDegree {
+  idCourse String @map("id_course")
+  idDegree String @map("id_degree")
+
+  courses Course @relation(fields: [idCourse], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  degrees Degree @relation(fields: [idDegree], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@id([idCourse, idDegree])
+}
+
+model CourseYear {
+  idCourse String @map("id_course")
+  idYear   String @map("id_year")
+
+  courses Course @relation(fields: [idCourse], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  years   Year   @relation(fields: [idYear], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@id([idCourse, idYear])
+}
+
+model Degree {
+  id   String @id @default(cuid())
+  name String @unique
+
+  courses_degrees CourseDegree[]
+  degrees_plans   DegreePlan[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+}
+
+model DegreePlan {
+  idDegree String @map("id_degree")
+  idPlan   String @map("id_plan")
+
+  degrees Degree @relation(fields: [idDegree], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  plans   Plan   @relation(fields: [idPlan], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@id([idDegree, idPlan])
+}
+
+model Link {
+  id       String  @id @default(cuid())
+  idCourse String  @map("id_course")
+  idUser   String  @map("id_user")
+  name     String
+  link     String
+  official Boolean
+
+  courses Course @relation(fields: [idCourse], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users   User   @relation(fields: [idUser], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+}
+
+model Midterm {
+  id       String   @id @default(cuid())
+  idCourse String   @map("id_course")
+  idUser   String   @map("id_user")
+  name     String
+  date     DateTime
+
+  responses Response[]
+
+  courses Course @relation(fields: [idCourse], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users   User   @relation(fields: [idUser], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+}
+
+model Comment {
+  id         String @id @default(cuid())
+  idResponse String @map("id_response")
+  idUser     String @map("id_user")
+  text       String
+
+  user     User?     @relation(fields: [idUser], references: [id])
+  response Response? @relation(fields: [idResponse], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+}
+
+enum TypeResponse {
+  TEXT
+  IMAGE
+  CODE
+  PDF
+}
+
+model Response {
+  id        String       @id @default(cuid())
+  idUser    String       @map("id_user")
+  idTp      String?      @map("id_tp")
+  idMidterm String?      @map("id_midterm")
+  number    Int
+  type      TypeResponse
+  text      String?
+
+  comments Comment[]
+
+  midterm Midterm? @relation(fields: [idMidterm], references: [id])
+  tp      Tp?      @relation(fields: [idTp], references: [id])
+  user    User?    @relation(fields: [idUser], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+}
+
+model Plan {
+  id   String @id @default(cuid())
+  year Int    @unique
+
+  degrees_plans DegreePlan[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+}
+
+model Tp {
+  id       String @id @default(cuid())
+  idCourse String @map("id_course")
+  idUser   String @map("id_user")
+  name     String
+  number   Int?
+  year     Int
+
+  responses Response[]
+
+  courses Course @relation(fields: [idCourse], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users   User   @relation(fields: [idUser], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+}
+
+enum TypeReaction {
+  LIKE
+  DISLIKE
+}
+
+enum ReactionTo {
+  RESPONSE
+  COMMENT
+  TP
+  MIDTERM
+  LINK
+}
+
+model Reaction {
+  id         String       @id @default(cuid())
+  idUser     String       @map("id_user")
+  idTarget   String       @map("id_target")
+  typeTarget ReactionTo
+  reaction   TypeReaction
+
+  user User @relation(fields: [idUser], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@unique([idUser, idTarget, typeTarget])
+  @@index([idUser])
+}
+
+model User {
+  id     String  @id @default(cuid())
+  email  String  @unique
+  name   String
+  image  String
+  tier   Int
+  banned Boolean
+
+  comments  Comment[]
+  responses Response[]
+  links     Link[]
+  midterms  Midterm[]
+  tps       Tp[]
+  reactions Reaction[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+}
+
+model Year {
+  id   String @id @default(cuid())
+  name String @unique
+
+  courses_years CourseYear[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+}

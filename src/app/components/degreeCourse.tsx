@@ -1,4 +1,4 @@
-import { fetchDegrees } from '@/app/lib/data';
+import { fetchDegrees } from '@/app/lib/server/data';
 import DegreeStructure from './degreeStructure';
 
 export default async function DegreeCourse() {

@@ -1,4 +1,4 @@
-import { fetchCorrelatives, fetchEnabler } from '@/app/lib/data';
+import { fetchCorrelatives, fetchEnabler } from '@/app/lib/server/data';
 import { CgArrowRightO } from 'react-icons/cg';
 import CorrelativeList from './correlativeList';
 

@@ -1,4 +1,4 @@
-import { fetchCourse, fetchTpsWithAllData } from '@/app/lib/data';
+import { fetchCourse, fetchTpsWithAllData } from '@/app/lib/server/data';
 import { MainModule } from '../../components/mainModule';
 import { makeModules } from '../../utils/makeModules';
 

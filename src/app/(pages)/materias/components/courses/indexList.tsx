@@ -1,5 +1,5 @@
 'use client';
-import { fetchCourseCount } from '@/app/lib/data';
+import { fetchCourseCount } from '@/app/lib/server/data';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import IndexLi from './indexLi';
@@ -62,34 +62,34 @@ export default function IndexList({
               />
             ))
           : page <= 5
-          ? [...Array(6)].map((_, index) => (
-              <IndexLi
-                key={index}
-                index={index}
-                page={page}
-                modifier={2}
-                callback={handlePage}
-              />
-            ))
-          : page >= pageCount - 4
-          ? [...Array(5)].map((_, index) => (
-              <IndexLi
-                key={index}
-                index={index}
-                page={page}
-                modifier={pageCount - 5}
-                callback={handlePage}
-              />
-            ))
-          : [...Array(5)].map((_, index) => (
-              <IndexLi
-                key={index}
-                index={index}
-                page={page}
-                modifier={page - 2}
-                callback={handlePage}
-              />
-            ))}
+            ? [...Array(6)].map((_, index) => (
+                <IndexLi
+                  key={index}
+                  index={index}
+                  page={page}
+                  modifier={2}
+                  callback={handlePage}
+                />
+              ))
+            : page >= pageCount - 4
+              ? [...Array(5)].map((_, index) => (
+                  <IndexLi
+                    key={index}
+                    index={index}
+                    page={page}
+                    modifier={pageCount - 5}
+                    callback={handlePage}
+                  />
+                ))
+              : [...Array(5)].map((_, index) => (
+                  <IndexLi
+                    key={index}
+                    index={index}
+                    page={page}
+                    modifier={page - 2}
+                    callback={handlePage}
+                  />
+                ))}
         {pageCount > 8 && page < pageCount - 4 && <li>...</li>}
         <IndexLi
           index={pageCount}

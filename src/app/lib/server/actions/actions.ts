@@ -1,6 +1,6 @@
 'use server';
 import Link from 'next/link';
-import prisma from './db';
+import prisma from '../db';
 
 export async function createMidterm({
   name,

@@ -1,4 +1,4 @@
-import { fetchDegreesWithCourse } from '@/app/lib/data';
+import { fetchDegreesWithCourse } from '@/app/lib/server/data';
 import { degrees } from '@prisma/client';
 
 export default async function DegreesListStructure({

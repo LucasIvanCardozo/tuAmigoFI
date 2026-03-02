@@ -1,4 +1,4 @@
-import { fetchCourse } from '@/app/lib/data';
+import { fetchCourse } from '@/app/lib/server/data';
 import { Metadata } from 'next';
 
 type Props = {

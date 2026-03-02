@@ -1,4 +1,4 @@
-import { fetchCourses } from '@/app/lib/data';
+import { fetchCourses } from '@/app/lib/server/data';
 import Course from './course';
 import IndexList from './indexList';
 import { UpdateLoader } from './updateLoader';

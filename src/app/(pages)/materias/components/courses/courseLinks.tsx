@@ -1,4 +1,4 @@
-import { fetchLinks } from '@/app/lib/data';
+import { fetchLinks } from '@/app/lib/server/data';
 import CourseLinksStructure from './courseLinksStructure';
 
 export default async function CourseLinks({ id }: { id: number }) {

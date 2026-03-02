@@ -4,7 +4,11 @@
 import { MainModal } from '@/app/components/modals/mainModal';
 import { Loading } from '@/app/components/others/loading';
 import { addLink, createCorrelative, deleteMidterm } from '@/app/lib/actions';
-import { fetchAllCourses, fetchCourse, fetchCourses } from '@/app/lib/data';
+import {
+  fetchAllCourses,
+  fetchCourse,
+  fetchCourses,
+} from '@/app/lib/server/data';
 import { courses, midterms } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { FormEvent, useEffect, useState } from 'react';
@@ -42,7 +46,7 @@ export default function ModalCreateCorrelative({
     }
     if (!session?.user || session?.user.tier < 1) {
       setError(
-        'Debes iniciar sesion y ser administrador para añadir una correlativa'
+        'Debes iniciar sesion y ser administrador para añadir una correlativa',
       );
       return false;
     }

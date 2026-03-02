@@ -1,5 +1,5 @@
 import { createUser } from '@/app/lib/actions';
-import { fetchUser, fetchUserWithoutThrow } from '@/app/lib/data';
+import { fetchUser, fetchUserWithoutThrow } from '@/app/lib/server/data';
 import NextAuth, { AuthOptions } from 'next-auth';
 import { JWT } from 'next-auth/jwt';
 import GoogleProvider from 'next-auth/providers/google';

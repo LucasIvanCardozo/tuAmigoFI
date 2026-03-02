@@ -1,32 +1,28 @@
-'use server';
-import prisma from './db';
+'use server'
+import db from './db'
 
 const cache = {
   ttl: 3600 * 24 * 30,
   swr: 3600 * 24,
-};
+}
 
 function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
 // fetching de materias
 export async function fetchCourse(id: number) {
-  const course = await prisma.courses.findFirstOrThrow({
+  const course = await db.courses.findFirstOrThrow({
     where: {
       id: id,
     },
     cacheStrategy: cache,
-  });
-  return course;
+  })
+  return course
 }
 
-export async function fetchCourseCount(query: {
-  search?: string;
-  year?: number;
-  degree?: number;
-}) {
-  const count = await prisma.courses.count({
+export async function fetchCourseCount(query: { search?: string; year?: number; degree?: number }) {
+  const count = await db.courses.count({
     where: {
       name_normalized: {
         contains: query.search,
@@ -52,12 +48,12 @@ export async function fetchCourseCount(query: {
         : {}),
     },
     cacheStrategy: cache,
-  });
-  return count;
+  })
+  return count
 }
 
 export async function fetchAllCourses() {
-  const courses = await prisma.courses.findMany({
+  const courses = await db.courses.findMany({
     select: {
       id: true,
       name: true,
@@ -66,22 +62,12 @@ export async function fetchAllCourses() {
       name: 'asc',
     },
     cacheStrategy: cache,
-  });
-  return courses;
+  })
+  return courses
 }
 
-export async function fetchCourses({
-  search,
-  year,
-  degree,
-  page,
-}: {
-  search?: string;
-  year?: number;
-  degree?: number;
-  page?: number;
-}) {
-  const courses = await prisma.courses.findMany({
+export async function fetchCourses({ search, year, degree, page }: { search?: string; year?: number; degree?: number; page?: number }) {
+  const courses = await db.courses.findMany({
     where: {
       name_normalized: {
         contains: search,
@@ -116,18 +102,12 @@ export async function fetchCourses({
         }
       : { take: 5, skip: 0 }),
     cacheStrategy: cache,
-  });
-  return courses;
+  })
+  return courses
 }
 
-export async function fetchCorrelatives({
-  id,
-  id_carreras,
-}: {
-  id: number;
-  id_carreras?: number;
-}) {
-  const correlatives = await prisma.courses.findMany({
+export async function fetchCorrelatives({ id, id_carreras }: { id: number; id_carreras?: number }) {
+  const correlatives = await db.courses.findMany({
     where: {
       correlatives_correlatives_id_correlativeTocourses: {
         some: {
@@ -149,18 +129,12 @@ export async function fetchCorrelatives({
       name: true,
     },
     cacheStrategy: cache,
-  });
-  return correlatives;
+  })
+  return correlatives
 }
 
-export async function fetchEnabler({
-  id,
-  id_carreras,
-}: {
-  id: number;
-  id_carreras?: number;
-}) {
-  const enabler = await prisma.courses.findMany({
+export async function fetchEnabler({ id, id_carreras }: { id: number; id_carreras?: number }) {
+  const enabler = await db.courses.findMany({
     where: {
       correlatives_correlatives_idTocourses: {
         some: {
@@ -182,25 +156,25 @@ export async function fetchEnabler({
       name: true,
     },
     cacheStrategy: cache,
-  });
-  return enabler;
+  })
+  return enabler
 }
 
 //fetch a parciales
 export async function fetchMidterms(id_materias: number) {
-  const midterms = await prisma.midterms.findMany({
+  const midterms = await db.midterms.findMany({
     where: {
       id_course: id_materias,
     },
     orderBy: {
       id: 'asc',
     },
-  });
-  return midterms;
+  })
+  return midterms
 }
 
 export async function fetchMidtermsWithAllData(id_materias: number) {
-  const tps = await prisma.midterms.findMany({
+  const tps = await db.midterms.findMany({
     where: {
       id_course: id_materias,
     },
@@ -228,25 +202,25 @@ export async function fetchMidtermsWithAllData(id_materias: number) {
     orderBy: {
       id: 'asc',
     },
-  });
-  return tps;
+  })
+  return tps
 }
 
 //fetchs a TPs
 export async function fetchTps(id_materias: number) {
-  const tps = await prisma.tps.findMany({
+  const tps = await db.tps.findMany({
     where: {
       id_course: id_materias,
     },
     orderBy: {
       number: 'asc',
     },
-  });
-  return tps;
+  })
+  return tps
 }
 
 export async function fetchTpsWithAllData(id_materias: number) {
-  const tps = await prisma.tps.findMany({
+  const tps = await db.tps.findMany({
     where: {
       id_course: id_materias,
     },
@@ -277,33 +251,33 @@ export async function fetchTpsWithAllData(id_materias: number) {
     orderBy: {
       number: 'asc',
     },
-  });
-  return tps;
+  })
+  return tps
 }
 
 //fetch contador de reposrtes a los TPs
 export async function fetchReportsTps(id_tps: number) {
-  const countReports = await prisma.tps_reports.count({
+  const countReports = await db.tps_reports.count({
     where: {
       id_module: id_tps,
     },
-  });
-  return countReports;
+  })
+  return countReports
 }
 
 //fetch contador de reposrtes a los parciales
 export async function fetchReportsMidterms(id_midterms: number) {
-  const countReports = await prisma.midterms_reports.count({
+  const countReports = await db.midterms_reports.count({
     where: {
       id_module: id_midterms,
     },
-  });
-  return countReports;
+  })
+  return countReports
 }
 
 //fetch de carreras
 export async function fetchDegrees() {
-  const degrees = await prisma.degrees.findMany({
+  const degrees = await db.degrees.findMany({
     include: {
       degrees_plans: {
         select: {
@@ -317,16 +291,12 @@ export async function fetchDegrees() {
       },
     },
     cacheStrategy: cache,
-  });
+  })
 
-  return degrees;
+  return degrees
 }
-export async function fetchDegreesWithCourse({
-  id_course,
-}: {
-  id_course: number;
-}) {
-  const degrees = await prisma.degrees.findMany({
+export async function fetchDegreesWithCourse({ id_course }: { id_course: number }) {
+  const degrees = await db.degrees.findMany({
     where: {
       courses_degrees: {
         some: {
@@ -335,26 +305,20 @@ export async function fetchDegreesWithCourse({
       },
     },
     cacheStrategy: cache,
-  });
-  return degrees;
+  })
+  return degrees
 }
 //fetch de años -- 1°, 2°, etc
 export async function fetchYears() {
-  const years = await prisma.years.findMany({
+  const years = await db.years.findMany({
     cacheStrategy: cache,
-  });
-  return years;
+  })
+  return years
 }
 
 //fetch a los links de cada materia
-export async function fetchLinks({
-  official,
-  id_materia,
-}: {
-  official: boolean;
-  id_materia: number;
-}) {
-  const links = await prisma.links.findMany({
+export async function fetchLinks({ official, id_materia }: { official: boolean; id_materia: number }) {
+  const links = await db.links.findMany({
     where: {
       id_course: id_materia,
       official: official,
@@ -367,85 +331,81 @@ export async function fetchLinks({
       },
     },
     // cacheStrategy: cache,
-  });
-  return links;
+  })
+  return links
 }
 
 export async function fetchUser(id: number | string) {
   try {
-    const user = await prisma.users.findFirstOrThrow({
+    const user = await db.users.findFirstOrThrow({
       where: {
-        ...(typeof id === 'number'
-          ? { id: id }
-          : typeof id === 'string' && { email: id }),
+        ...(typeof id === 'number' ? { id: id } : typeof id === 'string' && { email: id }),
       },
-    });
-    return user;
+    })
+    return user
   } catch (error) {
-    throw new Error('No se encontro nignun usuario');
+    throw new Error('No se encontro nignun usuario')
   }
 }
 
 export async function fetchUserWithoutThrow(id: number | string) {
   try {
-    const user = await prisma.users.findFirst({
+    const user = await db.users.findFirst({
       where: {
-        ...(typeof id === 'number'
-          ? { id: id }
-          : typeof id === 'string' && { email: id }),
+        ...(typeof id === 'number' ? { id: id } : typeof id === 'string' && { email: id }),
       },
-    });
-    return user;
+    })
+    return user
   } catch (error) {
-    throw new Error('No se encontro nignun usuario');
+    throw new Error('No se encontro nignun usuario')
   }
 }
 
 export async function fetchUserReactionTp(id_response: number) {
-  const userReactions = await prisma.tps_reactions.findMany({
+  const userReactions = await db.tps_reactions.findMany({
     where: {
       id_response: id_response,
     },
-  });
-  return userReactions;
+  })
+  return userReactions
 }
 
 export async function fetchUserReactionMidterm(id_response: number) {
-  const userReactions = await prisma.midterms_reactions.findMany({
+  const userReactions = await db.midterms_reactions.findMany({
     where: {
       id_response: id_response,
     },
-  });
-  return userReactions;
+  })
+  return userReactions
 }
 
 export async function fetchResponsesTp(id_tp: number) {
-  const responses = await prisma.tps_responses.findMany({
+  const responses = await db.tps_responses.findMany({
     where: {
       id_module: id_tp,
     },
     orderBy: {
       number: 'asc',
     },
-  });
-  return responses;
+  })
+  return responses
 }
 
 export async function fetchResponsesMidterm(id_midterm: number) {
-  const responses = await prisma.midterms_responses.findMany({
+  const responses = await db.midterms_responses.findMany({
     where: {
       id_module: id_midterm,
     },
     orderBy: {
       number: 'asc',
     },
-  });
+  })
 
-  return responses;
+  return responses
 }
 
 export async function fetchContributors() {
-  const users = await prisma.users.findMany({
+  const users = await db.users.findMany({
     include: {
       _count: {
         select: {
@@ -465,19 +425,14 @@ export async function fetchContributors() {
       ttl: 3600 * 24,
       swr: 3600,
     },
-  });
+  })
   const prepareUsers = users
     .map((user) => ({
       ...user,
-      score:
-        user._count.links * 1 +
-        user._count.midterms * 5 +
-        user._count.tps * 6 +
-        user._count.tps_reactions * 1 +
-        user._count.tps_responses * 3,
+      score: user._count.links * 1 + user._count.midterms * 5 + user._count.tps * 6 + user._count.tps_reactions * 1 + user._count.tps_responses * 3,
     }))
     .filter((user) => user.score > 0)
-    .sort((a, b) => b.score - a.score);
+    .sort((a, b) => b.score - a.score)
 
-  return prepareUsers;
+  return prepareUsers
 }

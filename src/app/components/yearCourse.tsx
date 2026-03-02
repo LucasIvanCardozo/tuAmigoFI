@@ -1,4 +1,4 @@
-import { fetchYears } from '@/app/lib/data';
+import { fetchYears } from '@/app/lib/server/data';
 import { years } from '@prisma/client';
 import YearStructures from './YearStructure';
 

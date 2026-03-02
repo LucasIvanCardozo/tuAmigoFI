@@ -1,4 +1,4 @@
-import { fetchContributors } from '@/app/lib/data';
+import { fetchContributors } from '@/app/lib/server/data';
 import { FaStar } from 'react-icons/fa';
 
 export default async function Contributors() {
@@ -12,10 +12,10 @@ export default async function Contributors() {
             (index == 0
               ? 'text-2xl'
               : index == 1
-              ? 'text-xl'
-              : index == 2
-              ? 'text-lg'
-              : 'text-base') + ` flex gap-1`
+                ? 'text-xl'
+                : index == 2
+                  ? 'text-lg'
+                  : 'text-base') + ` flex gap-1`
           }
           key={index}
         >

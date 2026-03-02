@@ -1,4 +1,4 @@
-import { fetchCourse, fetchMidtermsWithAllData } from '@/app/lib/data';
+import { fetchCourse, fetchMidtermsWithAllData } from '@/app/lib/server/data';
 import { MainModule } from '../../components/mainModule';
 import { makeModules } from '../../utils/makeModules';
 
