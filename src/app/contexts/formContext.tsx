@@ -1,14 +1,14 @@
-import { TypeValues } from '@/app/assets/types';
-import { createContext, useContext } from 'react';
+import { TypeValues } from '@/app/types'
+import { createContext, useContext } from 'react'
 
 interface TypeFromContext {
-  values: TypeValues[];
-  setValues: React.Dispatch<React.SetStateAction<TypeValues[]>>;
+  values: TypeValues[]
+  setValues: React.Dispatch<React.SetStateAction<TypeValues[]>>
 }
 
 export const FormContext = createContext<TypeFromContext>({
   values: [],
   setValues: () => {},
-});
+})
 
-export const useFormContext = () => useContext(FormContext);
+export const useFormContext = () => useContext(FormContext)

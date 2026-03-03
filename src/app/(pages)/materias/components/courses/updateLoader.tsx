@@ -1,15 +1,15 @@
-'use client';
+'use client'
 
-import { handleLoader } from '@/app/utils/handleLoader';
-import { courses } from '@prisma/client';
-import { useEffect } from 'react';
+import { Course } from '@/app/lib/server/db/prisma/prismaClient/client'
+import { handleLoader } from '@/app/utils/handleLoader'
+import { useEffect } from 'react'
 
 interface Params {
-  query: courses[];
+  courses: Course[]
 }
-export const UpdateLoader = ({ query }: Params) => {
+export const UpdateLoader = ({ courses }: Params) => {
   useEffect(() => {
-    handleLoader(false);
-  }, [query]);
-  return <></>;
-};
+    handleLoader(false)
+  }, [courses])
+  return <></>
+}

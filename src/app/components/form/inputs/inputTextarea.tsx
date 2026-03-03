@@ -1,8 +1,8 @@
-import { inputTextArea } from '@/app/assets/types';
+import { inputTextArea } from '@/app/types'
 
 interface Params {
-  input: inputTextArea;
-  onChange: (val: string) => void;
+  input: inputTextArea
+  onChange: (val: string) => void
 }
 export const InputTextarea = ({ input, onChange }: Params) => {
   return (
@@ -15,5 +15,5 @@ export const InputTextarea = ({ input, onChange }: Params) => {
       required={input.required}
       onChange={(e) => onChange(e.target.value)}
     />
-  );
-};
+  )
+}

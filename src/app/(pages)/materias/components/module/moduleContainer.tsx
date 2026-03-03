@@ -1,89 +1,68 @@
-'use client';
-import { numberIconsModules } from '../../assets/icons';
-import { CgMathPlus } from 'react-icons/cg';
-import { MdDelete } from 'react-icons/md';
-import { MdOutlineReport } from 'react-icons/md';
-import PdfView from '@/app/components/pdfView';
-import {
-  DataModule,
-  DataModuleProblem,
-  DataModuleResponse,
-  TypeValues,
-} from '@/app/assets/types';
-import { useMainContext } from '@/app/lib/contexts';
-import { SiGoogledocs } from 'react-icons/si';
-import ModuleResponse from '../responses/moduleResponse';
-import { HandlerInputs } from '@/app/components/form/inputs/handlerInputs';
-import {
-  addReportMidterm,
-  addReportTp,
-  createResponseMidterm,
-  createResponseTp,
-  deleteMidterm,
-  deleteTP,
-} from '@/app/lib/actions';
+'use client'
+import { numberIconsModules } from '../../assets/icons'
+import { CgMathPlus } from 'react-icons/cg'
+import { MdDelete } from 'react-icons/md'
+import { MdOutlineReport } from 'react-icons/md'
+import PdfView from '@/app/components/pdfView'
+import { DataModule, DataModuleProblem, DataModuleResponse, TypeValues } from '@/app/types'
+import { useMainContext } from '@/app/lib/contexts'
+import { SiGoogledocs } from 'react-icons/si'
+import ModuleResponse from '../responses/moduleResponse'
+import { HandlerInputs } from '@/app/components/form/inputs/handlerInputs'
+import { addReportMidterm, addReportTp, createResponseMidterm, createResponseTp, deleteMidterm, deleteTP } from '@/app/lib/actions'
 
 interface Params {
-  module: DataModule;
+  module: DataModule
 }
 
 export const ModuleContainer = ({ module }: Params) => {
-  
-  const { session, stateViewModule, stateModal, stateModules, stateForm } =
-    useMainContext();
+  const { session, stateViewModule, stateModal, stateModules, stateForm } = useMainContext()
 
-  const user = module.user;
-  const moduleInd = module.module;
-  const problems = module.problems;
-  const isTp = 'number' in moduleInd;
+  const user = module.user
+  const moduleInd = module.module
+  const problems = module.problems
+  const isTp = 'number' in moduleInd
 
   const submitDeleteModule = async (values: TypeValues[]) => {
-    const check = values.find((val) => val.id == 'check');
+    const check = values.find((val) => val.id == 'check')
     try {
       if (check && typeof check.value === 'boolean') {
         if (session && session?.user?.tier == 2) {
-          const formData = new FormData();
-          formData.set('id', moduleInd.id.toString());
-          formData.set(
-            'subFolder',
-            `${isTp ? 'tps' : 'parciales'}/respuestas/${moduleInd.id}`
-          );
+          const formData = new FormData()
+          formData.set('id', moduleInd.id.toString())
+          formData.set('subFolder', `${isTp ? 'tps' : 'parciales'}/respuestas/${moduleInd.id}`)
           const res = await fetch('/api/destroyAll', {
             method: 'POST',
             body: formData,
-          });
+          })
 
-          formData.set('id', moduleInd.id.toString());
-          formData.set('subFolder', `${isTp ? 'tps' : 'parciales'}/problemas`);
+          formData.set('id', moduleInd.id.toString())
+          formData.set('subFolder', `${isTp ? 'tps' : 'parciales'}/problemas`)
 
           const res2 = await fetch('/api/destroy', {
             method: 'POST',
             body: formData,
-          });
+          })
 
           if (res.ok && res2.ok) {
-            if (isTp) await deleteTP({ id: moduleInd.id });
-            else await deleteMidterm({ id: moduleInd.id });
+            if (isTp) await deleteTP({ id: moduleInd.id })
+            else await deleteMidterm({ id: moduleInd.id })
             try {
-              stateModules.setModules(
-                stateModules.modules.filter(
-                  (mod) => mod.module.id != module.module.id
-                )
-              );
+              stateModules.setModules(stateModules.modules.filter((mod) => mod.module.id != module.module.id))
             } catch (error) {
-              window.location.reload();
+              window.location.reload()
             }
-          } else throw new Error('Error al eliminar esta respuesta');
+          } else throw new Error('Error al eliminar esta respuesta')
         }
-      } else throw new Error('Faltan completar datos.');
+      } else throw new Error('Faltan completar datos.')
     } catch (error) {
-      if (error instanceof Error) throw new Error(error.message);
-      else throw new Error('Error inesperado.');
+      if (error instanceof Error) throw new Error(error.message)
+      else throw new Error('Error inesperado.')
     }
-  };
+  }
 
   const submitReportModule = async (values: TypeValues[]) => {
-    const check = values.find((val) => val.id == 'check');
+    const check = values.find((val) => val.id == 'check')
     try {
       if (check && typeof check.value === 'boolean') {
         if (session) {
@@ -91,84 +70,67 @@ export const ModuleContainer = ({ module }: Params) => {
             await addReportTp({
               id_tp: moduleInd.id,
               id_user: session.user.id,
-            });
+            })
           } else {
             await addReportMidterm({
               id_midterm: moduleInd.id,
               id_user: session.user.id,
-            });
+            })
           }
         }
-      } else throw new Error('Faltan completar datos.');
+      } else throw new Error('Faltan completar datos.')
     } catch (error) {
-      if (error instanceof Error) throw new Error(error.message);
-      else throw new Error('Error inesperado.');
+      if (error instanceof Error) throw new Error(error.message)
+      else throw new Error('Error inesperado.')
     }
-  };
+  }
 
   const submitAddResponse = async (values: TypeValues[]) => {
-    const number = values.find((val) => val.id == 'number');
-    const selectResponse = values.find((val) => val.id == 'selectResponse');
+    const number = values.find((val) => val.id == 'number')
+    const selectResponse = values.find((val) => val.id == 'selectResponse')
     try {
       if (
         number &&
         typeof number.value === 'string' &&
         selectResponse &&
-        (((selectResponse.inputType == '0' ||
-          selectResponse.inputType == '3') &&
-          typeof selectResponse.value == 'string') ||
-          ((selectResponse.inputType == '1' ||
-            selectResponse.inputType == '2') &&
-            selectResponse.value instanceof File))
+        (((selectResponse.inputType == '0' || selectResponse.inputType == '3') && typeof selectResponse.value == 'string') ||
+          ((selectResponse.inputType == '1' || selectResponse.inputType == '2') && selectResponse.value instanceof File))
       ) {
         if (session) {
-          let addResponse;
-          const typeResponse = Number(selectResponse.inputType);
+          let addResponse
+          const typeResponse = Number(selectResponse.inputType)
           if (isTp) {
             addResponse = await createResponseTp({
               idUser: session.user.id,
               idTp: moduleInd.id,
               number: Number(number.value),
-              text:
-                selectResponse.inputType == '0' ||
-                selectResponse.inputType == '3'
-                  ? (selectResponse.value as string)
-                  : undefined,
+              text: selectResponse.inputType == '0' || selectResponse.inputType == '3' ? (selectResponse.value as string) : undefined,
               type: typeResponse,
-            });
+            })
           } else {
             addResponse = await createResponseMidterm({
               idUser: session.user.id,
               idMidterm: moduleInd.id,
               number: Number(number.value),
-              text:
-                selectResponse.inputType == '0' ||
-                selectResponse.inputType == '3'
-                  ? (selectResponse.value as string)
-                  : undefined,
+              text: selectResponse.inputType == '0' || selectResponse.inputType == '3' ? (selectResponse.value as string) : undefined,
               type: typeResponse,
-            });
+            })
           }
           if (typeResponse == 1 || typeResponse == 2) {
             if (selectResponse.value) {
               if (addResponse) {
-                const formData = new FormData();
-                formData.set('file', selectResponse.value);
-                formData.set('id', session.user.id.toString());
-                formData.set(
-                  'subFolder',
-                  `${isTp ? 'tps' : 'parciales'}/respuestas/${
-                    moduleInd.id
-                  }/${Number(number.value)}`
-                );
+                const formData = new FormData()
+                formData.set('file', selectResponse.value)
+                formData.set('id', session.user.id.toString())
+                formData.set('subFolder', `${isTp ? 'tps' : 'parciales'}/respuestas/${moduleInd.id}/${Number(number.value)}`)
                 await fetch('/api/upload', {
                   method: 'POST',
                   body: formData,
-                });
+                })
               } else {
-                throw new Error('Ocurrio un error en la suba de la respuesta');
+                throw new Error('Ocurrio un error en la suba de la respuesta')
               }
-            } else throw new Error('No se encontro ningun archivo');
+            } else throw new Error('No se encontro ningun archivo')
           }
           try {
             const responseAux: DataModuleResponse = {
@@ -184,13 +146,11 @@ export const ModuleContainer = ({ module }: Params) => {
               response: addResponse,
               reactions: [],
               comments: [],
-            };
+            }
             stateModules.setModules(
               stateModules.modules.map((mod) => {
-                let newProblems: DataModuleProblem[];
-                if (
-                  mod.problems.some((pro) => pro.number == addResponse.number)
-                ) {
+                let newProblems: DataModuleProblem[]
+                if (mod.problems.some((pro) => pro.number == addResponse.number)) {
                   newProblems = mod.problems.map((pro) =>
                     pro.number == addResponse.number
                       ? {
@@ -198,58 +158,34 @@ export const ModuleContainer = ({ module }: Params) => {
                           responses: [...pro.responses, responseAux],
                         }
                       : pro
-                  );
+                  )
                 } else {
-                  newProblems = [
-                    ...mod.problems,
-                    { number: addResponse.number, responses: [responseAux] },
-                  ];
+                  newProblems = [...mod.problems, { number: addResponse.number, responses: [responseAux] }]
                 }
-                return mod.module.id == module.module.id
-                  ? { ...mod, problems: newProblems }
-                  : mod;
+                return mod.module.id == module.module.id ? { ...mod, problems: newProblems } : mod
               })
-            );
+            )
           } catch (error) {
-            window.location.reload();
+            window.location.reload()
           }
-        } else throw new Error('Debes iniciar sesion.');
-      } else throw new Error('Faltan completar datos.');
+        } else throw new Error('Debes iniciar sesion.')
+      } else throw new Error('Faltan completar datos.')
     } catch (error) {
-      if (error instanceof Error) throw new Error(error.message);
-      else throw new Error('Error inesperado.');
+      if (error instanceof Error) throw new Error(error.message)
+      else throw new Error('Error inesperado.')
     }
-  };
+  }
 
   return (
-    <li
-      className={
-        'relative ' +
-        `${
-          stateViewModule.viewModule != null &&
-          stateViewModule.viewModule != moduleInd.id &&
-          'hidden'
-        }`
-      }
-    >
+    <li className={'relative ' + `${stateViewModule.viewModule != null && stateViewModule.viewModule != moduleInd.id && 'hidden'}`}>
       <div className="flex items-center text-xl sticky top-0 z-20 bg-[--platinum] py-1 ">
-        {isTp ? (
-          moduleInd.number && numberIconsModules[moduleInd.number] ? (
-            numberIconsModules[moduleInd.number]
-          ) : (
-            numberIconsModules[0]
-          )
-        ) : (
-          <SiGoogledocs />
-        )}
+        {isTp ? moduleInd.number && numberIconsModules[moduleInd.number] ? numberIconsModules[moduleInd.number] : numberIconsModules[0] : <SiGoogledocs />}
         <h2>
           {moduleInd.name}{' '}
           {isTp ? (
             <p className="inline-block text-base">{`(${moduleInd.year})`}</p>
           ) : (
-            <p className="inline-block text-base">{`(${
-              moduleInd.date.getMonth() + 1
-            }/${moduleInd.date.getFullYear()})`}</p>
+            <p className="inline-block text-base">{`(${moduleInd.date.getMonth() + 1}/${moduleInd.date.getFullYear()})`}</p>
           )}
         </h2>
 
@@ -262,7 +198,7 @@ export const ModuleContainer = ({ module }: Params) => {
                 stateModal.setDataModal({
                   title: `Eliminar ${isTp ? 'TP' : 'Examen'}`,
                   viewModal: true,
-                });
+                })
                 stateForm.setDataForm({
                   onSubmit: submitDeleteModule,
                   children: (
@@ -290,38 +226,24 @@ export const ModuleContainer = ({ module }: Params) => {
                         ) : (
                           <p>
                             <b>Fecha:</b>
-                            {`${
-                              moduleInd.date.getMonth() + 1
-                            }/${moduleInd.date.getFullYear()}`}
+                            {`${moduleInd.date.getMonth() + 1}/${moduleInd.date.getFullYear()}`}
                           </p>
                         )}
                       </div>
                       <div>
                         <h3 className="text-sm">Recuerda!</h3>
                         <p className="text-xs">
-                          Por favor asegurate de que el examen que quieres
-                          eliminar sea el correcto. Se eliminaran todos los
-                          problemas, las respuestas y sus reacciones. En caso de
-                          cualquier problema podes contactarme:{' '}
-                          <a
-                            className="underline"
-                            target="_blank"
-                            href="https://wa.me/+5492235319564"
-                          >
+                          Por favor asegurate de que el examen que quieres eliminar sea el correcto. Se eliminaran todos los problemas, las respuestas y sus
+                          reacciones. En caso de cualquier problema podes contactarme:{' '}
+                          <a className="underline" target="_blank" href="https://wa.me/+5492235319564">
                             2235319564
                           </a>
                         </p>
                       </div>
-                      <HandlerInputs
-                        type="checkbox"
-                        id="check"
-                        name="check"
-                        placeholder="Confirmo la eliminación."
-                        required={true}
-                      />
+                      <HandlerInputs type="checkbox" id="check" name="check" placeholder="Confirmo la eliminación." required={true} />
                     </>
                   ),
-                });
+                })
               }}
             >
               <MdDelete />
@@ -340,39 +262,17 @@ export const ModuleContainer = ({ module }: Params) => {
                       <>
                         <div className="flex flex-col">
                           <label htmlFor="number">Número</label>
-                          <HandlerInputs
-                            type="number"
-                            id="number"
-                            name="number"
-                            min={0}
-                            max={100}
-                            placeholder="Número del problema"
-                            required={true}
-                          />
+                          <HandlerInputs type="number" id="number" name="number" min={0} max={100} placeholder="Número del problema" required={true} />
                         </div>
-                        <HandlerInputs
-                          type="selectResponse"
-                          id="selectResponse"
-                          required={true}
-                          name="selectResponse"
-                        />
+                        <HandlerInputs type="selectResponse" id="selectResponse" required={true} name="selectResponse" />
                         <div>
-                          <p>
-                            Esta respuesta se añadirá al módulo "
-                            {moduleInd.name}"
-                          </p>
+                          <p>Esta respuesta se añadirá al módulo "{moduleInd.name}"</p>
                         </div>
                         <div>
                           <h3 className="text-sm">Recuerda!</h3>
                           <p className="text-xs">
-                            Por favor asegurate de que las respuestas estén
-                            legibles y sean para este módulo. En caso de
-                            cualquier problema podes contactarme:{' '}
-                            <a
-                              className="underline"
-                              target="_blank"
-                              href="https://wa.me/+5492235319564"
-                            >
+                            Por favor asegurate de que las respuestas estén legibles y sean para este módulo. En caso de cualquier problema podes contactarme:{' '}
+                            <a className="underline" target="_blank" href="https://wa.me/+5492235319564">
                               2235319564
                             </a>
                           </p>
@@ -435,41 +335,26 @@ export const ModuleContainer = ({ module }: Params) => {
                       <div>
                         <h3 className="text-sm">Recuerda!</h3>
                         <p className="text-xs">
-                          Por favor asegurate de que el examen que quieres
-                          reportar sea el correcto. En caso de cualquier
-                          problema podes contactarme:{' '}
-                          <a
-                            className="underline"
-                            target="_blank"
-                            href="https://wa.me/+5492235319564"
-                          >
+                          Por favor asegurate de que el examen que quieres reportar sea el correcto. En caso de cualquier problema podes contactarme:{' '}
+                          <a className="underline" target="_blank" href="https://wa.me/+5492235319564">
                             2235319564
                           </a>
                         </p>
                       </div>
-                      <HandlerInputs
-                        type="checkbox"
-                        id="check"
-                        name="check"
-                        placeholder="Confirmo mi reporte."
-                        required={true}
-                      />
+                      <HandlerInputs type="checkbox" id="check" name="check" placeholder="Confirmo mi reporte." required={true} />
                     </>
                   ),
-                });
+                })
                 stateModal.setDataModal({
                   title: `Reportar  ${isTp ? 'TP' : 'Examen'}`,
                   viewModal: true,
-                });
+                })
               }}
             >
               <MdOutlineReport className="h-full w-full text-red-700" />
             </button>
           )}
-          <PdfView
-            id={moduleInd.id}
-            url={isTp ? `tps/problemas` : `parciales/problemas`}
-          />
+          <PdfView id={moduleInd.id} url={isTp ? `tps/problemas` : `parciales/problemas`} />
         </div>
         <ul className="flex flex-col gap-1 pl-1">
           {problems.length == 0 ? (
@@ -481,15 +366,7 @@ export const ModuleContainer = ({ module }: Params) => {
               {problems
                 .map((problem, index) =>
                   problem.responses.length > 0 ? (
-                    <ModuleResponse
-                      key={
-                        ((index + problem.responses.length) *
-                          (index + problem.responses.length + 1)) /
-                          2 +
-                        index
-                      }
-                      problem={problem}
-                    />
+                    <ModuleResponse key={((index + problem.responses.length) * (index + problem.responses.length + 1)) / 2 + index} problem={problem} />
                   ) : undefined
                 )
                 .filter((prob) => prob != undefined)}
@@ -498,5 +375,5 @@ export const ModuleContainer = ({ module }: Params) => {
         </ul>
       </div>
     </li>
-  );
-};
+  )
+}

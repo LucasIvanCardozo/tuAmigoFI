@@ -4,6 +4,17 @@ export const degreeRepository = (db: PrismaClient | Prisma.TransactionClient) =>
   findAll() {
     return db.degree.findMany()
   },
+  findAllWithPlans() {
+    return db.degree.findMany({
+      include: {
+        degrees_plans: {
+          select: {
+            plans: true,
+          },
+        },
+      },
+    })
+  },
   findByCourseId(idCourse: string) {
     return db.degree.findMany({
       where: { courses_degrees: { some: { idCourse } } },
@@ -11,3 +22,5 @@ export const degreeRepository = (db: PrismaClient | Prisma.TransactionClient) =>
     })
   },
 })
+
+export type DegreesWithPlansType = Prisma.DegreeGetPayload<{ include: { degrees_plans: { select: { plans: true } } } }>

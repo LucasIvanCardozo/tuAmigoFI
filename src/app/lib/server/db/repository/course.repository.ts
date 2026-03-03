@@ -40,7 +40,7 @@ export const courseRepository = (db: PrismaClient | Prisma.TransactionClient) =>
   findByPage({ search, idYear, idDegree, page, max = 5 }: { search?: string; idYear?: string; idDegree?: string; page?: number; max?: number }) {
     return db.course.findMany({
       where: {
-        name_normalized: {
+        nameNormalized: {
           contains: search,
           mode: 'insensitive',
         },
@@ -56,7 +56,7 @@ export const courseRepository = (db: PrismaClient | Prisma.TransactionClient) =>
         : { take: max, skip: 0 }),
     })
   },
-  findCorrelativesById({ idCourse, idDegree }: { idCourse: string; idDegree: string }) {
+  findCorrelativesById({ idCourse, idDegree }: { idCourse: string; idDegree?: string }) {
     return db.course.findMany({
       where: {
         correlatives_correlatives_id_correlativeTocourses: { some: { idCourse } },
@@ -68,7 +68,7 @@ export const courseRepository = (db: PrismaClient | Prisma.TransactionClient) =>
       },
     })
   },
-  findEnablesById({ idCourse, idDegree }: { idCourse: string; idDegree: string }) {
+  findEnablesById({ idCourse, idDegree }: { idCourse: string; idDegree?: string }) {
     return db.course.findMany({
       where: {
         correlatives_correlatives_idTocourses: {

@@ -1,39 +1,41 @@
-import { DataForm, DataModule, TypeModal } from '@/app/assets/types';
-import { courses } from '@prisma/client';
-import { Session } from 'next-auth';
-import { createContext, useContext } from 'react';
+import { DataForm, DataModule, TypeModal } from '@/app/types'
+import { Session } from 'next-auth'
+import { createContext, useContext } from 'react'
+import { Course } from '../lib/server/db/prisma/prismaClient/client'
 
 interface TypeMainContext {
-  session: Session | null;
-  course: courses;
-  typeModule: 'TP' | 'Practica';
+  session: Session | null
+  course: Course
+  typeModule: 'TP' | 'Practica'
   stateViewModule: {
-    viewModule: number | null;
-    setViewModule: (number: number | null) => void;
-  };
+    viewModule: number | null
+    setViewModule: (number: number | null) => void
+  }
   stateModal: {
-    dataModal: TypeModal;
-    setDataModal: (dataModal: TypeModal) => void;
-  };
+    dataModal: TypeModal
+    setDataModal: (dataModal: TypeModal) => void
+  }
   stateModules: {
-    modules: DataModule[];
-    setModules: (dataModules: DataModule[]) => void;
-  };
+    modules: DataModule[]
+    setModules: (dataModules: DataModule[]) => void
+  }
   stateForm: {
-    dataForm: DataForm;
-    setDataForm: (data: DataForm) => void;
-  };
+    dataForm: DataForm
+    setDataForm: (data: DataForm) => void
+  }
 }
 
 export const MainContext = createContext<TypeMainContext>({
   session: null,
   course: {
-    id: 0,
+    id: '0',
     name: 'Default',
-    name_normalized: 'default',
+    nameNormalized: 'default',
     cg: 0,
     hs: 0,
     optional: false,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   typeModule: 'TP',
   stateViewModule: {
@@ -55,6 +57,6 @@ export const MainContext = createContext<TypeMainContext>({
     dataForm: { children: <></>, onSubmit: async () => {} },
     setDataForm: () => {},
   },
-});
+})
 
-export const useMainContext = () => useContext(MainContext);
+export const useMainContext = () => useContext(MainContext)

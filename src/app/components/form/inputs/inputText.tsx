@@ -1,8 +1,8 @@
-import { inputText } from '@/app/assets/types';
+import { inputText } from '@/app/types'
 
 interface Params {
-  input: inputText;
-  onChange: (val: string) => void;
+  input: inputText
+  onChange: (val: string) => void
 }
 
 export const InputText = ({ input, onChange }: Params) => {
@@ -15,5 +15,5 @@ export const InputText = ({ input, onChange }: Params) => {
       required={input.required}
       onChange={(e) => onChange(e.target.value)}
     />
-  );
-};
+  )
+}

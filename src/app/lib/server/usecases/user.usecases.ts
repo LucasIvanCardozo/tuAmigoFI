@@ -3,6 +3,18 @@ import { User } from '../db/prisma/prismaClient/client'
 import { userRepository } from '../db/repository/user.repository'
 
 export const userUseCases = {
+  getById(id: string) {
+    return userRepository(db).getById(id)
+  },
+  getByEmail(email: string) {
+    return userRepository(db).getByEmail(email)
+  },
+  findById(id: string) {
+    return userRepository(db).findById(id)
+  },
+  findByEmail(email: string) {
+    return userRepository(db).findByEmail(email)
+  },
   async findContributorsWithScore() {
     const contributors = await userRepository(db).findContributors()
 

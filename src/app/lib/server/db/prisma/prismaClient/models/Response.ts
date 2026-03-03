@@ -251,7 +251,7 @@ export type ResponseWhereInput = {
   comments?: Prisma.CommentListRelationFilter
   midterm?: Prisma.XOR<Prisma.MidtermNullableScalarRelationFilter, Prisma.MidtermWhereInput> | null
   tp?: Prisma.XOR<Prisma.TpNullableScalarRelationFilter, Prisma.TpWhereInput> | null
-  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type ResponseOrderByWithRelationInput = {
@@ -286,7 +286,7 @@ export type ResponseWhereUniqueInput = Prisma.AtLeast<{
   comments?: Prisma.CommentListRelationFilter
   midterm?: Prisma.XOR<Prisma.MidtermNullableScalarRelationFilter, Prisma.MidtermWhereInput> | null
   tp?: Prisma.XOR<Prisma.TpNullableScalarRelationFilter, Prisma.TpWhereInput> | null
-  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
 export type ResponseOrderByWithAggregationInput = {
@@ -331,7 +331,7 @@ export type ResponseCreateInput = {
   comments?: Prisma.CommentCreateNestedManyWithoutResponseInput
   midterm?: Prisma.MidtermCreateNestedOneWithoutResponsesInput
   tp?: Prisma.TpCreateNestedOneWithoutResponsesInput
-  user?: Prisma.UserCreateNestedOneWithoutResponsesInput
+  user: Prisma.UserCreateNestedOneWithoutResponsesInput
 }
 
 export type ResponseUncheckedCreateInput = {
@@ -357,7 +357,7 @@ export type ResponseUpdateInput = {
   comments?: Prisma.CommentUpdateManyWithoutResponseNestedInput
   midterm?: Prisma.MidtermUpdateOneWithoutResponsesNestedInput
   tp?: Prisma.TpUpdateOneWithoutResponsesNestedInput
-  user?: Prisma.UserUpdateOneWithoutResponsesNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutResponsesNestedInput
 }
 
 export type ResponseUncheckedUpdateInput = {
@@ -416,9 +416,9 @@ export type ResponseOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type ResponseNullableScalarRelationFilter = {
-  is?: Prisma.ResponseWhereInput | null
-  isNot?: Prisma.ResponseWhereInput | null
+export type ResponseScalarRelationFilter = {
+  is?: Prisma.ResponseWhereInput
+  isNot?: Prisma.ResponseWhereInput
 }
 
 export type ResponseCountOrderByAggregateInput = {
@@ -513,12 +513,10 @@ export type ResponseCreateNestedOneWithoutCommentsInput = {
   connect?: Prisma.ResponseWhereUniqueInput
 }
 
-export type ResponseUpdateOneWithoutCommentsNestedInput = {
+export type ResponseUpdateOneRequiredWithoutCommentsNestedInput = {
   create?: Prisma.XOR<Prisma.ResponseCreateWithoutCommentsInput, Prisma.ResponseUncheckedCreateWithoutCommentsInput>
   connectOrCreate?: Prisma.ResponseCreateOrConnectWithoutCommentsInput
   upsert?: Prisma.ResponseUpsertWithoutCommentsInput
-  disconnect?: Prisma.ResponseWhereInput | boolean
-  delete?: Prisma.ResponseWhereInput | boolean
   connect?: Prisma.ResponseWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ResponseUpdateToOneWithWhereWithoutCommentsInput, Prisma.ResponseUpdateWithoutCommentsInput>, Prisma.ResponseUncheckedUpdateWithoutCommentsInput>
 }
@@ -632,7 +630,7 @@ export type ResponseCreateWithoutMidtermInput = {
   updatedAt?: Date | string
   comments?: Prisma.CommentCreateNestedManyWithoutResponseInput
   tp?: Prisma.TpCreateNestedOneWithoutResponsesInput
-  user?: Prisma.UserCreateNestedOneWithoutResponsesInput
+  user: Prisma.UserCreateNestedOneWithoutResponsesInput
 }
 
 export type ResponseUncheckedCreateWithoutMidtermInput = {
@@ -697,7 +695,7 @@ export type ResponseCreateWithoutCommentsInput = {
   updatedAt?: Date | string
   midterm?: Prisma.MidtermCreateNestedOneWithoutResponsesInput
   tp?: Prisma.TpCreateNestedOneWithoutResponsesInput
-  user?: Prisma.UserCreateNestedOneWithoutResponsesInput
+  user: Prisma.UserCreateNestedOneWithoutResponsesInput
 }
 
 export type ResponseUncheckedCreateWithoutCommentsInput = {
@@ -737,7 +735,7 @@ export type ResponseUpdateWithoutCommentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   midterm?: Prisma.MidtermUpdateOneWithoutResponsesNestedInput
   tp?: Prisma.TpUpdateOneWithoutResponsesNestedInput
-  user?: Prisma.UserUpdateOneWithoutResponsesNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutResponsesNestedInput
 }
 
 export type ResponseUncheckedUpdateWithoutCommentsInput = {
@@ -761,7 +759,7 @@ export type ResponseCreateWithoutTpInput = {
   updatedAt?: Date | string
   comments?: Prisma.CommentCreateNestedManyWithoutResponseInput
   midterm?: Prisma.MidtermCreateNestedOneWithoutResponsesInput
-  user?: Prisma.UserCreateNestedOneWithoutResponsesInput
+  user: Prisma.UserCreateNestedOneWithoutResponsesInput
 }
 
 export type ResponseUncheckedCreateWithoutTpInput = {
@@ -872,7 +870,7 @@ export type ResponseUpdateWithoutMidtermInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   comments?: Prisma.CommentUpdateManyWithoutResponseNestedInput
   tp?: Prisma.TpUpdateOneWithoutResponsesNestedInput
-  user?: Prisma.UserUpdateOneWithoutResponsesNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutResponsesNestedInput
 }
 
 export type ResponseUncheckedUpdateWithoutMidtermInput = {
@@ -918,7 +916,7 @@ export type ResponseUpdateWithoutTpInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   comments?: Prisma.CommentUpdateManyWithoutResponseNestedInput
   midterm?: Prisma.MidtermUpdateOneWithoutResponsesNestedInput
-  user?: Prisma.UserUpdateOneWithoutResponsesNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutResponsesNestedInput
 }
 
 export type ResponseUncheckedUpdateWithoutTpInput = {
@@ -1034,7 +1032,7 @@ export type ResponseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   comments?: boolean | Prisma.Response$commentsArgs<ExtArgs>
   midterm?: boolean | Prisma.Response$midtermArgs<ExtArgs>
   tp?: boolean | Prisma.Response$tpArgs<ExtArgs>
-  user?: boolean | Prisma.Response$userArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.ResponseCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["response"]>
 
@@ -1050,7 +1048,7 @@ export type ResponseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   updatedAt?: boolean
   midterm?: boolean | Prisma.Response$midtermArgs<ExtArgs>
   tp?: boolean | Prisma.Response$tpArgs<ExtArgs>
-  user?: boolean | Prisma.Response$userArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["response"]>
 
 export type ResponseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1065,7 +1063,7 @@ export type ResponseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   updatedAt?: boolean
   midterm?: boolean | Prisma.Response$midtermArgs<ExtArgs>
   tp?: boolean | Prisma.Response$tpArgs<ExtArgs>
-  user?: boolean | Prisma.Response$userArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["response"]>
 
 export type ResponseSelectScalar = {
@@ -1085,18 +1083,18 @@ export type ResponseInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   comments?: boolean | Prisma.Response$commentsArgs<ExtArgs>
   midterm?: boolean | Prisma.Response$midtermArgs<ExtArgs>
   tp?: boolean | Prisma.Response$tpArgs<ExtArgs>
-  user?: boolean | Prisma.Response$userArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.ResponseCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ResponseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   midterm?: boolean | Prisma.Response$midtermArgs<ExtArgs>
   tp?: boolean | Prisma.Response$tpArgs<ExtArgs>
-  user?: boolean | Prisma.Response$userArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type ResponseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   midterm?: boolean | Prisma.Response$midtermArgs<ExtArgs>
   tp?: boolean | Prisma.Response$tpArgs<ExtArgs>
-  user?: boolean | Prisma.Response$userArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $ResponsePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1105,7 +1103,7 @@ export type $ResponsePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     comments: Prisma.$CommentPayload<ExtArgs>[]
     midterm: Prisma.$MidtermPayload<ExtArgs> | null
     tp: Prisma.$TpPayload<ExtArgs> | null
-    user: Prisma.$UserPayload<ExtArgs> | null
+    user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1514,7 +1512,7 @@ export interface Prisma__ResponseClient<T, Null = never, ExtArgs extends runtime
   comments<T extends Prisma.Response$commentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Response$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   midterm<T extends Prisma.Response$midtermArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Response$midtermArgs<ExtArgs>>): Prisma.Prisma__MidtermClient<runtime.Types.Result.GetResult<Prisma.$MidtermPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   tp<T extends Prisma.Response$tpArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Response$tpArgs<ExtArgs>>): Prisma.Prisma__TpClient<runtime.Types.Result.GetResult<Prisma.$TpPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  user<T extends Prisma.Response$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Response$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2008,25 +2006,6 @@ export type Response$tpArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    */
   include?: Prisma.TpInclude<ExtArgs> | null
   where?: Prisma.TpWhereInput
-}
-
-/**
- * Response.user
- */
-export type Response$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
 }
 
 /**

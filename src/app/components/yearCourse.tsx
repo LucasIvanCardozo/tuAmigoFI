@@ -1,8 +1,37 @@
-import { fetchYears } from '@/app/lib/server/data';
-import { years } from '@prisma/client';
-import YearStructures from './YearStructure';
+'use client'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { use, useState } from 'react'
+import { Year } from '../lib/server/db/prisma/prismaClient/client'
 
-export default async function YearCourse() {
-  const years = await fetchYears();
-  return <YearStructures years={years} />;
+export default function YearCourse({ callback }: { callback: Promise<Year[]> }) {
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
+  const { replace } = useRouter()
+
+  const years = use(callback)
+
+  const [year, setYear] = useState<string>(searchParams.get('year')?.toString() ?? '')
+
+  const handleYears = (year: string) => {
+    const params = new URLSearchParams(searchParams)
+    if (year && year != '0') {
+      params.set('year', year)
+    } else {
+      params.delete('year')
+    }
+    setYear(year)
+    replace(`${pathname}?${params.toString()}`)
+  }
+
+  return (
+    <select name="years" id="years" className="w-full sm:w-16" value={year} aria-label="Elegir año de la materia" onChange={(e) => handleYears(e.target.value)}>
+      <option hidden>Año</option>
+      <option value="0">Todos</option>
+      {years.map((year) => (
+        <option key={year.id} value={year.id}>
+          {year.name}
+        </option>
+      ))}
+    </select>
+  )
 }

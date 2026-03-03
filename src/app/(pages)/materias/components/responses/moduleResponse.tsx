@@ -1,45 +1,38 @@
-'use client';
-import { useState } from 'react';
-import { CldImage } from 'next-cloudinary';
-import PdfView from '@/app/components/pdfView';
-import {
-  BiSolidRightArrowSquare,
-  BiSolidLeftArrowSquare,
-} from 'react-icons/bi';
-import { FaCommentDots } from 'react-icons/fa';
-import { MdDelete } from 'react-icons/md';
-import { DataModuleProblem, TypeValues } from '@/app/assets/types';
-import { useMainContext } from '@/app/lib/contexts';
-import ButtonReaction from './buttonReaction';
-import { HandlerInputs } from '@/app/components/form/inputs/handlerInputs';
-import { deleteMidtermResponse, deleteTpResponse } from '@/app/lib/actions';
-import { Code } from './Code';
-import { CommentsLi } from './commentsLi';
-import { CgMathPlus } from 'react-icons/cg';
+'use client'
+import { useState } from 'react'
+import { CldImage } from 'next-cloudinary'
+import PdfView from '@/app/components/pdfView'
+import { BiSolidRightArrowSquare, BiSolidLeftArrowSquare } from 'react-icons/bi'
+import { FaCommentDots } from 'react-icons/fa'
+import { MdDelete } from 'react-icons/md'
+import { DataModuleProblem, TypeValues } from '@/app/types'
+import { useMainContext } from '@/app/lib/contexts'
+import ButtonReaction from './buttonReaction'
+import { HandlerInputs } from '@/app/components/form/inputs/handlerInputs'
+import { deleteMidtermResponse, deleteTpResponse } from '@/app/lib/actions'
+import { Code } from './Code'
+import { CommentsLi } from './commentsLi'
+import { CgMathPlus } from 'react-icons/cg'
 
-export default function ModuleResponse({
-  problem,
-}: {
-  problem: DataModuleProblem;
-}) {
-  const [responses, setResponses] = useState(problem.responses);
-  const [indexResponse, setIndexResponse] = useState<number>(0);
-  const [stateComment, setStateComment] = useState(false);
-  const [viewResponses, setViewResponses] = useState(false);
+export default function ModuleResponse({ problem }: { problem: DataModuleProblem }) {
+  const [responses, setResponses] = useState(problem.responses)
+  const [indexResponse, setIndexResponse] = useState<number>(0)
+  const [stateComment, setStateComment] = useState(false)
+  const [viewResponses, setViewResponses] = useState(false)
 
-  const { session, stateModal, stateModules, stateForm } = useMainContext();
+  const { session, stateModal, stateModules, stateForm } = useMainContext()
 
-  const isTp = 'number' in stateModules.modules[0].module;
+  const isTp = 'number' in stateModules.modules[0].module
 
   const handlePageUser = (add: number) => {
-    const suma = indexResponse + add;
+    const suma = indexResponse + add
     if (!(suma >= problem.responses.length || suma < 0)) {
-      setIndexResponse(suma);
+      setIndexResponse(suma)
     }
-  };
+  }
 
   const submitDeleteResponse = async (values: TypeValues[]) => {
-    const check = values.find((val) => val.id == 'check');
+    const check = values.find((val) => val.id == 'check')
     try {
       if (check && typeof check.value === 'boolean') {
         if (session && session?.user?.tier == 2) {
@@ -47,79 +40,66 @@ export default function ModuleResponse({
             if (isTp) {
               await deleteTpResponse({
                 id: responses[indexResponse].response.id,
-              });
+              })
             } else if (!isTp) {
               await deleteMidtermResponse({
                 id: responses[indexResponse].response.id,
-              });
+              })
             }
             try {
-              const indexResponseAux = indexResponse;
-              setIndexResponse((indexResponse) => 0);
+              const indexResponseAux = indexResponse
+              setIndexResponse((indexResponse) => 0)
               stateModules.setModules(
                 stateModules.modules.map((mod) =>
-                  mod.module.id ==
-                  responses[indexResponseAux].response.id_module
+                  mod.module.id == responses[indexResponseAux].response.id_module
                     ? {
                         ...mod,
                         problems: mod.problems.map((pro) =>
                           pro.number == problem.number
                             ? {
                                 ...pro,
-                                responses: pro.responses.filter(
-                                  (res) =>
-                                    res.response.id !=
-                                    responses[indexResponseAux].response.id
-                                ),
+                                responses: pro.responses.filter((res) => res.response.id != responses[indexResponseAux].response.id),
                               }
                             : pro
                         ),
                       }
                     : mod
                 )
-              );
+              )
             } catch (error) {
-              window.location.reload();
+              window.location.reload()
             }
-          };
-          if (
-            responses[indexResponse].response.type == 1 ||
-            responses[indexResponse].response.type == 2
-          ) {
-            const formData = new FormData();
-            formData.set(
-              'id',
-              responses[indexResponse].response.id_user.toString()
-            );
+          }
+          if (responses[indexResponse].response.type == 1 || responses[indexResponse].response.type == 2) {
+            const formData = new FormData()
+            formData.set('id', responses[indexResponse].response.id_user.toString())
             formData.set(
               'subFolder',
-              `${isTp ? 'tps' : 'parciales'}/respuestas/${
-                responses[indexResponse].response.id_module
-              }/${responses[indexResponse].response.number}`
-            );
+              `${isTp ? 'tps' : 'parciales'}/respuestas/${responses[indexResponse].response.id_module}/${responses[indexResponse].response.number}`
+            )
             const res = await fetch('/api/destroy', {
               method: 'POST',
               body: formData,
-            });
+            })
             if (res.ok) {
-              deleteModuleDB();
-            } else throw new Error('Error al eliminar respuesta');
+              deleteModuleDB()
+            } else throw new Error('Error al eliminar respuesta')
           } else {
-            deleteModuleDB();
+            deleteModuleDB()
           }
         }
       } else {
-        throw new Error('Faltan completar datos.');
+        throw new Error('Faltan completar datos.')
       }
     } catch (error) {
-      throw error;
+      throw error
     }
-  };
+  }
 
   const handleComment = () => {
-    setStateComment(!stateComment);
-    console.log(responses[indexResponse].comments);
-  };
+    setStateComment(!stateComment)
+    console.log(responses[indexResponse].comments)
+  }
 
   return (
     <li className="mx-2 my-1">
@@ -160,33 +140,21 @@ export default function ModuleResponse({
                           <div>
                             <h3 className="text-sm">Recuerda!</h3>
                             <p className="text-xs">
-                              Por favor asegurate de que la respuesta sea la que
-                              quieres eliminar. Se borrara esta misma con todas
-                              sus reacciones. En caso de cualquier problema
-                              podés contactarme:{' '}
-                              <a
-                                className="underline"
-                                target="_blank"
-                                href="https://wa.me/+5492235319564"
-                              >
+                              Por favor asegurate de que la respuesta sea la que quieres eliminar. Se borrara esta misma con todas sus reacciones. En caso de
+                              cualquier problema podés contactarme:{' '}
+                              <a className="underline" target="_blank" href="https://wa.me/+5492235319564">
                                 2235319564
                               </a>
                             </p>
                           </div>
-                          <HandlerInputs
-                            type="checkbox"
-                            id="check"
-                            name="check"
-                            placeholder="Confirmo la eliminación."
-                            required={true}
-                          />
+                          <HandlerInputs type="checkbox" id="check" name="check" placeholder="Confirmo la eliminación." required={true} />
                         </>
                       ),
-                    });
+                    })
                     stateModal.setDataModal({
                       title: 'Eliminar respuesta',
                       viewModal: true,
-                    });
+                    })
                   }}
                 >
                   <MdDelete className="h-full w-full" />
@@ -224,9 +192,7 @@ export default function ModuleResponse({
                   <CldImage
                     src={`https://res.cloudinary.com/donzj5rlf/image/upload/f_auto,q_auto/v${Math.floor(
                       Date.now() / (1000 * 60 * 60 * 24 * 7)
-                    )}/${isTp ? 'tps' : 'parciales'}/respuestas/${
-                      responses[indexResponse].response.id_module
-                    }/${responses[indexResponse].response.number}/${
+                    )}/${isTp ? 'tps' : 'parciales'}/respuestas/${responses[indexResponse].response.id_module}/${responses[indexResponse].response.number}/${
                       responses[indexResponse].response.id_user
                     }`}
                     alt=""
@@ -243,9 +209,7 @@ export default function ModuleResponse({
                 <div className="relative overflow-hidden bg-[#C8E0E4] h-min max-w-full py-1 pb-7 rounded-md sm:p-1">
                   <PdfView
                     id={responses[indexResponse].response.id_user}
-                    url={`${isTp ? 'tps' : 'parciales'}/respuestas/${
-                      responses[indexResponse].response.id_module
-                    }/${responses[indexResponse].response.number}`}
+                    url={`${isTp ? 'tps' : 'parciales'}/respuestas/${responses[indexResponse].response.id_module}/${responses[indexResponse].response.number}`}
                   />
                 </div>
               ) : responses[indexResponse].response.type == 3 ? (
@@ -255,12 +219,7 @@ export default function ModuleResponse({
               ) : null
             }
             <div className="flex absolute bottom-0 right-0 z-10 gap-1 p-1 bg-[--white] rounded-md select-none">
-              <ButtonReaction
-                indexResponse={indexResponse}
-                responses={responses}
-                setResponses={setResponses}
-              />
-              |
+              <ButtonReaction indexResponse={indexResponse} responses={responses} setResponses={setResponses} />|
               <button onClick={handleComment}>
                 <FaCommentDots className="text-xl" />
               </button>
@@ -327,5 +286,5 @@ export default function ModuleResponse({
         </div>
       )}
     </li>
-  );
+  )
 }

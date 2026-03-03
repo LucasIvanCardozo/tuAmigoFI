@@ -1,24 +1,22 @@
-import { fetchCourses } from '@/app/lib/server/data';
-import Course from './course';
-import IndexList from './indexList';
-import { UpdateLoader } from './updateLoader';
+import Course from './course'
+import IndexList from './indexList'
+import { UpdateLoader } from './updateLoader'
+import { CourseSearchParams } from '../../page'
+import { courseUseCases } from '@/app/lib/server/usecases/course.usecases'
 
-export default async function CoursesTable({
-  query,
-}: {
-  query: { search?: string; year?: number; degree?: number; page?: number };
-}) {
-  const courses = await fetchCourses(query);
+export default async function CoursesTable({ query }: { query: CourseSearchParams }) {
+  const courses = await courseUseCases.findByPage(query)
+  const callbackAmount = courseUseCases.getAmountPages(query)
 
   return (
     <>
-      <UpdateLoader query={courses} />
+      <UpdateLoader courses={courses} />
       <ul className="w-full flex flex-col gap-3 items-center mt-5 mb-2 text-[--black]">
         {courses.map((course) => (
-          <Course key={course.id} course={course} id_carrera={query.degree} />
+          <Course key={course.id} course={course} idDegree={query.idDegree} />
         ))}
       </ul>
-      <IndexList query={query} />
+      <IndexList query={query} callback={callbackAmount} />
     </>
-  );
+  )
 }

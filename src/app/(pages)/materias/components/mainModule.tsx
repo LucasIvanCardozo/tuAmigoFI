@@ -1,44 +1,39 @@
-'use client';
-import { courses } from '@prisma/client';
-import { ProblemsTable } from './problemsTable';
-import { useSession } from 'next-auth/react';
-import { MainContext } from '@/app/lib/contexts';
-import { useState } from 'react';
-import {
-  DataForm,
-  DataModule,
-  TypeModal,
-  TypeValues,
-} from '@/app/assets/types';
-import { MainModal } from '@/app/components/modals/mainModal';
-import { AsideModules } from './aside/asideModules';
-import { Form } from '@/app/components/form/form';
+'use client'
+import { ProblemsTable } from './problemsTable'
+import { useSession } from 'next-auth/react'
+import { MainContext } from '@/app/contexts'
+import { useState } from 'react'
+import { DataForm, DataModule, TypeModal, TypeValues } from '@/app/types'
+import { MainModal } from '@/app/components/modals/mainModal'
+import { AsideModules } from './aside/asideModules'
+import { Form } from '@/app/components/form/form'
+import { Course } from '@/app/lib/server/db/prisma/prismaClient/client'
 
 interface Params {
-  modules: DataModule[];
-  course: courses;
-  typeModule: 'TP' | 'Practica';
+  modules: DataModule[]
+  course: Course
+  typeModule: 'TP' | 'Practica'
 }
 
 export const MainModule = ({ modules, course, typeModule }: Params) => {
-  const [modulesAux, setModulesAux] = useState(modules);
-  const [viewModule, setViewModule] = useState<number | null>(null);
+  const [modulesAux, setModulesAux] = useState(modules)
+  const [viewModule, setViewModule] = useState<number | null>(null)
   const [dataForm, setDataForm] = useState<DataForm>({
     children: <></>,
     onSubmit: async () => {},
-  });
+  })
   const [dataModal, setDataModal] = useState<TypeModal>({
     title: '',
     viewModal: false,
-  });
-  const { data: session } = useSession();
+  })
+  const { data: session } = useSession()
 
   const closeModal = () => {
     setDataModal({
       ...dataModal,
       viewModal: false,
-    });
-  };
+    })
+  }
 
   return (
     <main className="h-screen w-full pt-8 flex gap-2 max-w-screen-lg m-auto sm:pb-3 sm:px-2 sm:pt-16">
@@ -71,15 +66,11 @@ export const MainModule = ({ modules, course, typeModule }: Params) => {
               setDataModal({
                 ...dataModal,
                 viewModal: false,
-              });
+              })
             }}
           >
             <h2 className="text-lg">{dataModal.title}</h2>
-            <Form
-              children={dataForm.children}
-              onSubmit={(e: TypeValues[]) => dataForm.onSubmit(e)}
-              onEnd={closeModal}
-            />
+            <Form children={dataForm.children} onSubmit={(e: TypeValues[]) => dataForm.onSubmit(e)} onEnd={closeModal} />
           </MainModal>
         )}
         <AsideModules />
@@ -95,5 +86,5 @@ export const MainModule = ({ modules, course, typeModule }: Params) => {
         </section>
       </MainContext.Provider>
     </main>
-  );
-};
+  )
+}

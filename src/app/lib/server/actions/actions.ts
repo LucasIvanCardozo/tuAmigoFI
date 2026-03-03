@@ -1,210 +1,154 @@
-'use server';
-import Link from 'next/link';
-import prisma from '../db';
+'use server'
+import db from '../db/db'
+import { Correlative, Link, Midterm, Response, Tp, User } from '../db/prisma/prismaClient/client'
 
-export async function createMidterm({
-  name,
-  date,
-  idCourse,
-  idUser,
-}: {
-  name: string;
-  date: Date;
-  idCourse: number;
-  idUser: number;
-}) {
+export async function createMidterm({ name, date, idCourse, idUser }: Midterm) {
   try {
-    const midterm = prisma.midterms.create({
+    const midterm = db.midterm.create({
       data: {
         name: name,
         date: date,
-        id_course: idCourse,
-        id_user: idUser,
+        idCourse,
+        idUser,
       },
-    });
-    return midterm;
+    })
+    return midterm
   } catch (error) {
-    throw new Error('No se pudo subir el parcial');
+    throw new Error('No se pudo subir el parcial')
   }
 }
 
-export async function createResponseMidterm({
-  idUser,
-  idMidterm,
-  number,
-  type,
-  text,
-}: {
-  idUser: number;
-  idMidterm: number;
-  number: number;
-  type: number;
-  text?: string;
-}) {
+export async function createResponseMidterm({ idUser, idMidterm, number, type, text }: Response) {
   try {
-    const validation = await prisma.midterms_responses.findFirst({
+    const validation = await db.response.findFirst({
       where: {
-        id_module: idMidterm,
-        id_user: idUser,
-        number: number,
+        idMidterm,
+        idUser,
+        number,
       },
-    });
+    })
     if (!validation) {
-      const addResponse = await prisma.midterms_responses.create({
+      const addResponse = await db.response.create({
         data: {
-          id_module: idMidterm,
-          number: number,
-          type: type,
-          id_user: idUser,
+          idMidterm,
+          number,
+          type,
+          idUser,
           ...(text && { text: text }),
         },
-      });
-      return addResponse;
-    } else
-      throw new Error('No puedes tener mas de una respueste a un problema!');
+      })
+      return addResponse
+    } else throw new Error('No puedes tener mas de una respueste a un problema!')
   } catch (error) {
-    throw new Error('No se pudo editar el parcial');
+    throw new Error('No se pudo editar el parcial')
   }
 }
 
-export async function createResponseTp({
-  idUser,
-  idTp,
-  number,
-  type,
-  text,
-}: {
-  idUser: number;
-  idTp: number;
-  number: number;
-  type: number;
-  text?: string;
-}) {
+export async function createResponseTp({ idUser, idTp, number, type, text }: Response) {
   try {
-    const validation = await prisma.tps_responses.findFirst({
+    const validation = await db.response.findFirst({
       where: {
-        id_module: idTp,
-        id_user: idUser,
-        number: number,
+        idTp,
+        idUser,
+        number,
       },
-    });
+    })
     if (!validation) {
-      const addResponse = await prisma.tps_responses.create({
+      const addResponse = await db.response.create({
         data: {
-          id_module: idTp,
-          number: number,
-          type: type,
-          id_user: idUser,
+          idTp,
+          number,
+          type,
+          idUser,
           ...(text && { text: text }),
         },
-      });
-      return addResponse;
-    } else
-      throw new Error('No puedes tener mas de una respueste a un problema!');
+      })
+      return addResponse
+    } else throw new Error('No puedes tener mas de una respueste a un problema!')
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(error.message);
+      throw new Error(error.message)
     } else {
-      throw new Error('Error en validacioon de usuario');
+      throw new Error('Error en validacioon de usuario')
     }
   }
 }
 
-export async function createTp({
-  name,
-  number,
-  year,
-  idUser,
-  idCourse,
-}: {
-  name: string;
-  number?: number | null;
-  year: number;
-  idUser: number;
-  idCourse: number;
-}) {
+export async function createTp({ name, number, year, idUser, idCourse }: Tp) {
   try {
-    const tp = await prisma.tps.create({
+    const tp = await db.tp.create({
       data: {
         name: name,
         ...(number ? { number: number } : { number: 0 }),
         year: year,
-        id_user: idUser,
-        id_course: idCourse,
+        idUser,
+        idCourse,
       },
-    });
-    return tp;
+    })
+    return tp
   } catch (error) {
-    throw new Error('No se pudo subir el TP');
+    throw new Error('No se pudo subir el TP')
   }
 }
 
-export async function deleteTP({ id }: { id: number }) {
+export async function deleteTP({ id }: { id: string }) {
   try {
-    const deleteTP = await prisma.tps.delete({
+    const deleteTP = await db.tp.delete({
+      where: {
+        id,
+      },
+    })
+
+    return deleteTP
+  } catch (error) {
+    if (error instanceof Error) throw new Error(error.message)
+    else throw new Error('No se pudo eliminar el TP')
+  }
+}
+
+export async function deleteTpResponse({ id }: { id: string }) {
+  try {
+    const deleteTpResponse = await db.response.delete({
       where: {
         id: id,
       },
-    });
-
-    return deleteTP;
+    })
+    return deleteTpResponse
   } catch (error) {
-    if (error instanceof Error) throw new Error(error.message);
-    else throw new Error('No se pudo eliminar el TP');
+    throw new Error('No se pudo eliminar la respuesta')
   }
 }
 
-export async function deleteTpResponse({ id }: { id: number }) {
+export async function deleteMidterm({ id }: { id: string }) {
   try {
-    const deleteTpResponse = await prisma.tps_responses.delete({
+    const deleteMidterm = await db.midterm.delete({
       where: {
         id: id,
       },
-    });
-    return deleteTpResponse;
+    })
+
+    return deleteMidterm
   } catch (error) {
-    throw new Error('No se pudo eliminar la respuesta');
+    throw new Error('No se pudo eliminar el Parcial')
   }
 }
 
-export async function deleteMidterm({ id }: { id: number }) {
+export async function deleteMidtermResponse({ id }: { id: string }) {
   try {
-    const deleteMidterm = await prisma.midterms.delete({
+    const deleteMidtermResponse = await db.response.delete({
       where: {
         id: id,
       },
-    });
+    })
 
-    return deleteMidterm;
+    return deleteMidtermResponse
   } catch (error) {
-    throw new Error('No se pudo eliminar el Parcial');
+    throw new Error('No se pudo eliminar la respuesta')
   }
 }
-
-export async function deleteMidtermResponse({ id }: { id: number }) {
+export async function createUser({ name, email, image }: Pick<User, 'name' | 'email' | 'image'>) {
   try {
-    const deleteMidtermResponse = await prisma.midterms_responses.delete({
-      where: {
-        id: id,
-      },
-    });
-
-    return deleteMidtermResponse;
-  } catch (error) {
-    throw new Error('No se pudo eliminar la respuesta');
-  }
-}
-export async function createUser({
-  name,
-  email,
-  image,
-}: {
-  name: string;
-  email: string;
-  image: string;
-}) {
-  try {
-    const user = await prisma.users.create({
+    const user = await db.user.create({
       data: {
         email: email,
         name: name,
@@ -212,231 +156,179 @@ export async function createUser({
         tier: 0,
         banned: false,
       },
-    });
-    return user;
+    })
+    return user
   } catch (error) {
-    throw new Error('Error en la creación de usuario');
+    throw new Error('Error en la creación de usuario')
   }
 }
 
-export async function addReactionTp({
-  id,
-  id_response,
-  reaction,
-}: {
-  id: number;
-  id_response: number;
-  reaction: boolean;
-}) {
-  try {
-    const reactionSearch = await prisma.tps_reactions.findFirst({
-      where: {
-        id_response: id_response,
-        id_user: id,
-      },
-    });
-    if (reactionSearch) {
-      if (reaction != reactionSearch.reaction) {
-        const updateReaction = await prisma.tps_reactions.update({
-          where: {
-            id: reactionSearch.id,
-          },
-          data: {
-            reaction: reaction,
-          },
-        });
-        return updateReaction;
-      } else {
-        const deleteReaction = await prisma.tps_reactions.delete({
-          where: {
-            id: reactionSearch.id,
-          },
-        });
-        return deleteReaction;
-      }
-    } else {
-      const createReaction = await prisma.tps_reactions.create({
-        data: {
-          id_response: id_response,
-          id_user: id,
-          reaction: reaction,
-        },
-      });
-      return createReaction;
-    }
-  } catch (error) {
-    throw new Error('Error en modificar la reaccion de usuario');
-  }
-}
+// export async function addReactionTp({ id, id_response, reaction }: { id: number; id_response: number; reaction: boolean }) {
+//   try {
+//     const reactionSearch = await db.tps_reactions.findFirst({
+//       where: {
+//         id_response: id_response,
+//         id_user: id,
+//       },
+//     })
+//     if (reactionSearch) {
+//       if (reaction != reactionSearch.reaction) {
+//         const updateReaction = await db.tps_reactions.update({
+//           where: {
+//             id: reactionSearch.id,
+//           },
+//           data: {
+//             reaction: reaction,
+//           },
+//         })
+//         return updateReaction
+//       } else {
+//         const deleteReaction = await db.tps_reactions.delete({
+//           where: {
+//             id: reactionSearch.id,
+//           },
+//         })
+//         return deleteReaction
+//       }
+//     } else {
+//       const createReaction = await db.tps_reactions.create({
+//         data: {
+//           id_response: id_response,
+//           id_user: id,
+//           reaction: reaction,
+//         },
+//       })
+//       return createReaction
+//     }
+//   } catch (error) {
+//     throw new Error('Error en modificar la reaccion de usuario')
+//   }
+// }
 
-export async function addReactionMidterm({
-  id,
-  id_response,
-  reaction,
-}: {
-  id: number;
-  id_response: number;
-  reaction: boolean;
-}) {
-  try {
-    const reactionSearch = await prisma.midterms_reactions.findFirst({
-      where: {
-        id_response: id_response,
-        id_user: id,
-      },
-    });
-    if (reactionSearch) {
-      if (reaction != reactionSearch.reaction) {
-        const updateReaction = await prisma.midterms_reactions.update({
-          where: {
-            id: reactionSearch.id,
-          },
-          data: {
-            reaction: reaction,
-          },
-        });
-        return updateReaction;
-      } else {
-        const deleteReaction = await prisma.midterms_reactions.delete({
-          where: {
-            id: reactionSearch.id,
-          },
-        });
-        return deleteReaction;
-      }
-    } else {
-      const createReaction = await prisma.midterms_reactions.create({
-        data: {
-          id_response: id_response,
-          id_user: id,
-          reaction: reaction,
-        },
-      });
-      return createReaction;
-    }
-  } catch (error) {
-    throw new Error('Error en modificar reaccion de usuario');
-  }
-}
+// export async function addReactionMidterm({ id, id_response, reaction }: { id: number; id_response: number; reaction: boolean }) {
+//   try {
+//     const reactionSearch = await db.midterms_reactions.findFirst({
+//       where: {
+//         id_response: id_response,
+//         id_user: id,
+//       },
+//     })
+//     if (reactionSearch) {
+//       if (reaction != reactionSearch.reaction) {
+//         const updateReaction = await db.midterms_reactions.update({
+//           where: {
+//             id: reactionSearch.id,
+//           },
+//           data: {
+//             reaction: reaction,
+//           },
+//         })
+//         return updateReaction
+//       } else {
+//         const deleteReaction = await db.midterms_reactions.delete({
+//           where: {
+//             id: reactionSearch.id,
+//           },
+//         })
+//         return deleteReaction
+//       }
+//     } else {
+//       const createReaction = await db.midterms_reactions.create({
+//         data: {
+//           id_response: id_response,
+//           id_user: id,
+//           reaction: reaction,
+//         },
+//       })
+//       return createReaction
+//     }
+//   } catch (error) {
+//     throw new Error('Error en modificar reaccion de usuario')
+//   }
+// }
 
-export async function addLink({
-  idCourse,
-  name,
-  link,
-  official,
-  idUser,
-}: {
-  idCourse: number;
-  name: string;
-  link: string;
-  official: boolean;
-  idUser: number;
-}) {
+export async function addLink({ idCourse, name, link, official, idUser }: Pick<Link, 'idCourse' | 'name' | 'link' | 'official' | 'idUser'>) {
   try {
-    const createLink = await prisma.links.create({
+    const createLink = await db.link.create({
       data: {
-        id_course: idCourse,
+        idCourse,
         name: name,
         link: link,
         official: official,
-        id_user: idUser,
+        idUser,
       },
-    });
-    return createLink;
+    })
+    return createLink
   } catch (error) {
-    throw new Error('Error en la creación del link');
+    throw new Error('Error en la creación del link')
   }
 }
 
-export async function deleteLink({ id_link }: { id_link: number }) {
+export async function deleteLink({ id }: { id: string }) {
   try {
-    const deleteLink = await prisma.links.delete({
+    const deleteLink = await db.link.delete({
       where: {
-        id: id_link,
+        id,
       },
-    });
-    return deleteLink;
+    })
+    return deleteLink
   } catch (error) {
-    throw new Error('Error en eliminacion de link');
+    throw new Error('Error en eliminacion de link')
   }
 }
 
-export async function createCorrelative({
-  id,
-  id_correlative,
-}: {
-  id: number;
-  id_correlative: number;
-}) {
+export async function createCorrelative({ idCourse, idCorrelativeCourse }: Pick<Correlative, 'idCourse' | 'idCorrelativeCourse'>) {
   try {
-    const createCorrelative = await prisma.correlatives.create({
+    const createCorrelative = await db.correlative.create({
       data: {
-        id: id,
-        id_correlative: id_correlative,
+        idCourse,
+        idCorrelativeCourse,
       },
-    });
-    return createCorrelative;
+    })
+    return createCorrelative
   } catch (error) {
-    throw new Error('Error en la creacion de una correlativa');
+    throw new Error('Error en la creacion de una correlativa')
   }
 }
 
-export async function addReportLink({
-  id_link,
-  id_user,
-}: {
-  id_link: number;
-  id_user: number;
-}) {
-  try {
-    const createReport = await prisma.links_reports.create({
-      data: {
-        id_link: id_link,
-        id_user: id_user,
-      },
-    });
-    return createReport;
-  } catch (error) {
-    throw new Error('No poders reportar un link mas de una vez');
-  }
-}
+// export async function addReportLink({ id_link, id_user }: { id_link: number; id_user: number }) {
+//   try {
+//     const createReport = await db.links_reports.create({
+//       data: {
+//         id_link: id_link,
+//         id_user: id_user,
+//       },
+//     })
+//     return createReport
+//   } catch (error) {
+//     throw new Error('No poders reportar un link mas de una vez')
+//   }
+// }
 
-export async function addReportTp({
-  id_tp,
-  id_user,
-}: {
-  id_tp: number;
-  id_user: number;
-}) {
-  try {
-    const createReport = await prisma.tps_reports.create({
-      data: {
-        id_module: id_tp,
-        id_user: id_user,
-      },
-    });
-    return createReport;
-  } catch (error) {
-    throw new Error('No poders reportar un TP mas de una vez');
-  }
-}
+// export async function addReportTp({ id_tp, id_user }: { id_tp: number; id_user: number }) {
+//   try {
+//     const createReport = await db.tps_reports.create({
+//       data: {
+//         id_module: id_tp,
+//         id_user: id_user,
+//       },
+//     })
+//     return createReport
+//   } catch (error) {
+//     throw new Error('No poders reportar un TP mas de una vez')
+//   }
+// }
 
-export async function addReportMidterm({
-  id_midterm,
-  id_user,
-}: {
-  id_midterm: number;
-  id_user: number;
-}) {
-  try {
-    const createReport = await prisma.midterms_reports.create({
-      data: {
-        id_module: id_midterm,
-        id_user: id_user,
-      },
-    });
-    return createReport;
-  } catch (error) {
-    throw new Error('No poders reportar un parcial mas de una vez');
-  }
-}
+// export async function addReportMidterm({ id_midterm, id_user }: { id_midterm: number; id_user: number }) {
+//   try {
+//     const createReport = await db.midterms_reports.create({
+//       data: {
+//         id_module: id_midterm,
+//         id_user: id_user,
+//       },
+//     })
+//     return createReport
+//   } catch (error) {
+//     throw new Error('No poders reportar un parcial mas de una vez')
+//   }
+// }
