@@ -1,5 +1,5 @@
 'use client'
-import { addTpComment } from '@/app/lib/actions/responses/add.tp.comment'
+import { addTpComment } from '@/app/lib/server/actions/responses/add.tp.comment'
 import { Comment } from './comment'
 import { DataModuleComment } from '@/app/types'
 import { startTransition } from 'react'
@@ -15,7 +15,7 @@ export const CommentsLi = ({ comments }: Params) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const { error } = await addTpComment({
-      response_id: comments[0].comment.id_response,
+      response_id: comments[0].comment.idResponse,
       text: 'hola',
     })
     if (error) console.log('Error' + error)

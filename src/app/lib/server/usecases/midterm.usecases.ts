@@ -5,4 +5,7 @@ export const midtermUseCases = {
   findByCourseId(idCourse: string) {
     return midtermRepository(db).findByCourseId(idCourse)
   },
+  findByCourseIdWithAllData(idCourse: string) {
+    return midtermRepository(db).findByCourseIdWithAllData(idCourse)
+  },
 }

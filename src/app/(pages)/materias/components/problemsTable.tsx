@@ -1,4 +1,4 @@
-import { useMainContext } from '@/app/lib/contexts';
+import { useMainContext } from "@/app/contexts";
 import { ModuleContainer } from './module/moduleContainer';
 
 export const ProblemsTable = () => {

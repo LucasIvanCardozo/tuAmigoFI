@@ -2,7 +2,7 @@
 import db from '../db/db'
 import { Correlative, Link, Midterm, Response, Tp, User } from '../db/prisma/prismaClient/client'
 
-export async function createMidterm({ name, date, idCourse, idUser }: Midterm) {
+export async function createMidterm({ name, date, idCourse, idUser }: Pick<Midterm, 'name' | 'date' | 'idCourse' | 'idUser'>) {
   try {
     const midterm = db.midterm.create({
       data: {
@@ -18,7 +18,7 @@ export async function createMidterm({ name, date, idCourse, idUser }: Midterm) {
   }
 }
 
-export async function createResponseMidterm({ idUser, idMidterm, number, type, text }: Response) {
+export async function createResponseMidterm({ idUser, idMidterm, number, type, text }: Pick<Response, 'idUser' | 'idMidterm' | 'number' | 'type' | 'text'>) {
   try {
     const validation = await db.response.findFirst({
       where: {
@@ -44,7 +44,7 @@ export async function createResponseMidterm({ idUser, idMidterm, number, type, t
   }
 }
 
-export async function createResponseTp({ idUser, idTp, number, type, text }: Response) {
+export async function createResponseTp({ idUser, idTp, number, type, text }: Pick<Response, 'idUser' | 'idTp' | 'number' | 'type' | 'text'>) {
   try {
     const validation = await db.response.findFirst({
       where: {
@@ -74,7 +74,7 @@ export async function createResponseTp({ idUser, idTp, number, type, text }: Res
   }
 }
 
-export async function createTp({ name, number, year, idUser, idCourse }: Tp) {
+export async function createTp({ name, number, year, idUser, idCourse }: Pick<Tp, 'name' | 'number' | 'year' | 'idUser' | 'idCourse'>) {
   try {
     const tp = await db.tp.create({
       data: {

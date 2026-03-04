@@ -1,21 +1,21 @@
 'use client'
 
-import { AsideContext, useMainContext } from '@/app/lib/contexts'
+import { AsideContext, useMainContext } from '@/app/contexts'
 import { TypeValues } from '@/app/types'
 import { useEffect, useState } from 'react'
 import { numberIconsModules } from '../../assets/icons'
 import { TbSquareAsteriskFilled, TbSquareMinusFilled } from 'react-icons/tb'
 import { SiGoogledocs } from 'react-icons/si'
 import { HandlerInputs } from '@/app/components/form/inputs/handlerInputs'
-import { createMidterm, createTp } from '@/app/lib/actions'
 import { AsideMainButton } from './asideMainButton'
+import { createMidterm, createTp } from '@/app/lib/server/actions/actions'
 
 export const AsideModules = () => {
   const { session, stateViewModule, stateModules, stateModal, stateForm, course, typeModule } = useMainContext()
   const [viewAside, setViewAside] = useState(false)
   const isTp = typeModule == 'TP'
 
-  const handleViewModules = (module: number | null) => {
+  const handleViewModules = (module: string | null) => {
     setViewAside(false)
     stateViewModule.setViewModule(module)
   }
@@ -71,7 +71,6 @@ export const AsideModules = () => {
               stateModules.setModules([
                 ...stateModules.modules,
                 {
-                  countReports: 0,
                   user: {
                     id: session.user.id,
                     email: session.user.email as string,
@@ -79,7 +78,8 @@ export const AsideModules = () => {
                     banned: false,
                     tier: session.user.tier,
                     image: '',
-                    created_at: new Date(),
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
                   },
                   problems: [],
                   module: module,

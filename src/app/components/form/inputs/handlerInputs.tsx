@@ -1,12 +1,13 @@
-import { useFormContext } from '@/app/lib/contexts'
-import { TypeInput, TypeResponse, TypeValues } from '@/app/types'
+import { useFormContext } from '@/app/contexts'
+import { TypeInput, TypeValues } from '@/app/types'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { InputText, InputNumber, InputFile, InputSelect, InputTextarea, InputCheckbox, InputSelectResponse, InputDate } from './index'
+import { TypeResponse } from '@/app/lib/server/db/prisma/prismaClient/enums'
 
 export const HandlerInputs = (input: TypeInput) => {
   const inputType = input.type
   const { values, setValues } = useFormContext()
-  const [typeResponse, setTypeResponse] = useState<TypeResponse>('')
+  const [typeResponse, setTypeResponse] = useState<TypeResponse>()
   const [value, setValue] = useState('')
   const [file, setFile] = useState<File>()
   const [checkbox, setCheckbox] = useState<boolean>(false)
@@ -65,7 +66,7 @@ export const HandlerInputs = (input: TypeInput) => {
   useEffect(() => {
     setValues((validates: TypeValues[]) => {
       const validate = values.find((val) => val.id == input.id)
-      if (!validate) {
+      if (!validate && typeResponse) {
         const thisvalidate: TypeValues = {
           id: input.id,
           value:
@@ -85,7 +86,7 @@ export const HandlerInputs = (input: TypeInput) => {
   useEffect(() => {
     if (input.required) {
       const validate = values.find((val) => val.id == input.id)
-      if (validate) {
+      if (validate && typeResponse) {
         if (value || file || checkbox || date) {
           setValues(
             values.map((val) =>
@@ -97,10 +98,10 @@ export const HandlerInputs = (input: TypeInput) => {
                       inputType == 'number' ||
                       inputType == 'textarea' ||
                       inputType == 'select' ||
-                      typeResponse == '0' ||
-                      typeResponse == '3'
+                      typeResponse == 'TEXT' ||
+                      typeResponse == 'CODE'
                         ? value
-                        : inputType == 'file' || typeResponse == '1' || typeResponse == '2'
+                        : inputType == 'file' || typeResponse == 'IMAGE' || typeResponse == 'PDF'
                           ? file
                           : inputType == 'date'
                             ? date
@@ -159,7 +160,7 @@ export const HandlerInputs = (input: TypeInput) => {
         <InputTextarea input={input} onChange={setValue} />
       ) : inputType == 'checkbox' ? (
         <InputCheckbox input={input} onChange={setCheckbox} />
-      ) : inputType == 'selectResponse' ? (
+      ) : inputType == 'selectResponse' && typeResponse ? (
         <InputSelectResponse
           input={input}
           typeResponse={typeResponse}

@@ -6,10 +6,10 @@ import { BiSolidRightArrowSquare, BiSolidLeftArrowSquare } from 'react-icons/bi'
 import { FaCommentDots } from 'react-icons/fa'
 import { MdDelete } from 'react-icons/md'
 import { DataModuleProblem, TypeValues } from '@/app/types'
-import { useMainContext } from '@/app/lib/contexts'
-import ButtonReaction from './buttonReaction'
+import { useMainContext } from '@/app/contexts'
+// import ButtonReaction from './buttonReaction'
 import { HandlerInputs } from '@/app/components/form/inputs/handlerInputs'
-import { deleteMidtermResponse, deleteTpResponse } from '@/app/lib/actions'
+import { deleteMidtermResponse, deleteTpResponse } from '@/app/lib/server/actions/actions'
 import { Code } from './Code'
 import { CommentsLi } from './commentsLi'
 import { CgMathPlus } from 'react-icons/cg'
@@ -51,7 +51,8 @@ export default function ModuleResponse({ problem }: { problem: DataModuleProblem
               setIndexResponse((indexResponse) => 0)
               stateModules.setModules(
                 stateModules.modules.map((mod) =>
-                  mod.module.id == responses[indexResponseAux].response.id_module
+                  (mod.module.id == responses[indexResponseAux].response.idTp && isTp) ||
+                  (mod.module.id == responses[indexResponseAux].response.idMidterm && !isTp)
                     ? {
                         ...mod,
                         problems: mod.problems.map((pro) =>
@@ -70,12 +71,12 @@ export default function ModuleResponse({ problem }: { problem: DataModuleProblem
               window.location.reload()
             }
           }
-          if (responses[indexResponse].response.type == 1 || responses[indexResponse].response.type == 2) {
+          if (responses[indexResponse].response.type == 'IMAGE' || responses[indexResponse].response.type == 'PDF') {
             const formData = new FormData()
-            formData.set('id', responses[indexResponse].response.id_user.toString())
+            formData.set('id', responses[indexResponse].response.idUser)
             formData.set(
               'subFolder',
-              `${isTp ? 'tps' : 'parciales'}/respuestas/${responses[indexResponse].response.id_module}/${responses[indexResponse].response.number}`
+              `${isTp ? 'tps' : 'parciales'}/respuestas/${isTp ? responses[indexResponse].response.idTp : responses[indexResponse].response.idMidterm}/${responses[indexResponse].response.number}`
             )
             const res = await fetch('/api/destroy', {
               method: 'POST',
@@ -183,17 +184,17 @@ export default function ModuleResponse({ problem }: { problem: DataModuleProblem
             </div>
             {
               // 0 -> texto ; 1 -> imagen ; 2 -> pdf ; 3 -> codigo
-              responses[indexResponse].response.type == 0 ? (
+              responses[indexResponse].response.type == 'TEXT' ? (
                 <div className="whitespace-pre px-2 pb-7">
                   <p>{responses[indexResponse].response.text}</p>
                 </div>
-              ) : responses[indexResponse].response.type == 1 ? (
+              ) : responses[indexResponse].response.type == 'IMAGE' ? (
                 <div className="relative flex justify-center w-full max-h-250 pb-7">
                   <CldImage
                     src={`https://res.cloudinary.com/donzj5rlf/image/upload/f_auto,q_auto/v${Math.floor(
                       Date.now() / (1000 * 60 * 60 * 24 * 7)
-                    )}/${isTp ? 'tps' : 'parciales'}/respuestas/${responses[indexResponse].response.id_module}/${responses[indexResponse].response.number}/${
-                      responses[indexResponse].response.id_user
+                    )}/${isTp ? 'tps' : 'parciales'}/respuestas/${isTp ? responses[indexResponse].response.idTp : responses[indexResponse].response.idMidterm}/${responses[indexResponse].response.number}/${
+                      responses[indexResponse].response.idUser
                     }`}
                     alt=""
                     width="500"
@@ -205,21 +206,21 @@ export default function ModuleResponse({ problem }: { problem: DataModuleProblem
                     }}
                   />
                 </div>
-              ) : responses[indexResponse].response.type == 2 ? (
+              ) : responses[indexResponse].response.type == 'PDF' ? (
                 <div className="relative overflow-hidden bg-[#C8E0E4] h-min max-w-full py-1 pb-7 rounded-md sm:p-1">
                   <PdfView
-                    id={responses[indexResponse].response.id_user}
-                    url={`${isTp ? 'tps' : 'parciales'}/respuestas/${responses[indexResponse].response.id_module}/${responses[indexResponse].response.number}`}
+                    id={responses[indexResponse].response.idUser}
+                    url={`${isTp ? 'tps' : 'parciales'}/respuestas/${isTp ? responses[indexResponse].response.idTp : responses[indexResponse].response.idMidterm}/${responses[indexResponse].response.number}`}
                   />
                 </div>
-              ) : responses[indexResponse].response.type == 3 ? (
+              ) : responses[indexResponse].response.type == 'CODE' ? (
                 <div className="bg-gray-900 p-3 text-white rounded-md overflow-x-auto pb-7">
                   <Code code={responses[indexResponse].response.text ?? ''} />
                 </div>
               ) : null
             }
             <div className="flex absolute bottom-0 right-0 z-10 gap-1 p-1 bg-[--white] rounded-md select-none">
-              <ButtonReaction indexResponse={indexResponse} responses={responses} setResponses={setResponses} />|
+              {/* <ButtonReaction indexResponse={indexResponse} responses={responses} setResponses={setResponses} />| */}
               <button onClick={handleComment}>
                 <FaCommentDots className="text-xl" />
               </button>

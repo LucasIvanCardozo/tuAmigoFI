@@ -2,14 +2,13 @@
 import { numberIconsModules } from '../../assets/icons'
 import { CgMathPlus } from 'react-icons/cg'
 import { MdDelete } from 'react-icons/md'
-import { MdOutlineReport } from 'react-icons/md'
 import PdfView from '@/app/components/pdfView'
 import { DataModule, DataModuleProblem, DataModuleResponse, TypeValues } from '@/app/types'
-import { useMainContext } from '@/app/lib/contexts'
+import { useMainContext } from '@/app/contexts'
 import { SiGoogledocs } from 'react-icons/si'
 import ModuleResponse from '../responses/moduleResponse'
 import { HandlerInputs } from '@/app/components/form/inputs/handlerInputs'
-import { addReportMidterm, addReportTp, createResponseMidterm, createResponseTp, deleteMidterm, deleteTP } from '@/app/lib/actions'
+import { createResponseMidterm, createResponseTp, deleteMidterm, deleteTP } from '@/app/lib/server/actions/actions'
 
 interface Params {
   module: DataModule
@@ -61,29 +60,29 @@ export const ModuleContainer = ({ module }: Params) => {
     }
   }
 
-  const submitReportModule = async (values: TypeValues[]) => {
-    const check = values.find((val) => val.id == 'check')
-    try {
-      if (check && typeof check.value === 'boolean') {
-        if (session) {
-          if (isTp) {
-            await addReportTp({
-              id_tp: moduleInd.id,
-              id_user: session.user.id,
-            })
-          } else {
-            await addReportMidterm({
-              id_midterm: moduleInd.id,
-              id_user: session.user.id,
-            })
-          }
-        }
-      } else throw new Error('Faltan completar datos.')
-    } catch (error) {
-      if (error instanceof Error) throw new Error(error.message)
-      else throw new Error('Error inesperado.')
-    }
-  }
+  // const submitReportModule = async (values: TypeValues[]) => {
+  //   const check = values.find((val) => val.id == 'check')
+  //   try {
+  //     if (check && typeof check.value === 'boolean') {
+  //       if (session) {
+  //         if (isTp) {
+  //           await addReportTp({
+  //             id_tp: moduleInd.id,
+  //             id_user: session.user.id,
+  //           })
+  //         } else {
+  //           await addReportMidterm({
+  //             id_midterm: moduleInd.id,
+  //             id_user: session.user.id,
+  //           })
+  //         }
+  //       }
+  //     } else throw new Error('Faltan completar datos.')
+  //   } catch (error) {
+  //     if (error instanceof Error) throw new Error(error.message)
+  //     else throw new Error('Error inesperado.')
+  //   }
+  // }
 
   const submitAddResponse = async (values: TypeValues[]) => {
     const number = values.find((val) => val.id == 'number')
@@ -93,18 +92,18 @@ export const ModuleContainer = ({ module }: Params) => {
         number &&
         typeof number.value === 'string' &&
         selectResponse &&
-        (((selectResponse.inputType == '0' || selectResponse.inputType == '3') && typeof selectResponse.value == 'string') ||
-          ((selectResponse.inputType == '1' || selectResponse.inputType == '2') && selectResponse.value instanceof File))
+        (((selectResponse.inputType == 'TEXT' || selectResponse.inputType == 'CODE') && typeof selectResponse.value == 'string') ||
+          ((selectResponse.inputType == 'IMAGE' || selectResponse.inputType == 'PDF') && selectResponse.value instanceof File))
       ) {
         if (session) {
           let addResponse
-          const typeResponse = Number(selectResponse.inputType)
+          const typeResponse = selectResponse.inputType
           if (isTp) {
             addResponse = await createResponseTp({
               idUser: session.user.id,
               idTp: moduleInd.id,
               number: Number(number.value),
-              text: selectResponse.inputType == '0' || selectResponse.inputType == '3' ? (selectResponse.value as string) : undefined,
+              text: selectResponse.inputType == 'TEXT' || selectResponse.inputType == 'CODE' ? (selectResponse.value as string) : null,
               type: typeResponse,
             })
           } else {
@@ -112,11 +111,11 @@ export const ModuleContainer = ({ module }: Params) => {
               idUser: session.user.id,
               idMidterm: moduleInd.id,
               number: Number(number.value),
-              text: selectResponse.inputType == '0' || selectResponse.inputType == '3' ? (selectResponse.value as string) : undefined,
+              text: selectResponse.inputType == 'TEXT' || selectResponse.inputType == 'CODE' ? (selectResponse.value as string) : null,
               type: typeResponse,
             })
           }
-          if (typeResponse == 1 || typeResponse == 2) {
+          if (typeResponse == 'IMAGE' || typeResponse == 'PDF') {
             if (selectResponse.value) {
               if (addResponse) {
                 const formData = new FormData()
@@ -141,10 +140,11 @@ export const ModuleContainer = ({ module }: Params) => {
                 name: session.user.name as string,
                 tier: 0,
                 banned: false,
-                created_at: new Date(),
+                createdAt: new Date(),
+                updatedAt: new Date(),
               },
               response: addResponse,
-              reactions: [],
+              // reactions: [],
               comments: [],
             }
             stateModules.setModules(
@@ -295,7 +295,7 @@ export const ModuleContainer = ({ module }: Params) => {
       <div className="bg-[--white] text-base leading-5 drop-shadow-md flex flex-col gap-1">
         <div className="relative overflow-hidden bg-[#96cad3] h-min rounded-b-lg p-1 sm:p-2">
           <div className="absolute z-10 bg-[--white] rounded-md m-2 opacity-65 top-0 left-0">{`Por ${user.name}`}</div>
-          {session && (
+          {/* {session && (
             <button
               className="absolute z-10 m-2 bottom-0 right-0 w-6 h-6 bg-white bg-opacity-65 rounded-md"
               title="Reportar TP"
@@ -353,7 +353,7 @@ export const ModuleContainer = ({ module }: Params) => {
             >
               <MdOutlineReport className="h-full w-full text-red-700" />
             </button>
-          )}
+          )} */}
           <PdfView id={moduleInd.id} url={isTp ? `tps/problemas` : `parciales/problemas`} />
         </div>
         <ul className="flex flex-col gap-1 pl-1">

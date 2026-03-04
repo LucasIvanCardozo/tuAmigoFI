@@ -1,27 +1,24 @@
-'use server';
-import { z } from 'zod';
-import createAction from '../createActions';
-import prisma from '../../db';
-import { getServerUser } from '../users/get.server.user';
+'use server'
+import { z } from 'zod'
+import createAction from '../createActions'
+import { getServerUser } from '../users/get.server.user'
+import db from '../../db/db'
 
-const { object, number, string } = z;
+const { object, string } = z
 const schema = object({
-  response_id: number().positive(),
+  idResponse: string().min(1),
   text: string().min(1),
-});
+})
 
-export const addTpComment = createAction(
-  schema,
-  async ({ response_id, text }) => {
-    const { user } = await getServerUser();
-    if (!user) throw new Error('No estas logueado');
+export const addTpComment = createAction(schema, async ({ idResponse, text }) => {
+  const { user } = await getServerUser()
+  if (!user) throw new Error('No estas logueado')
 
-    return await prisma.tps_comments.create({
-      data: {
-        id_response: response_id,
-        text,
-        id_user: user.id,
-      },
-    });
-  }
-);
+  return await db.comment.create({
+    data: {
+      idResponse,
+      text,
+      idUser: user.id,
+    },
+  })
+})

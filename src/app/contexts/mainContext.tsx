@@ -8,8 +8,8 @@ interface TypeMainContext {
   course: Course
   typeModule: 'TP' | 'Practica'
   stateViewModule: {
-    viewModule: number | null
-    setViewModule: (number: number | null) => void
+    viewModule: string | null
+    setViewModule: (number: string | null) => void
   }
   stateModal: {
     dataModal: TypeModal
