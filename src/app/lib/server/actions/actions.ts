@@ -87,6 +87,7 @@ export async function createTp({ name, number, year, idUser, idCourse }: Pick<Tp
     })
     return tp
   } catch (error) {
+    const err = error as Error
     throw new Error('No se pudo subir el TP')
   }
 }

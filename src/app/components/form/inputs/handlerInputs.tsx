@@ -66,7 +66,7 @@ export const HandlerInputs = (input: TypeInput) => {
   useEffect(() => {
     setValues((validates: TypeValues[]) => {
       const validate = values.find((val) => val.id == input.id)
-      if (!validate && typeResponse) {
+      if (!validate) {
         const thisvalidate: TypeValues = {
           id: input.id,
           value:
@@ -75,7 +75,7 @@ export const HandlerInputs = (input: TypeInput) => {
               : inputType == 'file' || inputType == 'date'
                 ? undefined
                 : false,
-          inputType: typeResponse,
+          inputType: typeResponse as any,
           validate: !input.required,
         }
         return [...validates, thisvalidate]
@@ -86,7 +86,7 @@ export const HandlerInputs = (input: TypeInput) => {
   useEffect(() => {
     if (input.required) {
       const validate = values.find((val) => val.id == input.id)
-      if (validate && typeResponse) {
+      if (validate) {
         if (value || file || checkbox || date) {
           setValues(
             values.map((val) =>
@@ -106,7 +106,7 @@ export const HandlerInputs = (input: TypeInput) => {
                           : inputType == 'date'
                             ? date
                             : checkbox,
-                    inputType: typeResponse,
+                    inputType: typeResponse ?? inputType as any,
                     validate: true,
                   }
                 : val

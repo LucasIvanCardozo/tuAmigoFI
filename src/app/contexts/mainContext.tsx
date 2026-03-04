@@ -1,10 +1,8 @@
 import { DataForm, DataModule, TypeModal } from '@/app/types'
-import { Session } from 'next-auth'
 import { createContext, useContext } from 'react'
 import { Course } from '../lib/server/db/prisma/prismaClient/client'
 
 interface TypeMainContext {
-  session: Session | null
   course: Course
   typeModule: 'TP' | 'Practica'
   stateViewModule: {
@@ -26,7 +24,6 @@ interface TypeMainContext {
 }
 
 export const MainContext = createContext<TypeMainContext>({
-  session: null,
   course: {
     id: '0',
     name: 'Default',

@@ -9,9 +9,11 @@ import { SiGoogledocs } from 'react-icons/si'
 import { HandlerInputs } from '@/app/components/form/inputs/handlerInputs'
 import { AsideMainButton } from './asideMainButton'
 import { createMidterm, createTp } from '@/app/lib/server/actions/actions'
+import { useSession } from 'next-auth/react'
 
 export const AsideModules = () => {
-  const { session, stateViewModule, stateModules, stateModal, stateForm, course, typeModule } = useMainContext()
+  const { stateViewModule, stateModules, stateModal, stateForm, course, typeModule } = useMainContext()
+  const { data: session } = useSession()
   const [viewAside, setViewAside] = useState(false)
   const isTp = typeModule == 'TP'
 
@@ -26,6 +28,7 @@ export const AsideModules = () => {
     const number = values.find((val) => val.id == 'number')
     const date = values.find((val) => val.id == 'date')
     const file = values.find((val) => val.id == 'file')
+    console.log(session?.user)
     try {
       if (
         (isTp &&
@@ -37,7 +40,7 @@ export const AsideModules = () => {
           file.value instanceof File &&
           typeof year.value == 'string' &&
           typeof number.value == 'string') ||
-        (date && name && file && typeof name.value == 'string' && file.value instanceof File && date.value instanceof Date)
+        (date && name && file && typeof name.value == 'string' && file.value instanceof File && typeof date.value == 'string')
       ) {
         if (session) {
           let module
@@ -52,7 +55,7 @@ export const AsideModules = () => {
           } else {
             module = await createMidterm({
               name: name.value,
-              date: date?.value as Date,
+              date: new Date(date?.value as string),
               idCourse: course.id,
               idUser: session.user.id,
             })

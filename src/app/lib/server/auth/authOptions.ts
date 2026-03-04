@@ -2,8 +2,6 @@ import { createUser } from '../actions/actions'
 import { AuthOptions } from 'next-auth'
 import { JWT } from 'next-auth/jwt'
 import GoogleProvider from 'next-auth/providers/google'
-import { userRepository } from '../db/repository/user.repository'
-import db from '../db/db'
 import { userUseCases } from '../usecases/user.usecases'
 
 async function refreshAccessToken(token: JWT): Promise<JWT> {
@@ -64,13 +62,10 @@ export const authOptions: AuthOptions = {
             email: user.email!,
             image: user.image!,
           })
-          return true
         } else if (existingUser.banned) throw new Error('Estas baneado de esta pagina')
-        else {
-          user.idUser = existingUser.id
-          user.tier = existingUser.tier
-          return true
-        }
+        user.idUser = existingUser.id
+        user.tier = existingUser.tier
+        return true
       } catch (error) {
         throw error
       }

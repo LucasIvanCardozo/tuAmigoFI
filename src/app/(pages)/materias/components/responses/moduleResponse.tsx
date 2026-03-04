@@ -13,6 +13,7 @@ import { deleteMidtermResponse, deleteTpResponse } from '@/app/lib/server/action
 import { Code } from './Code'
 import { CommentsLi } from './commentsLi'
 import { CgMathPlus } from 'react-icons/cg'
+import { useSession } from 'next-auth/react'
 
 export default function ModuleResponse({ problem }: { problem: DataModuleProblem }) {
   const [responses, setResponses] = useState(problem.responses)
@@ -20,7 +21,8 @@ export default function ModuleResponse({ problem }: { problem: DataModuleProblem
   const [stateComment, setStateComment] = useState(false)
   const [viewResponses, setViewResponses] = useState(false)
 
-  const { session, stateModal, stateModules, stateForm } = useMainContext()
+  const { stateModal, stateModules, stateForm } = useMainContext()
+  const { data: session } = useSession()
 
   const isTp = 'number' in stateModules.modules[0].module
 
