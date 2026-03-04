@@ -106,7 +106,7 @@ export const HandlerInputs = (input: TypeInput) => {
                           : inputType == 'date'
                             ? date
                             : checkbox,
-                    inputType: typeResponse ?? inputType as any,
+                    inputType: typeResponse ?? (inputType as any),
                     validate: true,
                   }
                 : val
@@ -160,7 +160,7 @@ export const HandlerInputs = (input: TypeInput) => {
         <InputTextarea input={input} onChange={setValue} />
       ) : inputType == 'checkbox' ? (
         <InputCheckbox input={input} onChange={setCheckbox} />
-      ) : inputType == 'selectResponse' && typeResponse ? (
+      ) : inputType == 'selectResponse' ? (
         <InputSelectResponse
           input={input}
           typeResponse={typeResponse}

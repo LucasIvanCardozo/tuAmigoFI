@@ -4,7 +4,7 @@ import { ChangeEvent } from 'react'
 
 interface Params {
   input: inputSelectResponse
-  typeResponse: TypeResponse
+  typeResponse?: TypeResponse
   onChange: (val: TypeResponse) => void
   setValue: (val: string) => void
   setImage: (val: ChangeEvent<HTMLInputElement>) => void
@@ -18,16 +18,26 @@ export const InputSelectResponse = ({ input, onChange, setValue, setImage, setPD
           Tipo de respuesta
         </label>
         <select className="text-black mb-2" name={input.name} id={input.id} onChange={(e) => onChange(e.target.value as TypeResponse)} required>
-          <option value="">Selecciona el tipo respuesta</option>
+          <option value="" hidden>
+            Selecciona el tipo respuesta
+          </option>
           <option value="TEXT">Texto</option>
           <option value="IMAGE">Imagen</option>
           <option value="PDF">Pdf</option>
-          <option value="CODIGO">Código</option>
+          <option value="CODE">Código</option>
         </select>
       </div>
       {typeResponse == 'TEXT' ? (
         <div className="flex flex-col text-[--black]">
-          <textarea name="code" id="code" rows={3} cols={50} placeholder="Ingresa tu respuesta aquí..." onChange={(e) => setValue(e.target.value)}></textarea>
+          <textarea
+            name="code"
+            id="code"
+            rows={3}
+            cols={50}
+            placeholder="Ingresa tu respuesta aquí..."
+            required
+            onChange={(e) => setValue(e.target.value)}
+          ></textarea>
         </div>
       ) : typeResponse == 'IMAGE' ? (
         <input className="text-white" type="file" accept="image/*" required onChange={(e) => setImage(e)} />
@@ -35,7 +45,15 @@ export const InputSelectResponse = ({ input, onChange, setValue, setImage, setPD
         <input className="text-white" type="file" accept="application/pdf" required onChange={(e) => setPDF(e)} />
       ) : typeResponse == 'CODE' ? (
         <div className="flex flex-col text-[--black]">
-          <textarea name="code" id="code" rows={10} cols={50} placeholder="Pega tu código aquí..." onChange={(e) => setValue(e.target.value)}></textarea>
+          <textarea
+            name="code"
+            id="code"
+            rows={10}
+            cols={50}
+            required
+            placeholder="Pega tu código aquí..."
+            onChange={(e) => setValue(e.target.value)}
+          ></textarea>
         </div>
       ) : null}
     </>

@@ -1,6 +1,4 @@
 'use client'
-
-import { useMainContext } from '@/app/contexts'
 import { ReactNode, useEffect } from 'react'
 import { CgClose } from 'react-icons/cg'
 
@@ -10,8 +8,6 @@ interface Params {
 }
 
 export const MainModal = ({ children, closeModal }: Params) => {
-  const { stateModal } = useMainContext()
-
   useEffect(() => {
     document.body.classList.add('no-scroll')
     return () => document.body.classList.remove('no-scroll')

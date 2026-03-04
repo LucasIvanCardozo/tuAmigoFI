@@ -4,16 +4,14 @@ import { CldImage } from 'next-cloudinary'
 import PdfView from '@/app/components/pdfView'
 import { BiSolidRightArrowSquare, BiSolidLeftArrowSquare } from 'react-icons/bi'
 import { FaCommentDots } from 'react-icons/fa'
-import { MdDelete } from 'react-icons/md'
 import { DataModuleProblem, TypeValues } from '@/app/types'
 import { useMainContext } from '@/app/contexts'
 // import ButtonReaction from './buttonReaction'
-import { HandlerInputs } from '@/app/components/form/inputs/handlerInputs'
-import { deleteMidtermResponse, deleteTpResponse } from '@/app/lib/server/actions/actions'
 import { Code } from './Code'
 import { CommentsLi } from './commentsLi'
 import { CgMathPlus } from 'react-icons/cg'
 import { useSession } from 'next-auth/react'
+import { ModalDeleteResponse } from '@/app/components/modals/modalDeleteResponse'
 
 export default function ModuleResponse({ problem }: { problem: DataModuleProblem }) {
   const [responses, setResponses] = useState(problem.responses)
@@ -21,7 +19,7 @@ export default function ModuleResponse({ problem }: { problem: DataModuleProblem
   const [stateComment, setStateComment] = useState(false)
   const [viewResponses, setViewResponses] = useState(false)
 
-  const { stateModal, stateModules, stateForm } = useMainContext()
+  const { stateModules } = useMainContext()
   const { data: session } = useSession()
 
   const isTp = 'number' in stateModules.modules[0].module
@@ -30,72 +28,6 @@ export default function ModuleResponse({ problem }: { problem: DataModuleProblem
     const suma = indexResponse + add
     if (!(suma >= problem.responses.length || suma < 0)) {
       setIndexResponse(suma)
-    }
-  }
-
-  const submitDeleteResponse = async (values: TypeValues[]) => {
-    const check = values.find((val) => val.id == 'check')
-    try {
-      if (check && typeof check.value === 'boolean') {
-        if (session && session?.user?.tier == 2) {
-          const deleteModuleDB = async () => {
-            if (isTp) {
-              await deleteTpResponse({
-                id: responses[indexResponse].response.id,
-              })
-            } else if (!isTp) {
-              await deleteMidtermResponse({
-                id: responses[indexResponse].response.id,
-              })
-            }
-            try {
-              const indexResponseAux = indexResponse
-              setIndexResponse((indexResponse) => 0)
-              stateModules.setModules(
-                stateModules.modules.map((mod) =>
-                  (mod.module.id == responses[indexResponseAux].response.idTp && isTp) ||
-                  (mod.module.id == responses[indexResponseAux].response.idMidterm && !isTp)
-                    ? {
-                        ...mod,
-                        problems: mod.problems.map((pro) =>
-                          pro.number == problem.number
-                            ? {
-                                ...pro,
-                                responses: pro.responses.filter((res) => res.response.id != responses[indexResponseAux].response.id),
-                              }
-                            : pro
-                        ),
-                      }
-                    : mod
-                )
-              )
-            } catch (error) {
-              window.location.reload()
-            }
-          }
-          if (responses[indexResponse].response.type == 'IMAGE' || responses[indexResponse].response.type == 'PDF') {
-            const formData = new FormData()
-            formData.set('id', responses[indexResponse].response.idUser)
-            formData.set(
-              'subFolder',
-              `${isTp ? 'tps' : 'parciales'}/respuestas/${isTp ? responses[indexResponse].response.idTp : responses[indexResponse].response.idMidterm}/${responses[indexResponse].response.number}`
-            )
-            const res = await fetch('/api/destroy', {
-              method: 'POST',
-              body: formData,
-            })
-            if (res.ok) {
-              deleteModuleDB()
-            } else throw new Error('Error al eliminar respuesta')
-          } else {
-            deleteModuleDB()
-          }
-        }
-      } else {
-        throw new Error('Faltan completar datos.')
-      }
-    } catch (error) {
-      throw error
     }
   }
 
@@ -119,49 +51,8 @@ export default function ModuleResponse({ problem }: { problem: DataModuleProblem
               </span>
             </span>
             <div className="w-full h-5 relative flex justify-between">
-              {session?.user.tier == 2 && (
-                <button
-                  aria-label="Eliminar respuesta"
-                  title="Eliminar respuesta"
-                  onClick={() => {
-                    stateForm.setDataForm({
-                      onSubmit: submitDeleteResponse,
-                      children: (
-                        <>
-                          <div>
-                            <div className="flex flex-col [&>*]:flex [&>*]:gap-1">
-                              <p>
-                                <b>Numero del problema:</b>
-                                {responses[indexResponse].response.number}
-                              </p>
-                              <p>
-                                <b>Subida por:</b>
-                                {responses[indexResponse].user.name}
-                              </p>
-                            </div>
-                          </div>
-                          <div>
-                            <h3 className="text-sm">Recuerda!</h3>
-                            <p className="text-xs">
-                              Por favor asegurate de que la respuesta sea la que quieres eliminar. Se borrara esta misma con todas sus reacciones. En caso de
-                              cualquier problema podés contactarme:{' '}
-                              <a className="underline" target="_blank" href="https://wa.me/+5492235319564">
-                                2235319564
-                              </a>
-                            </p>
-                          </div>
-                          <HandlerInputs type="checkbox" id="check" name="check" placeholder="Confirmo la eliminación." required={true} />
-                        </>
-                      ),
-                    })
-                    stateModal.setDataModal({
-                      title: 'Eliminar respuesta',
-                      viewModal: true,
-                    })
-                  }}
-                >
-                  <MdDelete className="h-full w-full" />
-                </button>
+              {(session?.user.tier == 2 || session?.user.id == responses[indexResponse].response.idUser) && (
+                <ModalDeleteResponse response={responses[indexResponse].response} user={responses[indexResponse].user} />
               )}
               <span></span>
               <div className="flex gap-1">
@@ -173,7 +64,7 @@ export default function ModuleResponse({ problem }: { problem: DataModuleProblem
                 >
                   <BiSolidLeftArrowSquare className="h-full w-full" />
                 </button>
-                {`${indexResponse + 1} de ${responses.length}`}
+                <span className="text-nowrap">{`${indexResponse + 1} de ${responses.length}`}</span>
                 <button
                   className="h-full aspect-square text-[--black-olive] opacity-90"
                   aria-label="Cambiar usuario que respondió hacia la derecha"

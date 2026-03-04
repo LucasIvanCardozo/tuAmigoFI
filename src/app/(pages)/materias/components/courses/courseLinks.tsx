@@ -2,7 +2,7 @@
 import { useSession } from 'next-auth/react'
 import { use, useState } from 'react'
 import { VscTriangleDown, VscTriangleRight } from 'react-icons/vsc'
-import ModalDeleteLink from './modals/modalDeleteLink'
+import ModalDeleteLink from '../../../../components/modals/modalDeleteLink'
 import { Link } from '@/app/lib/server/db/prisma/prismaClient/client'
 
 export default function CourseLinks({ callbackLinks }: { callbackLinks: Promise<Link[]> }) {

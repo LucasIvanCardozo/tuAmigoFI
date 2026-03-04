@@ -1,103 +1,22 @@
 'use client'
 
 import { AsideContext, useMainContext } from '@/app/contexts'
-import { TypeValues } from '@/app/types'
 import { useEffect, useState } from 'react'
 import { numberIconsModules } from '../../assets/icons'
 import { TbSquareAsteriskFilled, TbSquareMinusFilled } from 'react-icons/tb'
 import { SiGoogledocs } from 'react-icons/si'
-import { HandlerInputs } from '@/app/components/form/inputs/handlerInputs'
 import { AsideMainButton } from './asideMainButton'
-import { createMidterm, createTp } from '@/app/lib/server/actions/actions'
-import { useSession } from 'next-auth/react'
+import { ModalAddTp } from '@/app/components/modals/modalAddTp'
+import { ModalAddMidterm } from '@/app/components/modals/modalAddMidterm'
 
 export const AsideModules = () => {
-  const { stateViewModule, stateModules, stateModal, stateForm, course, typeModule } = useMainContext()
-  const { data: session } = useSession()
+  const { stateViewModule, stateModules, course, typeModule } = useMainContext()
   const [viewAside, setViewAside] = useState(false)
   const isTp = typeModule == 'TP'
 
   const handleViewModules = (module: string | null) => {
     setViewAside(false)
     stateViewModule.setViewModule(module)
-  }
-
-  const submitAddModule = async (values: TypeValues[]) => {
-    const name = values.find((val) => val.id == 'name')
-    const year = values.find((val) => val.id == 'year')
-    const number = values.find((val) => val.id == 'number')
-    const date = values.find((val) => val.id == 'date')
-    const file = values.find((val) => val.id == 'file')
-    console.log(session?.user)
-    try {
-      if (
-        (isTp &&
-          year &&
-          number &&
-          name &&
-          file &&
-          typeof name.value == 'string' &&
-          file.value instanceof File &&
-          typeof year.value == 'string' &&
-          typeof number.value == 'string') ||
-        (date && name && file && typeof name.value == 'string' && file.value instanceof File && typeof date.value == 'string')
-      ) {
-        if (session) {
-          let module
-          if (isTp) {
-            module = await createTp({
-              name: name.value,
-              number: Number(number?.value),
-              year: Number(year?.value),
-              idUser: session.user.id,
-              idCourse: course.id,
-            })
-          } else {
-            module = await createMidterm({
-              name: name.value,
-              date: new Date(date?.value as string),
-              idCourse: course.id,
-              idUser: session.user.id,
-            })
-          }
-          if (module) {
-            const formData = new FormData()
-            formData.set('file', file.value)
-            formData.set('id', module.id.toString())
-            formData.set('subFolder', `${isTp ? 'tps' : 'parciales'}/problemas`)
-
-            await fetch('/api/upload', {
-              method: 'POST',
-              body: formData,
-            })
-            try {
-              stateModules.setModules([
-                ...stateModules.modules,
-                {
-                  user: {
-                    id: session.user.id,
-                    email: session.user.email as string,
-                    name: session.user.name as string,
-                    banned: false,
-                    tier: session.user.tier,
-                    image: '',
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
-                  },
-                  problems: [],
-                  module: module,
-                },
-              ])
-            } catch (error) {
-              window.location.reload()
-            }
-          }
-        }
-      } else throw new Error('Faltan completar datos.')
-    } catch (error) {
-      if (error instanceof Error) throw new Error(error.message)
-      else throw new Error('Error inesperado.')
-    }
   }
 
   useEffect(() => {
@@ -180,97 +99,7 @@ export const AsideModules = () => {
             </li>
           ))}
           <li className={'order-last gap-1 p-1 rounded-md transform-gpu text-center transition-transform sm:hover:scale-105'}>
-            <button
-              className="text-start bg-[--white] py-1 px-2 rounded-md"
-              onClick={() => {
-                stateModal.setDataModal({
-                  title: isTp ? 'Agregar TP' : 'Agregar Examen',
-                  viewModal: true,
-                })
-                stateForm.setDataForm({
-                  onSubmit: submitAddModule,
-                  children: (
-                    <>
-                      {isTp ? (
-                        <>
-                          <div className="flex flex-col">
-                            <label htmlFor="name">Titulo</label>
-                            <HandlerInputs id="name" name="name" type="text" placeholder="Título del TP" required={true} />
-                          </div>
-                          <div className="flex flex-col">
-                            <label htmlFor="number">Número</label>
-                            <HandlerInputs id="number" name="number" type="number" placeholder="Número del TP" min={0} max={30} required={true} />
-                          </div>
-                          <div className="flex flex-col">
-                            <label htmlFor="year">Año</label>
-                            <HandlerInputs
-                              id="year"
-                              name="year"
-                              type="number"
-                              placeholder="Año del TP"
-                              min={2000}
-                              max={new Date().getFullYear()}
-                              required={true}
-                            />
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <div className="flex flex-col">
-                            <label htmlFor="name">Título</label>
-                            <HandlerInputs
-                              type="select"
-                              placeholder="Selecciona el tipo de parcial"
-                              id="name"
-                              name="name"
-                              required={true}
-                              children={
-                                <>
-                                  <option value="Primer parcial">Primer parcial</option>
-                                  <option value="Segundo parcial">Segundo parcial</option>
-                                  <option value="Tercer parcial">Tercer parcial</option>
-                                  <option value="Final">Final</option>
-                                  <option value="Otros">Otros</option>
-                                </>
-                              }
-                            />
-                          </div>
-                          <div className="flex flex-col">
-                            <label htmlFor="date">Fecha</label>
-                            <HandlerInputs type="date" name="date" id="date" required={true} />
-                          </div>
-                        </>
-                      )}
-                      <HandlerInputs type="file" id="file" accept="application/pdf" required={true} />
-                      <div>
-                        <a href="https://www.ilovepdf.com/es/eliminar-paginas" target="_blank" className="underline">
-                          <h3 className="text-sm">Click aquí para eliminar páginas de tu PDF</h3>
-                        </a>
-                      </div>
-                      <div>
-                        <a href="https://tools.pdf24.org/es/convertidor-pdf" target="_blank" className="underline">
-                          <h3 className="text-sm">Click aquí para convertir a PDF</h3>
-                        </a>
-                      </div>
-                      <div>
-                        <h3 className="text-sm">Recuerda!</h3>
-                        <p className="text-xs">
-                          Solo se admite formato PDF y solo con los problemas (sin las respuestas). Por favor asegurate de que el modulo que quieres agregar no
-                          se encuentre ya disponible en la lista. En caso de cualquier problema podes contactarme:{' '}
-                          <a className="underline" target="_blank" href="https://wa.me/+5492235319564">
-                            2235319564
-                          </a>
-                        </p>
-                      </div>
-                    </>
-                  ),
-                })
-              }}
-              aria-label={isTp ? 'Agregar TP' : 'Agregar Examen'}
-              title={isTp ? 'Agregar TP' : 'Agregar Examen'}
-            >
-              <p className="text-base text-[--black-olive] leading-4">{isTp ? 'Agregar TP' : 'Agregar Examen'}</p>
-            </button>
+            {isTp ? <ModalAddTp course={course} /> : <ModalAddMidterm course={course} />}
           </li>
         </ul>
       </aside>

@@ -1,8 +1,6 @@
 'use client'
 import { DataModuleComment } from '@/app/types'
-import { likeTpComment } from '@/app/lib/server/actions/responses/like.tp.comment'
 import { useState } from 'react'
-import { AiFillLike } from 'react-icons/ai'
 
 interface Params {
   comments: DataModuleComment

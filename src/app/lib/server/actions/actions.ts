@@ -18,37 +18,20 @@ export async function createMidterm({ name, date, idCourse, idUser }: Pick<Midte
   }
 }
 
-export async function createResponseMidterm({ idUser, idMidterm, number, type, text }: Pick<Response, 'idUser' | 'idMidterm' | 'number' | 'type' | 'text'>) {
+export async function createResponse({
+  idUser,
+  idTp,
+  idMidterm,
+  number,
+  type,
+  text,
+}: Pick<Response, 'idUser' | 'idTp' | 'idMidterm' | 'number' | 'type' | 'text'>) {
   try {
-    const validation = await db.response.findFirst({
-      where: {
-        idMidterm,
-        idUser,
-        number,
-      },
-    })
-    if (!validation) {
-      const addResponse = await db.response.create({
-        data: {
-          idMidterm,
-          number,
-          type,
-          idUser,
-          ...(text && { text: text }),
-        },
-      })
-      return addResponse
-    } else throw new Error('No puedes tener mas de una respueste a un problema!')
-  } catch (error) {
-    throw new Error('No se pudo editar el parcial')
-  }
-}
-
-export async function createResponseTp({ idUser, idTp, number, type, text }: Pick<Response, 'idUser' | 'idTp' | 'number' | 'type' | 'text'>) {
-  try {
+    if (idMidterm && idTp) throw new Error('No puedes tener un parcial y un tp')
     const validation = await db.response.findFirst({
       where: {
         idTp,
+        idMidterm,
         idUser,
         number,
       },
@@ -107,7 +90,7 @@ export async function deleteTP({ id }: { id: string }) {
   }
 }
 
-export async function deleteTpResponse({ id }: { id: string }) {
+export async function deleteResponse({ id }: { id: string }) {
   try {
     const deleteTpResponse = await db.response.delete({
       where: {
@@ -134,19 +117,6 @@ export async function deleteMidterm({ id }: { id: string }) {
   }
 }
 
-export async function deleteMidtermResponse({ id }: { id: string }) {
-  try {
-    const deleteMidtermResponse = await db.response.delete({
-      where: {
-        id: id,
-      },
-    })
-
-    return deleteMidtermResponse
-  } catch (error) {
-    throw new Error('No se pudo eliminar la respuesta')
-  }
-}
 export async function createUser({ name, email, image }: Pick<User, 'name' | 'email' | 'image'>) {
   try {
     const user = await db.user.create({

@@ -9,10 +9,6 @@ interface TypeMainContext {
     viewModule: string | null
     setViewModule: (number: string | null) => void
   }
-  stateModal: {
-    dataModal: TypeModal
-    setDataModal: (dataModal: TypeModal) => void
-  }
   stateModules: {
     modules: DataModule[]
     setModules: (dataModules: DataModule[]) => void
@@ -38,13 +34,6 @@ export const MainContext = createContext<TypeMainContext>({
   stateViewModule: {
     viewModule: null,
     setViewModule: () => {},
-  },
-  stateModal: {
-    dataModal: {
-      title: '',
-      viewModal: false,
-    },
-    setDataModal: () => {},
   },
   stateModules: {
     modules: [],
