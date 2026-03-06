@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { IoIosInformationCircle } from 'react-icons/io';
-import { MainModal } from './modals/mainModal';
+import { MainModal } from './layout/modals/mainModal';
 
 export default function ButtonInfoScore() {
   const [viewModal, setViewModal] = useState<boolean>(false);

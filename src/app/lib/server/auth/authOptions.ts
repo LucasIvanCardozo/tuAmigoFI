@@ -1,8 +1,8 @@
-import { createUser } from '../actions/actions'
 import { AuthOptions } from 'next-auth'
 import { JWT } from 'next-auth/jwt'
 import GoogleProvider from 'next-auth/providers/google'
 import { userUseCases } from '../usecases/user.usecases'
+import { createUser } from '../actions/users/create.action'
 
 async function refreshAccessToken(token: JWT): Promise<JWT> {
   try {
@@ -57,12 +57,15 @@ export const authOptions: AuthOptions = {
         }
         let existingUser = await userUseCases.findByEmail(user.email)
         if (!existingUser) {
-          existingUser = await createUser({
+          const { data, error } = await createUser({
             name: user.name!,
             email: user.email!,
             image: user.image!,
           })
+          if (error) throw new Error(error)
+          if (data) existingUser = data
         } else if (existingUser.banned) throw new Error('Estas baneado de esta pagina')
+        if (!existingUser) throw new Error('Error al crear usuario')
         user.idUser = existingUser.id
         user.tier = existingUser.tier
         return true

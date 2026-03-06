@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { cabin } from './assets/fonts'
-import Nav from './components/nav'
+import Nav from './components/layout/nav'
 import Providers from './components/layout/providers'
-import Footer from './components/footer'
-import { Loader } from './components/loader'
+import Footer from './components/layout/footer'
+import { Loader } from './components/layout/loader'
 import { IconBackground } from './components/layout/IconBackground'
 
 export const metadata: Metadata = {

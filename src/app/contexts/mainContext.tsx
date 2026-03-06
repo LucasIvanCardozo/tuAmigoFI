@@ -1,26 +1,25 @@
-import { DataForm, DataModule, TypeModal } from '@/app/types'
-import { createContext, useContext } from 'react'
+'use client'
+import { DataModule } from '@/app/types'
+import { createContext, useContext, useState } from 'react'
 import { Course } from '../lib/server/db/prisma/prismaClient/client'
 
 interface TypeMainContext {
   course: Course
+  setCourse: (course: Course) => void
   typeModule: 'TP' | 'Practica'
-  stateViewModule: {
-    viewModule: string | null
-    setViewModule: (number: string | null) => void
-  }
-  stateModules: {
-    modules: DataModule[]
-    setModules: (dataModules: DataModule[]) => void
-  }
-  stateForm: {
-    dataForm: DataForm
-    setDataForm: (data: DataForm) => void
-  }
+  setTypeModule: (typeModule: 'TP' | 'Practica') => void
+  viewModule: string | null
+  setViewModule: (number: string | null) => void
+  modules: DataModule[]
+  setModules: (dataModules: DataModule[]) => void
 }
 
-export const MainContext = createContext<TypeMainContext>({
-  course: {
+export const MainContext = createContext<TypeMainContext | null>(null)
+
+export const MainProvider = ({ children }: { children: React.ReactNode }) => {
+  const [modules, setModules] = useState<DataModule[]>([])
+  const [viewModule, setViewModule] = useState<string | null>(null)
+  const [course, setCourse] = useState<Course>({
     id: '0',
     name: 'Default',
     nameNormalized: 'default',
@@ -29,20 +28,29 @@ export const MainContext = createContext<TypeMainContext>({
     optional: false,
     createdAt: new Date(),
     updatedAt: new Date(),
-  },
-  typeModule: 'TP',
-  stateViewModule: {
-    viewModule: null,
-    setViewModule: () => {},
-  },
-  stateModules: {
-    modules: [],
-    setModules: () => {},
-  },
-  stateForm: {
-    dataForm: { children: <></>, onSubmit: async () => {} },
-    setDataForm: () => {},
-  },
-})
+  })
+  const [typeModule, setTypeModule] = useState<'TP' | 'Practica'>('TP')
 
-export const useMainContext = () => useContext(MainContext)
+  return (
+    <MainContext.Provider
+      value={{
+        viewModule,
+        setViewModule,
+        modules,
+        setModules,
+        course,
+        setCourse,
+        typeModule,
+        setTypeModule,
+      }}
+    >
+      {children}
+    </MainContext.Provider>
+  )
+}
+
+export const useMainContext = () => {
+  const context = useContext(MainContext)
+  if (!context) throw new Error('useMainContext must be used within a MainProvider')
+  return context
+}

@@ -1,3 +1,4 @@
+import { MainProvider } from '@/app/contexts'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -11,5 +12,5 @@ export default function Layout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return children
+  return <MainProvider>{children}</MainProvider>
 }

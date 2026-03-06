@@ -46,8 +46,8 @@ model CourseDegree {
   idCourse String @map("id_course")
   idDegree String @map("id_degree")
 
-  courses Course @relation(fields: [idCourse], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  degrees Degree @relation(fields: [idDegree], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  courses Course @relation(fields: [idCourse], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  degrees Degree @relation(fields: [idDegree], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
@@ -59,8 +59,8 @@ model CourseYear {
   idCourse String @map("id_course")
   idYear   String @map("id_year")
 
-  courses Course @relation(fields: [idCourse], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  years   Year   @relation(fields: [idYear], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  courses Course @relation(fields: [idCourse], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  years   Year   @relation(fields: [idYear], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
@@ -83,8 +83,8 @@ model DegreePlan {
   idDegree String @map("id_degree")
   idPlan   String @map("id_plan")
 
-  degrees Degree @relation(fields: [idDegree], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  plans   Plan   @relation(fields: [idPlan], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  degrees Degree @relation(fields: [idDegree], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  plans   Plan   @relation(fields: [idPlan], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
@@ -129,8 +129,8 @@ model Comment {
   idUser     String @map("id_user")
   text       String
 
-  user     User     @relation(fields: [idUser], references: [id])
-  response Response @relation(fields: [idResponse], references: [id])
+  user     User     @relation(fields: [idUser], references: [id], onDelete: Cascade)
+  response Response @relation(fields: [idResponse], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
@@ -154,9 +154,9 @@ model Response {
 
   comments Comment[]
 
-  midterm Midterm? @relation(fields: [idMidterm], references: [id])
-  tp      Tp?      @relation(fields: [idTp], references: [id])
-  user    User     @relation(fields: [idUser], references: [id])
+  midterm Midterm? @relation(fields: [idMidterm], references: [id], onDelete: Cascade)
+  tp      Tp?      @relation(fields: [idTp], references: [id], onDelete: Cascade)
+  user    User     @relation(fields: [idUser], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
@@ -209,7 +209,7 @@ model Reaction {
   typeTarget ReactionTo
   reaction   TypeReaction
 
-  user User @relation(fields: [idUser], references: [id])
+  user User @relation(fields: [idUser], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")

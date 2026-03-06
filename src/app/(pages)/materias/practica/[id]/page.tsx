@@ -1,5 +1,4 @@
-import { MainModule } from '../../components/mainModule'
-import { makeModules } from '../../utils/makeModules'
+import { MainModule } from '../../../../components/feature/materias/mainModule'
 import { courseUseCases } from '@/app/lib/server/usecases/course.usecases'
 import { tpUseCases } from '@/app/lib/server/usecases/tp.usecases'
 
@@ -10,9 +9,7 @@ interface Props {
 export default async function Practica({ params }: Props) {
   const { id: idCourse } = params
   const course = await courseUseCases.getById(idCourse)
-  const moduleList = await tpUseCases.findByCourseIdWithAllData(idCourse)
-
-  let modules = makeModules({ moduleList: moduleList, type: 'tps' })
+  const modules = await tpUseCases.findByCourseIdWithAllData(idCourse)
 
   return <MainModule modules={modules} course={course} typeModule="TP" />
 }
