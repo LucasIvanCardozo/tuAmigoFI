@@ -1,47 +1,40 @@
 // 'src/app/components/ModalImportImage.tsx'
 'use client'
 import { Modal } from './Modal'
-import { Loading } from '@/app/components/layout/loading'
 import { Link } from '@/app/lib/server/db/prisma/prismaClient/client'
 import { useSession } from 'next-auth/react'
 import { FormEvent, useRef, useState } from 'react'
 import { MdDelete } from 'react-icons/md'
 import { ModalRef } from './Modal'
 import { deleteLink } from '@/app/lib/server/actions/links/delete.action'
+import { sileo } from 'sileo'
+import { useReload } from '@/app/hooks/useReload'
 
 export default function ModalDeleteLink({ link }: { link: Link }) {
   const [check, setCheck] = useState<boolean>()
-  const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState<boolean>(false)
   const modalRef = useRef<ModalRef>(null)
   const { data: session } = useSession()
-
-  const formValidate = (): boolean => {
-    if (!check) {
-      setError('Debes estar de acuerdo con la eliminacion del link')
-      return false
-    }
-    if (!session?.user || session.user.tier != 2) {
-      setError('Debes iniciar sesion y ser administrador para eliminar un link')
-      return false
-    }
-    return true
-  }
+  const { startReload } = useReload()
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (formValidate() && session && session.user.tier == 2) {
-      try {
+    await sileo.promise(
+      async () => {
+        if (!check) throw new Error('Debes estar de acuerdo con la eliminacion del link')
+        if (!session) throw new Error('No hay sesion')
+        if (session.user.tier != 2) throw new Error('Debes ser administrador para eliminar un link')
         await deleteLink({ id: link.id, idUser: link.idUser })
         modalRef.current?.close()
-        window.location.reload()
-      } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message)
-        } else setError('Ocurrio un error inesperado')
+        startReload()
+      },
+      {
+        loading: { title: 'Cargando...' },
+        success: { title: 'Link eliminado' },
+        error: (error) => {
+          return { title: (error as Error).message }
+        },
       }
-    }
-    setLoading(false)
+    )
   }
 
   return (
@@ -53,7 +46,7 @@ export default function ModalDeleteLink({ link }: { link: Link }) {
         </button>
       }
     >
-      <form className="relative flex flex-col w-full" onSubmit={(e) => (setLoading(true), handleSubmit(e))}>
+      <form className="relative flex flex-col w-full" onSubmit={handleSubmit}>
         <div>
           <h3 className="text-lg mb-4">
             <b>{`Eliminar link`}</b>
@@ -85,15 +78,10 @@ export default function ModalDeleteLink({ link }: { link: Link }) {
           </p>
         </div>
         <div className="flex justify-center">
-          {loading ? (
-            <Loading size={6} mode="white" />
-          ) : (
-            <button className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700  transition-colors" type="submit">
-              Eliminar
-            </button>
-          )}
+          <button className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700  transition-colors" type="submit">
+            Eliminar
+          </button>
         </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
       </form>
     </Modal>
   )

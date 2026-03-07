@@ -1,6 +1,6 @@
 'use client'
 import { TypeValues } from '@/app/types'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 
 interface FromContextType {
   values: TypeValues[]

@@ -3,6 +3,7 @@ import { ModuleContainer } from './moduleContainer'
 
 export const ProblemsTable = () => {
   const { modules } = useMainContext()
+  
   return (
     <>
       <ul className="flex flex-col gap-1 grow relative overflow-y-auto overflow-x-hidden">

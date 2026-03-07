@@ -1,10 +1,29 @@
 import { Prisma, PrismaClient } from '../prisma/prismaClient/client'
 
 export const reactionRepository = (db: PrismaClient | Prisma.TransactionClient) => ({
-  findByResponseId(idResponse: string) {
+  findAllResponses() {
     return db.reaction.findMany({
-      where: { idTarget: idResponse, typeTarget: 'RESPONSE' },
+      where: { typeTarget: 'RESPONSE' },
     })
-  },// no se si esta bien
-  
+  },
+  findAllComments() {
+    return db.reaction.findMany({
+      where: { typeTarget: 'COMMENT' },
+    })
+  },
+  findAllTps() {
+    return db.reaction.findMany({
+      where: { typeTarget: 'TP' },
+    })
+  },
+  findAllMidterms() {
+    return db.reaction.findMany({
+      where: { typeTarget: 'MIDTERM' },
+    })
+  },
+  findAllLinks() {
+    return db.reaction.findMany({
+      where: { typeTarget: 'LINK' },
+    })
+  },
 })

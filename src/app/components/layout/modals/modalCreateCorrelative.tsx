@@ -1,52 +1,46 @@
 // 'src/app/components/ModalImportImage.tsx'
 'use client'
 import { Modal } from './Modal'
-import { Loading } from '@/app/components/layout/loading'
 import { Course } from '@/app/lib/server/db/prisma/prismaClient/client'
 import { useSession } from 'next-auth/react'
 import { FormEvent, use, useRef, useState } from 'react'
 import { ModalRef } from './Modal'
 import { createCorrelative } from '@/app/lib/server/actions/correlatives/create.action'
+import { sileo } from 'sileo'
+import { useReload } from '@/app/hooks/useReload'
 
 export default function ModalCreateCorrelative({ course, callback }: { course: Course; callback: Promise<Pick<Course, 'id' | 'name'>[]> }) {
   const [idCorrelative, setIdCorrelative] = useState<string | undefined>()
-  const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState<boolean>(false)
   const { data: session } = useSession()
   const courses = use(callback)
   const modalRef = useRef<ModalRef>(null)
-
-  const formValidate = (): boolean => {
-    if (!idCorrelative) {
-      setError('Tenés que seleccionar una correlativa')
-      return false
-    }
-    if (!session?.user || session?.user.tier < 1) {
-      setError('Debes iniciar sesion y ser administrador para añadir una correlativa')
-      return false
-    }
-    return true
-  }
-
+  const { startReload } = useReload()
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (formValidate() && session && session?.user?.tier > 0 && idCorrelative) {
-      try {
+
+    await sileo.promise(
+      async () => {
+        if (!idCorrelative) throw new Error('Debes seleccionar una correlativa')
+        if (!session) throw new Error('No hay sesion')
+        if (session.user.tier == 0) throw new Error('Debes tener un rango superior para añadir correlativas')
         const { error } = await createCorrelative({
           idCourse: course.id,
           idCorrelativeCourse: idCorrelative,
         })
         if (error) throw new Error(error)
         modalRef.current?.close()
-        window.location.reload()
-      } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message)
-        } else setError('Ocurrio un error inesperado')
+        startReload()
+      },
+      {
+        loading: { title: 'Cargando...' },
+        success: { title: 'Correlativa creada' },
+        error: (error) => {
+          return { title: (error as Error).message }
+        },
       }
-    }
-    setLoading(false)
+    )
   }
+
   return (
     <Modal
       refAux={modalRef}
@@ -56,7 +50,7 @@ export default function ModalCreateCorrelative({ course, callback }: { course: C
         </button>
       }
     >
-      <form className="relative flex flex-col w-full" onSubmit={(e) => (setLoading(true), handleSubmit(e))}>
+      <form className="relative flex flex-col w-full" onSubmit={handleSubmit}>
         <div>
           <h3 className="text-lg mb-4">
             <b>Añadir correlativa</b>
@@ -92,15 +86,10 @@ export default function ModalCreateCorrelative({ course, callback }: { course: C
           </p>
         </div>
         <div className="flex justify-center">
-          {loading ? (
-            <Loading size={6} mode="white" />
-          ) : (
-            <button className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700  transition-colors" type="submit">
-              Aceptar
-            </button>
-          )}
+          <button className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700  transition-colors" type="submit">
+            Aceptar
+          </button>
         </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
       </form>
     </Modal>
   )

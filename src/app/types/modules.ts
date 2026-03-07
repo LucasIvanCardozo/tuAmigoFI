@@ -1,15 +1,15 @@
-import { Comment, Midterm, Response, Tp, User } from '../lib/server/db/prisma/prismaClient/client'
+import { Comment, Midterm, Reaction, Response, Tp, User } from '../lib/server/db/prisma/prismaClient/client'
 
 export interface DataModuleComment {
   comment: Comment
   user: User
-  // reactions: Reaction[]
+  reactions: Reaction[]
 }
 
 export interface DataModuleResponse {
   response: Response
   user: User
-  // reactions: Reaction[]
+  reactions: Reaction[]
   comments: DataModuleComment[]
 }
 
@@ -21,6 +21,7 @@ export interface DataModuleProblem {
 export interface DataModule {
   module: Tp | Midterm
   problems: DataModuleProblem[]
+  reactions: Reaction[]
   user: User
 }
 

@@ -7,11 +7,13 @@ import { getServerUser } from '../users/get.server.user'
 
 const schema = object({
   idUser: string().min(1),
-  idTp: string().min(1),
-  idMidterm: string().min(1),
+  idTp: string().min(1).nullable().optional(),
+  idMidterm: string().min(1).nullable().optional(),
   number: number().min(1),
   type: z.enum(Object.values(TypeResponse) as [string, ...string[]]),
-  text: string().min(1),
+  text: string().min(1).nullable().optional(),
+}).refine((data) => (data.idTp && !data.idMidterm) || (!data.idTp && data.idMidterm), {
+  message: 'Debe existir idTp o idMidterm, pero no ambos',
 })
 
 export const createResponse = createAction(schema, async ({ idUser, idTp, idMidterm, number, type, text }) => {

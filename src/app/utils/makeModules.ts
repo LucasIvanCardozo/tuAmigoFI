@@ -3,12 +3,10 @@ import { DataModule, DataModuleComment, DataModuleProblem } from '@/app/types'
 
 type TypeComment = {
   user: User
-  // reactions: Reaction[]
 } & Comment
 
 type TypeResponse = {
   comments: TypeComment[]
-  // reactions: Reaction[]
   user: User
 } & Response
 
@@ -22,19 +20,21 @@ type TypeListMidterm = {
   users: User
 } & Midterm
 
-type Props =
-  | {
-      moduleList: TypeListTp[]
-      type: 'tps'
-    }
-  | {
-      moduleList: TypeListMidterm[]
-      type: 'midterms'
-    }
+type Props = {
+  moduleList: TypeListTp[] | TypeListMidterm[]
+  type: 'tp' | 'midterm'
+  reactions: {
+    midtermReactions: Reaction[]
+    responseReactions: Reaction[]
+    commentReactions: Reaction[]
+    tpReactions: Reaction[]
+    linkReactions: Reaction[]
+  }
+}
 
-export const makeModules = ({ moduleList, type }: Props): DataModule[] => {
+export const makeModules = ({ moduleList, reactions, type }: Props): DataModule[] => {
   let modules: DataModule[] = []
-  const isTp = type == 'tps'
+  const isTp = type == 'tp'
 
   // Itera sobre cada módulo de la lista
   for (const module of moduleList) {
@@ -58,6 +58,7 @@ export const makeModules = ({ moduleList, type }: Props): DataModule[] => {
         dataModuleComment.push({
           comment: comment,
           user: comment.user,
+          reactions: reactions.commentReactions.filter((reaction) => reaction.idTarget == comment.id),
         })
       }
 
@@ -72,26 +73,28 @@ export const makeModules = ({ moduleList, type }: Props): DataModule[] => {
         response: response,
         user: response.user,
         comments: dataModuleComment,
+        reactions: reactions.responseReactions.filter((reaction) => reaction.idTarget == response.id),
       })
     }
 
     // // Ordena cada grupo de respuestas según el balance (likes - dislikes)
-    // for (const moduleProblem of dataModuleProblems) {
-    //   moduleProblem.responses.sort((a, b) => {
-    //     const likesA = a.reactions.filter((rea) => rea.reaction).length
-    //     const disLikesA = a.reactions.length - likesA
-    //     const likesB = b.reactions.filter((rea) => rea.reaction).length
-    //     const disLikesB = b.reactions.length - likesB
-    //     // Ordena de mayor a menor balance neto
-    //     return likesB - disLikesB - (likesA - disLikesA)
-    //   })
-    // }
+    for (const moduleProblem of dataModuleProblems) {
+      moduleProblem.responses.sort((a, b) => {
+        const likesA = a.reactions.filter((rea) => rea.reaction).length
+        const disLikesA = a.reactions.length - likesA
+        const likesB = b.reactions.filter((rea) => rea.reaction).length
+        const disLikesB = b.reactions.length - likesB
+        // Ordena de mayor a menor balance neto
+        return likesB - disLikesB - (likesA - disLikesA)
+      })
+    }
 
     // Crea un objeto DataModule con la información procesada del módulo
     modules.push({
       module: module,
       user: module.users,
       problems: dataModuleProblems,
+      reactions: isTp ? reactions.tpReactions : reactions.midtermReactions,
     })
   }
 

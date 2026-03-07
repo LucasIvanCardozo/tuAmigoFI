@@ -10,7 +10,7 @@ const schema = object({
   text: string().min(1),
 })
 
-export const addComment = createAction(schema, async ({ idResponse, text }) => {
+export const createComment = createAction(schema, async ({ idResponse, text }) => {
   const { user } = await getServerUser()
   if (!user) throw new Error('No estas logueado')
 

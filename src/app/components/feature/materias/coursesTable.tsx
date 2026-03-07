@@ -3,6 +3,7 @@ import IndexList from './indexList'
 import { UpdateLoader } from './updateLoader'
 import { CourseSearchParams } from '../../../(pages)/materias/page'
 import { courseUseCases } from '@/app/lib/server/usecases/course.usecases'
+import { Suspense } from 'react'
 
 export default async function CoursesTable({ query }: { query: CourseSearchParams }) {
   const courses = await courseUseCases.findByPage(query)
@@ -16,7 +17,9 @@ export default async function CoursesTable({ query }: { query: CourseSearchParam
           <Course key={course.id} course={course} idDegree={query.idDegree} />
         ))}
       </ul>
-      <IndexList query={query} callback={callbackAmount} />
+      <Suspense fallback={<div>Cargando...</div>}>
+        <IndexList query={query} callback={callbackAmount} />
+      </Suspense>
     </>
   )
 }

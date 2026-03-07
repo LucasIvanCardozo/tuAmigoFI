@@ -189,11 +189,6 @@ model Tp {
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 }
 
-enum TypeReaction {
-  LIKE
-  DISLIKE
-}
-
 enum ReactionTo {
   RESPONSE
   COMMENT
@@ -203,11 +198,11 @@ enum ReactionTo {
 }
 
 model Reaction {
-  id         String       @id @default(cuid())
-  idUser     String       @map("id_user")
-  idTarget   String       @map("id_target")
+  id         String     @id @default(cuid())
+  idUser     String     @map("id_user")
+  idTarget   String     @map("id_target")
   typeTarget ReactionTo
-  reaction   TypeReaction
+  reaction   Boolean
 
   user User @relation(fields: [idUser], references: [id], onDelete: Cascade)
 

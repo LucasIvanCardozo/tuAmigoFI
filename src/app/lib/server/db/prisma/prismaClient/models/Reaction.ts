@@ -29,7 +29,7 @@ export type ReactionMinAggregateOutputType = {
   idUser: string | null
   idTarget: string | null
   typeTarget: $Enums.ReactionTo | null
-  reaction: $Enums.TypeReaction | null
+  reaction: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -39,7 +39,7 @@ export type ReactionMaxAggregateOutputType = {
   idUser: string | null
   idTarget: string | null
   typeTarget: $Enums.ReactionTo | null
-  reaction: $Enums.TypeReaction | null
+  reaction: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -164,7 +164,7 @@ export type ReactionGroupByOutputType = {
   idUser: string
   idTarget: string
   typeTarget: $Enums.ReactionTo
-  reaction: $Enums.TypeReaction
+  reaction: boolean
   createdAt: Date
   updatedAt: Date
   _count: ReactionCountAggregateOutputType | null
@@ -195,7 +195,7 @@ export type ReactionWhereInput = {
   idUser?: Prisma.StringFilter<"Reaction"> | string
   idTarget?: Prisma.StringFilter<"Reaction"> | string
   typeTarget?: Prisma.EnumReactionToFilter<"Reaction"> | $Enums.ReactionTo
-  reaction?: Prisma.EnumTypeReactionFilter<"Reaction"> | $Enums.TypeReaction
+  reaction?: Prisma.BoolFilter<"Reaction"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Reaction"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Reaction"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -221,7 +221,7 @@ export type ReactionWhereUniqueInput = Prisma.AtLeast<{
   idUser?: Prisma.StringFilter<"Reaction"> | string
   idTarget?: Prisma.StringFilter<"Reaction"> | string
   typeTarget?: Prisma.EnumReactionToFilter<"Reaction"> | $Enums.ReactionTo
-  reaction?: Prisma.EnumTypeReactionFilter<"Reaction"> | $Enums.TypeReaction
+  reaction?: Prisma.BoolFilter<"Reaction"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Reaction"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Reaction"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -248,7 +248,7 @@ export type ReactionScalarWhereWithAggregatesInput = {
   idUser?: Prisma.StringWithAggregatesFilter<"Reaction"> | string
   idTarget?: Prisma.StringWithAggregatesFilter<"Reaction"> | string
   typeTarget?: Prisma.EnumReactionToWithAggregatesFilter<"Reaction"> | $Enums.ReactionTo
-  reaction?: Prisma.EnumTypeReactionWithAggregatesFilter<"Reaction"> | $Enums.TypeReaction
+  reaction?: Prisma.BoolWithAggregatesFilter<"Reaction"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Reaction"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Reaction"> | Date | string
 }
@@ -257,7 +257,7 @@ export type ReactionCreateInput = {
   id?: string
   idTarget: string
   typeTarget: $Enums.ReactionTo
-  reaction: $Enums.TypeReaction
+  reaction: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutReactionsInput
@@ -268,7 +268,7 @@ export type ReactionUncheckedCreateInput = {
   idUser: string
   idTarget: string
   typeTarget: $Enums.ReactionTo
-  reaction: $Enums.TypeReaction
+  reaction: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -277,7 +277,7 @@ export type ReactionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   idTarget?: Prisma.StringFieldUpdateOperationsInput | string
   typeTarget?: Prisma.EnumReactionToFieldUpdateOperationsInput | $Enums.ReactionTo
-  reaction?: Prisma.EnumTypeReactionFieldUpdateOperationsInput | $Enums.TypeReaction
+  reaction?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutReactionsNestedInput
@@ -288,7 +288,7 @@ export type ReactionUncheckedUpdateInput = {
   idUser?: Prisma.StringFieldUpdateOperationsInput | string
   idTarget?: Prisma.StringFieldUpdateOperationsInput | string
   typeTarget?: Prisma.EnumReactionToFieldUpdateOperationsInput | $Enums.ReactionTo
-  reaction?: Prisma.EnumTypeReactionFieldUpdateOperationsInput | $Enums.TypeReaction
+  reaction?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -298,7 +298,7 @@ export type ReactionCreateManyInput = {
   idUser: string
   idTarget: string
   typeTarget: $Enums.ReactionTo
-  reaction: $Enums.TypeReaction
+  reaction: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -307,7 +307,7 @@ export type ReactionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   idTarget?: Prisma.StringFieldUpdateOperationsInput | string
   typeTarget?: Prisma.EnumReactionToFieldUpdateOperationsInput | $Enums.ReactionTo
-  reaction?: Prisma.EnumTypeReactionFieldUpdateOperationsInput | $Enums.TypeReaction
+  reaction?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -317,7 +317,7 @@ export type ReactionUncheckedUpdateManyInput = {
   idUser?: Prisma.StringFieldUpdateOperationsInput | string
   idTarget?: Prisma.StringFieldUpdateOperationsInput | string
   typeTarget?: Prisma.EnumReactionToFieldUpdateOperationsInput | $Enums.ReactionTo
-  reaction?: Prisma.EnumTypeReactionFieldUpdateOperationsInput | $Enums.TypeReaction
+  reaction?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -372,10 +372,6 @@ export type EnumReactionToFieldUpdateOperationsInput = {
   set?: $Enums.ReactionTo
 }
 
-export type EnumTypeReactionFieldUpdateOperationsInput = {
-  set?: $Enums.TypeReaction
-}
-
 export type ReactionCreateNestedManyWithoutUserInput = {
   create?: Prisma.XOR<Prisma.ReactionCreateWithoutUserInput, Prisma.ReactionUncheckedCreateWithoutUserInput> | Prisma.ReactionCreateWithoutUserInput[] | Prisma.ReactionUncheckedCreateWithoutUserInput[]
   connectOrCreate?: Prisma.ReactionCreateOrConnectWithoutUserInput | Prisma.ReactionCreateOrConnectWithoutUserInput[]
@@ -422,7 +418,7 @@ export type ReactionCreateWithoutUserInput = {
   id?: string
   idTarget: string
   typeTarget: $Enums.ReactionTo
-  reaction: $Enums.TypeReaction
+  reaction: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -431,7 +427,7 @@ export type ReactionUncheckedCreateWithoutUserInput = {
   id?: string
   idTarget: string
   typeTarget: $Enums.ReactionTo
-  reaction: $Enums.TypeReaction
+  reaction: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -470,7 +466,7 @@ export type ReactionScalarWhereInput = {
   idUser?: Prisma.StringFilter<"Reaction"> | string
   idTarget?: Prisma.StringFilter<"Reaction"> | string
   typeTarget?: Prisma.EnumReactionToFilter<"Reaction"> | $Enums.ReactionTo
-  reaction?: Prisma.EnumTypeReactionFilter<"Reaction"> | $Enums.TypeReaction
+  reaction?: Prisma.BoolFilter<"Reaction"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Reaction"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Reaction"> | Date | string
 }
@@ -479,7 +475,7 @@ export type ReactionCreateManyUserInput = {
   id?: string
   idTarget: string
   typeTarget: $Enums.ReactionTo
-  reaction: $Enums.TypeReaction
+  reaction: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -488,7 +484,7 @@ export type ReactionUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   idTarget?: Prisma.StringFieldUpdateOperationsInput | string
   typeTarget?: Prisma.EnumReactionToFieldUpdateOperationsInput | $Enums.ReactionTo
-  reaction?: Prisma.EnumTypeReactionFieldUpdateOperationsInput | $Enums.TypeReaction
+  reaction?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -497,7 +493,7 @@ export type ReactionUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   idTarget?: Prisma.StringFieldUpdateOperationsInput | string
   typeTarget?: Prisma.EnumReactionToFieldUpdateOperationsInput | $Enums.ReactionTo
-  reaction?: Prisma.EnumTypeReactionFieldUpdateOperationsInput | $Enums.TypeReaction
+  reaction?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -506,7 +502,7 @@ export type ReactionUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   idTarget?: Prisma.StringFieldUpdateOperationsInput | string
   typeTarget?: Prisma.EnumReactionToFieldUpdateOperationsInput | $Enums.ReactionTo
-  reaction?: Prisma.EnumTypeReactionFieldUpdateOperationsInput | $Enums.TypeReaction
+  reaction?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -577,7 +573,7 @@ export type $ReactionPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     idUser: string
     idTarget: string
     typeTarget: $Enums.ReactionTo
-    reaction: $Enums.TypeReaction
+    reaction: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["reaction"]>
@@ -1008,7 +1004,7 @@ export interface ReactionFieldRefs {
   readonly idUser: Prisma.FieldRef<"Reaction", 'String'>
   readonly idTarget: Prisma.FieldRef<"Reaction", 'String'>
   readonly typeTarget: Prisma.FieldRef<"Reaction", 'ReactionTo'>
-  readonly reaction: Prisma.FieldRef<"Reaction", 'TypeReaction'>
+  readonly reaction: Prisma.FieldRef<"Reaction", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Reaction", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Reaction", 'DateTime'>
 }

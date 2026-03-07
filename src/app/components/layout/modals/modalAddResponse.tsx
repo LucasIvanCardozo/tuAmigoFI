@@ -8,9 +8,10 @@ import { useSession } from 'next-auth/react'
 import { useRef } from 'react'
 import { useReload } from '@/app/hooks/useReload'
 import { createResponse } from '@/app/lib/server/actions/responses/create.action'
+import { sileo } from 'sileo'
 
 export const ModalAddResponse = ({ module }: { module: Module }) => {
-  const [startReload] = useReload()
+  const { startReload } = useReload()
 
   const { data: session } = useSession()
   const modalRef = useRef<ModalRef>(null)
@@ -19,47 +20,40 @@ export const ModalAddResponse = ({ module }: { module: Module }) => {
   const submitAddResponse = async (values: TypeValues[]) => {
     const number = values.find((val) => val.id == 'number')
     const selectResponse = values.find((val) => val.id == 'selectResponse')
-    try {
-      if (
-        number &&
-        typeof number.value === 'string' &&
-        selectResponse &&
-        (((selectResponse.inputType == 'TEXT' || selectResponse.inputType == 'CODE') && typeof selectResponse.value == 'string') ||
-          ((selectResponse.inputType == 'IMAGE' || selectResponse.inputType == 'PDF') && selectResponse.value instanceof File))
-      ) {
-        if (session) {
-          const typeResponse = selectResponse.inputType
-          const { error } = await createResponse({
-            idUser: session.user.id,
-            idTp: isTp ? module.id : null,
-            idMidterm: !isTp ? module.id : null,
-            number: Number(number.value),
-            text: selectResponse.inputType == 'TEXT' || selectResponse.inputType == 'CODE' ? (selectResponse.value as string) : null,
-            type: typeResponse,
+    await sileo.promise(
+      async () => {
+        if (!session) throw new Error('No hay sesion')
+        if (!number || !selectResponse) throw new Error('Faltan datos')
+        const typeResponse = selectResponse.inputType
+        const { error } = await createResponse({
+          idUser: session.user.id,
+          idTp: isTp ? module.id : null,
+          idMidterm: !isTp ? module.id : null,
+          number: Number(number.value),
+          text: typeResponse == 'TEXT' || typeResponse == 'CODE' ? (selectResponse.value as string) : null,
+          type: typeResponse,
+        })
+        if (error) throw new Error('Error: ' + error)
+        if (typeResponse == 'IMAGE' || typeResponse == 'PDF') {
+          const formData = new FormData()
+          formData.set('file', selectResponse.value as File)
+          formData.set('id', session.user.id.toString())
+          formData.set('subFolder', `${isTp ? 'tps' : 'parciales'}/respuestas/${module.id}/${Number(number.value)}`)
+          await fetch('/api/upload', {
+            method: 'POST',
+            body: formData,
           })
-
-          if (typeResponse == 'IMAGE' || typeResponse == 'PDF') {
-            if (selectResponse.value) {
-              if (error) throw new Error('Error: ' + error)
-              else {
-                const formData = new FormData()
-                formData.set('file', selectResponse.value)
-                formData.set('id', session.user.id.toString())
-                formData.set('subFolder', `${isTp ? 'tps' : 'parciales'}/respuestas/${module.id}/${Number(number.value)}`)
-                await fetch('/api/upload', {
-                  method: 'POST',
-                  body: formData,
-                })
-              }
-            } else throw new Error('No se encontro ningun archivo')
-          }
-          startReload()
-        } else throw new Error('Debes iniciar sesion.')
-      } else throw new Error('Faltan completar datos.')
-    } catch (error) {
-      if (error instanceof Error) throw new Error(error.message)
-      else throw new Error('Error inesperado.')
-    }
+        }
+        startReload()
+      },
+      {
+        loading: { title: 'Cargando...' },
+        success: { title: 'Respuesta agregada' },
+        error: (error) => {
+          return { title: (error as Error).message }
+        },
+      }
+    )
   }
 
   return (

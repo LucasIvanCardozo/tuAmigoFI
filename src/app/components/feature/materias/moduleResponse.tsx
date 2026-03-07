@@ -12,6 +12,7 @@ import { CommentsLi } from './commentsLi'
 import { CgMathPlus } from 'react-icons/cg'
 import { useSession } from 'next-auth/react'
 import { ModalDeleteResponse } from '../../layout/modals/modalDeleteResponse'
+import ButtonReaction from './buttonReaction'
 
 export default function ModuleResponse({ problem }: { problem: DataModuleProblem }) {
   const [indexResponse, setIndexResponse] = useState<number>(0)
@@ -113,7 +114,7 @@ export default function ModuleResponse({ problem }: { problem: DataModuleProblem
               ) : null
             }
             <div className="flex absolute bottom-0 right-0 z-10 gap-1 p-1 bg-[--white] rounded-md select-none">
-              {/* <ButtonReaction indexResponse={indexResponse} responses={responses} setResponses={setResponses} />| */}
+              <ButtonReaction indexResponse={indexResponse} responses={responses} />|
               <button onClick={handleComment}>
                 <FaCommentDots className="text-xl" />
               </button>

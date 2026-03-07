@@ -8,45 +8,33 @@ import { useSession } from 'next-auth/react'
 import { useRef } from 'react'
 import { useReload } from '@/app/hooks/useReload'
 import { deleteMidterm } from '@/app/lib/server/actions/midterms/delete.action'
+import { sileo } from 'sileo'
 
 export const ModalDeleteMidterm = ({ midterm, user }: { midterm: Midterm; user: User }) => {
-  // const { modules, setModules } = useMainContext()
-  const [startReload] = useReload()
+  const { startReload } = useReload()
 
   const modalRef = useRef<ModalRef>(null)
   const { data: session } = useSession()
 
   const submitDeleteModule = async (values: TypeValues[]) => {
     const check = values.find((val) => val.id == 'check')
-    try {
-      if (check && typeof check.value === 'boolean') {
-        if ((session && session?.user?.tier == 2) || session?.user.id == midterm.idUser) {
-          const formData = new FormData()
-          formData.set('id', midterm.id.toString())
-          formData.set('subFolder', `parciales/respuestas/${midterm.id}`)
-          const res = await fetch('/api/destroyAll', {
-            method: 'POST',
-            body: formData,
-          })
+    await sileo.promise(
+      async () => {
+        if (!session) throw new Error('No hay sesion')
+        if (session.user.tier != 2) throw new Error('Debes ser administrador para eliminar un examen')
+        if (!check) throw new Error('Debes estar de acuerdo con la eliminacion del examen')
 
-          formData.set('id', midterm.id.toString())
-          formData.set('subFolder', `parciales/problemas`)
-
-          const res2 = await fetch('/api/destroy', {
-            method: 'POST',
-            body: formData,
-          })
-
-          if (res.ok && res2.ok) {
-            await deleteMidterm({ id: midterm.id, idUser: midterm.idUser })
-            startReload()
-          } else throw new Error('Error al eliminar esta respuesta')
-        }
-      } else throw new Error('Faltan completar datos.')
-    } catch (error) {
-      if (error instanceof Error) throw new Error(error.message)
-      else throw new Error('Error inesperado.')
-    }
+        await deleteMidterm({ id: midterm.id, idUser: midterm.idUser })
+        startReload()
+      },
+      {
+        loading: { title: 'Cargando...' },
+        success: { title: 'Examen eliminado' },
+        error: (error) => {
+          return { title: (error as Error).message }
+        },
+      }
+    )
   }
 
   return (

@@ -8,5 +8,5 @@ export const useReload = () => {
     startTransition(refresh)
   }, [refresh])
 
-  return [startReload]
+  return { startReload }
 }

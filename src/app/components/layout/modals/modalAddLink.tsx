@@ -1,61 +1,45 @@
 // 'src/app/components/ModalImportImage.tsx'
 'use client'
-import { addLink } from '@/app/lib/server/actions/links/add.action'
+import { createLink } from '@/app/lib/server/actions/links/create.action'
 import { Modal } from './Modal'
-import { Loading } from '@/app/components/layout/loading'
 import { Course } from '@/app/lib/server/db/prisma/prismaClient/client'
 import { useSession } from 'next-auth/react'
 import { FormEvent, useState } from 'react'
+import { sileo } from 'sileo'
+import { useReload } from '@/app/hooks/useReload'
 
 export default function ModalAddLink({ course }: { course: Course }) {
   const [name, setName] = useState<string | undefined>()
   const [link, setLink] = useState<string | undefined>()
   const [official, setOfficial] = useState<boolean | undefined>()
-  const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState<boolean>(false)
   const { data: session } = useSession()
-
-  const formValidate = (): boolean => {
-    if (!name) {
-      setError('Tenés que ponerle un nomber al link')
-      return false
-    } else if (!link) {
-      setError('Tenés que poner la direccion web')
-      return false
-    } else if (!link.startsWith('https://')) {
-      setError('El link debe comenzar con "https://"')
-      return false
-    } else if (official == undefined) {
-      setError('Tenés que decir si el link es oficial o no')
-      return false
-    }
-    if (!session?.user) {
-      setError('Debes iniciar sesion para añadir un link')
-      return false
-    }
-    return true
-  }
+  const { startReload } = useReload()
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (formValidate() && session && name && link && official != undefined) {
-      try {
-        const { error } = await addLink({
+    await sileo.promise(
+      async () => {
+        if (!session) throw new Error('No hay sesion')
+        const { error } = await createLink({
           idCourse: course.id,
           link: link,
           name: name,
           official: official,
-          idUser: session.user.id,
         })
         if (error) throw new Error(error)
-        window.location.reload()
-      } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message)
-        } else setError('Ocurrio un error inesperado')
+        startReload()
+      },
+      {
+        loading: { title: 'Cargando...' },
+        success: { title: 'Link creado' },
+        error: (error) => {
+          const err = error as Error
+          return {
+            title: err.message,
+          }
+        },
       }
-    }
-    setLoading(false)
+    )
   }
 
   return (
@@ -66,7 +50,7 @@ export default function ModalAddLink({ course }: { course: Course }) {
         </button>
       }
     >
-      <form className="relative flex flex-col w-full" onSubmit={(e) => (setLoading(true), handleSubmit(e))}>
+      <form className="relative flex flex-col w-full" onSubmit={handleSubmit}>
         <div>
           <h3 className="text-lg mb-2">
             <b>Añadir link</b>
@@ -128,15 +112,10 @@ export default function ModalAddLink({ course }: { course: Course }) {
           </p>
         </div>
         <div className="flex justify-center">
-          {loading ? (
-            <Loading size={6} mode="white" />
-          ) : (
-            <button className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700  transition-colors" type="submit">
-              Aceptar
-            </button>
-          )}
+          <button className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700  transition-colors" type="submit">
+            Aceptar
+          </button>
         </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
       </form>
     </Modal>
   )

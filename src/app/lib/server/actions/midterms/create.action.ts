@@ -15,7 +15,7 @@ export const createMidterm = createAction(schema, async ({ name, date, idCourse,
   const { user } = await getServerUser()
   if (!user) throw new Error('No estas logueado')
 
-  return await db.midterm.create({
+  return db.midterm.create({
     data: {
       name: name,
       date: date,

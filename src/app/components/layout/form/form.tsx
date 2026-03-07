@@ -4,7 +4,7 @@ import { FormEvent, useEffect, useState, useTransition } from 'react'
 import { Loading } from '../loading'
 
 export const Form = ({ children, onSubmit, onEnd }: DataForm) => {
-  const [loading, startTransition] = useTransition()
+  // const [loading, startTransition] = useTransition()
   const { values, setValues, error, setError } = useForm()
   const [thanks, setThanks] = useState(false)
 
@@ -19,15 +19,22 @@ export const Form = ({ children, onSubmit, onEnd }: DataForm) => {
     e.preventDefault()
     try {
       if (!values.some((val) => !val.validate)) {
-        startTransition(async () => {
-          await onSubmit(values)
-          setThanks(true)
-          if (onEnd) {
-            setTimeout(() => {
-              onEnd()
-            }, 1200)
-          }
-        })
+        await onSubmit(values)
+        setThanks(true)
+        if (onEnd) {
+          setTimeout(() => {
+            onEnd()
+          }, 1200)
+        }
+        // startTransition(async () => {
+        //   await onSubmit(values)
+        //   setThanks(true)
+        //   if (onEnd) {
+        //     setTimeout(() => {
+        //       onEnd()
+        //     }, 1200)
+        //   }
+        // })
       } else {
         throw new Error('No deberías hacer esto...')
       }
@@ -45,9 +52,10 @@ export const Form = ({ children, onSubmit, onEnd }: DataForm) => {
       <div className="flex gap-4 justify-center mt-4">
         {thanks ? (
           <p>Muchas gracias por tu aporte! ❤️</p>
-        ) : loading ? (
-          <Loading size={6} mode="white" />
         ) : (
+          // loading ? (
+          //   <Loading size={6} mode="white" />
+          // ):
           <button className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700  transition-colors" type="submit">
             Aceptar
           </button>

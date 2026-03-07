@@ -19,14 +19,6 @@ export const TypeResponse = {
 export type TypeResponse = (typeof TypeResponse)[keyof typeof TypeResponse]
 
 
-export const TypeReaction = {
-  LIKE: 'LIKE',
-  DISLIKE: 'DISLIKE'
-} as const
-
-export type TypeReaction = (typeof TypeReaction)[keyof typeof TypeReaction]
-
-
 export const ReactionTo = {
   RESPONSE: 'RESPONSE',
   COMMENT: 'COMMENT',

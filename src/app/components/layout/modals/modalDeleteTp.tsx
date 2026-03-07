@@ -8,44 +8,30 @@ import { HandlerInputs } from '../form/inputs/handlerInputs'
 import { useRef } from 'react'
 import { useReload } from '@/app/hooks/useReload'
 import { deleteTp } from '@/app/lib/server/actions/tps/delete.action'
+import { sileo } from 'sileo'
 
 export const ModalDeleteTp = ({ tp, user }: { tp: Tp; user: User }) => {
-  const [startReload] = useReload()
+  const { startReload } = useReload()
 
   const modalRef = useRef<ModalRef>(null)
   const { data: session } = useSession()
 
   const submitDeleteModule = async (values: TypeValues[]) => {
     const check = values.find((val) => val.id == 'check')
-    try {
-      if (check && typeof check.value === 'boolean') {
-        if ((session && session?.user?.tier == 2) || session?.user.id == tp.idUser) {
-          const formData = new FormData()
-          formData.set('id', tp.id.toString())
-          formData.set('subFolder', `tps/respuestas/${tp.id}`)
-          const res = await fetch('/api/destroyAll', {
-            method: 'POST',
-            body: formData,
-          })
-
-          formData.set('id', tp.id.toString())
-          formData.set('subFolder', `tps/problemas`)
-
-          const res2 = await fetch('/api/destroy', {
-            method: 'POST',
-            body: formData,
-          })
-
-          if (res.ok && res2.ok) {
-            await deleteTp({ id: tp.id, idUser: tp.idUser })
-            startReload()
-          } else throw new Error('Error al eliminar esta respuesta')
-        }
-      } else throw new Error('Faltan completar datos.')
-    } catch (error) {
-      if (error instanceof Error) throw new Error(error.message)
-      else throw new Error('Error inesperado.')
-    }
+    await sileo.promise(
+      async () => {
+        if (!check) throw new Error('Debes estar de acuerdo con la eliminacion del TP')
+        if (!session) throw new Error('No hay sesion')
+        if (session.user.tier != 2) throw new Error('Debes ser administrador para eliminar un TP')
+        await deleteTp({ id: tp.id, idUser: tp.idUser })
+        startReload()
+      },
+      {
+        loading: { title: 'Cargando...' },
+        success: { title: 'TP eliminado correctamente.' },
+        error: (error) => ({ title: (error as Error).message }),
+      }
+    )
   }
 
   return (

@@ -11,9 +11,6 @@ const schema = object({
 })
 
 export const createUser = createAction(schema, async ({ name, email, image }) => {
-  const { user } = await getServerUser()
-  if (!user) throw new Error('No estas logueado')
-
   return db.user.create({
     data: {
       email: email,
