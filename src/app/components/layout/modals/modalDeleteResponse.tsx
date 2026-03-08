@@ -10,7 +10,7 @@ import { useReload } from '@/app/hooks/useReload'
 import { deleteResponse } from '@/app/lib/server/actions/responses/delete.action'
 
 export const ModalDeleteResponse = ({ response, user }: { response: Response; user: User }) => {
-  const { id, idMidterm, idTp, idUser, number, type } = response
+  const { id, idUser } = response
   const modalRef = useRef<ModalRef>(null)
   const { startReload } = useReload()
   const { data: session } = useSession()
@@ -19,7 +19,7 @@ export const ModalDeleteResponse = ({ response, user }: { response: Response; us
     const check = values.find((val) => val.id == 'check')
     if (!check) throw new Error('Debes estar de acuerdo con la eliminacion de la respuesta')
     if (!session) throw new Error('No hay sesion')
-    if (session.user.tier != 2) throw new Error('Debes ser administrador para eliminar una respuesta')
+    if (session.user.tier != 2 || session.user.id != user.id) throw new Error('Debes ser administrador o el creador para eliminar una respuesta')
 
     const deleteModuleDB = async () => {
       const { error } = await deleteResponse({ id, idUser })
