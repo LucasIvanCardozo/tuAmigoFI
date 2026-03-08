@@ -22,7 +22,7 @@ export default function ModalDeleteLink({ link }: { link: Link }) {
       async () => {
         if (!check) throw new Error('Debes estar de acuerdo con la eliminacion del link')
         if (!session) throw new Error('No hay sesion')
-        if (session.user.tier != 2 || session.user.id != link.idUser) throw new Error('Debes ser administrador o el creador para eliminar un link')
+        if (session.user.tier != 2 && session.user.id != link.idUser) throw new Error('Debes ser administrador o el creador para eliminar un link')
         await deleteLink({ id: link.id, idUser: link.idUser })
         modalRef.current?.close()
         startReload()

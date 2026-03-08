@@ -8,7 +8,6 @@ import { useSession } from 'next-auth/react'
 import { useRef } from 'react'
 import { useReload } from '@/app/hooks/useReload'
 import { deleteMidterm } from '@/app/lib/server/actions/midterms/delete.action'
-import { sileo } from 'sileo'
 
 export const ModalDeleteMidterm = ({ midterm, user }: { midterm: Midterm; user: User }) => {
   const { startReload } = useReload()
@@ -19,7 +18,7 @@ export const ModalDeleteMidterm = ({ midterm, user }: { midterm: Midterm; user: 
   const submitDeleteModule = async (values: TypeValues[]) => {
     const check = values.find((val) => val.id == 'check')
     if (!session) throw new Error('No hay sesion')
-    if (session.user.tier != 2 || session.user.id != user.id) throw new Error('Debes ser administrador o el creador para eliminar un examen')
+    if (session.user.tier != 2 && session.user.id != user.id) throw new Error('Debes ser administrador o el creador para eliminar un examen')
     if (!check) throw new Error('Debes estar de acuerdo con la eliminacion del examen')
 
     const formData = new FormData()
