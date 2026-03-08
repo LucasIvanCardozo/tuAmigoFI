@@ -17,7 +17,7 @@ export default function ModalAddLink({ course }: { course: Course }) {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    await sileo.promise(
+    sileo.promise(
       async () => {
         if (!session) throw new Error('No hay sesion')
         const { error } = await createLink({
@@ -31,7 +31,7 @@ export default function ModalAddLink({ course }: { course: Course }) {
       },
       {
         loading: { title: 'Cargando...' },
-        success: { title: 'Link creado' },
+        success: { title: 'Muchas gracias por tu aporte! ❤️' },
         error: (error) => {
           const err = error as Error
           return {
@@ -45,7 +45,7 @@ export default function ModalAddLink({ course }: { course: Course }) {
   return (
     <Modal
       opener={
-        <button aria-label="Añadir link" title="Añadir link">
+        <button className="text-[--black-olive] p-1" aria-label="Añadir link" title="Añadir link">
           Añadir Link
         </button>
       }

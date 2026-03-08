@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { AiFillLike } from 'react-icons/ai'
 import { TbAlertHexagon } from 'react-icons/tb'
+import { sileo } from 'sileo'
 
 export default function ButtonReaction({ indexResponse, responses }: { indexResponse: number; responses: DataModuleResponse[] }) {
   const [stateReaction, setStateReaction] = useState<boolean | null>(null)
@@ -12,7 +13,8 @@ export default function ButtonReaction({ indexResponse, responses }: { indexResp
   const { data: session } = useSession()
 
   async function handleLike(reaction: boolean) {
-    if (session?.user?.id) {
+    if (!session?.user.id) sileo.error({ title: 'Debes iniciar sesion para reaccionar a la respuesta.' })
+    else {
       const response = responses[indexResponse]
       setStateReaction(reaction == stateReaction ? null : reaction)
       setAmountReaction(
@@ -36,9 +38,7 @@ export default function ButtonReaction({ indexResponse, responses }: { indexResp
         typeTarget: 'RESPONSE',
         reaction: reaction,
       })
-      if (error) throw new Error(error)
-    } else {
-      window.alert('Debes iniciar sesion para reaccionar a la respuesta.')
+      if (error) sileo.error({ title: error })
     }
   }
 

@@ -6,6 +6,7 @@ import { Response } from '@/app/lib/server/db/prisma/prismaClient/client'
 import { useReload } from '@/app/hooks/useReload'
 import { sileo } from 'sileo'
 import { useSession } from 'next-auth/react'
+import { useState } from 'react'
 
 interface Params {
   comments: DataModuleComment[]
@@ -14,25 +15,27 @@ interface Params {
 
 export const CommentsLi = ({ comments, response }: Params) => {
   const { startReload } = useReload()
+  const [inputText, setInputText] = useState<string>('')
   const { data: session } = useSession()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
     const text = formData.get('comment')
-    if (!session) throw new Error('No hay sesion')
-    await sileo.promise(
+    sileo.promise(
       async () => {
+        if (!session) throw new Error('No hay sesion')
         const { error } = await createComment({
           idResponse: response.id,
           text,
         })
         if (error) throw new Error(error)
+        setInputText('')
         startReload()
       },
       {
         loading: { title: 'Publicando comentario...' },
-        success: { title: 'Comentario publicado' },
+        success: { title: 'Muchas gracias por tu aporte! ❤️' },
         error: (error) => {
           const err = error as Error
           return {
@@ -43,9 +46,16 @@ export const CommentsLi = ({ comments, response }: Params) => {
     )
   }
   return (
-    <div className="mx-2 shadow-[0px_0px_2px_0px_rgba(0,0,0,0.5)]">
-      <form className="flex p-1 gap-1 bg-blue-300" onSubmit={(e) => handleSubmit(e)}>
-        <input className="grow" name="comment" type="text" placeholder="Coloca tu comentario..." />
+    <div className="mx-1 shadow-[0px_0px_2px_0px_rgba(0,0,0,0.5)]">
+      <form className="flex p-1 gap-1  bg-slate-200" onSubmit={handleSubmit}>
+        <input
+          className="grow"
+          name="comment"
+          type="text"
+          value={inputText}
+          onChange={(e) => setInputText(e.target.value)}
+          placeholder="Coloca tu comentario..."
+        />
         <button type="submit">Publicar</button>
       </form>
       {comments.length > 0 ? (

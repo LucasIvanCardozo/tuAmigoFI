@@ -59,7 +59,7 @@ export const courseRepository = (db: PrismaClient | Prisma.TransactionClient) =>
   findCorrelativesById({ idCourse, idDegree }: { idCourse: string; idDegree?: string }) {
     return db.course.findMany({
       where: {
-        correlatives_correlatives_id_correlativeTocourses: { some: { idCourse } },
+        requiredBy: { some: { idCourse } },
         ...(idDegree ? { courses_degrees: { some: { idDegree } } } : {}),
       },
       select: {
@@ -71,8 +71,8 @@ export const courseRepository = (db: PrismaClient | Prisma.TransactionClient) =>
   findEnablesById({ idCourse, idDegree }: { idCourse: string; idDegree?: string }) {
     return db.course.findMany({
       where: {
-        correlatives_correlatives_idTocourses: {
-          some: { idCourse },
+        requires: {
+          some: { idCorrelativeCourse: idCourse },
         },
         ...(idDegree ? { courses_degrees: { some: { idDegree } } } : {}),
       },

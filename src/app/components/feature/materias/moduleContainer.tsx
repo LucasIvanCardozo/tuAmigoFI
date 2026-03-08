@@ -22,30 +22,6 @@ export const ModuleContainer = ({ module }: Params) => {
   const problems = module.problems
   const isTp = 'number' in moduleInd
 
-  // const submitReportModule = async (values: TypeValues[]) => {
-  //   const check = values.find((val) => val.id == 'check')
-  //   try {
-  //     if (check && typeof check.value === 'boolean') {
-  //       if (session) {
-  //         if (isTp) {
-  //           await addReportTp({
-  //             id_tp: moduleInd.id,
-  //             id_user: session.user.id,
-  //           })
-  //         } else {
-  //           await addReportMidterm({
-  //             id_midterm: moduleInd.id,
-  //             id_user: session.user.id,
-  //           })
-  //         }
-  //       }
-  //     } else throw new Error('Faltan completar datos.')
-  //   } catch (error) {
-  //     if (error instanceof Error) throw new Error(error.message)
-  //     else throw new Error('Error inesperado.')
-  //   }
-  // }
-
   return (
     <li className={'relative ' + `${viewModule != null && viewModule != moduleInd.id && 'hidden'}`}>
       <div className="flex items-center text-xl sticky top-0 z-20 bg-[--platinum] py-1 ">

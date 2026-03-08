@@ -42,8 +42,12 @@ export default async function Course({ course, idDegree }: { course: CourseType;
         </Suspense>
       </div>
       <div className="flex justify-end gap-1 pt-1 text-[--white] items-center text-sm sm:text-base">
-        {session && session?.user && session?.user.tier > 0 && <ModalCreateCorrelative course={course} callback={callbackCourses} />}
-        <ModalAddLink course={course} />
+        {session && session?.user && (
+          <>
+            <ModalCreateCorrelative course={course} callback={callbackCourses} />
+            <ModalAddLink course={course} />
+          </>
+        )}
         <ButtonUrl url={`./materias/parciales/${id}`} label="Ver exámenes" />
         <ButtonUrl url={`./materias/practica/${id}`} label="Ir a la práctica" />
       </div>

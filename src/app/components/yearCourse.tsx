@@ -10,14 +10,14 @@ export default function YearCourse({ callback }: { callback: Promise<Year[]> }) 
 
   const years = use(callback)
 
-  const [year, setYear] = useState<string>(searchParams.get('year')?.toString() ?? '')
+  const [year, setYear] = useState<string>(searchParams.get('idYear')?.toString() ?? '')
 
   const handleYears = (year: string) => {
     const params = new URLSearchParams(searchParams)
     if (year && year != '0') {
-      params.set('year', year)
+      params.set('idYear', year)
     } else {
-      params.delete('year')
+      params.delete('idYear')
     }
     setYear(year)
     replace(`${pathname}?${params.toString()}`)

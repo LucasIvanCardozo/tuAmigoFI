@@ -18,7 +18,7 @@ export default function ModalDeleteLink({ link }: { link: Link }) {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    await sileo.promise(
+    sileo.promise(
       async () => {
         if (!check) throw new Error('Debes estar de acuerdo con la eliminacion del link')
         if (!session) throw new Error('No hay sesion')
@@ -29,7 +29,7 @@ export default function ModalDeleteLink({ link }: { link: Link }) {
       },
       {
         loading: { title: 'Cargando...' },
-        success: { title: 'Link eliminado' },
+        success: { title: 'Muchas gracias por tu aporte! ❤️' },
         error: (error) => {
           return { title: (error as Error).message }
         },

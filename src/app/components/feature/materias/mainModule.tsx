@@ -17,15 +17,9 @@ export const MainModule = ({ modules, course, typeModule }: Params) => {
 
   useEffect(() => {
     setCourse(course)
-  }, [course])
-
-  useEffect(() => {
-    setModules(modules)
-  }, modules)
-
-  useEffect(() => {
     setTypeModule(typeModule)
-  }, [typeModule])
+    setModules(modules)
+  }, [course, typeModule, modules])
 
   return (
     <main className="h-screen w-full pt-8 flex gap-2 max-w-screen-lg m-auto sm:pb-3 sm:px-2 sm:pt-16">

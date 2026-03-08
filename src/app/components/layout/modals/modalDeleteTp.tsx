@@ -8,7 +8,6 @@ import { HandlerInputs } from '../form/inputs/handlerInputs'
 import { useRef } from 'react'
 import { useReload } from '@/app/hooks/useReload'
 import { deleteTp } from '@/app/lib/server/actions/tps/delete.action'
-import { sileo } from 'sileo'
 
 export const ModalDeleteTp = ({ tp, user }: { tp: Tp; user: User }) => {
   const { startReload } = useReload()
@@ -18,20 +17,31 @@ export const ModalDeleteTp = ({ tp, user }: { tp: Tp; user: User }) => {
 
   const submitDeleteModule = async (values: TypeValues[]) => {
     const check = values.find((val) => val.id == 'check')
-    await sileo.promise(
-      async () => {
-        if (!check) throw new Error('Debes estar de acuerdo con la eliminacion del TP')
-        if (!session) throw new Error('No hay sesion')
-        if (session.user.tier != 2) throw new Error('Debes ser administrador para eliminar un TP')
-        await deleteTp({ id: tp.id, idUser: tp.idUser })
-        startReload()
-      },
-      {
-        loading: { title: 'Cargando...' },
-        success: { title: 'TP eliminado correctamente.' },
-        error: (error) => ({ title: (error as Error).message }),
-      }
-    )
+    if (!check) throw new Error('Debes estar de acuerdo con la eliminacion del TP')
+    if (!session) throw new Error('No hay sesion')
+    if (session.user.tier != 2) throw new Error('Debes ser administrador para eliminar un TP')
+
+    const formData = new FormData()
+    formData.set('id', tp.id.toString())
+    formData.set('subFolder', `tps/respuestas/${tp.id}`)
+    const res = await fetch('/api/destroyAll', {
+      method: 'POST',
+      body: formData,
+    })
+
+    formData.set('id', tp.id.toString())
+    formData.set('subFolder', `tps/problemas`)
+
+    const res2 = await fetch('/api/destroy', {
+      method: 'POST',
+      body: formData,
+    })
+
+    if (res.ok && res2.ok) {
+      const { error } = await deleteTp({ id: tp.id, idUser: tp.idUser })
+      if (error) throw new Error(error)
+      startReload()
+    }
   }
 
   return (

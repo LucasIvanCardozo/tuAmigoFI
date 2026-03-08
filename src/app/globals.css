@@ -28,6 +28,10 @@ body {
   background: var(--platinum);
 }
 
+[data-sileo-viewport] {
+  z-index: 100000 !important;
+}
+
 .displayBlock {
   display: block;
 }

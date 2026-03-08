@@ -17,7 +17,7 @@ export default async function CorrelativeTable({ idCourse, idDegree }: { idCours
           {dataCorrelatives.length != 0 ? (
             dataCorrelatives.map(({ id, name }, index) => <CorrelativeList key={id} index={index} name={name} />)
           ) : (
-            <p className="opacity-75">No se encuentran datos</p>
+            <p className="opacity-75">No tiene correlativas</p>
           )}
         </div>
       </div>
@@ -30,7 +30,7 @@ export default async function CorrelativeTable({ idCourse, idDegree }: { idCours
           {dataEnabler.length != 0 ? (
             dataEnabler.map(({ id, name }, index) => <CorrelativeList key={id} index={index} name={name} />)
           ) : (
-            <p className="opacity-75">No se encuentran datos</p>
+            <p className="opacity-75">No tiene habilitantes</p>
           )}
         </div>
       </div>

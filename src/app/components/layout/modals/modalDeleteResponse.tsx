@@ -8,7 +8,6 @@ import { useSession } from 'next-auth/react'
 import { useRef } from 'react'
 import { useReload } from '@/app/hooks/useReload'
 import { deleteResponse } from '@/app/lib/server/actions/responses/delete.action'
-import { sileo } from 'sileo'
 
 export const ModalDeleteResponse = ({ response, user }: { response: Response; user: User }) => {
   const { id, idMidterm, idTp, idUser, number, type } = response
@@ -18,23 +17,29 @@ export const ModalDeleteResponse = ({ response, user }: { response: Response; us
 
   const submitDeleteResponse = async (values: TypeValues[]) => {
     const check = values.find((val) => val.id == 'check')
-    await sileo.promise(
-      async () => {
-        if (!check) throw new Error('Debes estar de acuerdo con la eliminacion de la respuesta')
-        if (!session) throw new Error('No hay sesion')
-        if (session.user.tier != 2) throw new Error('Debes ser administrador para eliminar una respuesta')
-        const { error } = await deleteResponse({ id, idUser, idTp, idMidterm, type, number })
-        if (error) throw new Error('Error: ' + error)
-        startReload()
-      },
-      {
-        loading: { title: 'Cargando...' },
-        success: { title: 'Respuesta eliminada' },
-        error: (error) => {
-          return { title: (error as Error).message }
-        },
-      }
-    )
+    if (!check) throw new Error('Debes estar de acuerdo con la eliminacion de la respuesta')
+    if (!session) throw new Error('No hay sesion')
+    if (session.user.tier != 2) throw new Error('Debes ser administrador para eliminar una respuesta')
+
+    const deleteModuleDB = async () => {
+      const { error } = await deleteResponse({ id, idUser })
+      if (error) throw new Error('Error: ' + error)
+      startReload()
+    }
+    if (response.type == 'IMAGE' || response.type == 'PDF') {
+      const formData = new FormData()
+      formData.set('id', response.idUser)
+      formData.set('subFolder', `${response.idTp ? 'tps' : 'parciales'}/respuestas/${response.idTp ? response.idTp : response.idMidterm}/${response.number}`)
+      const res = await fetch('/api/destroy', {
+        method: 'POST',
+        body: formData,
+      })
+      if (res.ok) {
+        deleteModuleDB()
+      } else throw new Error('Error al eliminar respuesta')
+    } else {
+      deleteModuleDB()
+    }
   }
 
   return (

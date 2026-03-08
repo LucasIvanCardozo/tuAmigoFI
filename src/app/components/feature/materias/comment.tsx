@@ -1,33 +1,33 @@
 'use client'
+import { useReload } from '@/app/hooks/useReload'
+import { upsertReaction } from '@/app/lib/server/actions/reactions/upsert.action'
 import { DataModuleComment } from '@/app/types'
-import { useState } from 'react'
+import { useSession } from 'next-auth/react'
+import { useEffect, useState } from 'react'
+import { AiFillLike } from 'react-icons/ai'
+import { sileo } from 'sileo'
 
 interface Params {
   comment: DataModuleComment
 }
 
 export const Comment = ({ comment }: Params) => {
-  // const [numberLike, setNumberLike] = useState(comments.reactions.length)
+  const [numberLike, setNumberLike] = useState(comment.reactions.length)
   const [stateLike, setStateLike] = useState(false)
+  const { data: session } = useSession()
+  const { startReload } = useReload()
 
-  // const { comment } = comment
+  useEffect(() => {
+    if (comment.reactions.find((reaction) => reaction.reaction && reaction.idUser === session?.user?.id)) setStateLike(true)
+  }, [comment])
 
-  // const handleLike = async () => {
-  //   const { data: like, error } = await likeTpComment({
-  //     comment_id: comment.id,
-  //   })
-  //   if (!error)
-  //     if (like) {
-  //       setNumberLike(numberLike + 1)
-  //       setStateLike(true)
-  //     } else {
-  //       setNumberLike(numberLike - 1)
-  //       setStateLike(false)
-  //     }
-  //   else {
-  //     console.log(error)
-  //   }
-  // }
+  const handleLike = async () => {
+    setStateLike(!stateLike)
+    setNumberLike(stateLike ? numberLike - 1 : numberLike + 1)
+    const { error } = await upsertReaction({ idTarget: comment.comment.id, typeTarget: 'COMMENT', reaction: !stateLike })
+    if (error) sileo.error({ title: error })
+    startReload()
+  }
 
   return (
     <div className="flex items-start gap-2 p-1 bg-white rounded-lg shadow-sm">
@@ -36,7 +36,7 @@ export const Comment = ({ comment }: Params) => {
         <p className="mt-1 text-sm text-gray-700">{comment.comment.text}</p>
       </div>
       <div className="flex items-center gap-1">
-        {/* <button
+        <button
           className="flex items-center gap-1 px-2 py-1 rounded-lg hover:bg-gray-100 transition"
           aria-label="Dar me gusta"
           title="Me gusta"
@@ -44,7 +44,7 @@ export const Comment = ({ comment }: Params) => {
         >
           <AiFillLike className={(stateLike ? 'text-green-500' : 'text-gray-400') + ' text-xl'} />
           <span className="text-sm font-medium text-gray-600">{numberLike}</span>
-        </button> */}
+        </button>
       </div>
     </div>
   )

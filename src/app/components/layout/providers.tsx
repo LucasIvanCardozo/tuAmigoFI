@@ -7,7 +7,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <SessionProvider>
       <FormProvider>
-        <Toaster theme="dark" position="top-center">
+        <Toaster options={{ duration: 3000 }} theme="dark" position="top-center">
           {children}
         </Toaster>
       </FormProvider>

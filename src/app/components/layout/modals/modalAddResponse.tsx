@@ -8,7 +8,6 @@ import { useSession } from 'next-auth/react'
 import { useRef } from 'react'
 import { useReload } from '@/app/hooks/useReload'
 import { createResponse } from '@/app/lib/server/actions/responses/create.action'
-import { sileo } from 'sileo'
 
 export const ModalAddResponse = ({ module }: { module: Module }) => {
   const { startReload } = useReload()
@@ -20,40 +19,29 @@ export const ModalAddResponse = ({ module }: { module: Module }) => {
   const submitAddResponse = async (values: TypeValues[]) => {
     const number = values.find((val) => val.id == 'number')
     const selectResponse = values.find((val) => val.id == 'selectResponse')
-    await sileo.promise(
-      async () => {
-        if (!session) throw new Error('No hay sesion')
-        if (!number || !selectResponse) throw new Error('Faltan datos')
-        const typeResponse = selectResponse.inputType
-        const { error } = await createResponse({
-          idUser: session.user.id,
-          idTp: isTp ? module.id : null,
-          idMidterm: !isTp ? module.id : null,
-          number: Number(number.value),
-          text: typeResponse == 'TEXT' || typeResponse == 'CODE' ? (selectResponse.value as string) : null,
-          type: typeResponse,
-        })
-        if (error) throw new Error('Error: ' + error)
-        if (typeResponse == 'IMAGE' || typeResponse == 'PDF') {
-          const formData = new FormData()
-          formData.set('file', selectResponse.value as File)
-          formData.set('id', session.user.id.toString())
-          formData.set('subFolder', `${isTp ? 'tps' : 'parciales'}/respuestas/${module.id}/${Number(number.value)}`)
-          await fetch('/api/upload', {
-            method: 'POST',
-            body: formData,
-          })
-        }
-        startReload()
-      },
-      {
-        loading: { title: 'Cargando...' },
-        success: { title: 'Respuesta agregada' },
-        error: (error) => {
-          return { title: (error as Error).message }
-        },
-      }
-    )
+    if (!session) throw new Error('No hay sesion')
+    if (!number || !selectResponse) throw new Error('Faltan datos')
+    const typeResponse = selectResponse.inputType
+    const { error } = await createResponse({
+      idUser: session.user.id,
+      idTp: isTp ? module.id : null,
+      idMidterm: !isTp ? module.id : null,
+      number: Number(number.value),
+      text: typeResponse == 'TEXT' || typeResponse == 'CODE' ? (selectResponse.value as string) : null,
+      type: typeResponse,
+    })
+    if (error) throw new Error(error)
+    if (typeResponse == 'IMAGE' || typeResponse == 'PDF') {
+      const formData = new FormData()
+      formData.set('file', selectResponse.value as File)
+      formData.set('id', session.user.id.toString())
+      formData.set('subFolder', `${isTp ? 'tps' : 'parciales'}/respuestas/${module.id}/${Number(number.value)}`)
+      await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      })
+    }
+    startReload()
   }
 
   return (

@@ -17,8 +17,7 @@ export default function ModalCreateCorrelative({ course, callback }: { course: C
   const { startReload } = useReload()
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
-    await sileo.promise(
+    sileo.promise(
       async () => {
         if (!idCorrelative) throw new Error('Debes seleccionar una correlativa')
         if (!session) throw new Error('No hay sesion')
@@ -33,7 +32,7 @@ export default function ModalCreateCorrelative({ course, callback }: { course: C
       },
       {
         loading: { title: 'Cargando...' },
-        success: { title: 'Correlativa creada' },
+        success: { title: 'Muchas gracias por tu aporte! ❤️' },
         error: (error) => {
           return { title: (error as Error).message }
         },
@@ -45,7 +44,7 @@ export default function ModalCreateCorrelative({ course, callback }: { course: C
     <Modal
       refAux={modalRef}
       opener={
-        <button aria-label="Añadir correlativa" title="Añadir correlativa">
+        <button className="text-[--black-olive] p-1" aria-label="Añadir correlativa" title="Añadir correlativa">
           Añadir correlativa
         </button>
       }

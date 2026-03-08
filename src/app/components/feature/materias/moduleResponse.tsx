@@ -9,7 +9,7 @@ import { useMainContext } from '@/app/contexts'
 // import ButtonReaction from './buttonReaction'
 import { Code } from './code'
 import { CommentsLi } from './commentsLi'
-import { CgMathPlus } from 'react-icons/cg'
+import { CgMathMinus, CgMathPlus } from 'react-icons/cg'
 import { useSession } from 'next-auth/react'
 import { ModalDeleteResponse } from '../../layout/modals/modalDeleteResponse'
 import ButtonReaction from './buttonReaction'
@@ -47,7 +47,7 @@ export default function ModuleResponse({ problem }: { problem: DataModuleProblem
               <span className="opacity-75 p-1 flex gap-1">
                 Por {`${responses[indexResponse].user.name}`}
                 <button onClick={() => setViewResponses(!viewResponses)}>
-                  <CgMathPlus className="text-xl " />
+                  <CgMathMinus className="text-xl " />
                 </button>
               </span>
             </span>

@@ -8,7 +8,6 @@ import { Course } from '@/app/lib/server/db/prisma/prismaClient/client'
 import { useRef } from 'react'
 import { useReload } from '@/app/hooks/useReload'
 import { createTp } from '@/app/lib/server/actions/tps/create.action'
-import { sileo } from 'sileo'
 
 export const ModalAddTp = ({ course }: { course: Course }) => {
   const modalRef = useRef<ModalRef>(null)
@@ -20,39 +19,28 @@ export const ModalAddTp = ({ course }: { course: Course }) => {
     const year = values.find((val) => val.id == 'year')
     const number = values.find((val) => val.id == 'number')
     const file = values.find((val) => val.id == 'file')
-    await sileo.promise(
-      async () => {
-        if (!year || !number || !name || !file || !(file.value instanceof File)) throw new Error('Faltan completar datos.')
-        if (!session) throw new Error('No hay sesion')
-        const { data, error } = await createTp({
-          name: name.value,
-          number: Number(number?.value),
-          year: Number(year?.value),
-          idUser: session.user.id,
-          idCourse: course.id,
-        })
-        if (error) throw new Error('Error: ' + error)
-        if (data) {
-          const formData = new FormData()
-          formData.set('file', file.value)
-          formData.set('id', data.id.toString())
-          formData.set('subFolder', `tps/problemas`)
+    if (!year || !number || !name || !file || !(file.value instanceof File)) throw new Error('Faltan completar datos.')
+    if (!session) throw new Error('No hay sesion')
+    const { data, error } = await createTp({
+      name: name.value,
+      number: Number(number?.value),
+      year: Number(year?.value),
+      idUser: session.user.id,
+      idCourse: course.id,
+    })
+    if (error) throw new Error('Error: ' + error)
+    if (data) {
+      const formData = new FormData()
+      formData.set('file', file.value)
+      formData.set('id', data.id.toString())
+      formData.set('subFolder', `tps/problemas`)
 
-          await fetch('/api/upload', {
-            method: 'POST',
-            body: formData,
-          })
-        }
-        startReload()
-      },
-      {
-        loading: { title: 'Cargando...' },
-        success: { title: 'TP creado' },
-        error: (error) => {
-          return { title: (error as Error).message }
-        },
-      }
-    )
+      await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      })
+    }
+    startReload()
   }
 
   return (

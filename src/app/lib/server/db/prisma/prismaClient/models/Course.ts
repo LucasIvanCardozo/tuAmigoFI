@@ -244,8 +244,8 @@ export type CourseWhereInput = {
   optional?: Prisma.BoolFilter<"Course"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Course"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Course"> | Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeListRelationFilter
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeListRelationFilter
+  requires?: Prisma.CorrelativeListRelationFilter
+  requiredBy?: Prisma.CorrelativeListRelationFilter
   courses_degrees?: Prisma.CourseDegreeListRelationFilter
   courses_years?: Prisma.CourseYearListRelationFilter
   links?: Prisma.LinkListRelationFilter
@@ -262,8 +262,8 @@ export type CourseOrderByWithRelationInput = {
   optional?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeOrderByRelationAggregateInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeOrderByRelationAggregateInput
+  requires?: Prisma.CorrelativeOrderByRelationAggregateInput
+  requiredBy?: Prisma.CorrelativeOrderByRelationAggregateInput
   courses_degrees?: Prisma.CourseDegreeOrderByRelationAggregateInput
   courses_years?: Prisma.CourseYearOrderByRelationAggregateInput
   links?: Prisma.LinkOrderByRelationAggregateInput
@@ -283,8 +283,8 @@ export type CourseWhereUniqueInput = Prisma.AtLeast<{
   optional?: Prisma.BoolFilter<"Course"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Course"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Course"> | Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeListRelationFilter
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeListRelationFilter
+  requires?: Prisma.CorrelativeListRelationFilter
+  requiredBy?: Prisma.CorrelativeListRelationFilter
   courses_degrees?: Prisma.CourseDegreeListRelationFilter
   courses_years?: Prisma.CourseYearListRelationFilter
   links?: Prisma.LinkListRelationFilter
@@ -331,8 +331,8 @@ export type CourseCreateInput = {
   optional?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeCreateNestedManyWithoutCourses_correlatives_id_correlativeTocoursesInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeCreateNestedManyWithoutCourses_correlatives_idTocoursesInput
+  requires?: Prisma.CorrelativeCreateNestedManyWithoutCourseInput
+  requiredBy?: Prisma.CorrelativeCreateNestedManyWithoutRequiredCourseInput
   courses_degrees?: Prisma.CourseDegreeCreateNestedManyWithoutCoursesInput
   courses_years?: Prisma.CourseYearCreateNestedManyWithoutCoursesInput
   links?: Prisma.LinkCreateNestedManyWithoutCoursesInput
@@ -349,8 +349,8 @@ export type CourseUncheckedCreateInput = {
   optional?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutCourses_correlatives_id_correlativeTocoursesInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutCourses_correlatives_idTocoursesInput
+  requires?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutCourseInput
+  requiredBy?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutRequiredCourseInput
   courses_degrees?: Prisma.CourseDegreeUncheckedCreateNestedManyWithoutCoursesInput
   courses_years?: Prisma.CourseYearUncheckedCreateNestedManyWithoutCoursesInput
   links?: Prisma.LinkUncheckedCreateNestedManyWithoutCoursesInput
@@ -367,8 +367,8 @@ export type CourseUpdateInput = {
   optional?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeUpdateManyWithoutCourses_correlatives_id_correlativeTocoursesNestedInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeUpdateManyWithoutCourses_correlatives_idTocoursesNestedInput
+  requires?: Prisma.CorrelativeUpdateManyWithoutCourseNestedInput
+  requiredBy?: Prisma.CorrelativeUpdateManyWithoutRequiredCourseNestedInput
   courses_degrees?: Prisma.CourseDegreeUpdateManyWithoutCoursesNestedInput
   courses_years?: Prisma.CourseYearUpdateManyWithoutCoursesNestedInput
   links?: Prisma.LinkUpdateManyWithoutCoursesNestedInput
@@ -385,8 +385,8 @@ export type CourseUncheckedUpdateInput = {
   optional?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeUncheckedUpdateManyWithoutCourses_correlatives_id_correlativeTocoursesNestedInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeUncheckedUpdateManyWithoutCourses_correlatives_idTocoursesNestedInput
+  requires?: Prisma.CorrelativeUncheckedUpdateManyWithoutCourseNestedInput
+  requiredBy?: Prisma.CorrelativeUncheckedUpdateManyWithoutRequiredCourseNestedInput
   courses_degrees?: Prisma.CourseDegreeUncheckedUpdateManyWithoutCoursesNestedInput
   courses_years?: Prisma.CourseYearUncheckedUpdateManyWithoutCoursesNestedInput
   links?: Prisma.LinkUncheckedUpdateManyWithoutCoursesNestedInput
@@ -475,32 +475,32 @@ export type CourseSumOrderByAggregateInput = {
   hs?: Prisma.SortOrder
 }
 
-export type CourseCreateNestedOneWithoutCorrelatives_correlatives_id_correlativeTocoursesInput = {
-  create?: Prisma.XOR<Prisma.CourseCreateWithoutCorrelatives_correlatives_id_correlativeTocoursesInput, Prisma.CourseUncheckedCreateWithoutCorrelatives_correlatives_id_correlativeTocoursesInput>
-  connectOrCreate?: Prisma.CourseCreateOrConnectWithoutCorrelatives_correlatives_id_correlativeTocoursesInput
+export type CourseCreateNestedOneWithoutRequiresInput = {
+  create?: Prisma.XOR<Prisma.CourseCreateWithoutRequiresInput, Prisma.CourseUncheckedCreateWithoutRequiresInput>
+  connectOrCreate?: Prisma.CourseCreateOrConnectWithoutRequiresInput
   connect?: Prisma.CourseWhereUniqueInput
 }
 
-export type CourseCreateNestedOneWithoutCorrelatives_correlatives_idTocoursesInput = {
-  create?: Prisma.XOR<Prisma.CourseCreateWithoutCorrelatives_correlatives_idTocoursesInput, Prisma.CourseUncheckedCreateWithoutCorrelatives_correlatives_idTocoursesInput>
-  connectOrCreate?: Prisma.CourseCreateOrConnectWithoutCorrelatives_correlatives_idTocoursesInput
+export type CourseCreateNestedOneWithoutRequiredByInput = {
+  create?: Prisma.XOR<Prisma.CourseCreateWithoutRequiredByInput, Prisma.CourseUncheckedCreateWithoutRequiredByInput>
+  connectOrCreate?: Prisma.CourseCreateOrConnectWithoutRequiredByInput
   connect?: Prisma.CourseWhereUniqueInput
 }
 
-export type CourseUpdateOneRequiredWithoutCorrelatives_correlatives_id_correlativeTocoursesNestedInput = {
-  create?: Prisma.XOR<Prisma.CourseCreateWithoutCorrelatives_correlatives_id_correlativeTocoursesInput, Prisma.CourseUncheckedCreateWithoutCorrelatives_correlatives_id_correlativeTocoursesInput>
-  connectOrCreate?: Prisma.CourseCreateOrConnectWithoutCorrelatives_correlatives_id_correlativeTocoursesInput
-  upsert?: Prisma.CourseUpsertWithoutCorrelatives_correlatives_id_correlativeTocoursesInput
+export type CourseUpdateOneRequiredWithoutRequiresNestedInput = {
+  create?: Prisma.XOR<Prisma.CourseCreateWithoutRequiresInput, Prisma.CourseUncheckedCreateWithoutRequiresInput>
+  connectOrCreate?: Prisma.CourseCreateOrConnectWithoutRequiresInput
+  upsert?: Prisma.CourseUpsertWithoutRequiresInput
   connect?: Prisma.CourseWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CourseUpdateToOneWithWhereWithoutCorrelatives_correlatives_id_correlativeTocoursesInput, Prisma.CourseUpdateWithoutCorrelatives_correlatives_id_correlativeTocoursesInput>, Prisma.CourseUncheckedUpdateWithoutCorrelatives_correlatives_id_correlativeTocoursesInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CourseUpdateToOneWithWhereWithoutRequiresInput, Prisma.CourseUpdateWithoutRequiresInput>, Prisma.CourseUncheckedUpdateWithoutRequiresInput>
 }
 
-export type CourseUpdateOneRequiredWithoutCorrelatives_correlatives_idTocoursesNestedInput = {
-  create?: Prisma.XOR<Prisma.CourseCreateWithoutCorrelatives_correlatives_idTocoursesInput, Prisma.CourseUncheckedCreateWithoutCorrelatives_correlatives_idTocoursesInput>
-  connectOrCreate?: Prisma.CourseCreateOrConnectWithoutCorrelatives_correlatives_idTocoursesInput
-  upsert?: Prisma.CourseUpsertWithoutCorrelatives_correlatives_idTocoursesInput
+export type CourseUpdateOneRequiredWithoutRequiredByNestedInput = {
+  create?: Prisma.XOR<Prisma.CourseCreateWithoutRequiredByInput, Prisma.CourseUncheckedCreateWithoutRequiredByInput>
+  connectOrCreate?: Prisma.CourseCreateOrConnectWithoutRequiredByInput
+  upsert?: Prisma.CourseUpsertWithoutRequiredByInput
   connect?: Prisma.CourseWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CourseUpdateToOneWithWhereWithoutCorrelatives_correlatives_idTocoursesInput, Prisma.CourseUpdateWithoutCorrelatives_correlatives_idTocoursesInput>, Prisma.CourseUncheckedUpdateWithoutCorrelatives_correlatives_idTocoursesInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CourseUpdateToOneWithWhereWithoutRequiredByInput, Prisma.CourseUpdateWithoutRequiredByInput>, Prisma.CourseUncheckedUpdateWithoutRequiredByInput>
 }
 
 export type NullableIntFieldUpdateOperationsInput = {
@@ -585,7 +585,7 @@ export type CourseUpdateOneRequiredWithoutTpsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CourseUpdateToOneWithWhereWithoutTpsInput, Prisma.CourseUpdateWithoutTpsInput>, Prisma.CourseUncheckedUpdateWithoutTpsInput>
 }
 
-export type CourseCreateWithoutCorrelatives_correlatives_id_correlativeTocoursesInput = {
+export type CourseCreateWithoutRequiresInput = {
   id?: string
   name: string
   nameNormalized: string
@@ -594,7 +594,7 @@ export type CourseCreateWithoutCorrelatives_correlatives_id_correlativeTocourses
   optional?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeCreateNestedManyWithoutCourses_correlatives_idTocoursesInput
+  requiredBy?: Prisma.CorrelativeCreateNestedManyWithoutRequiredCourseInput
   courses_degrees?: Prisma.CourseDegreeCreateNestedManyWithoutCoursesInput
   courses_years?: Prisma.CourseYearCreateNestedManyWithoutCoursesInput
   links?: Prisma.LinkCreateNestedManyWithoutCoursesInput
@@ -602,7 +602,7 @@ export type CourseCreateWithoutCorrelatives_correlatives_id_correlativeTocourses
   tps?: Prisma.TpCreateNestedManyWithoutCoursesInput
 }
 
-export type CourseUncheckedCreateWithoutCorrelatives_correlatives_id_correlativeTocoursesInput = {
+export type CourseUncheckedCreateWithoutRequiresInput = {
   id?: string
   name: string
   nameNormalized: string
@@ -611,7 +611,7 @@ export type CourseUncheckedCreateWithoutCorrelatives_correlatives_id_correlative
   optional?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutCourses_correlatives_idTocoursesInput
+  requiredBy?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutRequiredCourseInput
   courses_degrees?: Prisma.CourseDegreeUncheckedCreateNestedManyWithoutCoursesInput
   courses_years?: Prisma.CourseYearUncheckedCreateNestedManyWithoutCoursesInput
   links?: Prisma.LinkUncheckedCreateNestedManyWithoutCoursesInput
@@ -619,12 +619,12 @@ export type CourseUncheckedCreateWithoutCorrelatives_correlatives_id_correlative
   tps?: Prisma.TpUncheckedCreateNestedManyWithoutCoursesInput
 }
 
-export type CourseCreateOrConnectWithoutCorrelatives_correlatives_id_correlativeTocoursesInput = {
+export type CourseCreateOrConnectWithoutRequiresInput = {
   where: Prisma.CourseWhereUniqueInput
-  create: Prisma.XOR<Prisma.CourseCreateWithoutCorrelatives_correlatives_id_correlativeTocoursesInput, Prisma.CourseUncheckedCreateWithoutCorrelatives_correlatives_id_correlativeTocoursesInput>
+  create: Prisma.XOR<Prisma.CourseCreateWithoutRequiresInput, Prisma.CourseUncheckedCreateWithoutRequiresInput>
 }
 
-export type CourseCreateWithoutCorrelatives_correlatives_idTocoursesInput = {
+export type CourseCreateWithoutRequiredByInput = {
   id?: string
   name: string
   nameNormalized: string
@@ -633,7 +633,7 @@ export type CourseCreateWithoutCorrelatives_correlatives_idTocoursesInput = {
   optional?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeCreateNestedManyWithoutCourses_correlatives_id_correlativeTocoursesInput
+  requires?: Prisma.CorrelativeCreateNestedManyWithoutCourseInput
   courses_degrees?: Prisma.CourseDegreeCreateNestedManyWithoutCoursesInput
   courses_years?: Prisma.CourseYearCreateNestedManyWithoutCoursesInput
   links?: Prisma.LinkCreateNestedManyWithoutCoursesInput
@@ -641,7 +641,7 @@ export type CourseCreateWithoutCorrelatives_correlatives_idTocoursesInput = {
   tps?: Prisma.TpCreateNestedManyWithoutCoursesInput
 }
 
-export type CourseUncheckedCreateWithoutCorrelatives_correlatives_idTocoursesInput = {
+export type CourseUncheckedCreateWithoutRequiredByInput = {
   id?: string
   name: string
   nameNormalized: string
@@ -650,7 +650,7 @@ export type CourseUncheckedCreateWithoutCorrelatives_correlatives_idTocoursesInp
   optional?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutCourses_correlatives_id_correlativeTocoursesInput
+  requires?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutCourseInput
   courses_degrees?: Prisma.CourseDegreeUncheckedCreateNestedManyWithoutCoursesInput
   courses_years?: Prisma.CourseYearUncheckedCreateNestedManyWithoutCoursesInput
   links?: Prisma.LinkUncheckedCreateNestedManyWithoutCoursesInput
@@ -658,23 +658,23 @@ export type CourseUncheckedCreateWithoutCorrelatives_correlatives_idTocoursesInp
   tps?: Prisma.TpUncheckedCreateNestedManyWithoutCoursesInput
 }
 
-export type CourseCreateOrConnectWithoutCorrelatives_correlatives_idTocoursesInput = {
+export type CourseCreateOrConnectWithoutRequiredByInput = {
   where: Prisma.CourseWhereUniqueInput
-  create: Prisma.XOR<Prisma.CourseCreateWithoutCorrelatives_correlatives_idTocoursesInput, Prisma.CourseUncheckedCreateWithoutCorrelatives_correlatives_idTocoursesInput>
+  create: Prisma.XOR<Prisma.CourseCreateWithoutRequiredByInput, Prisma.CourseUncheckedCreateWithoutRequiredByInput>
 }
 
-export type CourseUpsertWithoutCorrelatives_correlatives_id_correlativeTocoursesInput = {
-  update: Prisma.XOR<Prisma.CourseUpdateWithoutCorrelatives_correlatives_id_correlativeTocoursesInput, Prisma.CourseUncheckedUpdateWithoutCorrelatives_correlatives_id_correlativeTocoursesInput>
-  create: Prisma.XOR<Prisma.CourseCreateWithoutCorrelatives_correlatives_id_correlativeTocoursesInput, Prisma.CourseUncheckedCreateWithoutCorrelatives_correlatives_id_correlativeTocoursesInput>
+export type CourseUpsertWithoutRequiresInput = {
+  update: Prisma.XOR<Prisma.CourseUpdateWithoutRequiresInput, Prisma.CourseUncheckedUpdateWithoutRequiresInput>
+  create: Prisma.XOR<Prisma.CourseCreateWithoutRequiresInput, Prisma.CourseUncheckedCreateWithoutRequiresInput>
   where?: Prisma.CourseWhereInput
 }
 
-export type CourseUpdateToOneWithWhereWithoutCorrelatives_correlatives_id_correlativeTocoursesInput = {
+export type CourseUpdateToOneWithWhereWithoutRequiresInput = {
   where?: Prisma.CourseWhereInput
-  data: Prisma.XOR<Prisma.CourseUpdateWithoutCorrelatives_correlatives_id_correlativeTocoursesInput, Prisma.CourseUncheckedUpdateWithoutCorrelatives_correlatives_id_correlativeTocoursesInput>
+  data: Prisma.XOR<Prisma.CourseUpdateWithoutRequiresInput, Prisma.CourseUncheckedUpdateWithoutRequiresInput>
 }
 
-export type CourseUpdateWithoutCorrelatives_correlatives_id_correlativeTocoursesInput = {
+export type CourseUpdateWithoutRequiresInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nameNormalized?: Prisma.StringFieldUpdateOperationsInput | string
@@ -683,7 +683,7 @@ export type CourseUpdateWithoutCorrelatives_correlatives_id_correlativeTocourses
   optional?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeUpdateManyWithoutCourses_correlatives_idTocoursesNestedInput
+  requiredBy?: Prisma.CorrelativeUpdateManyWithoutRequiredCourseNestedInput
   courses_degrees?: Prisma.CourseDegreeUpdateManyWithoutCoursesNestedInput
   courses_years?: Prisma.CourseYearUpdateManyWithoutCoursesNestedInput
   links?: Prisma.LinkUpdateManyWithoutCoursesNestedInput
@@ -691,7 +691,7 @@ export type CourseUpdateWithoutCorrelatives_correlatives_id_correlativeTocourses
   tps?: Prisma.TpUpdateManyWithoutCoursesNestedInput
 }
 
-export type CourseUncheckedUpdateWithoutCorrelatives_correlatives_id_correlativeTocoursesInput = {
+export type CourseUncheckedUpdateWithoutRequiresInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nameNormalized?: Prisma.StringFieldUpdateOperationsInput | string
@@ -700,7 +700,7 @@ export type CourseUncheckedUpdateWithoutCorrelatives_correlatives_id_correlative
   optional?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeUncheckedUpdateManyWithoutCourses_correlatives_idTocoursesNestedInput
+  requiredBy?: Prisma.CorrelativeUncheckedUpdateManyWithoutRequiredCourseNestedInput
   courses_degrees?: Prisma.CourseDegreeUncheckedUpdateManyWithoutCoursesNestedInput
   courses_years?: Prisma.CourseYearUncheckedUpdateManyWithoutCoursesNestedInput
   links?: Prisma.LinkUncheckedUpdateManyWithoutCoursesNestedInput
@@ -708,18 +708,18 @@ export type CourseUncheckedUpdateWithoutCorrelatives_correlatives_id_correlative
   tps?: Prisma.TpUncheckedUpdateManyWithoutCoursesNestedInput
 }
 
-export type CourseUpsertWithoutCorrelatives_correlatives_idTocoursesInput = {
-  update: Prisma.XOR<Prisma.CourseUpdateWithoutCorrelatives_correlatives_idTocoursesInput, Prisma.CourseUncheckedUpdateWithoutCorrelatives_correlatives_idTocoursesInput>
-  create: Prisma.XOR<Prisma.CourseCreateWithoutCorrelatives_correlatives_idTocoursesInput, Prisma.CourseUncheckedCreateWithoutCorrelatives_correlatives_idTocoursesInput>
+export type CourseUpsertWithoutRequiredByInput = {
+  update: Prisma.XOR<Prisma.CourseUpdateWithoutRequiredByInput, Prisma.CourseUncheckedUpdateWithoutRequiredByInput>
+  create: Prisma.XOR<Prisma.CourseCreateWithoutRequiredByInput, Prisma.CourseUncheckedCreateWithoutRequiredByInput>
   where?: Prisma.CourseWhereInput
 }
 
-export type CourseUpdateToOneWithWhereWithoutCorrelatives_correlatives_idTocoursesInput = {
+export type CourseUpdateToOneWithWhereWithoutRequiredByInput = {
   where?: Prisma.CourseWhereInput
-  data: Prisma.XOR<Prisma.CourseUpdateWithoutCorrelatives_correlatives_idTocoursesInput, Prisma.CourseUncheckedUpdateWithoutCorrelatives_correlatives_idTocoursesInput>
+  data: Prisma.XOR<Prisma.CourseUpdateWithoutRequiredByInput, Prisma.CourseUncheckedUpdateWithoutRequiredByInput>
 }
 
-export type CourseUpdateWithoutCorrelatives_correlatives_idTocoursesInput = {
+export type CourseUpdateWithoutRequiredByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nameNormalized?: Prisma.StringFieldUpdateOperationsInput | string
@@ -728,7 +728,7 @@ export type CourseUpdateWithoutCorrelatives_correlatives_idTocoursesInput = {
   optional?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeUpdateManyWithoutCourses_correlatives_id_correlativeTocoursesNestedInput
+  requires?: Prisma.CorrelativeUpdateManyWithoutCourseNestedInput
   courses_degrees?: Prisma.CourseDegreeUpdateManyWithoutCoursesNestedInput
   courses_years?: Prisma.CourseYearUpdateManyWithoutCoursesNestedInput
   links?: Prisma.LinkUpdateManyWithoutCoursesNestedInput
@@ -736,7 +736,7 @@ export type CourseUpdateWithoutCorrelatives_correlatives_idTocoursesInput = {
   tps?: Prisma.TpUpdateManyWithoutCoursesNestedInput
 }
 
-export type CourseUncheckedUpdateWithoutCorrelatives_correlatives_idTocoursesInput = {
+export type CourseUncheckedUpdateWithoutRequiredByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   nameNormalized?: Prisma.StringFieldUpdateOperationsInput | string
@@ -745,7 +745,7 @@ export type CourseUncheckedUpdateWithoutCorrelatives_correlatives_idTocoursesInp
   optional?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeUncheckedUpdateManyWithoutCourses_correlatives_id_correlativeTocoursesNestedInput
+  requires?: Prisma.CorrelativeUncheckedUpdateManyWithoutCourseNestedInput
   courses_degrees?: Prisma.CourseDegreeUncheckedUpdateManyWithoutCoursesNestedInput
   courses_years?: Prisma.CourseYearUncheckedUpdateManyWithoutCoursesNestedInput
   links?: Prisma.LinkUncheckedUpdateManyWithoutCoursesNestedInput
@@ -762,8 +762,8 @@ export type CourseCreateWithoutCourses_degreesInput = {
   optional?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeCreateNestedManyWithoutCourses_correlatives_id_correlativeTocoursesInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeCreateNestedManyWithoutCourses_correlatives_idTocoursesInput
+  requires?: Prisma.CorrelativeCreateNestedManyWithoutCourseInput
+  requiredBy?: Prisma.CorrelativeCreateNestedManyWithoutRequiredCourseInput
   courses_years?: Prisma.CourseYearCreateNestedManyWithoutCoursesInput
   links?: Prisma.LinkCreateNestedManyWithoutCoursesInput
   midterms?: Prisma.MidtermCreateNestedManyWithoutCoursesInput
@@ -779,8 +779,8 @@ export type CourseUncheckedCreateWithoutCourses_degreesInput = {
   optional?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutCourses_correlatives_id_correlativeTocoursesInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutCourses_correlatives_idTocoursesInput
+  requires?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutCourseInput
+  requiredBy?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutRequiredCourseInput
   courses_years?: Prisma.CourseYearUncheckedCreateNestedManyWithoutCoursesInput
   links?: Prisma.LinkUncheckedCreateNestedManyWithoutCoursesInput
   midterms?: Prisma.MidtermUncheckedCreateNestedManyWithoutCoursesInput
@@ -812,8 +812,8 @@ export type CourseUpdateWithoutCourses_degreesInput = {
   optional?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeUpdateManyWithoutCourses_correlatives_id_correlativeTocoursesNestedInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeUpdateManyWithoutCourses_correlatives_idTocoursesNestedInput
+  requires?: Prisma.CorrelativeUpdateManyWithoutCourseNestedInput
+  requiredBy?: Prisma.CorrelativeUpdateManyWithoutRequiredCourseNestedInput
   courses_years?: Prisma.CourseYearUpdateManyWithoutCoursesNestedInput
   links?: Prisma.LinkUpdateManyWithoutCoursesNestedInput
   midterms?: Prisma.MidtermUpdateManyWithoutCoursesNestedInput
@@ -829,8 +829,8 @@ export type CourseUncheckedUpdateWithoutCourses_degreesInput = {
   optional?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeUncheckedUpdateManyWithoutCourses_correlatives_id_correlativeTocoursesNestedInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeUncheckedUpdateManyWithoutCourses_correlatives_idTocoursesNestedInput
+  requires?: Prisma.CorrelativeUncheckedUpdateManyWithoutCourseNestedInput
+  requiredBy?: Prisma.CorrelativeUncheckedUpdateManyWithoutRequiredCourseNestedInput
   courses_years?: Prisma.CourseYearUncheckedUpdateManyWithoutCoursesNestedInput
   links?: Prisma.LinkUncheckedUpdateManyWithoutCoursesNestedInput
   midterms?: Prisma.MidtermUncheckedUpdateManyWithoutCoursesNestedInput
@@ -846,8 +846,8 @@ export type CourseCreateWithoutCourses_yearsInput = {
   optional?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeCreateNestedManyWithoutCourses_correlatives_id_correlativeTocoursesInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeCreateNestedManyWithoutCourses_correlatives_idTocoursesInput
+  requires?: Prisma.CorrelativeCreateNestedManyWithoutCourseInput
+  requiredBy?: Prisma.CorrelativeCreateNestedManyWithoutRequiredCourseInput
   courses_degrees?: Prisma.CourseDegreeCreateNestedManyWithoutCoursesInput
   links?: Prisma.LinkCreateNestedManyWithoutCoursesInput
   midterms?: Prisma.MidtermCreateNestedManyWithoutCoursesInput
@@ -863,8 +863,8 @@ export type CourseUncheckedCreateWithoutCourses_yearsInput = {
   optional?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutCourses_correlatives_id_correlativeTocoursesInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutCourses_correlatives_idTocoursesInput
+  requires?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutCourseInput
+  requiredBy?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutRequiredCourseInput
   courses_degrees?: Prisma.CourseDegreeUncheckedCreateNestedManyWithoutCoursesInput
   links?: Prisma.LinkUncheckedCreateNestedManyWithoutCoursesInput
   midterms?: Prisma.MidtermUncheckedCreateNestedManyWithoutCoursesInput
@@ -896,8 +896,8 @@ export type CourseUpdateWithoutCourses_yearsInput = {
   optional?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeUpdateManyWithoutCourses_correlatives_id_correlativeTocoursesNestedInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeUpdateManyWithoutCourses_correlatives_idTocoursesNestedInput
+  requires?: Prisma.CorrelativeUpdateManyWithoutCourseNestedInput
+  requiredBy?: Prisma.CorrelativeUpdateManyWithoutRequiredCourseNestedInput
   courses_degrees?: Prisma.CourseDegreeUpdateManyWithoutCoursesNestedInput
   links?: Prisma.LinkUpdateManyWithoutCoursesNestedInput
   midterms?: Prisma.MidtermUpdateManyWithoutCoursesNestedInput
@@ -913,8 +913,8 @@ export type CourseUncheckedUpdateWithoutCourses_yearsInput = {
   optional?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeUncheckedUpdateManyWithoutCourses_correlatives_id_correlativeTocoursesNestedInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeUncheckedUpdateManyWithoutCourses_correlatives_idTocoursesNestedInput
+  requires?: Prisma.CorrelativeUncheckedUpdateManyWithoutCourseNestedInput
+  requiredBy?: Prisma.CorrelativeUncheckedUpdateManyWithoutRequiredCourseNestedInput
   courses_degrees?: Prisma.CourseDegreeUncheckedUpdateManyWithoutCoursesNestedInput
   links?: Prisma.LinkUncheckedUpdateManyWithoutCoursesNestedInput
   midterms?: Prisma.MidtermUncheckedUpdateManyWithoutCoursesNestedInput
@@ -930,8 +930,8 @@ export type CourseCreateWithoutLinksInput = {
   optional?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeCreateNestedManyWithoutCourses_correlatives_id_correlativeTocoursesInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeCreateNestedManyWithoutCourses_correlatives_idTocoursesInput
+  requires?: Prisma.CorrelativeCreateNestedManyWithoutCourseInput
+  requiredBy?: Prisma.CorrelativeCreateNestedManyWithoutRequiredCourseInput
   courses_degrees?: Prisma.CourseDegreeCreateNestedManyWithoutCoursesInput
   courses_years?: Prisma.CourseYearCreateNestedManyWithoutCoursesInput
   midterms?: Prisma.MidtermCreateNestedManyWithoutCoursesInput
@@ -947,8 +947,8 @@ export type CourseUncheckedCreateWithoutLinksInput = {
   optional?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutCourses_correlatives_id_correlativeTocoursesInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutCourses_correlatives_idTocoursesInput
+  requires?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutCourseInput
+  requiredBy?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutRequiredCourseInput
   courses_degrees?: Prisma.CourseDegreeUncheckedCreateNestedManyWithoutCoursesInput
   courses_years?: Prisma.CourseYearUncheckedCreateNestedManyWithoutCoursesInput
   midterms?: Prisma.MidtermUncheckedCreateNestedManyWithoutCoursesInput
@@ -980,8 +980,8 @@ export type CourseUpdateWithoutLinksInput = {
   optional?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeUpdateManyWithoutCourses_correlatives_id_correlativeTocoursesNestedInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeUpdateManyWithoutCourses_correlatives_idTocoursesNestedInput
+  requires?: Prisma.CorrelativeUpdateManyWithoutCourseNestedInput
+  requiredBy?: Prisma.CorrelativeUpdateManyWithoutRequiredCourseNestedInput
   courses_degrees?: Prisma.CourseDegreeUpdateManyWithoutCoursesNestedInput
   courses_years?: Prisma.CourseYearUpdateManyWithoutCoursesNestedInput
   midterms?: Prisma.MidtermUpdateManyWithoutCoursesNestedInput
@@ -997,8 +997,8 @@ export type CourseUncheckedUpdateWithoutLinksInput = {
   optional?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeUncheckedUpdateManyWithoutCourses_correlatives_id_correlativeTocoursesNestedInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeUncheckedUpdateManyWithoutCourses_correlatives_idTocoursesNestedInput
+  requires?: Prisma.CorrelativeUncheckedUpdateManyWithoutCourseNestedInput
+  requiredBy?: Prisma.CorrelativeUncheckedUpdateManyWithoutRequiredCourseNestedInput
   courses_degrees?: Prisma.CourseDegreeUncheckedUpdateManyWithoutCoursesNestedInput
   courses_years?: Prisma.CourseYearUncheckedUpdateManyWithoutCoursesNestedInput
   midterms?: Prisma.MidtermUncheckedUpdateManyWithoutCoursesNestedInput
@@ -1014,8 +1014,8 @@ export type CourseCreateWithoutMidtermsInput = {
   optional?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeCreateNestedManyWithoutCourses_correlatives_id_correlativeTocoursesInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeCreateNestedManyWithoutCourses_correlatives_idTocoursesInput
+  requires?: Prisma.CorrelativeCreateNestedManyWithoutCourseInput
+  requiredBy?: Prisma.CorrelativeCreateNestedManyWithoutRequiredCourseInput
   courses_degrees?: Prisma.CourseDegreeCreateNestedManyWithoutCoursesInput
   courses_years?: Prisma.CourseYearCreateNestedManyWithoutCoursesInput
   links?: Prisma.LinkCreateNestedManyWithoutCoursesInput
@@ -1031,8 +1031,8 @@ export type CourseUncheckedCreateWithoutMidtermsInput = {
   optional?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutCourses_correlatives_id_correlativeTocoursesInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutCourses_correlatives_idTocoursesInput
+  requires?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutCourseInput
+  requiredBy?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutRequiredCourseInput
   courses_degrees?: Prisma.CourseDegreeUncheckedCreateNestedManyWithoutCoursesInput
   courses_years?: Prisma.CourseYearUncheckedCreateNestedManyWithoutCoursesInput
   links?: Prisma.LinkUncheckedCreateNestedManyWithoutCoursesInput
@@ -1064,8 +1064,8 @@ export type CourseUpdateWithoutMidtermsInput = {
   optional?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeUpdateManyWithoutCourses_correlatives_id_correlativeTocoursesNestedInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeUpdateManyWithoutCourses_correlatives_idTocoursesNestedInput
+  requires?: Prisma.CorrelativeUpdateManyWithoutCourseNestedInput
+  requiredBy?: Prisma.CorrelativeUpdateManyWithoutRequiredCourseNestedInput
   courses_degrees?: Prisma.CourseDegreeUpdateManyWithoutCoursesNestedInput
   courses_years?: Prisma.CourseYearUpdateManyWithoutCoursesNestedInput
   links?: Prisma.LinkUpdateManyWithoutCoursesNestedInput
@@ -1081,8 +1081,8 @@ export type CourseUncheckedUpdateWithoutMidtermsInput = {
   optional?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeUncheckedUpdateManyWithoutCourses_correlatives_id_correlativeTocoursesNestedInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeUncheckedUpdateManyWithoutCourses_correlatives_idTocoursesNestedInput
+  requires?: Prisma.CorrelativeUncheckedUpdateManyWithoutCourseNestedInput
+  requiredBy?: Prisma.CorrelativeUncheckedUpdateManyWithoutRequiredCourseNestedInput
   courses_degrees?: Prisma.CourseDegreeUncheckedUpdateManyWithoutCoursesNestedInput
   courses_years?: Prisma.CourseYearUncheckedUpdateManyWithoutCoursesNestedInput
   links?: Prisma.LinkUncheckedUpdateManyWithoutCoursesNestedInput
@@ -1098,8 +1098,8 @@ export type CourseCreateWithoutTpsInput = {
   optional?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeCreateNestedManyWithoutCourses_correlatives_id_correlativeTocoursesInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeCreateNestedManyWithoutCourses_correlatives_idTocoursesInput
+  requires?: Prisma.CorrelativeCreateNestedManyWithoutCourseInput
+  requiredBy?: Prisma.CorrelativeCreateNestedManyWithoutRequiredCourseInput
   courses_degrees?: Prisma.CourseDegreeCreateNestedManyWithoutCoursesInput
   courses_years?: Prisma.CourseYearCreateNestedManyWithoutCoursesInput
   links?: Prisma.LinkCreateNestedManyWithoutCoursesInput
@@ -1115,8 +1115,8 @@ export type CourseUncheckedCreateWithoutTpsInput = {
   optional?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutCourses_correlatives_id_correlativeTocoursesInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutCourses_correlatives_idTocoursesInput
+  requires?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutCourseInput
+  requiredBy?: Prisma.CorrelativeUncheckedCreateNestedManyWithoutRequiredCourseInput
   courses_degrees?: Prisma.CourseDegreeUncheckedCreateNestedManyWithoutCoursesInput
   courses_years?: Prisma.CourseYearUncheckedCreateNestedManyWithoutCoursesInput
   links?: Prisma.LinkUncheckedCreateNestedManyWithoutCoursesInput
@@ -1148,8 +1148,8 @@ export type CourseUpdateWithoutTpsInput = {
   optional?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeUpdateManyWithoutCourses_correlatives_id_correlativeTocoursesNestedInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeUpdateManyWithoutCourses_correlatives_idTocoursesNestedInput
+  requires?: Prisma.CorrelativeUpdateManyWithoutCourseNestedInput
+  requiredBy?: Prisma.CorrelativeUpdateManyWithoutRequiredCourseNestedInput
   courses_degrees?: Prisma.CourseDegreeUpdateManyWithoutCoursesNestedInput
   courses_years?: Prisma.CourseYearUpdateManyWithoutCoursesNestedInput
   links?: Prisma.LinkUpdateManyWithoutCoursesNestedInput
@@ -1165,8 +1165,8 @@ export type CourseUncheckedUpdateWithoutTpsInput = {
   optional?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  correlatives_correlatives_id_correlativeTocourses?: Prisma.CorrelativeUncheckedUpdateManyWithoutCourses_correlatives_id_correlativeTocoursesNestedInput
-  correlatives_correlatives_idTocourses?: Prisma.CorrelativeUncheckedUpdateManyWithoutCourses_correlatives_idTocoursesNestedInput
+  requires?: Prisma.CorrelativeUncheckedUpdateManyWithoutCourseNestedInput
+  requiredBy?: Prisma.CorrelativeUncheckedUpdateManyWithoutRequiredCourseNestedInput
   courses_degrees?: Prisma.CourseDegreeUncheckedUpdateManyWithoutCoursesNestedInput
   courses_years?: Prisma.CourseYearUncheckedUpdateManyWithoutCoursesNestedInput
   links?: Prisma.LinkUncheckedUpdateManyWithoutCoursesNestedInput
@@ -1179,8 +1179,8 @@ export type CourseUncheckedUpdateWithoutTpsInput = {
  */
 
 export type CourseCountOutputType = {
-  correlatives_correlatives_id_correlativeTocourses: number
-  correlatives_correlatives_idTocourses: number
+  requires: number
+  requiredBy: number
   courses_degrees: number
   courses_years: number
   links: number
@@ -1189,8 +1189,8 @@ export type CourseCountOutputType = {
 }
 
 export type CourseCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  correlatives_correlatives_id_correlativeTocourses?: boolean | CourseCountOutputTypeCountCorrelatives_correlatives_id_correlativeTocoursesArgs
-  correlatives_correlatives_idTocourses?: boolean | CourseCountOutputTypeCountCorrelatives_correlatives_idTocoursesArgs
+  requires?: boolean | CourseCountOutputTypeCountRequiresArgs
+  requiredBy?: boolean | CourseCountOutputTypeCountRequiredByArgs
   courses_degrees?: boolean | CourseCountOutputTypeCountCourses_degreesArgs
   courses_years?: boolean | CourseCountOutputTypeCountCourses_yearsArgs
   links?: boolean | CourseCountOutputTypeCountLinksArgs
@@ -1211,14 +1211,14 @@ export type CourseCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exten
 /**
  * CourseCountOutputType without action
  */
-export type CourseCountOutputTypeCountCorrelatives_correlatives_id_correlativeTocoursesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type CourseCountOutputTypeCountRequiresArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.CorrelativeWhereInput
 }
 
 /**
  * CourseCountOutputType without action
  */
-export type CourseCountOutputTypeCountCorrelatives_correlatives_idTocoursesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type CourseCountOutputTypeCountRequiredByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.CorrelativeWhereInput
 }
 
@@ -1267,8 +1267,8 @@ export type CourseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   optional?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  correlatives_correlatives_id_correlativeTocourses?: boolean | Prisma.Course$correlatives_correlatives_id_correlativeTocoursesArgs<ExtArgs>
-  correlatives_correlatives_idTocourses?: boolean | Prisma.Course$correlatives_correlatives_idTocoursesArgs<ExtArgs>
+  requires?: boolean | Prisma.Course$requiresArgs<ExtArgs>
+  requiredBy?: boolean | Prisma.Course$requiredByArgs<ExtArgs>
   courses_degrees?: boolean | Prisma.Course$courses_degreesArgs<ExtArgs>
   courses_years?: boolean | Prisma.Course$courses_yearsArgs<ExtArgs>
   links?: boolean | Prisma.Course$linksArgs<ExtArgs>
@@ -1312,8 +1312,8 @@ export type CourseSelectScalar = {
 
 export type CourseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "nameNormalized" | "cg" | "hs" | "optional" | "createdAt" | "updatedAt", ExtArgs["result"]["course"]>
 export type CourseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  correlatives_correlatives_id_correlativeTocourses?: boolean | Prisma.Course$correlatives_correlatives_id_correlativeTocoursesArgs<ExtArgs>
-  correlatives_correlatives_idTocourses?: boolean | Prisma.Course$correlatives_correlatives_idTocoursesArgs<ExtArgs>
+  requires?: boolean | Prisma.Course$requiresArgs<ExtArgs>
+  requiredBy?: boolean | Prisma.Course$requiredByArgs<ExtArgs>
   courses_degrees?: boolean | Prisma.Course$courses_degreesArgs<ExtArgs>
   courses_years?: boolean | Prisma.Course$courses_yearsArgs<ExtArgs>
   links?: boolean | Prisma.Course$linksArgs<ExtArgs>
@@ -1327,8 +1327,8 @@ export type CourseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type $CoursePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Course"
   objects: {
-    correlatives_correlatives_id_correlativeTocourses: Prisma.$CorrelativePayload<ExtArgs>[]
-    correlatives_correlatives_idTocourses: Prisma.$CorrelativePayload<ExtArgs>[]
+    requires: Prisma.$CorrelativePayload<ExtArgs>[]
+    requiredBy: Prisma.$CorrelativePayload<ExtArgs>[]
     courses_degrees: Prisma.$CourseDegreePayload<ExtArgs>[]
     courses_years: Prisma.$CourseYearPayload<ExtArgs>[]
     links: Prisma.$LinkPayload<ExtArgs>[]
@@ -1738,8 +1738,8 @@ readonly fields: CourseFieldRefs;
  */
 export interface Prisma__CourseClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  correlatives_correlatives_id_correlativeTocourses<T extends Prisma.Course$correlatives_correlatives_id_correlativeTocoursesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$correlatives_correlatives_id_correlativeTocoursesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CorrelativePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  correlatives_correlatives_idTocourses<T extends Prisma.Course$correlatives_correlatives_idTocoursesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$correlatives_correlatives_idTocoursesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CorrelativePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  requires<T extends Prisma.Course$requiresArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$requiresArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CorrelativePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  requiredBy<T extends Prisma.Course$requiredByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$requiredByArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CorrelativePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   courses_degrees<T extends Prisma.Course$courses_degreesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$courses_degreesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CourseDegreePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   courses_years<T extends Prisma.Course$courses_yearsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$courses_yearsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CourseYearPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   links<T extends Prisma.Course$linksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$linksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2170,9 +2170,9 @@ export type CourseDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 /**
- * Course.correlatives_correlatives_id_correlativeTocourses
+ * Course.requires
  */
-export type Course$correlatives_correlatives_id_correlativeTocoursesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Course$requiresArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Correlative
    */
@@ -2194,9 +2194,9 @@ export type Course$correlatives_correlatives_id_correlativeTocoursesArgs<ExtArgs
 }
 
 /**
- * Course.correlatives_correlatives_idTocourses
+ * Course.requiredBy
  */
-export type Course$correlatives_correlatives_idTocoursesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Course$requiredByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Correlative
    */

@@ -7,16 +7,16 @@ export default function DegreeCourse({ callback }: { callback: Promise<DegreesWi
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const { replace } = useRouter()
-  const [degree, setDegree] = useState<string>(searchParams.get('degree')?.toString() ?? '')
+  const [degree, setDegree] = useState<string>(searchParams.get('idDegree')?.toString() ?? '')
 
   const degrees = use(callback)
 
   const handleDegree = (degree: string) => {
     const params = new URLSearchParams(searchParams)
     if (degree && degree != '0') {
-      params.set('degree', degree)
+      params.set('idDegree', degree)
     } else {
-      params.delete('degree')
+      params.delete('idDegree')
     }
     setDegree(degree)
     replace(`${pathname}?${params.toString()}`)

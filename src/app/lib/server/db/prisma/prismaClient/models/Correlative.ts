@@ -174,8 +174,8 @@ export type CorrelativeWhereInput = {
   idCorrelativeCourse?: Prisma.StringFilter<"Correlative"> | string
   createdAt?: Prisma.DateTimeFilter<"Correlative"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Correlative"> | Date | string
-  courses_correlatives_id_correlativeTocourses?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
-  courses_correlatives_idTocourses?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
+  course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
+  requiredCourse?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
 }
 
 export type CorrelativeOrderByWithRelationInput = {
@@ -183,8 +183,8 @@ export type CorrelativeOrderByWithRelationInput = {
   idCorrelativeCourse?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  courses_correlatives_id_correlativeTocourses?: Prisma.CourseOrderByWithRelationInput
-  courses_correlatives_idTocourses?: Prisma.CourseOrderByWithRelationInput
+  course?: Prisma.CourseOrderByWithRelationInput
+  requiredCourse?: Prisma.CourseOrderByWithRelationInput
 }
 
 export type CorrelativeWhereUniqueInput = Prisma.AtLeast<{
@@ -196,8 +196,8 @@ export type CorrelativeWhereUniqueInput = Prisma.AtLeast<{
   idCorrelativeCourse?: Prisma.StringFilter<"Correlative"> | string
   createdAt?: Prisma.DateTimeFilter<"Correlative"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Correlative"> | Date | string
-  courses_correlatives_id_correlativeTocourses?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
-  courses_correlatives_idTocourses?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
+  course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
+  requiredCourse?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
 }, "idCourse_idCorrelativeCourse">
 
 export type CorrelativeOrderByWithAggregationInput = {
@@ -223,8 +223,8 @@ export type CorrelativeScalarWhereWithAggregatesInput = {
 export type CorrelativeCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
-  courses_correlatives_id_correlativeTocourses: Prisma.CourseCreateNestedOneWithoutCorrelatives_correlatives_id_correlativeTocoursesInput
-  courses_correlatives_idTocourses: Prisma.CourseCreateNestedOneWithoutCorrelatives_correlatives_idTocoursesInput
+  course: Prisma.CourseCreateNestedOneWithoutRequiresInput
+  requiredCourse: Prisma.CourseCreateNestedOneWithoutRequiredByInput
 }
 
 export type CorrelativeUncheckedCreateInput = {
@@ -237,8 +237,8 @@ export type CorrelativeUncheckedCreateInput = {
 export type CorrelativeUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courses_correlatives_id_correlativeTocourses?: Prisma.CourseUpdateOneRequiredWithoutCorrelatives_correlatives_id_correlativeTocoursesNestedInput
-  courses_correlatives_idTocourses?: Prisma.CourseUpdateOneRequiredWithoutCorrelatives_correlatives_idTocoursesNestedInput
+  course?: Prisma.CourseUpdateOneRequiredWithoutRequiresNestedInput
+  requiredCourse?: Prisma.CourseUpdateOneRequiredWithoutRequiredByNestedInput
 }
 
 export type CorrelativeUncheckedUpdateInput = {
@@ -311,148 +311,148 @@ export type StringFieldUpdateOperationsInput = {
   set?: string
 }
 
-export type CorrelativeCreateNestedManyWithoutCourses_correlatives_id_correlativeTocoursesInput = {
-  create?: Prisma.XOR<Prisma.CorrelativeCreateWithoutCourses_correlatives_id_correlativeTocoursesInput, Prisma.CorrelativeUncheckedCreateWithoutCourses_correlatives_id_correlativeTocoursesInput> | Prisma.CorrelativeCreateWithoutCourses_correlatives_id_correlativeTocoursesInput[] | Prisma.CorrelativeUncheckedCreateWithoutCourses_correlatives_id_correlativeTocoursesInput[]
-  connectOrCreate?: Prisma.CorrelativeCreateOrConnectWithoutCourses_correlatives_id_correlativeTocoursesInput | Prisma.CorrelativeCreateOrConnectWithoutCourses_correlatives_id_correlativeTocoursesInput[]
-  createMany?: Prisma.CorrelativeCreateManyCourses_correlatives_id_correlativeTocoursesInputEnvelope
+export type CorrelativeCreateNestedManyWithoutCourseInput = {
+  create?: Prisma.XOR<Prisma.CorrelativeCreateWithoutCourseInput, Prisma.CorrelativeUncheckedCreateWithoutCourseInput> | Prisma.CorrelativeCreateWithoutCourseInput[] | Prisma.CorrelativeUncheckedCreateWithoutCourseInput[]
+  connectOrCreate?: Prisma.CorrelativeCreateOrConnectWithoutCourseInput | Prisma.CorrelativeCreateOrConnectWithoutCourseInput[]
+  createMany?: Prisma.CorrelativeCreateManyCourseInputEnvelope
   connect?: Prisma.CorrelativeWhereUniqueInput | Prisma.CorrelativeWhereUniqueInput[]
 }
 
-export type CorrelativeCreateNestedManyWithoutCourses_correlatives_idTocoursesInput = {
-  create?: Prisma.XOR<Prisma.CorrelativeCreateWithoutCourses_correlatives_idTocoursesInput, Prisma.CorrelativeUncheckedCreateWithoutCourses_correlatives_idTocoursesInput> | Prisma.CorrelativeCreateWithoutCourses_correlatives_idTocoursesInput[] | Prisma.CorrelativeUncheckedCreateWithoutCourses_correlatives_idTocoursesInput[]
-  connectOrCreate?: Prisma.CorrelativeCreateOrConnectWithoutCourses_correlatives_idTocoursesInput | Prisma.CorrelativeCreateOrConnectWithoutCourses_correlatives_idTocoursesInput[]
-  createMany?: Prisma.CorrelativeCreateManyCourses_correlatives_idTocoursesInputEnvelope
+export type CorrelativeCreateNestedManyWithoutRequiredCourseInput = {
+  create?: Prisma.XOR<Prisma.CorrelativeCreateWithoutRequiredCourseInput, Prisma.CorrelativeUncheckedCreateWithoutRequiredCourseInput> | Prisma.CorrelativeCreateWithoutRequiredCourseInput[] | Prisma.CorrelativeUncheckedCreateWithoutRequiredCourseInput[]
+  connectOrCreate?: Prisma.CorrelativeCreateOrConnectWithoutRequiredCourseInput | Prisma.CorrelativeCreateOrConnectWithoutRequiredCourseInput[]
+  createMany?: Prisma.CorrelativeCreateManyRequiredCourseInputEnvelope
   connect?: Prisma.CorrelativeWhereUniqueInput | Prisma.CorrelativeWhereUniqueInput[]
 }
 
-export type CorrelativeUncheckedCreateNestedManyWithoutCourses_correlatives_id_correlativeTocoursesInput = {
-  create?: Prisma.XOR<Prisma.CorrelativeCreateWithoutCourses_correlatives_id_correlativeTocoursesInput, Prisma.CorrelativeUncheckedCreateWithoutCourses_correlatives_id_correlativeTocoursesInput> | Prisma.CorrelativeCreateWithoutCourses_correlatives_id_correlativeTocoursesInput[] | Prisma.CorrelativeUncheckedCreateWithoutCourses_correlatives_id_correlativeTocoursesInput[]
-  connectOrCreate?: Prisma.CorrelativeCreateOrConnectWithoutCourses_correlatives_id_correlativeTocoursesInput | Prisma.CorrelativeCreateOrConnectWithoutCourses_correlatives_id_correlativeTocoursesInput[]
-  createMany?: Prisma.CorrelativeCreateManyCourses_correlatives_id_correlativeTocoursesInputEnvelope
+export type CorrelativeUncheckedCreateNestedManyWithoutCourseInput = {
+  create?: Prisma.XOR<Prisma.CorrelativeCreateWithoutCourseInput, Prisma.CorrelativeUncheckedCreateWithoutCourseInput> | Prisma.CorrelativeCreateWithoutCourseInput[] | Prisma.CorrelativeUncheckedCreateWithoutCourseInput[]
+  connectOrCreate?: Prisma.CorrelativeCreateOrConnectWithoutCourseInput | Prisma.CorrelativeCreateOrConnectWithoutCourseInput[]
+  createMany?: Prisma.CorrelativeCreateManyCourseInputEnvelope
   connect?: Prisma.CorrelativeWhereUniqueInput | Prisma.CorrelativeWhereUniqueInput[]
 }
 
-export type CorrelativeUncheckedCreateNestedManyWithoutCourses_correlatives_idTocoursesInput = {
-  create?: Prisma.XOR<Prisma.CorrelativeCreateWithoutCourses_correlatives_idTocoursesInput, Prisma.CorrelativeUncheckedCreateWithoutCourses_correlatives_idTocoursesInput> | Prisma.CorrelativeCreateWithoutCourses_correlatives_idTocoursesInput[] | Prisma.CorrelativeUncheckedCreateWithoutCourses_correlatives_idTocoursesInput[]
-  connectOrCreate?: Prisma.CorrelativeCreateOrConnectWithoutCourses_correlatives_idTocoursesInput | Prisma.CorrelativeCreateOrConnectWithoutCourses_correlatives_idTocoursesInput[]
-  createMany?: Prisma.CorrelativeCreateManyCourses_correlatives_idTocoursesInputEnvelope
+export type CorrelativeUncheckedCreateNestedManyWithoutRequiredCourseInput = {
+  create?: Prisma.XOR<Prisma.CorrelativeCreateWithoutRequiredCourseInput, Prisma.CorrelativeUncheckedCreateWithoutRequiredCourseInput> | Prisma.CorrelativeCreateWithoutRequiredCourseInput[] | Prisma.CorrelativeUncheckedCreateWithoutRequiredCourseInput[]
+  connectOrCreate?: Prisma.CorrelativeCreateOrConnectWithoutRequiredCourseInput | Prisma.CorrelativeCreateOrConnectWithoutRequiredCourseInput[]
+  createMany?: Prisma.CorrelativeCreateManyRequiredCourseInputEnvelope
   connect?: Prisma.CorrelativeWhereUniqueInput | Prisma.CorrelativeWhereUniqueInput[]
 }
 
-export type CorrelativeUpdateManyWithoutCourses_correlatives_id_correlativeTocoursesNestedInput = {
-  create?: Prisma.XOR<Prisma.CorrelativeCreateWithoutCourses_correlatives_id_correlativeTocoursesInput, Prisma.CorrelativeUncheckedCreateWithoutCourses_correlatives_id_correlativeTocoursesInput> | Prisma.CorrelativeCreateWithoutCourses_correlatives_id_correlativeTocoursesInput[] | Prisma.CorrelativeUncheckedCreateWithoutCourses_correlatives_id_correlativeTocoursesInput[]
-  connectOrCreate?: Prisma.CorrelativeCreateOrConnectWithoutCourses_correlatives_id_correlativeTocoursesInput | Prisma.CorrelativeCreateOrConnectWithoutCourses_correlatives_id_correlativeTocoursesInput[]
-  upsert?: Prisma.CorrelativeUpsertWithWhereUniqueWithoutCourses_correlatives_id_correlativeTocoursesInput | Prisma.CorrelativeUpsertWithWhereUniqueWithoutCourses_correlatives_id_correlativeTocoursesInput[]
-  createMany?: Prisma.CorrelativeCreateManyCourses_correlatives_id_correlativeTocoursesInputEnvelope
+export type CorrelativeUpdateManyWithoutCourseNestedInput = {
+  create?: Prisma.XOR<Prisma.CorrelativeCreateWithoutCourseInput, Prisma.CorrelativeUncheckedCreateWithoutCourseInput> | Prisma.CorrelativeCreateWithoutCourseInput[] | Prisma.CorrelativeUncheckedCreateWithoutCourseInput[]
+  connectOrCreate?: Prisma.CorrelativeCreateOrConnectWithoutCourseInput | Prisma.CorrelativeCreateOrConnectWithoutCourseInput[]
+  upsert?: Prisma.CorrelativeUpsertWithWhereUniqueWithoutCourseInput | Prisma.CorrelativeUpsertWithWhereUniqueWithoutCourseInput[]
+  createMany?: Prisma.CorrelativeCreateManyCourseInputEnvelope
   set?: Prisma.CorrelativeWhereUniqueInput | Prisma.CorrelativeWhereUniqueInput[]
   disconnect?: Prisma.CorrelativeWhereUniqueInput | Prisma.CorrelativeWhereUniqueInput[]
   delete?: Prisma.CorrelativeWhereUniqueInput | Prisma.CorrelativeWhereUniqueInput[]
   connect?: Prisma.CorrelativeWhereUniqueInput | Prisma.CorrelativeWhereUniqueInput[]
-  update?: Prisma.CorrelativeUpdateWithWhereUniqueWithoutCourses_correlatives_id_correlativeTocoursesInput | Prisma.CorrelativeUpdateWithWhereUniqueWithoutCourses_correlatives_id_correlativeTocoursesInput[]
-  updateMany?: Prisma.CorrelativeUpdateManyWithWhereWithoutCourses_correlatives_id_correlativeTocoursesInput | Prisma.CorrelativeUpdateManyWithWhereWithoutCourses_correlatives_id_correlativeTocoursesInput[]
+  update?: Prisma.CorrelativeUpdateWithWhereUniqueWithoutCourseInput | Prisma.CorrelativeUpdateWithWhereUniqueWithoutCourseInput[]
+  updateMany?: Prisma.CorrelativeUpdateManyWithWhereWithoutCourseInput | Prisma.CorrelativeUpdateManyWithWhereWithoutCourseInput[]
   deleteMany?: Prisma.CorrelativeScalarWhereInput | Prisma.CorrelativeScalarWhereInput[]
 }
 
-export type CorrelativeUpdateManyWithoutCourses_correlatives_idTocoursesNestedInput = {
-  create?: Prisma.XOR<Prisma.CorrelativeCreateWithoutCourses_correlatives_idTocoursesInput, Prisma.CorrelativeUncheckedCreateWithoutCourses_correlatives_idTocoursesInput> | Prisma.CorrelativeCreateWithoutCourses_correlatives_idTocoursesInput[] | Prisma.CorrelativeUncheckedCreateWithoutCourses_correlatives_idTocoursesInput[]
-  connectOrCreate?: Prisma.CorrelativeCreateOrConnectWithoutCourses_correlatives_idTocoursesInput | Prisma.CorrelativeCreateOrConnectWithoutCourses_correlatives_idTocoursesInput[]
-  upsert?: Prisma.CorrelativeUpsertWithWhereUniqueWithoutCourses_correlatives_idTocoursesInput | Prisma.CorrelativeUpsertWithWhereUniqueWithoutCourses_correlatives_idTocoursesInput[]
-  createMany?: Prisma.CorrelativeCreateManyCourses_correlatives_idTocoursesInputEnvelope
+export type CorrelativeUpdateManyWithoutRequiredCourseNestedInput = {
+  create?: Prisma.XOR<Prisma.CorrelativeCreateWithoutRequiredCourseInput, Prisma.CorrelativeUncheckedCreateWithoutRequiredCourseInput> | Prisma.CorrelativeCreateWithoutRequiredCourseInput[] | Prisma.CorrelativeUncheckedCreateWithoutRequiredCourseInput[]
+  connectOrCreate?: Prisma.CorrelativeCreateOrConnectWithoutRequiredCourseInput | Prisma.CorrelativeCreateOrConnectWithoutRequiredCourseInput[]
+  upsert?: Prisma.CorrelativeUpsertWithWhereUniqueWithoutRequiredCourseInput | Prisma.CorrelativeUpsertWithWhereUniqueWithoutRequiredCourseInput[]
+  createMany?: Prisma.CorrelativeCreateManyRequiredCourseInputEnvelope
   set?: Prisma.CorrelativeWhereUniqueInput | Prisma.CorrelativeWhereUniqueInput[]
   disconnect?: Prisma.CorrelativeWhereUniqueInput | Prisma.CorrelativeWhereUniqueInput[]
   delete?: Prisma.CorrelativeWhereUniqueInput | Prisma.CorrelativeWhereUniqueInput[]
   connect?: Prisma.CorrelativeWhereUniqueInput | Prisma.CorrelativeWhereUniqueInput[]
-  update?: Prisma.CorrelativeUpdateWithWhereUniqueWithoutCourses_correlatives_idTocoursesInput | Prisma.CorrelativeUpdateWithWhereUniqueWithoutCourses_correlatives_idTocoursesInput[]
-  updateMany?: Prisma.CorrelativeUpdateManyWithWhereWithoutCourses_correlatives_idTocoursesInput | Prisma.CorrelativeUpdateManyWithWhereWithoutCourses_correlatives_idTocoursesInput[]
+  update?: Prisma.CorrelativeUpdateWithWhereUniqueWithoutRequiredCourseInput | Prisma.CorrelativeUpdateWithWhereUniqueWithoutRequiredCourseInput[]
+  updateMany?: Prisma.CorrelativeUpdateManyWithWhereWithoutRequiredCourseInput | Prisma.CorrelativeUpdateManyWithWhereWithoutRequiredCourseInput[]
   deleteMany?: Prisma.CorrelativeScalarWhereInput | Prisma.CorrelativeScalarWhereInput[]
 }
 
-export type CorrelativeUncheckedUpdateManyWithoutCourses_correlatives_id_correlativeTocoursesNestedInput = {
-  create?: Prisma.XOR<Prisma.CorrelativeCreateWithoutCourses_correlatives_id_correlativeTocoursesInput, Prisma.CorrelativeUncheckedCreateWithoutCourses_correlatives_id_correlativeTocoursesInput> | Prisma.CorrelativeCreateWithoutCourses_correlatives_id_correlativeTocoursesInput[] | Prisma.CorrelativeUncheckedCreateWithoutCourses_correlatives_id_correlativeTocoursesInput[]
-  connectOrCreate?: Prisma.CorrelativeCreateOrConnectWithoutCourses_correlatives_id_correlativeTocoursesInput | Prisma.CorrelativeCreateOrConnectWithoutCourses_correlatives_id_correlativeTocoursesInput[]
-  upsert?: Prisma.CorrelativeUpsertWithWhereUniqueWithoutCourses_correlatives_id_correlativeTocoursesInput | Prisma.CorrelativeUpsertWithWhereUniqueWithoutCourses_correlatives_id_correlativeTocoursesInput[]
-  createMany?: Prisma.CorrelativeCreateManyCourses_correlatives_id_correlativeTocoursesInputEnvelope
+export type CorrelativeUncheckedUpdateManyWithoutCourseNestedInput = {
+  create?: Prisma.XOR<Prisma.CorrelativeCreateWithoutCourseInput, Prisma.CorrelativeUncheckedCreateWithoutCourseInput> | Prisma.CorrelativeCreateWithoutCourseInput[] | Prisma.CorrelativeUncheckedCreateWithoutCourseInput[]
+  connectOrCreate?: Prisma.CorrelativeCreateOrConnectWithoutCourseInput | Prisma.CorrelativeCreateOrConnectWithoutCourseInput[]
+  upsert?: Prisma.CorrelativeUpsertWithWhereUniqueWithoutCourseInput | Prisma.CorrelativeUpsertWithWhereUniqueWithoutCourseInput[]
+  createMany?: Prisma.CorrelativeCreateManyCourseInputEnvelope
   set?: Prisma.CorrelativeWhereUniqueInput | Prisma.CorrelativeWhereUniqueInput[]
   disconnect?: Prisma.CorrelativeWhereUniqueInput | Prisma.CorrelativeWhereUniqueInput[]
   delete?: Prisma.CorrelativeWhereUniqueInput | Prisma.CorrelativeWhereUniqueInput[]
   connect?: Prisma.CorrelativeWhereUniqueInput | Prisma.CorrelativeWhereUniqueInput[]
-  update?: Prisma.CorrelativeUpdateWithWhereUniqueWithoutCourses_correlatives_id_correlativeTocoursesInput | Prisma.CorrelativeUpdateWithWhereUniqueWithoutCourses_correlatives_id_correlativeTocoursesInput[]
-  updateMany?: Prisma.CorrelativeUpdateManyWithWhereWithoutCourses_correlatives_id_correlativeTocoursesInput | Prisma.CorrelativeUpdateManyWithWhereWithoutCourses_correlatives_id_correlativeTocoursesInput[]
+  update?: Prisma.CorrelativeUpdateWithWhereUniqueWithoutCourseInput | Prisma.CorrelativeUpdateWithWhereUniqueWithoutCourseInput[]
+  updateMany?: Prisma.CorrelativeUpdateManyWithWhereWithoutCourseInput | Prisma.CorrelativeUpdateManyWithWhereWithoutCourseInput[]
   deleteMany?: Prisma.CorrelativeScalarWhereInput | Prisma.CorrelativeScalarWhereInput[]
 }
 
-export type CorrelativeUncheckedUpdateManyWithoutCourses_correlatives_idTocoursesNestedInput = {
-  create?: Prisma.XOR<Prisma.CorrelativeCreateWithoutCourses_correlatives_idTocoursesInput, Prisma.CorrelativeUncheckedCreateWithoutCourses_correlatives_idTocoursesInput> | Prisma.CorrelativeCreateWithoutCourses_correlatives_idTocoursesInput[] | Prisma.CorrelativeUncheckedCreateWithoutCourses_correlatives_idTocoursesInput[]
-  connectOrCreate?: Prisma.CorrelativeCreateOrConnectWithoutCourses_correlatives_idTocoursesInput | Prisma.CorrelativeCreateOrConnectWithoutCourses_correlatives_idTocoursesInput[]
-  upsert?: Prisma.CorrelativeUpsertWithWhereUniqueWithoutCourses_correlatives_idTocoursesInput | Prisma.CorrelativeUpsertWithWhereUniqueWithoutCourses_correlatives_idTocoursesInput[]
-  createMany?: Prisma.CorrelativeCreateManyCourses_correlatives_idTocoursesInputEnvelope
+export type CorrelativeUncheckedUpdateManyWithoutRequiredCourseNestedInput = {
+  create?: Prisma.XOR<Prisma.CorrelativeCreateWithoutRequiredCourseInput, Prisma.CorrelativeUncheckedCreateWithoutRequiredCourseInput> | Prisma.CorrelativeCreateWithoutRequiredCourseInput[] | Prisma.CorrelativeUncheckedCreateWithoutRequiredCourseInput[]
+  connectOrCreate?: Prisma.CorrelativeCreateOrConnectWithoutRequiredCourseInput | Prisma.CorrelativeCreateOrConnectWithoutRequiredCourseInput[]
+  upsert?: Prisma.CorrelativeUpsertWithWhereUniqueWithoutRequiredCourseInput | Prisma.CorrelativeUpsertWithWhereUniqueWithoutRequiredCourseInput[]
+  createMany?: Prisma.CorrelativeCreateManyRequiredCourseInputEnvelope
   set?: Prisma.CorrelativeWhereUniqueInput | Prisma.CorrelativeWhereUniqueInput[]
   disconnect?: Prisma.CorrelativeWhereUniqueInput | Prisma.CorrelativeWhereUniqueInput[]
   delete?: Prisma.CorrelativeWhereUniqueInput | Prisma.CorrelativeWhereUniqueInput[]
   connect?: Prisma.CorrelativeWhereUniqueInput | Prisma.CorrelativeWhereUniqueInput[]
-  update?: Prisma.CorrelativeUpdateWithWhereUniqueWithoutCourses_correlatives_idTocoursesInput | Prisma.CorrelativeUpdateWithWhereUniqueWithoutCourses_correlatives_idTocoursesInput[]
-  updateMany?: Prisma.CorrelativeUpdateManyWithWhereWithoutCourses_correlatives_idTocoursesInput | Prisma.CorrelativeUpdateManyWithWhereWithoutCourses_correlatives_idTocoursesInput[]
+  update?: Prisma.CorrelativeUpdateWithWhereUniqueWithoutRequiredCourseInput | Prisma.CorrelativeUpdateWithWhereUniqueWithoutRequiredCourseInput[]
+  updateMany?: Prisma.CorrelativeUpdateManyWithWhereWithoutRequiredCourseInput | Prisma.CorrelativeUpdateManyWithWhereWithoutRequiredCourseInput[]
   deleteMany?: Prisma.CorrelativeScalarWhereInput | Prisma.CorrelativeScalarWhereInput[]
 }
 
-export type CorrelativeCreateWithoutCourses_correlatives_id_correlativeTocoursesInput = {
+export type CorrelativeCreateWithoutCourseInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
-  courses_correlatives_idTocourses: Prisma.CourseCreateNestedOneWithoutCorrelatives_correlatives_idTocoursesInput
+  requiredCourse: Prisma.CourseCreateNestedOneWithoutRequiredByInput
 }
 
-export type CorrelativeUncheckedCreateWithoutCourses_correlatives_id_correlativeTocoursesInput = {
-  idCourse: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type CorrelativeCreateOrConnectWithoutCourses_correlatives_id_correlativeTocoursesInput = {
-  where: Prisma.CorrelativeWhereUniqueInput
-  create: Prisma.XOR<Prisma.CorrelativeCreateWithoutCourses_correlatives_id_correlativeTocoursesInput, Prisma.CorrelativeUncheckedCreateWithoutCourses_correlatives_id_correlativeTocoursesInput>
-}
-
-export type CorrelativeCreateManyCourses_correlatives_id_correlativeTocoursesInputEnvelope = {
-  data: Prisma.CorrelativeCreateManyCourses_correlatives_id_correlativeTocoursesInput | Prisma.CorrelativeCreateManyCourses_correlatives_id_correlativeTocoursesInput[]
-  skipDuplicates?: boolean
-}
-
-export type CorrelativeCreateWithoutCourses_correlatives_idTocoursesInput = {
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  courses_correlatives_id_correlativeTocourses: Prisma.CourseCreateNestedOneWithoutCorrelatives_correlatives_id_correlativeTocoursesInput
-}
-
-export type CorrelativeUncheckedCreateWithoutCourses_correlatives_idTocoursesInput = {
+export type CorrelativeUncheckedCreateWithoutCourseInput = {
   idCorrelativeCourse: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type CorrelativeCreateOrConnectWithoutCourses_correlatives_idTocoursesInput = {
+export type CorrelativeCreateOrConnectWithoutCourseInput = {
   where: Prisma.CorrelativeWhereUniqueInput
-  create: Prisma.XOR<Prisma.CorrelativeCreateWithoutCourses_correlatives_idTocoursesInput, Prisma.CorrelativeUncheckedCreateWithoutCourses_correlatives_idTocoursesInput>
+  create: Prisma.XOR<Prisma.CorrelativeCreateWithoutCourseInput, Prisma.CorrelativeUncheckedCreateWithoutCourseInput>
 }
 
-export type CorrelativeCreateManyCourses_correlatives_idTocoursesInputEnvelope = {
-  data: Prisma.CorrelativeCreateManyCourses_correlatives_idTocoursesInput | Prisma.CorrelativeCreateManyCourses_correlatives_idTocoursesInput[]
+export type CorrelativeCreateManyCourseInputEnvelope = {
+  data: Prisma.CorrelativeCreateManyCourseInput | Prisma.CorrelativeCreateManyCourseInput[]
   skipDuplicates?: boolean
 }
 
-export type CorrelativeUpsertWithWhereUniqueWithoutCourses_correlatives_id_correlativeTocoursesInput = {
-  where: Prisma.CorrelativeWhereUniqueInput
-  update: Prisma.XOR<Prisma.CorrelativeUpdateWithoutCourses_correlatives_id_correlativeTocoursesInput, Prisma.CorrelativeUncheckedUpdateWithoutCourses_correlatives_id_correlativeTocoursesInput>
-  create: Prisma.XOR<Prisma.CorrelativeCreateWithoutCourses_correlatives_id_correlativeTocoursesInput, Prisma.CorrelativeUncheckedCreateWithoutCourses_correlatives_id_correlativeTocoursesInput>
+export type CorrelativeCreateWithoutRequiredCourseInput = {
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  course: Prisma.CourseCreateNestedOneWithoutRequiresInput
 }
 
-export type CorrelativeUpdateWithWhereUniqueWithoutCourses_correlatives_id_correlativeTocoursesInput = {
-  where: Prisma.CorrelativeWhereUniqueInput
-  data: Prisma.XOR<Prisma.CorrelativeUpdateWithoutCourses_correlatives_id_correlativeTocoursesInput, Prisma.CorrelativeUncheckedUpdateWithoutCourses_correlatives_id_correlativeTocoursesInput>
+export type CorrelativeUncheckedCreateWithoutRequiredCourseInput = {
+  idCourse: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
-export type CorrelativeUpdateManyWithWhereWithoutCourses_correlatives_id_correlativeTocoursesInput = {
+export type CorrelativeCreateOrConnectWithoutRequiredCourseInput = {
+  where: Prisma.CorrelativeWhereUniqueInput
+  create: Prisma.XOR<Prisma.CorrelativeCreateWithoutRequiredCourseInput, Prisma.CorrelativeUncheckedCreateWithoutRequiredCourseInput>
+}
+
+export type CorrelativeCreateManyRequiredCourseInputEnvelope = {
+  data: Prisma.CorrelativeCreateManyRequiredCourseInput | Prisma.CorrelativeCreateManyRequiredCourseInput[]
+  skipDuplicates?: boolean
+}
+
+export type CorrelativeUpsertWithWhereUniqueWithoutCourseInput = {
+  where: Prisma.CorrelativeWhereUniqueInput
+  update: Prisma.XOR<Prisma.CorrelativeUpdateWithoutCourseInput, Prisma.CorrelativeUncheckedUpdateWithoutCourseInput>
+  create: Prisma.XOR<Prisma.CorrelativeCreateWithoutCourseInput, Prisma.CorrelativeUncheckedCreateWithoutCourseInput>
+}
+
+export type CorrelativeUpdateWithWhereUniqueWithoutCourseInput = {
+  where: Prisma.CorrelativeWhereUniqueInput
+  data: Prisma.XOR<Prisma.CorrelativeUpdateWithoutCourseInput, Prisma.CorrelativeUncheckedUpdateWithoutCourseInput>
+}
+
+export type CorrelativeUpdateManyWithWhereWithoutCourseInput = {
   where: Prisma.CorrelativeScalarWhereInput
-  data: Prisma.XOR<Prisma.CorrelativeUpdateManyMutationInput, Prisma.CorrelativeUncheckedUpdateManyWithoutCourses_correlatives_id_correlativeTocoursesInput>
+  data: Prisma.XOR<Prisma.CorrelativeUpdateManyMutationInput, Prisma.CorrelativeUncheckedUpdateManyWithoutCourseInput>
 }
 
 export type CorrelativeScalarWhereInput = {
@@ -465,66 +465,66 @@ export type CorrelativeScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Correlative"> | Date | string
 }
 
-export type CorrelativeUpsertWithWhereUniqueWithoutCourses_correlatives_idTocoursesInput = {
+export type CorrelativeUpsertWithWhereUniqueWithoutRequiredCourseInput = {
   where: Prisma.CorrelativeWhereUniqueInput
-  update: Prisma.XOR<Prisma.CorrelativeUpdateWithoutCourses_correlatives_idTocoursesInput, Prisma.CorrelativeUncheckedUpdateWithoutCourses_correlatives_idTocoursesInput>
-  create: Prisma.XOR<Prisma.CorrelativeCreateWithoutCourses_correlatives_idTocoursesInput, Prisma.CorrelativeUncheckedCreateWithoutCourses_correlatives_idTocoursesInput>
+  update: Prisma.XOR<Prisma.CorrelativeUpdateWithoutRequiredCourseInput, Prisma.CorrelativeUncheckedUpdateWithoutRequiredCourseInput>
+  create: Prisma.XOR<Prisma.CorrelativeCreateWithoutRequiredCourseInput, Prisma.CorrelativeUncheckedCreateWithoutRequiredCourseInput>
 }
 
-export type CorrelativeUpdateWithWhereUniqueWithoutCourses_correlatives_idTocoursesInput = {
+export type CorrelativeUpdateWithWhereUniqueWithoutRequiredCourseInput = {
   where: Prisma.CorrelativeWhereUniqueInput
-  data: Prisma.XOR<Prisma.CorrelativeUpdateWithoutCourses_correlatives_idTocoursesInput, Prisma.CorrelativeUncheckedUpdateWithoutCourses_correlatives_idTocoursesInput>
+  data: Prisma.XOR<Prisma.CorrelativeUpdateWithoutRequiredCourseInput, Prisma.CorrelativeUncheckedUpdateWithoutRequiredCourseInput>
 }
 
-export type CorrelativeUpdateManyWithWhereWithoutCourses_correlatives_idTocoursesInput = {
+export type CorrelativeUpdateManyWithWhereWithoutRequiredCourseInput = {
   where: Prisma.CorrelativeScalarWhereInput
-  data: Prisma.XOR<Prisma.CorrelativeUpdateManyMutationInput, Prisma.CorrelativeUncheckedUpdateManyWithoutCourses_correlatives_idTocoursesInput>
+  data: Prisma.XOR<Prisma.CorrelativeUpdateManyMutationInput, Prisma.CorrelativeUncheckedUpdateManyWithoutRequiredCourseInput>
 }
 
-export type CorrelativeCreateManyCourses_correlatives_id_correlativeTocoursesInput = {
-  idCourse: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type CorrelativeCreateManyCourses_correlatives_idTocoursesInput = {
+export type CorrelativeCreateManyCourseInput = {
   idCorrelativeCourse: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type CorrelativeUpdateWithoutCourses_correlatives_id_correlativeTocoursesInput = {
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courses_correlatives_idTocourses?: Prisma.CourseUpdateOneRequiredWithoutCorrelatives_correlatives_idTocoursesNestedInput
+export type CorrelativeCreateManyRequiredCourseInput = {
+  idCourse: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
-export type CorrelativeUncheckedUpdateWithoutCourses_correlatives_id_correlativeTocoursesInput = {
-  idCourse?: Prisma.StringFieldUpdateOperationsInput | string
+export type CorrelativeUpdateWithoutCourseInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  requiredCourse?: Prisma.CourseUpdateOneRequiredWithoutRequiredByNestedInput
 }
 
-export type CorrelativeUncheckedUpdateManyWithoutCourses_correlatives_id_correlativeTocoursesInput = {
-  idCourse?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type CorrelativeUpdateWithoutCourses_correlatives_idTocoursesInput = {
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courses_correlatives_id_correlativeTocourses?: Prisma.CourseUpdateOneRequiredWithoutCorrelatives_correlatives_id_correlativeTocoursesNestedInput
-}
-
-export type CorrelativeUncheckedUpdateWithoutCourses_correlatives_idTocoursesInput = {
+export type CorrelativeUncheckedUpdateWithoutCourseInput = {
   idCorrelativeCourse?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type CorrelativeUncheckedUpdateManyWithoutCourses_correlatives_idTocoursesInput = {
+export type CorrelativeUncheckedUpdateManyWithoutCourseInput = {
   idCorrelativeCourse?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type CorrelativeUpdateWithoutRequiredCourseInput = {
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  course?: Prisma.CourseUpdateOneRequiredWithoutRequiresNestedInput
+}
+
+export type CorrelativeUncheckedUpdateWithoutRequiredCourseInput = {
+  idCourse?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type CorrelativeUncheckedUpdateManyWithoutRequiredCourseInput = {
+  idCourse?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -536,8 +536,8 @@ export type CorrelativeSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   idCorrelativeCourse?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  courses_correlatives_id_correlativeTocourses?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
-  courses_correlatives_idTocourses?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+  course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+  requiredCourse?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["correlative"]>
 
 export type CorrelativeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -545,8 +545,8 @@ export type CorrelativeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   idCorrelativeCourse?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  courses_correlatives_id_correlativeTocourses?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
-  courses_correlatives_idTocourses?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+  course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+  requiredCourse?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["correlative"]>
 
 export type CorrelativeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -554,8 +554,8 @@ export type CorrelativeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   idCorrelativeCourse?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  courses_correlatives_id_correlativeTocourses?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
-  courses_correlatives_idTocourses?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+  course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+  requiredCourse?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["correlative"]>
 
 export type CorrelativeSelectScalar = {
@@ -567,23 +567,23 @@ export type CorrelativeSelectScalar = {
 
 export type CorrelativeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idCourse" | "idCorrelativeCourse" | "createdAt" | "updatedAt", ExtArgs["result"]["correlative"]>
 export type CorrelativeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  courses_correlatives_id_correlativeTocourses?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
-  courses_correlatives_idTocourses?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+  course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+  requiredCourse?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }
 export type CorrelativeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  courses_correlatives_id_correlativeTocourses?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
-  courses_correlatives_idTocourses?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+  course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+  requiredCourse?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }
 export type CorrelativeIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  courses_correlatives_id_correlativeTocourses?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
-  courses_correlatives_idTocourses?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+  course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+  requiredCourse?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }
 
 export type $CorrelativePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Correlative"
   objects: {
-    courses_correlatives_id_correlativeTocourses: Prisma.$CoursePayload<ExtArgs>
-    courses_correlatives_idTocourses: Prisma.$CoursePayload<ExtArgs>
+    course: Prisma.$CoursePayload<ExtArgs>
+    requiredCourse: Prisma.$CoursePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idCourse: string
@@ -984,8 +984,8 @@ readonly fields: CorrelativeFieldRefs;
  */
 export interface Prisma__CorrelativeClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  courses_correlatives_id_correlativeTocourses<T extends Prisma.CourseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseDefaultArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  courses_correlatives_idTocourses<T extends Prisma.CourseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseDefaultArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  course<T extends Prisma.CourseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseDefaultArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  requiredCourse<T extends Prisma.CourseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseDefaultArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

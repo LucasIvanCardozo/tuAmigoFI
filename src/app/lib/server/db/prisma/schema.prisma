@@ -11,8 +11,8 @@ model Correlative {
   idCourse            String @map("id_course")
   idCorrelativeCourse String @map("id_correlative")
 
-  courses_correlatives_id_correlativeTocourses Course @relation("correlatives_id_correlativeTocourses", fields: [idCorrelativeCourse], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  courses_correlatives_idTocourses             Course @relation("correlatives_idTocourses", fields: [idCourse], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  course         Course @relation("CourseRequires", fields: [idCourse], references: [id])
+  requiredCourse Course @relation("CourseRequiredBy", fields: [idCorrelativeCourse], references: [id])
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
@@ -28,13 +28,14 @@ model Course {
   hs             Int?
   optional       Boolean @default(false)
 
-  correlatives_correlatives_id_correlativeTocourses Correlative[]  @relation("correlatives_id_correlativeTocourses")
-  correlatives_correlatives_idTocourses             Correlative[]  @relation("correlatives_idTocourses")
-  courses_degrees                                   CourseDegree[]
-  courses_years                                     CourseYear[]
-  links                                             Link[]
-  midterms                                          Midterm[]
-  tps                                               Tp[]
+  requires   Correlative[] @relation("CourseRequires")
+  requiredBy Correlative[] @relation("CourseRequiredBy")
+
+  courses_degrees CourseDegree[]
+  courses_years   CourseYear[]
+  links           Link[]
+  midterms        Midterm[]
+  tps             Tp[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")

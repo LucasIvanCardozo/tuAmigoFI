@@ -18,23 +18,31 @@ export const ModalDeleteMidterm = ({ midterm, user }: { midterm: Midterm; user: 
 
   const submitDeleteModule = async (values: TypeValues[]) => {
     const check = values.find((val) => val.id == 'check')
-    await sileo.promise(
-      async () => {
-        if (!session) throw new Error('No hay sesion')
-        if (session.user.tier != 2) throw new Error('Debes ser administrador para eliminar un examen')
-        if (!check) throw new Error('Debes estar de acuerdo con la eliminacion del examen')
+    if (!session) throw new Error('No hay sesion')
+    if (session.user.tier != 2) throw new Error('Debes ser administrador para eliminar un examen')
+    if (!check) throw new Error('Debes estar de acuerdo con la eliminacion del examen')
 
-        await deleteMidterm({ id: midterm.id, idUser: midterm.idUser })
-        startReload()
-      },
-      {
-        loading: { title: 'Cargando...' },
-        success: { title: 'Examen eliminado' },
-        error: (error) => {
-          return { title: (error as Error).message }
-        },
-      }
-    )
+    const formData = new FormData()
+    formData.set('id', midterm.id.toString())
+    formData.set('subFolder', `parciales/respuestas/${midterm.id}`)
+    const res = await fetch('/api/destroyAll', {
+      method: 'POST',
+      body: formData,
+    })
+
+    formData.set('id', midterm.id.toString())
+    formData.set('subFolder', `parciales/problemas`)
+
+    const res2 = await fetch('/api/destroy', {
+      method: 'POST',
+      body: formData,
+    })
+
+    if (res.ok && res2.ok) {
+      const{error} = await deleteMidterm({ id: midterm.id, idUser: midterm.idUser })
+      if (error) throw new Error(error)
+      startReload()
+    }
   }
 
   return (
