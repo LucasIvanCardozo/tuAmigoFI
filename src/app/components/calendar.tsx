@@ -143,9 +143,8 @@ export default function CalendarSection() {
   useEffect(() => {
     const updateCountCalendar = () => {
       const width = document.documentElement.clientWidth
-      if (width < 640) setCountCalendar(1)
-      else if (width >= 640 && width < 1024) setCountCalendar(2)
-      else setCountCalendar(3)
+      const newCount = width < 640 ? 1 : width < 1024 ? 2 : 3
+      setCountCalendar(newCount)
     }
     updateCountCalendar()
     const mediaQuery640 = window.matchMedia('(min-width: 640px)')

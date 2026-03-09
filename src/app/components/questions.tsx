@@ -1,4 +1,5 @@
 'use client'
+import { useRouter } from 'next/navigation'
 import { use, useState } from 'react'
 import { DegreesWithPlansType } from '../lib/server/db/repository/degree.repository'
 import { sileo } from 'sileo'
@@ -6,6 +7,7 @@ import { sileo } from 'sileo'
 export default function Questions({ callback }: { callback: Promise<DegreesWithPlansType[]> }) {
   const [degreeState, setDegreeState] = useState<string>()
   const [planState, setPlanState] = useState<string>()
+  const router = useRouter()
 
   const degrees = use(callback)
 
@@ -26,8 +28,8 @@ export default function Questions({ callback }: { callback: Promise<DegreesWithP
               <option hidden>Plan</option>
               {degrees
                 .find((degree) => degree.name == degreeState)
-                ?.degrees_plans.map((plan, index) => (
-                  <option key={index} value={plan.plans.year}>
+                ?.degrees_plans.map((plan) => (
+                  <option key={plan.plans.id} value={plan.plans.year}>
                     {plan.plans.year}
                   </option>
                 ))}
@@ -35,26 +37,32 @@ export default function Questions({ callback }: { callback: Promise<DegreesWithP
           )}
         </div>
         <div className="flex gap-2">
-          <a
+          <button
+            type="button"
             className="whitespace-nowrap text-center cursor-pointer self-end py-1 px-2 text-base rounded-sm bg-[--midnight-green] text-[--white] grow"
-            onClick={(e) => {
-              ;(!degreeState || !planState) && (e.preventDefault(), sileo.error({ title: 'Debes elegir tu carrera y tu plan.' }))
+            onClick={() => {
+              if (!degreeState || !planState) {
+                sileo.error({ title: 'Debes elegir tu carrera y tu plan.' })
+                return
+              }
+              router.push(`/planes-de-estudio/${encodeURIComponent(degreeState)}-${planState}.pdf`)
             }}
-            href={degreeState && `/planes-de-estudio/${encodeURIComponent(degreeState)}-${planState}.pdf`}
-            target="_blank"
           >
             Plan de estudio 👀
-          </a>
-          <a
+          </button>
+          <button
+            type="button"
             className="whitespace-nowrap text-center cursor-pointer self-end py-1 px-2 text-base rounded-sm bg-[--midnight-green] text-[--white] grow"
-            onClick={(e) => {
-              !degreeState && (e.preventDefault(), sileo.error({ title: 'Debes elegir tu carrera.' }))
+            onClick={() => {
+              if (!degreeState) {
+                sileo.error({ title: 'Debes elegir tu carrera.' })
+                return
+              }
+              router.push(`/horarios-de-cursada/${encodeURIComponent(degreeState)}.pdf`)
             }}
-            href={degreeState && `/horarios-de-cursada/${encodeURIComponent(degreeState)}.pdf`}
-            target="_blank"
           >
             Horarios de cursada 👀
-          </a>
+          </button>
         </div>
       </div>
     </>
