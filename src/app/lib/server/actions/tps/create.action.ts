@@ -13,8 +13,9 @@ const schema = object({
 })
 
 export const createTp = createAction(schema, async ({ name, number, year, idUser, idCourse }) => {
-  const { user } = await getSession()
-  if (!user) throw new Error('No estas logueado')
+  const session = await getSession()
+  if (!session) throw new Error('No estas logueado')
+
   return db.tp.create({
     data: {
       name: name,

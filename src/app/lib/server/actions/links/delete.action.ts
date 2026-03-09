@@ -10,9 +10,9 @@ const schema = object({
 })
 
 export const deleteLink = createAction(schema, async ({ id, idUser }) => {
-  const { user } = await getSession()
-  if (!user) throw new Error('No estas logueado')
-  if (user.id !== idUser && user.tier !== 2) throw new Error('No tienes permiso para eliminar este tp')
+  const session = await getSession()
+  if (!session) throw new Error('No estas logueado')
+  if (session.user.id !== idUser && session.user.tier !== 2) throw new Error('No tienes permiso para eliminar este tp')
 
   return db.link.delete({
     where: {

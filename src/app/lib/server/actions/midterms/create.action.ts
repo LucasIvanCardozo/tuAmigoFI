@@ -12,8 +12,8 @@ const schema = object({
 })
 
 export const createMidterm = createAction(schema, async ({ name, date, idCourse, idUser }) => {
-  const { user } = await getSession()
-  if (!user) throw new Error('No estas logueado')
+  const session = await getSession()
+  if (!session) throw new Error('No estas logueado')
 
   return db.midterm.create({
     data: {

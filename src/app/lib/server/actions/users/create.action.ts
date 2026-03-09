@@ -2,7 +2,6 @@
 import { object, string } from 'zod'
 import createAction from '../createActions'
 import db from '../../db/db'
-import { getSession } from './get.server.user'
 
 const schema = object({
   name: string().min(1),

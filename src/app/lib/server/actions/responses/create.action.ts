@@ -18,8 +18,8 @@ const schema = object({
 
 export const createResponse = createAction(schema, async ({ idUser, idTp, idMidterm, number, type, text }) => {
   if (idMidterm && idTp) throw new Error('No puedes tener un parcial y un tp')
-  const { user } = await getSession()
-  if (!user) throw new Error('No estas logueado')
+  const session = await getSession()
+  if (!session) throw new Error('No estas logueado')
 
   const validation = await db.response.findFirst({
     where: {

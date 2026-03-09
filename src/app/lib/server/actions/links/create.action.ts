@@ -12,8 +12,8 @@ const schema = object({
 })
 
 export const createLink = createAction(schema, async ({ idCourse, name, link, official }) => {
-  const { user } = await getSession()
-  if (!user) throw new Error('No estas logueado')
+  const session = await getSession()
+  if (!session) throw new Error('No estas logueado')
 
   return db.link.create({
     data: {
@@ -21,7 +21,7 @@ export const createLink = createAction(schema, async ({ idCourse, name, link, of
       name: name,
       link: link,
       official: official,
-      idUser: user.id,
+      idUser: session.user.id,
     },
   })
 })

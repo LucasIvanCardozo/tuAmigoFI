@@ -12,10 +12,10 @@ const schema = object({
 })
 
 export const createComment = createAction(schema, async ({ idResponse, text }) => {
-  const { user } = await getSession()
-  if (!user) throw new Error('No estas logueado')
+  const session = await getSession()
+  if (!session) throw new Error('No estas logueado')
 
-  const lastComments = await commentRepository(db).findLastsByUserId(user.id)
+  const lastComments = await commentRepository(db).findLastsByUserId(session.user.id)
 
   if (lastComments.length >= 5) throw new Error('Has alcanzado el límite de comentarios por hoy')
 
@@ -23,7 +23,7 @@ export const createComment = createAction(schema, async ({ idResponse, text }) =
     data: {
       idResponse,
       text,
-      idUser: user.id,
+      idUser: session.user.id,
     },
   })
 })
