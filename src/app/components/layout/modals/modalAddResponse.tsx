@@ -57,7 +57,7 @@ export const ModalAddResponse = ({ module, session }: { module: Module; session:
       }
     >
       <h2 className="text-lg">Añadir una respuesta</h2>
-      <Form onSubmit={(e: TypeValues[]) => submitAddResponse(e)} onEnd={modalRef.current?.close}>
+      <Form onSubmit={(e: TypeValues[]) => submitAddResponse(e)} onEnd={() => modalRef.current?.close()}>
         <div className="flex flex-col">
           <label htmlFor="number">Número</label>
           <HandlerInputs type="number" id="number" name="number" min={0} max={100} placeholder="Número del problema" required={true} />

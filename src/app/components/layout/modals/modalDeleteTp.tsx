@@ -55,7 +55,7 @@ export const ModalDeleteTp = ({ tp, user, session }: { tp: Tp; user: User; sessi
       }
     >
       <h2 className="text-lg">Eliminar TP</h2>
-      <Form onSubmit={(e: TypeValues[]) => submitDeleteModule(e)} onEnd={modalRef.current?.close}>
+      <Form onSubmit={(e: TypeValues[]) => submitDeleteModule(e)} onEnd={() => modalRef.current?.close()}>
         <div className="flex flex-col [&>*]:flex [&>*]:gap-1">
           <p>
             <b>Nombre:</b>

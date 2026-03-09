@@ -52,7 +52,7 @@ export const ModalAddMidterm = ({ course }: { course: Course }) => {
       }
     >
       <h2 className="text-lg">Agregar Examen</h2>
-      <Form onSubmit={(e: TypeValues[]) => submitAddModule(e)} onEnd={modaleRef.current?.close}>
+      <Form onSubmit={(e: TypeValues[]) => submitAddModule(e)} onEnd={() => modaleRef.current?.close()}>
         <div className="flex flex-col">
           <label htmlFor="name">Título</label>
           <HandlerInputs

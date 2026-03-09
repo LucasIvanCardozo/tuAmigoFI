@@ -53,7 +53,7 @@ export const ModalAddTp = ({ course }: { course: Course }) => {
       }
     >
       <h2 className="text-lg">Agregar TP</h2>
-      <Form onSubmit={(e: TypeValues[]) => submitAddModule(e)} onEnd={modalRef.current?.close}>
+      <Form onSubmit={(e: TypeValues[]) => submitAddModule(e)} onEnd={() => modalRef.current?.close()}>
         <div className="flex flex-col">
           <label htmlFor="name">Titulo</label>
           <HandlerInputs id="name" name="name" type="text" placeholder="Título del TP" required={true} />
