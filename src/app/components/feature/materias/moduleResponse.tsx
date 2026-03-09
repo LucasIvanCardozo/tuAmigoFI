@@ -5,26 +5,28 @@ import PdfView from '@/app/components/pdfView'
 import { BiSolidRightArrowSquare, BiSolidLeftArrowSquare } from 'react-icons/bi'
 import { FaCommentDots } from 'react-icons/fa'
 import { DataModuleProblem } from '@/app/types'
-import { useMainContext } from '@/app/contexts'
-// import ButtonReaction from './buttonReaction'
 import { Code } from './code'
 import { CommentsLi } from './commentsLi'
 import { CgMathMinus, CgMathPlus } from 'react-icons/cg'
-import { useSession } from 'next-auth/react'
 import { ModalDeleteResponse } from '../../layout/modals/modalDeleteResponse'
 import ButtonReaction from './buttonReaction'
+import { Session } from 'next-auth'
 
-export default function ModuleResponse({ problem }: { problem: DataModuleProblem }) {
+export default function ModuleResponse({
+  problem,
+  session,
+  typeModule,
+}: {
+  problem: DataModuleProblem
+  session: Session | null
+  typeModule: 'TP' | 'Practica'
+}) {
   const [indexResponse, setIndexResponse] = useState<number>(0)
   const [stateComment, setStateComment] = useState(false)
   const [viewResponses, setViewResponses] = useState(false)
 
   const responses = problem.responses
-
-  const { modules } = useMainContext()
-  const { data: session } = useSession()
-
-  const isTp = 'number' in modules[0].module
+  const isTp = typeModule == 'TP'
 
   const handlePageUser = (add: number) => {
     const suma = indexResponse + add
@@ -76,43 +78,40 @@ export default function ModuleResponse({ problem }: { problem: DataModuleProblem
                 </button>
               </div>
             </div>
-            {
-              // 0 -> texto ; 1 -> imagen ; 2 -> pdf ; 3 -> codigo
-              responses[indexResponse].response.type == 'TEXT' ? (
-                <div className="whitespace-pre px-2 pb-7">
-                  <p>{responses[indexResponse].response.text}</p>
-                </div>
-              ) : responses[indexResponse].response.type == 'IMAGE' ? (
-                <div className="relative flex justify-center w-full max-h-250 pb-7">
-                  <CldImage
-                    src={`https://res.cloudinary.com/donzj5rlf/image/upload/f_auto,q_auto/v${Math.floor(
-                      Date.now() / (1000 * 60 * 60 * 24 * 7)
-                    )}/${isTp ? 'tps' : 'parciales'}/respuestas/${isTp ? responses[indexResponse].response.idTp : responses[indexResponse].response.idMidterm}/${responses[indexResponse].response.number}/${
-                      responses[indexResponse].response.idUser
-                    }`}
-                    alt=""
-                    width="500"
-                    height="500"
-                    style={{
-                      objectFit: 'cover',
-                      width: '100%',
-                      height: 'auto',
-                    }}
-                  />
-                </div>
-              ) : responses[indexResponse].response.type == 'PDF' ? (
-                <div className="relative overflow-hidden bg-[#C8E0E4] h-min max-w-full py-1 pb-7 rounded-md sm:p-1">
-                  <PdfView
-                    id={responses[indexResponse].response.idUser}
-                    url={`${isTp ? 'tps' : 'parciales'}/respuestas/${isTp ? responses[indexResponse].response.idTp : responses[indexResponse].response.idMidterm}/${responses[indexResponse].response.number}`}
-                  />
-                </div>
-              ) : responses[indexResponse].response.type == 'CODE' ? (
-                <div className="bg-gray-900 p-3 text-white rounded-md overflow-x-auto pb-7">
-                  <Code code={responses[indexResponse].response.text ?? ''} />
-                </div>
-              ) : null
-            }
+            {responses[indexResponse].response.type == 'TEXT' ? (
+              <div className="whitespace-pre px-2 pb-7">
+                <p>{responses[indexResponse].response.text}</p>
+              </div>
+            ) : responses[indexResponse].response.type == 'IMAGE' ? (
+              <div className="relative flex justify-center w-full max-h-250 pb-7">
+                <CldImage
+                  src={`https://res.cloudinary.com/donzj5rlf/image/upload/f_auto,q_auto/v${Math.floor(
+                    Date.now() / (1000 * 60 * 60 * 24 * 7)
+                  )}/${isTp ? 'tps' : 'parciales'}/respuestas/${isTp ? responses[indexResponse].response.idTp : responses[indexResponse].response.idMidterm}/${responses[indexResponse].response.number}/${
+                    responses[indexResponse].response.idUser
+                  }`}
+                  alt=""
+                  width="500"
+                  height="500"
+                  style={{
+                    objectFit: 'cover',
+                    width: '100%',
+                    height: 'auto',
+                  }}
+                />
+              </div>
+            ) : responses[indexResponse].response.type == 'PDF' ? (
+              <div className="relative overflow-hidden bg-[#C8E0E4] h-min max-w-full py-1 pb-7 rounded-md sm:p-1">
+                <PdfView
+                  id={responses[indexResponse].response.idUser}
+                  url={`${isTp ? 'tps' : 'parciales'}/respuestas/${isTp ? responses[indexResponse].response.idTp : responses[indexResponse].response.idMidterm}/${responses[indexResponse].response.number}`}
+                />
+              </div>
+            ) : responses[indexResponse].response.type == 'CODE' ? (
+              <div className="bg-gray-900 p-3 text-white rounded-md overflow-x-auto pb-7">
+                <Code code={responses[indexResponse].response.text ?? ''} />
+              </div>
+            ) : null}
             <div className="flex absolute bottom-0 right-0 z-10 gap-1 p-1 bg-[--white] rounded-md select-none">
               <ButtonReaction indexResponse={indexResponse} responses={responses} />|
               <button onClick={handleComment}>
@@ -121,7 +120,7 @@ export default function ModuleResponse({ problem }: { problem: DataModuleProblem
               {responses[indexResponse].comments.length}
             </div>
           </div>
-          {stateComment && <CommentsLi comments={responses[indexResponse].comments} response={responses[indexResponse].response} />}
+          {stateComment && <CommentsLi comments={responses[indexResponse].comments} response={responses[indexResponse].response} session={session} />}
         </>
       ) : (
         <div className="relative bg-[--white] text-base leading-5 shadow-[0px_0px_5px_0px_rgba(0,0,0,0.5)] flex flex-col">

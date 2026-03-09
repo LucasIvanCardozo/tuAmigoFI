@@ -3,7 +3,7 @@ import z, { boolean, object, string } from 'zod'
 import createAction from '../createActions'
 import db from '../../db/db'
 import { ReactionTo } from '../../db/prisma/prismaClient/enums'
-import { getServerUser } from '../users/get.server.user'
+import { getSession } from '../users/get.server.user'
 
 type ReactionToType = (typeof ReactionTo)[keyof typeof ReactionTo]
 
@@ -14,7 +14,7 @@ const schema = object({
 })
 
 export const upsertReaction = createAction(schema, async ({ idTarget, typeTarget, reaction }) => {
-  const { user } = await getServerUser()
+  const { user } = await getSession()
   if (!user) throw new Error('No estas logueado')
   const { id: idUser } = user
 

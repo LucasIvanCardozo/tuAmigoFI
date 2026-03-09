@@ -7,6 +7,7 @@ export default function PdfView({ id, url }: { id: string; url: string }) {
   const [pageNumber, setPageNumber] = useState<number>(1)
   const [lastPage, setLastPage] = useState<number>(0)
   const [loadingImage, setLoadingImage] = useState<boolean>(false)
+
   const imageUrl = `https://res.cloudinary.com/donzj5rlf/image/upload/pg_${pageNumber}/f_auto/q_auto:eco/v${Math.floor(
     Date.now() / (1000 * 60 * 60 * 24 * 7)
   )}/${url}/${id}`

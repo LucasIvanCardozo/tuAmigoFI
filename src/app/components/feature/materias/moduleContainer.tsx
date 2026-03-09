@@ -1,29 +1,27 @@
-'use client'
 import { numberIconsModules } from '../../../assets/icons'
 import PdfView from '@/app/components/pdfView'
 import { DataModule } from '@/app/types'
-import { useMainContext } from '@/app/contexts'
 import { SiGoogledocs } from 'react-icons/si'
 import ModuleResponse from './moduleResponse'
-import { useSession } from 'next-auth/react'
 import { ModalDeleteTp } from '../../layout/modals/modalDeleteTp'
 import { ModalDeleteMidterm } from '../../layout/modals/modalDeleteMidterm'
 import { ModalAddResponse } from '../../layout/modals/modalAddResponse'
+import { getSession } from '@/app/lib/server/actions/users/get.server.user'
 
-interface Params {
+interface Props {
   module: DataModule
+  idModule?: string
+  typeModule: 'TP' | 'Practica'
 }
 
-export const ModuleContainer = ({ module }: Params) => {
-  const { viewModule } = useMainContext()
-  const { data: session } = useSession()
-
+export const ModuleContainer = async ({ module, idModule, typeModule }: Props) => {
+  const session = await getSession()
   const moduleInd = module.module
   const problems = module.problems
   const isTp = 'number' in moduleInd
 
   return (
-    <li className={'relative ' + `${viewModule != null && viewModule != moduleInd.id && 'hidden'}`}>
+    <li className={'relative ' + `${idModule != null && idModule != moduleInd.id && 'hidden'}`}>
       <div className="flex items-center text-xl sticky top-0 z-20 bg-[--platinum] py-1 ">
         {isTp ? moduleInd.number && numberIconsModules[moduleInd.number] ? numberIconsModules[moduleInd.number] : numberIconsModules[0] : <SiGoogledocs />}
         <h2>
@@ -37,10 +35,14 @@ export const ModuleContainer = ({ module }: Params) => {
 
         <div className="flex gap-1 px-1 ml-auto">
           {session &&
-            (session.user.tier == 2 || session.user.id == module.user.id) &&
-            (isTp ? <ModalDeleteTp tp={moduleInd} user={module.user} /> : <ModalDeleteMidterm midterm={moduleInd} user={module.user} />)}
+            (session.user?.tier == 2 || session.user?.id == module.user.id) &&
+            (isTp ? (
+              <ModalDeleteTp tp={moduleInd} user={module.user} session={session} />
+            ) : (
+              <ModalDeleteMidterm midterm={moduleInd} user={module.user} session={session} />
+            ))}
 
-          <ModalAddResponse module={moduleInd} />
+          <ModalAddResponse module={moduleInd} session={session} />
         </div>
       </div>
       <div className="bg-[--white] text-base leading-5 drop-shadow-md flex flex-col gap-1">
@@ -117,7 +119,12 @@ export const ModuleContainer = ({ module }: Params) => {
               {problems
                 .map((problem, index) =>
                   problem.responses.length > 0 ? (
-                    <ModuleResponse key={((index + problem.responses.length) * (index + problem.responses.length + 1)) / 2 + index} problem={problem} />
+                    <ModuleResponse
+                      key={((index + problem.responses.length) * (index + problem.responses.length + 1)) / 2 + index}
+                      problem={problem}
+                      typeModule={typeModule}
+                      session={session}
+                    />
                   ) : undefined
                 )
                 .filter((prob) => prob != undefined)}

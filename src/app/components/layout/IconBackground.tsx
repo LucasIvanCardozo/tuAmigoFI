@@ -1,4 +1,4 @@
-import { TbMathIntegral, TbTools, TbRulerMeasure, TbCircuitCellPlus, TbMathFunction, TbBulbFilled, TbHammer } from "react-icons/tb"
+import { TbMathIntegral, TbTools, TbRulerMeasure, TbCircuitCellPlus, TbMathFunction, TbBulbFilled, TbHammer } from 'react-icons/tb'
 
 export const IconBackground = () => {
   return (
@@ -17,7 +17,7 @@ export const IconBackground = () => {
         <TbMathFunction />,
       ].map((element, index) => (
         <div
-          key={index}
+          key={element.key}
           className={`w-min relative origin-top [&>*]:animate-[spin_30s_linear_infinite]`}
           style={{
             left: `${index % 2 == 0 ? 5 + Math.random() * 25 : 95 - Math.random() * 25}vw`,

@@ -2,7 +2,7 @@
 import { boolean, object, string } from 'zod'
 import createAction from '../createActions'
 import db from '../../db/db'
-import { getServerUser } from '../users/get.server.user'
+import { getSession } from '../users/get.server.user'
 
 const schema = object({
   idCourse: string().min(1),
@@ -12,7 +12,7 @@ const schema = object({
 })
 
 export const createLink = createAction(schema, async ({ idCourse, name, link, official }) => {
-  const { user } = await getServerUser()
+  const { user } = await getSession()
   if (!user) throw new Error('No estas logueado')
 
   return db.link.create({

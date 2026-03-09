@@ -3,7 +3,7 @@ import z, { number, object, string } from 'zod'
 import createAction from '../createActions'
 import db from '../../db/db'
 import { TypeResponse } from '../../db/prisma/prismaClient/enums'
-import { getServerUser } from '../users/get.server.user'
+import { getSession } from '../users/get.server.user'
 
 const schema = object({
   idUser: string().min(1),
@@ -18,7 +18,7 @@ const schema = object({
 
 export const createResponse = createAction(schema, async ({ idUser, idTp, idMidterm, number, type, text }) => {
   if (idMidterm && idTp) throw new Error('No puedes tener un parcial y un tp')
-  const { user } = await getServerUser()
+  const { user } = await getSession()
   if (!user) throw new Error('No estas logueado')
 
   const validation = await db.response.findFirst({

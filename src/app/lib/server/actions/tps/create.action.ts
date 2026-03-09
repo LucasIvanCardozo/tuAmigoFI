@@ -2,7 +2,7 @@
 import { number, object, string } from 'zod'
 import createAction from '../createActions'
 import db from '../../db/db'
-import { getServerUser } from '../users/get.server.user'
+import { getSession } from '../users/get.server.user'
 
 const schema = object({
   name: string().min(1),
@@ -13,7 +13,7 @@ const schema = object({
 })
 
 export const createTp = createAction(schema, async ({ name, number, year, idUser, idCourse }) => {
-  const { user } = await getServerUser()
+  const { user } = await getSession()
   if (!user) throw new Error('No estas logueado')
   return db.tp.create({
     data: {

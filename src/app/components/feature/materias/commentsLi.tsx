@@ -5,18 +5,18 @@ import { DataModuleComment } from '@/app/types'
 import { Response } from '@/app/lib/server/db/prisma/prismaClient/client'
 import { useReload } from '@/app/hooks/useReload'
 import { sileo } from 'sileo'
-import { useSession } from 'next-auth/react'
 import { useState } from 'react'
+import { Session } from 'next-auth'
 
 interface Params {
   comments: DataModuleComment[]
   response: Response
+  session: Session | null
 }
 
-export const CommentsLi = ({ comments, response }: Params) => {
+export const CommentsLi = ({ comments, response, session }: Params) => {
   const { startReload } = useReload()
   const [inputText, setInputText] = useState<string>('')
-  const { data: session } = useSession()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -61,7 +61,7 @@ export const CommentsLi = ({ comments, response }: Params) => {
       {comments.length > 0 ? (
         <ul className="w-full flex flex-col gap-1 p-1">
           {comments.map((comment) => (
-            <Comment key={comment.comment.id} comment={comment} />
+            <Comment key={comment.comment.id} comment={comment} session={session} />
           ))}
         </ul>
       ) : (

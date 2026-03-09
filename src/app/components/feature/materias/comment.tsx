@@ -2,19 +2,19 @@
 import { useReload } from '@/app/hooks/useReload'
 import { upsertReaction } from '@/app/lib/server/actions/reactions/upsert.action'
 import { DataModuleComment } from '@/app/types'
-import { useSession } from 'next-auth/react'
+import { Session } from 'next-auth'
 import { useEffect, useState } from 'react'
 import { AiFillLike } from 'react-icons/ai'
 import { sileo } from 'sileo'
 
 interface Params {
   comment: DataModuleComment
+  session: Session | null
 }
 
-export const Comment = ({ comment }: Params) => {
+export const Comment = ({ comment, session }: Params) => {
   const [numberLike, setNumberLike] = useState(comment.reactions.length)
   const [stateLike, setStateLike] = useState(false)
-  const { data: session } = useSession()
   const { startReload } = useReload()
 
   useEffect(() => {

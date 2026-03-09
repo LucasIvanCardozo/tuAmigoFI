@@ -3,15 +3,15 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { CgMenu, CgClose } from 'react-icons/cg'
-import { signIn, signOut, useSession } from 'next-auth/react'
+import { signIn, signOut } from 'next-auth/react'
 import Image from 'next/image'
 import { handleLoader } from '@/app/utils/handleLoader'
 import { Loading } from './loading'
+import { Session } from 'next-auth'
 
-export default function Nav() {
+export default function Nav({ session }: { session: Session | null }) {
   const [navState, setNavState] = useState<boolean>(false)
   const pathname: string = usePathname()
-  const { data: session } = useSession()
 
   const handleNavState = () => {
     if (document.documentElement.scrollWidth < 640) {

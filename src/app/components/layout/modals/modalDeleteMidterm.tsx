@@ -1,19 +1,18 @@
+'use client'
 import { TypeValues } from '@/app/types'
 import { Form } from '../form/form'
 import { Modal, ModalRef } from './Modal'
 import { MdDelete } from 'react-icons/md'
 import { HandlerInputs } from '../form/inputs/handlerInputs'
 import { Midterm, User } from '@/app/lib/server/db/prisma/prismaClient/client'
-import { useSession } from 'next-auth/react'
 import { useRef } from 'react'
 import { useReload } from '@/app/hooks/useReload'
 import { deleteMidterm } from '@/app/lib/server/actions/midterms/delete.action'
+import { Session } from 'next-auth'
 
-export const ModalDeleteMidterm = ({ midterm, user }: { midterm: Midterm; user: User }) => {
+export const ModalDeleteMidterm = ({ midterm, user, session }: { midterm: Midterm; user: User; session: Session | null }) => {
   const { startReload } = useReload()
-
   const modalRef = useRef<ModalRef>(null)
-  const { data: session } = useSession()
 
   const submitDeleteModule = async (values: TypeValues[]) => {
     const check = values.find((val) => val.id == 'check')

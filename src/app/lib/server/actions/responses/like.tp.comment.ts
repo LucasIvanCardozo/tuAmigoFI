@@ -2,7 +2,7 @@
 import { z } from 'zod'
 import createAction from '../createActions'
 import db from '../../db/db'
-import { getServerUser } from '../users/get.server.user'
+import { getSession } from '../users/get.server.user'
 
 const { object, number } = z
 

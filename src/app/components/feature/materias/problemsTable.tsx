@@ -1,9 +1,7 @@
-import { useMainContext } from '@/app/contexts'
 import { ModuleContainer } from './moduleContainer'
+import { DataModule } from '@/app/types'
 
-export const ProblemsTable = () => {
-  const { modules } = useMainContext()
-  
+export const ProblemsTable = ({ modules, idModule, typeModule }: { modules: DataModule[]; idModule?: string; typeModule: 'TP' | 'Practica' }) => {
   return (
     <>
       <ul className="flex flex-col gap-1 grow relative overflow-y-auto overflow-x-hidden">
@@ -12,7 +10,7 @@ export const ProblemsTable = () => {
             <p>No hay datos :,c</p>
           </li>
         ) : (
-          modules.map((module) => <ModuleContainer key={module.module.id} module={module} />)
+          modules.map((module) => <ModuleContainer key={module.module.id} module={module} idModule={idModule} typeModule={typeModule} />)
         )}
       </ul>
     </>

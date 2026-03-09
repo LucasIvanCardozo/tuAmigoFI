@@ -1,7 +1,7 @@
 'use server'
 import { z } from 'zod'
 import createAction from '../createActions'
-import { getServerUser } from '../users/get.server.user'
+import { getSession } from '../users/get.server.user'
 import db from '../../db/db'
 import { commentRepository } from '../../db/repository/comment.repository'
 
@@ -12,7 +12,7 @@ const schema = object({
 })
 
 export const createComment = createAction(schema, async ({ idResponse, text }) => {
-  const { user } = await getServerUser()
+  const { user } = await getSession()
   if (!user) throw new Error('No estas logueado')
 
   const lastComments = await commentRepository(db).findLastsByUserId(user.id)

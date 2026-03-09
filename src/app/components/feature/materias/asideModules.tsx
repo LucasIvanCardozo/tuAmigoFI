@@ -1,6 +1,4 @@
 'use client'
-
-import { useMainContext } from '@/app/contexts'
 import { useEffect, useState } from 'react'
 import { numberIconsModules } from '@/app/assets/icons'
 import { TbSquareAsteriskFilled, TbSquareMinusFilled } from 'react-icons/tb'
@@ -8,15 +6,33 @@ import { SiGoogledocs } from 'react-icons/si'
 import { AsideMainButton } from './asideMainButton'
 import { ModalAddTp } from '../../layout/modals/modalAddTp'
 import { ModalAddMidterm } from '../../layout/modals/modalAddMidterm'
+import { DataModule } from '@/app/types'
+import { Course } from '@/app/lib/server/db/prisma/prismaClient/client'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
-export const AsideModules = () => {
-  const { viewModule, setViewModule, modules, course, typeModule } = useMainContext()
+export const AsideModules = ({
+  modules,
+  course,
+  typeModule,
+  idModule,
+}: {
+  modules: DataModule[]
+  course: Course
+  typeModule: 'TP' | 'Practica'
+  idModule?: string
+}) => {
+  const { replace } = useRouter()
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
   const [viewAside, setViewAside] = useState(false)
   const isTp = typeModule == 'TP'
 
   const handleViewModules = (module: string | null) => {
     setViewAside(false)
-    setViewModule(module)
+    const params = new URLSearchParams(searchParams)
+    if (module) params.set('idModule', module)
+    else params.delete('idModule')
+    replace(`${pathname}?${params.toString()}`)
   }
 
   useEffect(() => {
@@ -24,20 +40,14 @@ export const AsideModules = () => {
     else document.body.style.overflow = ''
   }, [viewAside])
 
-  //no bloquear el scroll en pantallas escritorio
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(min-width: 640px)') // Tailwind 'sm' breakpoint is 640px
-
+    const mediaQuery = window.matchMedia('(min-width: 640px)')
     const handleMediaChange = (e: MediaQueryListEvent) => {
       if (e.matches) {
         setViewAside(false)
       }
     }
-
-    // Escucha los cambios de la media query
     mediaQuery.addEventListener('change', (e) => handleMediaChange(e))
-
-    // Limpieza para remover el event listener
     return () => {
       mediaQuery.removeEventListener('change', (e) => handleMediaChange(e))
     }
@@ -56,7 +66,7 @@ export const AsideModules = () => {
         <ul className="flex flex-col gap-3 overflow-y-auto overflow-x-hidden" style={{ scrollbarWidth: 'none' }}>
           <li
             className={
-              (!viewModule ? 'bg-[#3D4731]' : '') +
+              (!idModule ? 'bg-[#3D4731]' : '') +
               ' grid grid-cols-[1.2rem,1fr] gap-1 p-1 rounded-md [&>svg]:self-start [&>svg]:h-max [&>svg]:w-full transform-gpu transition-transform sm:hover:scale-105'
             }
           >
@@ -70,7 +80,7 @@ export const AsideModules = () => {
             <li
               key={module.id}
               className={
-                (viewModule == module.id ? 'bg-[#3D4731] ' : '') +
+                (idModule == module.id ? 'bg-[#3D4731] ' : '') +
                 'grid grid-cols-[1.2rem,1fr] gap-1 p-1 rounded-md [&>svg]:self-start [&>svg]:h-max [&>svg]:w-full transform-gpu transition-transform sm:hover:scale-105'
               }
             >

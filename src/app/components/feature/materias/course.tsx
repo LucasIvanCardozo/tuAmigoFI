@@ -11,11 +11,11 @@ import ModalCreateCorrelative from '../../layout/modals/modalCreateCorrelative'
 import ModalAddLink from '../../layout/modals/modalAddLink'
 import { linkUseCases } from '@/app/lib/server/usecases/link.usecases'
 import { courseUseCases } from '@/app/lib/server/usecases/course.usecases'
-import { getServerUser } from '@/app/lib/server/actions/users/get.server.user'
+import { getSession } from '@/app/lib/server/actions/users/get.server.user'
 
 export default async function Course({ course, idDegree }: { course: CourseType; idDegree?: string }) {
   const { id, name, cg, hs, optional } = course
-  const session = await getServerUser()
+  const session = await getSession()
   const callbackLinks = linkUseCases.findByCourseId(id)
   const callbackCourses = courseUseCases.findAll()
 

@@ -1,18 +1,16 @@
+'use client'
 import { Module, TypeValues } from '@/app/types'
 import { Form } from '../form/form'
 import { Modal, ModalRef } from './Modal'
 import { CgMathPlus } from 'react-icons/cg'
 import { HandlerInputs } from '../form/inputs/handlerInputs'
-import { useSession } from 'next-auth/react'
-
 import { useRef } from 'react'
 import { useReload } from '@/app/hooks/useReload'
 import { createResponse } from '@/app/lib/server/actions/responses/create.action'
+import { Session } from 'next-auth'
 
-export const ModalAddResponse = ({ module }: { module: Module }) => {
+export const ModalAddResponse = ({ module, session }: { module: Module; session: Session | null }) => {
   const { startReload } = useReload()
-
-  const { data: session } = useSession()
   const modalRef = useRef<ModalRef>(null)
   const isTp = 'number' in module
 

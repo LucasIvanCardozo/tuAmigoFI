@@ -1,29 +1,19 @@
-'use client'
 import { ProblemsTable } from './problemsTable'
-import { useMainContext } from '@/app/contexts'
-import { useEffect } from 'react'
 import { DataModule } from '@/app/types'
 import { AsideModules } from './asideModules'
 import { Course } from '@/app/lib/server/db/prisma/prismaClient/client'
 
-interface Params {
+interface Props {
   modules: DataModule[]
   course: Course
   typeModule: 'TP' | 'Practica'
+  idModule?: string
 }
 
-export const MainModule = ({ modules, course, typeModule }: Params) => {
-  const { setCourse, setTypeModule, setModules } = useMainContext()
-
-  useEffect(() => {
-    setCourse(course)
-    setTypeModule(typeModule)
-    setModules(modules)
-  }, [course, typeModule, modules])
-
+export const MainModule = async ({ modules, course, typeModule, idModule }: Props) => {
   return (
     <main className="h-screen w-full pt-8 flex gap-2 max-w-screen-lg m-auto sm:pb-3 sm:px-2 sm:pt-16">
-      <AsideModules />
+      <AsideModules modules={modules} course={course} typeModule={typeModule} idModule={idModule} />
       <section className="text-[--black] flex flex-col grow relative h-full p-3 overflow-hidden sm:p-0 ">
         <div>
           <div className="flex justify-between items-end">
@@ -32,7 +22,7 @@ export const MainModule = ({ modules, course, typeModule }: Params) => {
             </h1>
           </div>
         </div>
-        <ProblemsTable />
+        <ProblemsTable idModule={idModule} modules={modules} typeModule={typeModule} />
       </section>
     </main>
   )

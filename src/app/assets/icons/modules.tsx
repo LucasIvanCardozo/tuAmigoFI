@@ -8,10 +8,8 @@ import {
   TbSquareNumber7Filled,
   TbSquareNumber8Filled,
   TbSquareNumber9Filled,
-  TbSquareMinusFilled,
-  TbSquareAsteriskFilled,
   TbSquareDotFilled,
-} from 'react-icons/tb';
+} from 'react-icons/tb'
 
 export const numberIconsModules = [
   <TbSquareDotFilled />,
@@ -24,4 +22,4 @@ export const numberIconsModules = [
   <TbSquareNumber7Filled />,
   <TbSquareNumber8Filled />,
   <TbSquareNumber9Filled />,
-];
+]
