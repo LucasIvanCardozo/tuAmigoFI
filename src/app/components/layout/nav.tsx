@@ -55,7 +55,7 @@ export default function Nav({ session }: { session: Session | null }) {
       role="navigation"
     >
       <Link
-        className="text-xl bg-[--dark-cyan] drop-shadow-sm rounded-md m-1 px-1 flex items-center justify-center sm:hidden"
+        className="text-xl bg-(--dark-cyan) drop-shadow-sm rounded-md m-1 px-1 flex items-center justify-center sm:hidden"
         href="/"
         onClick={
           pathname != '/'
@@ -68,14 +68,14 @@ export default function Nav({ session }: { session: Session | null }) {
       >
         <b className="">Tu Amigo FI</b>
       </Link>
-      <button className="relative m-1 bg-[--dark-cyan] rounded-md aspect-square sm:hidden" aria-label="Menú" title="Menú" onClick={handleNavState}>
+      <button className="relative m-1 bg-(--dark-cyan) rounded-md aspect-square sm:hidden" aria-label="Menú" title="Menú" onClick={handleNavState}>
         <CgMenu className={(navState ? 'opacity-0' : 'opacity-100') + ' transform-gpu transition-opacity absolute top-0 left-0 w-full h-full p-1'} />
         <CgClose className={(navState ? 'opacity-100' : 'opacity-0') + ' transform-gpu transition-opacity absolute top-0 left-0 w-full h-full p-1'} />
       </button>
       <ul
         className={
-          (navState ? '-translate-x-full' : '-translate-x-0') +
-          ` flex flex-col absolute left-full top-10 bg-[--dark-cyan] rounded-md transform-gpu transition-transform sm:flex-row sm:relative sm:translate-x-0 sm:left-auto sm:top-auto`
+          (navState ? '-translate-x-full' : 'translate-x-0') +
+          ` flex flex-col absolute left-full top-10 bg-(--dark-cyan) rounded-md transform-gpu transition-transform sm:flex-row sm:relative sm:translate-x-0 sm:left-auto sm:top-auto`
         }
       >
         {[
@@ -83,7 +83,7 @@ export default function Nav({ session }: { session: Session | null }) {
           { href: '/materias', name: 'Materias' },
           { href: '/contactame', name: 'Contáctame' },
         ].map(({ href, name }, index) => (
-          <li key={index} className={'rounded-md ' + (pathname == href ? 'bg-[--midnight-green]' : 'hover:bg-[--midnight-green]')}>
+          <li key={index} className={'rounded-md ' + (pathname == href ? 'bg-(--midnight-green)' : 'hover:bg-(--midnight-green)')}>
             <Link
               href={href}
               className="inline-block text-center w-40 py-2 font-bold px-3 sm:w-28 sm:font-normal"
@@ -100,7 +100,7 @@ export default function Nav({ session }: { session: Session | null }) {
             </Link>
           </li>
         ))}
-        <li className="rounded-md border-t-2 border-[#31969B] hover:bg-[--midnight-green] sm:border-l-2 sm:border-t-0">
+        <li className="rounded-md border-t-2 border-[#31969B] hover:bg-(--midnight-green) sm:border-l-2 sm:border-t-0">
           {session === undefined ? (
             <div className="flex justify-center w-40 py-2 px-3 sm:w-28">
               <Loading size={6} mode="white" />

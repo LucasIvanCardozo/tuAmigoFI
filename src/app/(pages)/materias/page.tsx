@@ -23,7 +23,7 @@ export default async function Materias({ searchParams }: { searchParams?: Course
 
   return (
     <>
-      <main className="relative flex justify-center pb-4 w-10/12 max-w-screen-sm pt-12 m-auto my-6 gap-2 h-auto text-[--black] sm:pt-16">
+      <main className="relative flex justify-center pb-4 w-10/12 max-w-(--breakpoint-sm) pt-12 m-auto my-6 gap-2 h-auto text-(--black) sm:pt-16">
         <div className="select-none">
           <Image className="object-contain h-full" src="/FI.svg" width={200} height={200} alt="" unoptimized />
         </div>
@@ -32,8 +32,8 @@ export default async function Materias({ searchParams }: { searchParams?: Course
           <p className="text-lg font-normal hidden sm:block">Aquí encontrarás todo lo necesario para mejorar tus prácticas c:</p>
         </h1>
       </main>
-      <section className="flex flex-col max-w-screen-md w-11/12 mb-4 m-auto grow items-center">
-        <div className="flex select-none flex-col w-full gap-1 text-[--black] sm:flex-row">
+      <section className="flex flex-col max-w-(--breakpoint-md) w-11/12 mb-4 m-auto grow items-center">
+        <div className="flex select-none flex-col w-full gap-1 text-(--black) sm:flex-row">
           <SearchCourses />
           <Suspense fallback={<YearSkeleton />}>
             <YearCourse callback={callbackYears} />

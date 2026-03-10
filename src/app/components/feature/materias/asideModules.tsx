@@ -59,7 +59,7 @@ export const AsideModules = ({
       <aside
         className={
           (viewAside ? 'translate-x-full' : 'translate-x-0') +
-          ' fixed z-40 top-0 right-full  transform-gpu transition-transform bg-[--black-olive] w-max min-w-40  rounded-md mt-10 py-4 px-3 flex flex-col max-h-[80vh] gap-3 sm:max-h-none sm:relative sm:h-full sm:m-0 sm:max-w-52 sm:right-auto '
+          ' fixed z-40 top-0 right-full  transform-gpu transition-transform bg-(--black-olive) w-max min-w-40  rounded-md mt-10 py-4 px-3 flex flex-col max-h-[80vh] gap-3 sm:max-h-none sm:relative sm:h-full sm:m-0 sm:max-w-52 sm:right-auto '
         }
       >
         <h1 className="text-xl hidden whitespace-nowrap sm:block">{isTp ? <b>Busca tu TP</b> : <b>Exámenes</b>}</h1>
@@ -67,13 +67,13 @@ export const AsideModules = ({
           <li
             className={
               (!idModule ? 'bg-[#3D4731]' : '') +
-              ' grid grid-cols-[1.2rem,1fr] gap-1 p-1 rounded-md [&>svg]:self-start [&>svg]:h-max [&>svg]:w-full transform-gpu transition-transform sm:hover:scale-105'
+              ' grid grid-cols-[1.2rem_1fr] gap-1 p-1 rounded-md [&>svg]:self-start [&>svg]:h-max [&>svg]:w-full transform-gpu transition-transform sm:hover:scale-105'
             }
           >
             <TbSquareAsteriskFilled />
             <button className="text-start" onClick={() => handleViewModules(null)} aria-label="Mostrar todos" title="Mostrar todos los TPs">
               <h2 className="text-base leading-4">Mostrar todos</h2>
-              <p className="text-xs text-[--silver]">{`Todos los TPs`} </p>
+              <p className="text-xs text-(--silver)">{`Todos los TPs`} </p>
             </button>
           </li>
           {modules.map(({ module }) => (
@@ -81,7 +81,7 @@ export const AsideModules = ({
               key={module.id}
               className={
                 (idModule == module.id ? 'bg-[#3D4731] ' : '') +
-                'grid grid-cols-[1.2rem,1fr] gap-1 p-1 rounded-md [&>svg]:self-start [&>svg]:h-max [&>svg]:w-full transform-gpu transition-transform sm:hover:scale-105'
+                'grid grid-cols-[1.2rem_1fr] gap-1 p-1 rounded-md [&>svg]:self-start [&>svg]:h-max [&>svg]:w-full transform-gpu transition-transform sm:hover:scale-105'
               }
             >
               {'number' in module ? (
@@ -101,9 +101,9 @@ export const AsideModules = ({
               >
                 <h2 className="text-base leading-4">{module.name}</h2>
                 {'number' in module ? (
-                  <p className="text-xs text-[--silver]">{`Del año ${module.year}`} </p>
+                  <p className="text-xs text-(--silver)">{`Del año ${module.year}`} </p>
                 ) : (
-                  <p className="text-xs text-[--silver]">{`Del ${module.date.getMonth() + 1}/${module.date.getFullYear()}`} </p>
+                  <p className="text-xs text-(--silver)">{`Del ${module.date.getMonth() + 1}/${module.date.getFullYear()}`} </p>
                 )}
               </button>
             </li>

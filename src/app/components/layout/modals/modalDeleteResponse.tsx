@@ -54,7 +54,7 @@ export const ModalDeleteResponse = ({ response, user }: { response: Response; us
       <h2 className="text-lg">Eliminar respuesta</h2>
       <Form onSubmit={(e: TypeValues[]) => submitDeleteResponse(e)} onEnd={() => modalRef.current?.close()}>
         <div>
-          <div className="flex flex-col [&>*]:flex [&>*]:gap-1">
+          <div className="flex flex-col *:flex *:gap-1">
             <p>
               <b>Numero del problema:</b>
               {response.number}

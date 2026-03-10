@@ -58,7 +58,7 @@ export default function ModalReportLink({ link }: { link: Link }) {
           <h3 className="text-lg mb-4">
             <b>{`Reportar link`}</b>
           </h3>
-          <div className="flex flex-col gap-1 [&>*]:flex [&>*]:gap-1">
+          <div className="flex flex-col gap-1 *:flex *:gap-1">
             <span>
               <b>Nombre:</b>
               {link.name}

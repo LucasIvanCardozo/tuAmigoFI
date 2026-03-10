@@ -20,9 +20,9 @@ export default async function Course({ course, idDegree }: { course: CourseType;
   const callbackCourses = courseUseCases.findAll()
 
   return (
-    <li className="relative select-none flex flex-col w-full h-min bg-[--white] shadow-md p-2 transform-gpu transition-transform sm:w-11/12 sm:will-change-transform">
+    <li className="relative select-none flex flex-col w-full h-min bg-(--white) shadow-md p-2 transform-gpu transition-transform sm:w-11/12 sm:will-change-transform">
       <div className="relative flex gap-1 justify-between w-full select-text">
-        <h2 className="font-bold whitespace-nowrap overflow-x-auto text-lg text-[--white] bg-[--dark-cyan] sm:font-normal sm:text-wrap sm:leading-6">{name}</h2>
+        <h2 className="font-bold whitespace-nowrap overflow-x-auto text-lg text-(--white) bg-(--dark-cyan) sm:font-normal sm:text-wrap sm:leading-6">{name}</h2>
         {optional ? <span className="absolute left-full text-sm">{`(Opcional)`}</span> : ''}
         <div className="flex items-center text-center whitespace-nowrap px-1">
           <span>{`${cg}CG / ${hs}Hs`}</span>
@@ -41,7 +41,7 @@ export default async function Course({ course, idDegree }: { course: CourseType;
           <DegreeList idCourse={id} />
         </Suspense>
       </div>
-      <div className="flex justify-end gap-1 pt-1 text-[--white] items-center text-sm sm:text-base">
+      <div className="flex justify-end gap-1 pt-1 text-(--white) items-center text-sm sm:text-base">
         {session && session?.user && (
           <>
             <ModalCreateCorrelative course={course} callback={callbackCourses} />

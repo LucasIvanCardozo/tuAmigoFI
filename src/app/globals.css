@@ -58,6 +58,12 @@ body {
   overflow: hidden;
 }
 
+input,
+select {
+  background: var(--white);
+  color: var(--black);
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

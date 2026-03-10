@@ -47,8 +47,8 @@ export const ModalAddTp = ({ course }: { course: Course }) => {
     <Modal
       refAux={modalRef}
       opener={
-        <button className="text-start bg-[--white] py-1 px-2 rounded-md">
-          <p className="text-base text-[--black-olive] leading-4">Agregar TP</p>
+        <button className="text-start bg-(--white) py-1 px-2 rounded-md">
+          <p className="text-base text-(--black-olive) leading-4">Agregar TP</p>
         </button>
       }
     >

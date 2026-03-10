@@ -45,7 +45,7 @@ export default function ModalAddLink({ course }: { course: Course }) {
   return (
     <Modal
       opener={
-        <button className="text-[--black-olive] p-1" aria-label="Añadir link" title="Añadir link">
+        <button className="text-(--black-olive) p-1" aria-label="Añadir link" title="Añadir link">
           Añadir Link
         </button>
       }
@@ -58,7 +58,7 @@ export default function ModalAddLink({ course }: { course: Course }) {
           <p>
             Este link será añadido a la materia <b> "{course.name}"</b>
           </p>
-          <div className="flex flex-col gap-2 [&>*]:flex ">
+          <div className="flex flex-col gap-2 *:flex ">
             <div className="flex flex-col">
               <label htmlFor="name">Titulo del link</label>
               <input

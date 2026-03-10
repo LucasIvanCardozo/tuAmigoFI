@@ -3,7 +3,7 @@ import PrivacitySection from '@/app/components/privacitySection'
 export default async function Privacidad() {
   return (
     <>
-      <main className="pt-14 text-[--black] w-11/12 mx-auto max-w-screen-md my-5 sm:pt-20">
+      <main className="pt-14 text-(--black) w-11/12 mx-auto max-w-(--breakpoint-md) my-5 sm:pt-20">
         <h1 className="text-3xl">
           <b>Política de Privacidad de Tu-Amigo-FI</b>
         </h1>
@@ -21,7 +21,7 @@ export default async function Privacidad() {
           }
         />
       </main>
-      <article className="flex flex-col py-8 gap-4 text-[--black] w-11/12 mx-auto max-w-screen-md">
+      <article className="flex flex-col py-8 gap-4 text-(--black) w-11/12 mx-auto max-w-(--breakpoint-md)">
         <PrivacitySection
           header="Información que recopilo"
           description={

@@ -31,11 +31,11 @@ export default function IndexList({ query, callback }: { query: CourseSearchPara
   }
 
   return total === 0 ? (
-    <p className="text-[--black]">Cargando</p>
+    <p className="text-(--black)">Cargando</p>
   ) : total === 0 ? (
-    <p className="opacity-75 text-[--black]">No se encuentran datos</p>
+    <p className="opacity-75 text-(--black)">No se encuentran datos</p>
   ) : (
-    <ul className="flex items-center text-[--black] select-none">
+    <ul className="flex items-center text-(--black) select-none">
       <IndexLi index={1} page={page} modifier={0} callback={handlePage} />
       {total > 8 && page > 5 && <li>...</li>}
       {total <= 8

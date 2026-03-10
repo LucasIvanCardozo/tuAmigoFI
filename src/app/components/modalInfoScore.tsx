@@ -7,7 +7,7 @@ export default function ModalInfoScore({
   callback: (display: boolean | undefined) => void;
 }) {
   return (
-    <div className="fixed z-50 inset-0 bg-slate-800 bg-opacity-30 text-[--white] flex justify-center items-center font-normal">
+    <div className="fixed z-50 inset-0 bg-slate-800 bg-opacity-30 text-(--white) flex justify-center items-center font-normal">
       <div className="flex flex-col max-w-80 w-11/12 bg-slate-800 p-5 rounded-lg gap-3">
         <h3 className="text-lg mb-4">
           <b>¿Cómo obtener puntos?</b>

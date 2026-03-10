@@ -46,8 +46,8 @@ export const ModalAddMidterm = ({ course }: { course: Course }) => {
     <Modal
       refAux={modaleRef}
       opener={
-        <button className="text-start bg-[--white] py-1 px-2 rounded-md">
-          <p className="text-base text-[--black-olive] leading-4">Agregar Examen</p>
+        <button className="text-start bg-(--white) py-1 px-2 rounded-md">
+          <p className="text-base text-(--black-olive) leading-4">Agregar Examen</p>
         </button>
       }
     >

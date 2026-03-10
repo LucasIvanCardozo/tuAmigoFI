@@ -22,7 +22,7 @@ export const ModuleContainer = async ({ module, idModule, typeModule }: Props) =
 
   return (
     <li className={'relative ' + `${idModule != null && idModule != moduleInd.id && 'hidden'}`}>
-      <div className="flex items-center text-xl sticky top-0 z-20 bg-[--platinum] py-1 ">
+      <div className="flex items-center text-xl sticky top-0 z-20 bg-(--platinum) py-1 ">
         {isTp ? moduleInd.number && numberIconsModules[moduleInd.number] ? numberIconsModules[moduleInd.number] : numberIconsModules[0] : <SiGoogledocs />}
         <h2>
           {moduleInd.name}{' '}
@@ -45,9 +45,9 @@ export const ModuleContainer = async ({ module, idModule, typeModule }: Props) =
           <ModalAddResponse module={moduleInd} session={session} />
         </div>
       </div>
-      <div className="bg-[--white] text-base leading-5 drop-shadow-md flex flex-col gap-1">
+      <div className="bg-(--white) text-base leading-5 drop-shadow-md flex flex-col gap-1">
         <div className="relative overflow-hidden bg-[#96cad3] h-min rounded-b-lg p-1 sm:p-2">
-          <div className="absolute z-10 bg-[--white] rounded-md m-2 opacity-65 top-0 left-0">{`Por ${module.user.name}`}</div>
+          <div className="absolute z-10 bg-(--white) rounded-md m-2 opacity-65 top-0 left-0">{`Por ${module.user.name}`}</div>
           {/* {session && (
             <button
               className="absolute z-10 m-2 bottom-0 right-0 w-6 h-6 bg-white bg-opacity-65 rounded-md"
@@ -58,7 +58,7 @@ export const ModuleContainer = async ({ module, idModule, typeModule }: Props) =
                   onSubmit: submitReportModule,
                   children: (
                     <>
-                      <div className="flex flex-col [&>*]:flex [&>*]:gap-1">
+                      <div className="flex flex-col *:flex *:gap-1">
                         <p>
                           <b>Nombre:</b>
                           {moduleInd.name}

@@ -28,7 +28,7 @@ export const InputSelectResponse = ({ input, onChange, setValue, setImage, setPD
         </select>
       </div>
       {typeResponse == 'TEXT' ? (
-        <div className="flex flex-col text-[--black]">
+        <div className="flex flex-col text-(--black)">
           <textarea
             name="code"
             id="code"
@@ -44,7 +44,7 @@ export const InputSelectResponse = ({ input, onChange, setValue, setImage, setPD
       ) : typeResponse == 'PDF' ? (
         <input className="text-white" type="file" accept="application/pdf" required onChange={(e) => setPDF(e)} />
       ) : typeResponse == 'CODE' ? (
-        <div className="flex flex-col text-[--black]">
+        <div className="flex flex-col text-(--black)">
           <textarea
             name="code"
             id="code"

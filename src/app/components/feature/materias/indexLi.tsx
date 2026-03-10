@@ -14,7 +14,7 @@ export default function IndexLi({
     <li
       className={
         page == index + modifier
-          ? 'font-bold text-2xl text-[--black-olive]'
+          ? 'font-bold text-2xl text-(--black-olive)'
           : 'opacity-60 text-lg' + ' sm:hover:scale-110'
       }
     >

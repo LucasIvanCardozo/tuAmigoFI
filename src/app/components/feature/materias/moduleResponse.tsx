@@ -43,7 +43,7 @@ export default function ModuleResponse({
     <li className="mx-2 my-1">
       {viewResponses ? (
         <>
-          <div className="relative bg-[--white] text-base leading-5 shadow-[0px_0px_5px_0px_rgba(0,0,0,0.5)] flex flex-col min-h-32">
+          <div className="relative bg-(--white) text-base leading-5 shadow-[0px_0px_5px_0px_rgba(0,0,0,0.5)] flex flex-col min-h-32">
             <span className="bg-[#C8E0E4] flex justify-between items-center">
               <b className="bg-[#9fc8cf] p-1">{`Ejercicio ${problem.number}:`}</b>
               <span className="opacity-75 p-1 flex gap-1">
@@ -60,7 +60,7 @@ export default function ModuleResponse({
               <span></span>
               <div className="flex gap-1">
                 <button
-                  className="h-full aspect-square text-[--black-olive] opacity-90"
+                  className="h-full aspect-square text-(--black-olive) opacity-90"
                   aria-label="Cambiar usuario que respondió hacia la izquierda"
                   title="Cambiar hacia izquierda"
                   onClick={() => handlePageUser(-1)}
@@ -69,7 +69,7 @@ export default function ModuleResponse({
                 </button>
                 <span className="text-nowrap">{`${indexResponse + 1} de ${responses.length}`}</span>
                 <button
-                  className="h-full aspect-square text-[--black-olive] opacity-90"
+                  className="h-full aspect-square text-(--black-olive) opacity-90"
                   aria-label="Cambiar usuario que respondió hacia la derecha"
                   title="Cambiar hacia derecha"
                   onClick={() => handlePageUser(1)}
@@ -112,7 +112,7 @@ export default function ModuleResponse({
                 <Code code={responses[indexResponse].response.text ?? ''} />
               </div>
             ) : null}
-            <div className="flex absolute bottom-0 right-0 z-10 gap-1 p-1 bg-[--white] rounded-md select-none">
+            <div className="flex absolute bottom-0 right-0 z-10 gap-1 p-1 bg-(--white) rounded-md select-none">
               <ButtonReaction indexResponse={indexResponse} responses={responses} />|
               <button onClick={handleComment}>
                 <FaCommentDots className="text-xl" />
@@ -123,7 +123,7 @@ export default function ModuleResponse({
           {stateComment && <CommentsLi comments={responses[indexResponse].comments} response={responses[indexResponse].response} session={session} />}
         </>
       ) : (
-        <div className="relative bg-[--white] text-base leading-5 shadow-[0px_0px_5px_0px_rgba(0,0,0,0.5)] flex flex-col">
+        <div className="relative bg-(--white) text-base leading-5 shadow-[0px_0px_5px_0px_rgba(0,0,0,0.5)] flex flex-col">
           <span className="bg-[#C8E0E4] flex justify-between items-center">
             <b className=" p-1">{`Ejercicio ${problem.number}`}</b>
             <span className="opacity-75 p-1 flex gap-1">

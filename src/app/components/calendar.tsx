@@ -162,7 +162,7 @@ export default function CalendarSection() {
   }, [])
 
   return (
-    <section className="relative my-4 text-[--black] max-w-screen-md m-auto w-11/12 select-none">
+    <section className="relative my-4 text-(--black) max-w-(--breakpoint-md) m-auto w-11/12 select-none">
       <div className="text-3xl w-full flex h-fit justify-center sm:text-4xl">
         <h2 className="font-bold flex flex-col mb-2">
           <span>Calendario académico</span>

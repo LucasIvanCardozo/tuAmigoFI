@@ -44,7 +44,7 @@ export default function ModalCreateCorrelative({ course, callback }: { course: C
     <Modal
       refAux={modalRef}
       opener={
-        <button className="text-[--black-olive] p-1" aria-label="Añadir correlativa" title="Añadir correlativa">
+        <button className="text-(--black-olive) p-1" aria-label="Añadir correlativa" title="Añadir correlativa">
           Añadir correlativa
         </button>
       }
@@ -54,7 +54,7 @@ export default function ModalCreateCorrelative({ course, callback }: { course: C
           <h3 className="text-lg mb-4">
             <b>Añadir correlativa</b>
           </h3>
-          <div className="flex flex-col [&>*]:flex [&>*]:gap-1">
+          <div className="flex flex-col *:flex *:gap-1">
             <div className="flex flex-col">
               <label htmlFor="correlative">Correlativa</label>
               <select className="text-black" name="correlative" id="correlative" onChange={(e) => setIdCorrelative(e.target.value)} required>

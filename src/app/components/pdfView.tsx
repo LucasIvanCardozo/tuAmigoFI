@@ -80,7 +80,7 @@ export default function PdfView({ id, url }: { id: string; url: string }) {
                   className="border-black inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] bg-white bg-opacity-65"
                   role="status"
                 >
-                  <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+                  <span className="absolute! -m-px! h-px! w-px! overflow-hidden! whitespace-nowrap! border-0! p-0! [clip:rect(0,0,0,0)]!">Loading...</span>
                 </div>
               </div>
             }

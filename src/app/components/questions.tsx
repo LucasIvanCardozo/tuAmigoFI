@@ -39,7 +39,7 @@ export default function Questions({ callback }: { callback: Promise<DegreesWithP
         <div className="flex gap-2">
           <button
             type="button"
-            className="whitespace-nowrap text-center cursor-pointer self-end py-1 px-2 text-base rounded-sm bg-[--midnight-green] text-[--white] grow"
+            className="whitespace-nowrap text-center cursor-pointer self-end py-1 px-2 text-base rounded-sm bg-(--midnight-green) text-(--white) grow"
             onClick={() => {
               if (!degreeState || !planState) {
                 sileo.error({ title: 'Debes elegir tu carrera y tu plan.' })
@@ -52,7 +52,7 @@ export default function Questions({ callback }: { callback: Promise<DegreesWithP
           </button>
           <button
             type="button"
-            className="whitespace-nowrap text-center cursor-pointer self-end py-1 px-2 text-base rounded-sm bg-[--midnight-green] text-[--white] grow"
+            className="whitespace-nowrap text-center cursor-pointer self-end py-1 px-2 text-base rounded-sm bg-(--midnight-green) text-(--white) grow"
             onClick={() => {
               if (!degreeState) {
                 sileo.error({ title: 'Debes elegir tu carrera.' })

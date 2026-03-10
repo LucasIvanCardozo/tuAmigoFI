@@ -12,7 +12,7 @@ export default async function CoursesTable({ query }: { query: CourseSearchParam
   return (
     <>
       <UpdateLoader courses={courses} />
-      <ul className="w-full flex flex-col gap-3 items-center mt-5 mb-2 text-[--black]">
+      <ul className="w-full flex flex-col gap-3 items-center mt-5 mb-2 text-(--black)">
         {courses.map((course) => (
           <Course key={course.id} course={course} idDegree={query.idDegree} />
         ))}

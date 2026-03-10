@@ -12,9 +12,9 @@ interface Props {
 
 export const MainModule = async ({ modules, course, typeModule, idModule }: Props) => {
   return (
-    <main className="h-screen w-full pt-8 flex gap-2 max-w-screen-lg m-auto sm:pb-3 sm:px-2 sm:pt-16">
+    <main className="h-screen w-full pt-8 flex gap-2 max-w-(--breakpoint-lg) m-auto sm:pb-3 sm:px-2 sm:pt-16">
       <AsideModules modules={modules} course={course} typeModule={typeModule} idModule={idModule} />
-      <section className="text-[--black] flex flex-col grow relative h-full p-3 overflow-hidden sm:p-0 ">
+      <section className="text-(--black) flex flex-col grow relative h-full p-3 overflow-hidden sm:p-0 ">
         <div>
           <div className="flex justify-between items-end">
             <h1 className="text-2xl sm:text-3xl font-bold">
