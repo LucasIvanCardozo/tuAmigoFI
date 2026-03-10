@@ -2,11 +2,11 @@ import { courseUseCases } from '@/app/lib/server/usecases/course.usecases'
 import { Metadata } from 'next'
 
 type Props = {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = params
+  const { id } = await params
   const course = await courseUseCases.getById(id)
 
   return {

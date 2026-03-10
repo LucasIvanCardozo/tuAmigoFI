@@ -9,8 +9,6 @@ import QuestionSkeleton from './components/skeletons/question.skeleton'
 import Questions from './components/questions'
 import { degreeUseCases } from './lib/server/usecases/degree.usecases'
 
-export const revalidate = 3600 * 24
-
 export default async function Home() {
   const degreesCallback = degreeUseCases.findAllWithPlans()
 

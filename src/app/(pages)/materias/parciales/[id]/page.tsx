@@ -3,17 +3,17 @@ import { courseUseCases } from '@/app/lib/server/usecases/course.usecases'
 import { midtermUseCases } from '@/app/lib/server/usecases/midterm.usecases'
 
 interface Params {
-  params: { id: string }
-  searchParams?: {
-    idModule: string
+  params: Promise<{ id: string }>
+  searchParams: {
+    idModule: string | undefined
   }
 }
 
 export default async function Practica({ params, searchParams }: Params) {
-  const idCourse = params.id
-  const { idModule } = { idModule: searchParams?.idModule }
-  const course = await courseUseCases.getById(idCourse)
-  const modules = await midtermUseCases.findByCourseIdWithAllData(idCourse)
+  const { id } = await params
+  const { idModule } = await searchParams
+  const course = await courseUseCases.getById(id)
+  const modules = await midtermUseCases.findByCourseIdWithAllData(id)
 
   return <MainModule modules={modules} course={course} idModule={idModule} typeModule="Practica" />
 }

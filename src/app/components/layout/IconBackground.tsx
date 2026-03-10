@@ -17,7 +17,7 @@ export const IconBackground = () => {
         <TbMathFunction />,
       ].map((element, index) => (
         <div
-          key={element.key}
+          key={index}
           className={`w-min relative origin-top *:animate-[spin_30s_linear_infinite]`}
           style={{
             left: `${index % 2 == 0 ? 5 + Math.random() * 25 : 95 - Math.random() * 25}vw`,

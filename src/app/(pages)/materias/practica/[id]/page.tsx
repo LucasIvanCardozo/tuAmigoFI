@@ -3,17 +3,17 @@ import { courseUseCases } from '@/app/lib/server/usecases/course.usecases'
 import { tpUseCases } from '@/app/lib/server/usecases/tp.usecases'
 
 interface Props {
-  params: { id: string }
-  searchParams?: {
-    idModule: string
-  }
+  params: Promise<{ id: string }>
+  searchParams: Promise<{
+    idModule: string | undefined
+  }>
 }
 
 export default async function Practica({ params, searchParams }: Props) {
-  const { id: idCourse } = params
-  const { idModule } = { idModule: searchParams?.idModule }
-  const course = await courseUseCases.getById(idCourse)
-  const modules = await tpUseCases.findByCourseIdWithAllData(idCourse)
+  const { id } = await params
+  const { idModule } = await searchParams
+  const course = await courseUseCases.getById(id)
+  const modules = await tpUseCases.findByCourseIdWithAllData(id)
 
   return <MainModule modules={modules} course={course} typeModule="TP" idModule={idModule} />
 }
