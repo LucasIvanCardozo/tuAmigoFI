@@ -1,4 +1,3 @@
-import 'dotenv/config'
 import { PrismaClient } from './prismaClient/client'
 import { Pool } from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
@@ -7,6 +6,7 @@ import { courseSeed } from './seeds/course.seed'
 import { yearSeed } from './seeds/year.seed'
 import { planSeed } from './seeds/plan.seed'
 import { correlativeSeed } from './seeds/correlative.seed'
+process.loadEnvFile()
 
 const connectionString = `${process.env.DATABASE_URL}`
 const pool = new Pool({ connectionString })

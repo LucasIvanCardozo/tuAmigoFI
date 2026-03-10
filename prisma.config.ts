@@ -1,6 +1,6 @@
-import 'dotenv/config'
 import type { PrismaConfig } from 'prisma'
 import { env } from 'prisma/config'
+process.loadEnvFile()
 
 export default {
   schema: 'src/app/lib/server/db/prisma/schema.prisma',
@@ -10,6 +10,5 @@ export default {
   },
   datasource: {
     url: env('DATABASE_URL'),
-    
   },
 } satisfies PrismaConfig
