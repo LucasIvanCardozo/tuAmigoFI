@@ -1,6 +1,24 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+/* @theme debe estar en top-level y crea las utilidades correspondientes */
+@theme {
+  /* --- spacing (genera p-18, h-18, mt-18, etc.) --- */
+  --spacing-18: 4.5rem;
+  --spacing-19: 4.75rem;
+  --spacing-250: 62.5rem; /* para h-250 */
+
+  /* --- transitionProperty: genera transition-height --- */
+  --transition-property-height: height;
+
+  /* --- animation: define variable + keyframes si hace falta --- */
+  --animate-spin-slow: spin 20s linear infinite;
+  /* `spin` keyframes ya existen en Tailwind; si quieres definir custom keyframes: */
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
 
 :root {
   --black-olive: rgb(38, 44, 30);
