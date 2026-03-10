@@ -48,12 +48,12 @@ export default function PdfView({ id, url }: { id: string; url: string }) {
       </div>
       <div className="absolute bottom-0 left-0 flex justify-center w-full select-none">
         <div className="flex items-cente">
-          <span className="relative my-1 bg-white bg-opacity-65">
+          <span className="relative my-1 bg-white/65">
             {
               <button
                 className={`${
                   pageNumber == 1 && 'opacity-0 pointer-events-none'
-                } absolute h-full right-full top-0 bottom-0 bg-white bg-opacity-65 transform-gpu transition-opacity rounded-tl-md rounded-bl-md`}
+                } absolute h-full right-full top-0 bottom-0 bg-white/65 transform-gpu transition-opacity rounded-tl-md rounded-bl-md`}
                 aria-label="Ir a página izquierda"
                 title="Ir a izquierda"
                 onClick={() => handlePage(pageNumber - 1)}
@@ -66,7 +66,7 @@ export default function PdfView({ id, url }: { id: string; url: string }) {
               <button
                 className={`${
                   pageNumber == lastPage && 'opacity-0 pointer-events-none'
-                } absolute h-full left-full top-0 bottom-0 bg-white bg-opacity-65 transform-gpu transition-opacity rounded-tr-md rounded-br-md`}
+                } absolute h-full left-full top-0 bottom-0 bg-white/65 transform-gpu transition-opacity rounded-tr-md rounded-br-md`}
                 aria-label="Ir a página derecha"
                 title="Ir a derecha"
                 onClick={() => handlePage(pageNumber + 1)}
@@ -77,7 +77,7 @@ export default function PdfView({ id, url }: { id: string; url: string }) {
             {
               <div className={`${!loadingImage && 'opacity-0'} absolute bottom-full flex justify-center w-full sm:w-full transform-gpu transition-opacity`}>
                 <div
-                  className="border-black inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] bg-white bg-opacity-65"
+                  className="border-black inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] bg-white/65"
                   role="status"
                 >
                   <span className="absolute! -m-px! h-px! w-px! overflow-hidden! whitespace-nowrap! border-0! p-0! [clip:rect(0,0,0,0)]!">Loading...</span>
@@ -88,7 +88,7 @@ export default function PdfView({ id, url }: { id: string; url: string }) {
         </div>
       </div>
       <button
-        className="absolute h-6 w-6 top-0 right-0 m-2 bg-white bg-opacity-65 rounded-md select-none"
+        className="absolute h-6 w-6 top-0 right-0 m-2 bg-white/65 rounded-md select-none"
         onClick={downloadFile}
         aria-label="Descargar PDF"
         title="Descargar PDF"

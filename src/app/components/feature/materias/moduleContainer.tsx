@@ -50,7 +50,7 @@ export const ModuleContainer = async ({ module, idModule, typeModule }: Props) =
           <div className="absolute z-10 bg-(--white) rounded-md m-2 opacity-65 top-0 left-0">{`Por ${module.user.name}`}</div>
           {/* {session && (
             <button
-              className="absolute z-10 m-2 bottom-0 right-0 w-6 h-6 bg-white bg-opacity-65 rounded-md"
+              className="absolute z-10 m-2 bottom-0 right-0 w-6 h-6 bg-white/65 rounded-md"
               title="Reportar TP"
               aria-label="Reportar TP"
               onClick={() => {

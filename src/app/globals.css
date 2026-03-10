@@ -59,9 +59,14 @@ body {
 }
 
 input,
-select {
+select,
+textarea {
   background: var(--white);
   color: var(--black);
+}
+
+button {
+  cursor: pointer;
 }
 
 @layer utilities {

@@ -1,13 +1,9 @@
 // 'src/app/components/ModalImportImage.tsx'
-'use client';
+'use client'
 
-export default function ModalInfoScore({
-  callback,
-}: {
-  callback: (display: boolean | undefined) => void;
-}) {
+export default function ModalInfoScore({ callback }: { callback: (display: boolean | undefined) => void }) {
   return (
-    <div className="fixed z-50 inset-0 bg-slate-800 bg-opacity-30 text-(--white) flex justify-center items-center font-normal">
+    <div className="fixed z-50 inset-0 bg-slate-800/30 text-(--white) flex justify-center items-center font-normal">
       <div className="flex flex-col max-w-80 w-11/12 bg-slate-800 p-5 rounded-lg gap-3">
         <h3 className="text-lg mb-4">
           <b>¿Cómo obtener puntos?</b>
@@ -26,30 +22,22 @@ export default function ModalInfoScore({
                 Responde consultas de TPs y obtendrás <b>3 puntos</b>.
               </li>
               <li>
-                Recibe likes en tus respuestas para sumar <b>1 punto</b> por
-                cada uno.
+                Recibe likes en tus respuestas para sumar <b>1 punto</b> por cada uno.
               </li>
               <li>
                 Comparte links útiles y obtendrás <b>1 punto</b>.
               </li>
             </ul>
-            <span>
-              ¡Colabora y construyamos juntos una comunidad más fuerte!
-            </span>
+            <span>¡Colabora y construyamos juntos una comunidad más fuerte!</span>
             <span>
               <b>Los datos se actualizan cada 24 hs</b>
             </span>
           </p>
         </div>
-        <button
-          className="mt-4 py-2 px-4 text-base font-semibold rounded-lg"
-          aria-label="Cerrar modal"
-          title="Atrás"
-          onClick={() => callback(false)}
-        >
+        <button className="mt-4 py-2 px-4 text-base font-semibold rounded-lg" aria-label="Cerrar modal" title="Atrás" onClick={() => callback(false)}>
           Atrás
         </button>
       </div>
     </div>
-  );
+  )
 }
