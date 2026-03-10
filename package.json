@@ -27,7 +27,7 @@
     "react-pdf": "~10.4.1",
     "sileo": "~0.1.5",
     "use-debounce": "~10.1.0",
-    "zod": "~3.25.76"
+    "zod": "~4.3.6"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "~4.2.1",
