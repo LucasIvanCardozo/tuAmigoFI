@@ -30,8 +30,8 @@ importers:
         specifier: ~4.24.13
         version: 4.24.13(next@14.2.35(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       next-cloudinary:
-        specifier: ~6.16.3
-        version: 6.16.3(next@14.2.35(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        specifier: ~6.17.5
+        version: 6.17.5(next@14.2.35(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       react:
         specifier: ~18.3.1
         version: 18.3.1
@@ -1004,8 +1004,8 @@ packages:
       nodemailer:
         optional: true
 
-  next-cloudinary@6.16.3:
-    resolution: {integrity: sha512-dlNAar+Wvq9n+iTopW7gZfcMQdCnTdY2FFRvogc40LnxlAAdsuruXEiDJ8XT0/NPQLZkrR/xMfb+7+Q4jtlURA==}
+  next-cloudinary@6.17.5:
+    resolution: {integrity: sha512-YIyIWw5Ds30f4rnED+E9ssLUd94FOPTtbkO2KUvOcw9z4irOEIpb1goxMxbn2EUBnIGQOd6uUf1gFizjME7pMg==}
     peerDependencies:
       next: ^12 || ^13 || ^14 || >=15.0.0-rc || ^15
       react: ^17 || ^18 || >=19.0.0-beta || ^19
@@ -2136,7 +2136,7 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       uuid: 8.3.2
 
-  next-cloudinary@6.16.3(next@14.2.35(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1):
+  next-cloudinary@6.17.5(next@14.2.35(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1):
     dependencies:
       '@cloudinary-util/types': 1.5.10
       '@cloudinary-util/url-loader': 5.10.4
