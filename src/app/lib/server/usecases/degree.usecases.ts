@@ -1,14 +1,24 @@
+import { cacheLife, cacheTag } from 'next/cache'
 import db from '../db/db'
 import { degreeRepository } from '../db/repository/degree.repository'
 
 export const degreeUseCases = {
-  findAll() {
+  async findAll() {
+    'use cache'
+    cacheLife('weeks')
+    cacheTag('degrees')
     return degreeRepository(db).findAll()
   },
-  findAllWithPlans() {
+  async findAllWithPlans() {
+    'use cache'
+    cacheLife('weeks')
+    cacheTag('degrees')
     return degreeRepository(db).findAllWithPlans()
   },
-  findByCourseId(idCourse: string) {
+  async findByCourseId(idCourse: string) {
+    'use cache'
+    cacheLife('weeks')
+    cacheTag('degrees')
     return degreeRepository(db).findByCourseId(idCourse)
   },
 }

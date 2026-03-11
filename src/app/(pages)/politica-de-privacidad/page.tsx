@@ -1,3 +1,4 @@
+'use cache'
 import PrivacitySection from '@/app/components/privacitySection'
 
 export default async function Privacidad() {

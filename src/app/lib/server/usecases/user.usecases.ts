@@ -1,23 +1,38 @@
+import { cacheLife, cacheTag } from 'next/cache'
 import db from '../db/db'
 import { User } from '../db/prisma/prismaClient/client'
 import { userRepository } from '../db/repository/user.repository'
 
 export const userUseCases = {
-  getById(id: string) {
+  async getById(id: string) {
+    'use cache'
+    cacheLife('hours')
+    cacheTag('users')
     return userRepository(db).getById(id)
   },
-  getByEmail(email: string) {
+  async getByEmail(email: string) {
+    'use cache'
+    cacheLife('hours')
+    cacheTag('users')
     return userRepository(db).getByEmail(email)
   },
-  findById(id: string) {
+  async findById(id: string) {
+    'use cache'
+    cacheLife('hours')
+    cacheTag('users')
     return userRepository(db).findById(id)
   },
-  findByEmail(email: string) {
+  async findByEmail(email: string) {
+    'use cache'
+    cacheLife('hours')
+    cacheTag('users')
     return userRepository(db).findByEmail(email)
   },
   async findContributorsWithScore() {
+    'use cache'
+    cacheLife('hours')
+    cacheTag('users')
     const contributors = await userRepository(db).findContributors()
-
     const data: ContributorsFullType[] = []
 
     contributors.map((user) => {

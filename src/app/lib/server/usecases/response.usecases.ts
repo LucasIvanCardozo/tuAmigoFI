@@ -1,11 +1,18 @@
+import { cacheLife, cacheTag } from 'next/cache'
 import db from '../db/db'
 import { responseRepository } from '../db/repository/response.respository'
 
 export const responseUseCases = {
-  findFromTp(idTp: string) {
+  async findFromTp(idTp: string) {
+    'use cache'
+    cacheLife('days')
+    cacheTag('responses')
     return responseRepository(db).findFromTp(idTp)
   },
-  findFromMidterm(idMidterm: string) {
+  async findFromMidterm(idMidterm: string) {
+    'use cache'
+    cacheLife('days')
+    cacheTag('responses')
     return responseRepository(db).findFromMidterm(idMidterm)
   },
 }

@@ -1,5 +1,4 @@
 'use client'
-
 import { useEffect } from 'react'
 import { Loading } from './loading'
 import { handleLoader } from '@/app/utils/handleLoader'

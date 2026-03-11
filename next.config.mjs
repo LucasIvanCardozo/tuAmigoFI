@@ -12,6 +12,7 @@ const nextConfig = {
       },
     ],
   },
-};
+  cacheComponents: true,
+}
 
-export default nextConfig;
+export default nextConfig

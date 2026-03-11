@@ -1,6 +1,7 @@
+'use cache'
 import Image from 'next/image'
 
-export default function Contactame() {
+export default async function Contactame() {
   return (
     <>
       <main className="pt-14 relative flex text-(--black) w-11/12 justify-center mx-auto max-w-(--breakpoint-md) my-10 sm:pt-20 sm:justify-center">

@@ -7,6 +7,7 @@ import Footer from './components/layout/footer'
 import { Loader } from './components/layout/loader'
 import { IconBackground } from './components/layout/IconBackground'
 import { getSession } from './lib/server/actions/users/get.server.user'
+import { Suspense } from 'react'
 
 export const metadata: Metadata = {
   title: 'Tu amigo FI',
@@ -18,16 +19,20 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const session = await getSession()
+  const callbackSession = getSession()
   return (
     <html lang="es">
       <body id="root" className={cabin.className + ' flex flex-col h-dvh'}>
         <Providers>
-          <Nav session={session} />
+          <Suspense>
+            <Nav callbackSession={callbackSession} />
+          </Suspense>
           <IconBackground />
           {children}
           <Footer />
-          <Loader />
+          <Suspense>
+            <Loader />
+          </Suspense>
         </Providers>
       </body>
     </html>

@@ -10,13 +10,9 @@ import DegreeCourse from '@/app/components/degreeCourse'
 import { yearUseCases } from '@/app/lib/server/usecases/year.usecases'
 import { degreeUseCases } from '@/app/lib/server/usecases/degree.usecases'
 
-export default async function Materias({ searchParams }: { searchParams?: CourseSearchParams }) {
-  const query: CourseSearchParams = {
-    search: searchParams?.search,
-    idYear: searchParams?.idYear,
-    idDegree: searchParams?.idDegree,
-    page: searchParams?.page,
-  }
+export default async function Materias({ searchParams }: { searchParams: Promise<CourseSearchParams> }) {
+  const { search, idYear, idDegree, page } = await searchParams
+  const query: CourseSearchParams = { search, idYear, idDegree, page }
 
   const callbackYears = yearUseCases.findAll()
   const callbackDegrees = degreeUseCases.findAllWithPlans()

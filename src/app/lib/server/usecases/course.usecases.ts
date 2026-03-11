@@ -1,26 +1,44 @@
 import { CourseSearchParams } from '@/app/(pages)/materias/page'
 import { courseRepository } from '../db/repository/course.repository'
 import db from '../db/db'
+import { cacheLife, cacheTag } from 'next/cache'
 
 export const courseUseCases = {
-  findByPage({ idDegree, page: pageAux, search, idYear }: CourseSearchParams) {
+  async findByPage({ idDegree, page: pageAux, search, idYear }: CourseSearchParams) {
+    'use cache'
+    cacheLife('weeks')
+    cacheTag('courses')
     const page = pageAux ? Number(pageAux) : 1
-
     return courseRepository(db).findByPage({ idDegree, page, search, idYear })
   },
-  getById(id: string) {
+  async getById(id: string) {
+    'use cache'
+    cacheLife('weeks')
+    cacheTag('courses')
     return courseRepository(db).getById(id)
   },
   async getAmountPages({ search, idYear, idDegree }: CourseSearchParams) {
+    'use cache'
+    cacheLife('weeks')
+    cacheTag('courses')
     return Math.ceil((await courseRepository(db).getAmount({ search, idYear, idDegree })) / 5)
   },
-  findEnablesById({ idCourse, idDegree }: { idCourse: string; idDegree?: string }) {
+  async findEnablesById({ idCourse, idDegree }: { idCourse: string; idDegree?: string }) {
+    'use cache'
+    cacheLife('weeks')
+    cacheTag('courses')
     return courseRepository(db).findEnablesById({ idCourse, idDegree })
   },
-  findCorrelativesById({ idCourse, idDegree }: { idCourse: string; idDegree?: string }) {
+  async findCorrelativesById({ idCourse, idDegree }: { idCourse: string; idDegree?: string }) {
+    'use cache'
+    cacheLife('weeks')
+    cacheTag('courses')
     return courseRepository(db).findCorrelativesById({ idCourse, idDegree })
   },
-  findAll() {
+  async findAll() {
+    'use cache'
+    cacheLife('weeks')
+    cacheTag('courses')
     return courseRepository(db).findAll()
   },
 }

@@ -4,9 +4,7 @@ import { midtermUseCases } from '@/app/lib/server/usecases/midterm.usecases'
 
 interface Params {
   params: Promise<{ id: string }>
-  searchParams: {
-    idModule: string | undefined
-  }
+  searchParams: Promise<{ idModule: string | undefined }>
 }
 
 export default async function Practica({ params, searchParams }: Params) {

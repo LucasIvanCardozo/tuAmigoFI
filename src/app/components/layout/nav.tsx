@@ -1,17 +1,19 @@
 'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import { CgMenu, CgClose } from 'react-icons/cg'
 import { signIn, signOut } from 'next-auth/react'
-import Image from 'next/image'
 import { handleLoader } from '@/app/utils/handleLoader'
 import { Loading } from './loading'
 import { Session } from 'next-auth'
+import Image from 'next/image'
 
-export default function Nav({ session }: { session: Session | null }) {
+export default function Nav({ callbackSession }: { callbackSession: Promise<Session | null> }) {
   const [navState, setNavState] = useState<boolean>(false)
   const pathname: string = usePathname()
+
+  const session = use(callbackSession)
 
   const handleNavState = () => {
     if (document.documentElement.scrollWidth < 640) {

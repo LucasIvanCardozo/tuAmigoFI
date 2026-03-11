@@ -19,16 +19,7 @@ export const MainContext = createContext<TypeMainContext | null>(null)
 export const MainProvider = ({ children }: { children: React.ReactNode }) => {
   const [modules, setModules] = useState<DataModule[]>([])
   const [viewModule, setViewModule] = useState<string | null>(null)
-  const [course, setCourse] = useState<Course>({
-    id: '0',
-    name: 'Default',
-    nameNormalized: 'default',
-    cg: 0,
-    hs: 0,
-    optional: false,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  })
+  const [course, setCourse] = useState<Course>({} as Course)
   const [typeModule, setTypeModule] = useState<'TP' | 'Practica'>('TP')
 
   return (

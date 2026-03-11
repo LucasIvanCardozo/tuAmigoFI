@@ -1,7 +1,6 @@
-'use client';
-import { TbSquareAsteriskFilled } from 'react-icons/tb';
-import { useState } from 'react';
-import { CgClose, CgMenu } from 'react-icons/cg';
+'use client'
+import { TbSquareAsteriskFilled } from 'react-icons/tb'
+import { CgMenu } from 'react-icons/cg'
 
 export const MainSkeleton = () => {
   return (
@@ -21,33 +20,17 @@ export const MainSkeleton = () => {
           fixed z-40 top-0 right-full  transform-gpu transition-transform bg-(--black-olive) w-max min-w-40  rounded-md mt-10 py-4 px-3 flex flex-col max-h-[80vh] gap-3 sm:max-h-none sm:relative sm:h-full sm:m-0 sm:max-w-52 sm:right-auto "
       >
         <h1 className="text-xl hidden whitespace-nowrap sm:block">Cargando</h1>
-        <ul
-          className="flex flex-col gap-3 overflow-y-auto overflow-x-hidden"
-          style={{ scrollbarWidth: 'none' }}
-        >
+        <ul className="flex flex-col gap-3 overflow-y-auto overflow-x-hidden" style={{ scrollbarWidth: 'none' }}>
           <li className="grid grid-cols-[1.2rem_1fr] gap-1 p-1 rounded-md [&>svg]:self-start [&>svg]:h-max [&>svg]:w-full transform-gpu transition-transform sm:hover:scale-105">
             <TbSquareAsteriskFilled />
-            <button
-              className="text-start"
-              aria-label="Mostrar todos"
-              title="Mostrar todos los TPs"
-            >
+            <button className="text-start" aria-label="Mostrar todos" title="Mostrar todos los TPs">
               <h2 className="text-base leading-4">Mostrar todos</h2>
               <p className="text-xs text-(--silver)">{`Todos los TPs`} </p>
             </button>
           </li>
-          <li
-            className={
-              'order-last gap-1 p-1 rounded-md transform-gpu text-center transition-transform sm:hover:scale-105'
-            }
-          >
-            <button
-              className="text-start bg-(--white) py-1 px-2 rounded-md"
-              title="..."
-            >
-              <p className="text-base text-(--black-olive) leading-4">
-                Agregar ...
-              </p>
+          <li className={'order-last gap-1 p-1 rounded-md transform-gpu text-center transition-transform sm:hover:scale-105'}>
+            <button className="text-start bg-(--white) py-1 px-2 rounded-md" title="...">
+              <p className="text-base text-(--black-olive) leading-4">Agregar ...</p>
             </button>
           </li>
         </ul>
@@ -68,5 +51,5 @@ export const MainSkeleton = () => {
         </ul>
       </section>
     </main>
-  );
-};
+  )
+}

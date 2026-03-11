@@ -1,5 +1,6 @@
 import { MainProvider } from '@/app/contexts'
 import { Metadata } from 'next'
+import { Suspense } from 'react'
 
 export const metadata: Metadata = {
   title: 'Materias - Tu amigo FI',
@@ -12,5 +13,9 @@ export default function Layout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return <MainProvider>{children}</MainProvider>
+  return (
+    <Suspense>
+      <MainProvider>{children}</MainProvider>
+    </Suspense>
+  )
 }

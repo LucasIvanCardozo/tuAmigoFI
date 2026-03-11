@@ -1,8 +1,12 @@
+import { cacheLife, cacheTag } from 'next/cache'
 import db from '../db/db'
 import { yearRepository } from '../db/repository/year.repository'
 
 export const yearUseCases = {
-  findAll() {
+  async findAll() {
+    'use cache'
+    cacheLife('weeks')
+    cacheTag('years')
     return yearRepository(db).findAll()
   },
 }

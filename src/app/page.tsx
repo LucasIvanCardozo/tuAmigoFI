@@ -1,3 +1,4 @@
+'use cache'
 import Image from 'next/image'
 import CalendarSection from './components/calendar'
 import Contributors from './components/contributors'
@@ -72,7 +73,9 @@ export default async function Home() {
           ))}
         </ul>
       </section>
-      <CalendarSection />
+      <Suspense fallback={<div>Cargando...</div>}>
+        <CalendarSection />
+      </Suspense>
       <section className="text-(--black) relative max-w-(--breakpoint-md) m-auto w-11/12 my-4">
         <h2 className="font-bold text-3xl my-2 flex gap-1 items-center justify-center">
           Colaboradores
