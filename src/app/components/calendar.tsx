@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import { Calendar } from 'react-multi-date-picker'
 
 const spanish_es = {
@@ -34,9 +34,10 @@ const spanish_es = {
   ],
 }
 
-export default function CalendarSection() {
+export default function CalendarSection({ callbackYear }: { callbackYear: Promise<number> }) {
   const [countCalendar, setCountCalendar] = useState<number>(1)
-  const yearCurrent: number = new Date().getFullYear()
+
+  const yearCurrent = use(callbackYear)
   const recessDays = new Set([
     `${yearCurrent}/01/01`,
     `${yearCurrent}/01/02`,

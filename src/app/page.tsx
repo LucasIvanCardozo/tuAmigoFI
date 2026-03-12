@@ -1,4 +1,3 @@
-'use cache'
 import Image from 'next/image'
 import CalendarSection from './components/calendar'
 import Contributors from './components/contributors'
@@ -9,9 +8,15 @@ import { FaArrowRight } from 'react-icons/fa'
 import QuestionSkeleton from './components/skeletons/question.skeleton'
 import Questions from './components/questions'
 import { degreeUseCases } from './lib/server/usecases/degree.usecases'
+import { cacheLife } from 'next/cache'
 
 export default async function Home() {
   const degreesCallback = degreeUseCases.findAllWithPlans()
+  const callbackYear = async () => {
+    'use cache'
+    cacheLife('weeks')
+    return new Date().getFullYear()
+  }
 
   return (
     <>
@@ -73,9 +78,7 @@ export default async function Home() {
           ))}
         </ul>
       </section>
-      <Suspense fallback={<div>Cargando...</div>}>
-        <CalendarSection />
-      </Suspense>
+      <CalendarSection callbackYear={callbackYear()} />
       <section className="text-(--black) relative max-w-(--breakpoint-md) m-auto w-11/12 my-4">
         <h2 className="font-bold text-3xl my-2 flex gap-1 items-center justify-center">
           Colaboradores

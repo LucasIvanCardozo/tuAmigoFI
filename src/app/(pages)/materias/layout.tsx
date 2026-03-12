@@ -1,3 +1,4 @@
+import { Loading } from '@/app/components/layout/loading'
 import { MainProvider } from '@/app/contexts'
 import { Metadata } from 'next'
 import { Suspense } from 'react'
@@ -14,7 +15,13 @@ export default function Layout({
   children: React.ReactNode
 }>) {
   return (
-    <Suspense>
+    <Suspense
+      fallback={
+        <div className="h-dvh w-dvw flex items-center justify-center">
+          <Loading mode="black" size={6} />
+        </div>
+      }
+    >
       <MainProvider>{children}</MainProvider>
     </Suspense>
   )
