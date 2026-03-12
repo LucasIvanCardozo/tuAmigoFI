@@ -4,7 +4,7 @@ import { reactionRepository } from '../db/repository/reaction.repository'
 
 export const reactionUseCases = {
   async findSplitAll() {
-    'use cache'
+    'use cache: remote'
     cacheLife('days')
     cacheTag('reactions')
     const [responseReactions, commentReactions, tpReactions, midtermReactions, linkReactions] = await Promise.all([

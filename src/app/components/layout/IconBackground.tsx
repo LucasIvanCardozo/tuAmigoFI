@@ -1,4 +1,4 @@
-'use cache'
+'use cache: remote'
 import { TbMathIntegral, TbTools, TbRulerMeasure, TbCircuitCellPlus, TbMathFunction, TbBulbFilled, TbHammer } from 'react-icons/tb'
 
 export const IconBackground = async () => {

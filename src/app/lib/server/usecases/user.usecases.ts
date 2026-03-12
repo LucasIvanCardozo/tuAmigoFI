@@ -5,31 +5,31 @@ import { userRepository } from '../db/repository/user.repository'
 
 export const userUseCases = {
   async getById(id: string) {
-    'use cache'
+    'use cache: remote'
     cacheLife('hours')
     cacheTag('users')
     return userRepository(db).getById(id)
   },
   async getByEmail(email: string) {
-    'use cache'
+    'use cache: remote'
     cacheLife('hours')
     cacheTag('users')
     return userRepository(db).getByEmail(email)
   },
   async findById(id: string) {
-    'use cache'
+    'use cache: remote'
     cacheLife('hours')
     cacheTag('users')
     return userRepository(db).findById(id)
   },
   async findByEmail(email: string) {
-    'use cache'
+    'use cache: remote'
     cacheLife('hours')
     cacheTag('users')
     return userRepository(db).findByEmail(email)
   },
   async findContributorsWithScore() {
-    'use cache'
+    'use cache: remote'
     cacheLife('hours')
     cacheTag('users')
     const contributors = await userRepository(db).findContributors()

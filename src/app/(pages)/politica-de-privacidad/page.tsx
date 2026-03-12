@@ -1,4 +1,4 @@
-'use cache'
+'use cache: remote'
 import PrivacitySection from '@/app/components/privacitySection'
 
 export default async function Privacidad() {

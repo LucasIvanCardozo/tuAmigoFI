@@ -6,13 +6,13 @@ import { cacheLife, cacheTag } from 'next/cache'
 
 export const midtermUseCases = {
   async findByCourseId(idCourse: string) {
-    'use cache'
+    'use cache: remote'
     cacheLife('days')
     cacheTag('midterms')
     return midtermRepository(db).findByCourseId(idCourse)
   },
   async findByCourseIdWithAllData(idCourse: string) {
-    'use cache'
+    'use cache: remote'
     cacheLife('days')
     cacheTag('midterms')
     const moduleList = await midtermRepository(db).findByCourseIdWithAllData(idCourse)

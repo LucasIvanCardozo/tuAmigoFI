@@ -9,7 +9,7 @@ const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL,
 })
 
-const db = globalThis.prismaGlobal ?? new PrismaClient({ adapter })
+const db = globalThis.prismaGlobal ?? new PrismaClient({ adapter, log: ['query', 'info', 'warn', 'error'] })
 
 if (process.env.NODE_ENV !== 'production') globalThis.prismaGlobal = db
 

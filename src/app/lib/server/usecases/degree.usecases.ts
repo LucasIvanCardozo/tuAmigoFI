@@ -4,19 +4,19 @@ import { degreeRepository } from '../db/repository/degree.repository'
 
 export const degreeUseCases = {
   async findAll() {
-    'use cache'
+    'use cache: remote'
     cacheLife('weeks')
     cacheTag('degrees')
     return degreeRepository(db).findAll()
   },
   async findAllWithPlans() {
-    'use cache'
+    'use cache: remote'
     cacheLife('weeks')
     cacheTag('degrees')
     return degreeRepository(db).findAllWithPlans()
   },
   async findByCourseId(idCourse: string) {
-    'use cache'
+    'use cache: remote'
     cacheLife('weeks')
     cacheTag('degrees')
     return degreeRepository(db).findByCourseId(idCourse)

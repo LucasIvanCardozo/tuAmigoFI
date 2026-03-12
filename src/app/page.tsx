@@ -13,7 +13,7 @@ import { cacheLife } from 'next/cache'
 export default async function Home() {
   const degreesCallback = degreeUseCases.findAllWithPlans()
   const callbackYear = async () => {
-    'use cache'
+    'use cache: remote'
     cacheLife('weeks')
     return new Date().getFullYear()
   }
