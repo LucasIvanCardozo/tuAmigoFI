@@ -35,19 +35,14 @@ export const userUseCases = {
     cacheLife('hours')
     cacheTag('users')
     const contributors = await userRepository(db).findContributors()
-    const data: ContributorsFullType[] = []
-
-    contributors.map((user) => {
+    const data: ContributorsFullType[] = contributors.map((user) => {
       const { comments, links, midterms, reactions, responses, tps } = user._count
-      data.push({
+      return {
         user,
         score: links + midterms * 5 + tps * 6 + reactions + responses * 3 + comments,
-      })
+      }
     })
-
-    data.sort((a, b) => b.score - a.score)
-
-    return data
+    return data.sort((a, b) => b.score - a.score)
   },
   async getSession() {
     const session = await getServerSession(authOptions)
