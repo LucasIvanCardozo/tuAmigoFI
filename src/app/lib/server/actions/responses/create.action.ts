@@ -1,5 +1,5 @@
 'use server'
-process.loadEnvFile()
+
 import z, { cuid, file, number, string } from 'zod'
 import createAction from '../createActions'
 import db from '../../db/db'
