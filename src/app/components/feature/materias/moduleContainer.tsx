@@ -6,7 +6,7 @@ import ModuleResponse from './moduleResponse'
 import { ModalDeleteTp } from '../../layout/modals/modalDeleteTp'
 import { ModalDeleteMidterm } from '../../layout/modals/modalDeleteMidterm'
 import { ModalAddResponse } from '../../layout/modals/modalAddResponse'
-import { getSession } from '@/app/lib/server/actions/users/get.server.user'
+import { userUseCases } from '@/app/lib/server/usecases/user.usecases'
 
 interface Props {
   module: DataModule
@@ -15,7 +15,7 @@ interface Props {
 }
 
 export const ModuleContainer = async ({ module, idModule, typeModule }: Props) => {
-  const session = await getSession()
+  const session = await userUseCases.getSession()
   const moduleInd = module.module
   const problems = module.problems
   const isTp = 'number' in moduleInd

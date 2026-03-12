@@ -1,21 +1,22 @@
 'use server'
-import { boolean, object, string } from 'zod'
+import { boolean, cuid, object, string } from 'zod'
 import createAction from '../createActions'
 import db from '../../db/db'
-import { getSession } from '../users/get.server.user'
+import { userUseCases } from '../../usecases/user.usecases'
+import { revalidateTag } from 'next/cache'
 
 const schema = object({
-  idCourse: string().min(1),
+  idCourse: cuid(),
   name: string().min(1),
   link: string().min(1),
   official: boolean(),
 })
 
 export const createLink = createAction(schema, async ({ idCourse, name, link, official }) => {
-  const session = await getSession()
+  const session = await userUseCases.getSession()
   if (!session) throw new Error('No estas logueado')
 
-  return db.link.create({
+  const newLink = await db.link.create({
     data: {
       idCourse,
       name: name,
@@ -24,4 +25,7 @@ export const createLink = createAction(schema, async ({ idCourse, name, link, of
       idUser: session.user.id,
     },
   })
+
+  revalidateTag('links', 'max')
+  return newLink
 })

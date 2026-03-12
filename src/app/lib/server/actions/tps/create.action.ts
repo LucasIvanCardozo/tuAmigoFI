@@ -1,22 +1,23 @@
 'use server'
-import { number, object, string } from 'zod'
+import { cuid, number, object, string } from 'zod'
 import createAction from '../createActions'
 import db from '../../db/db'
-import { getSession } from '../users/get.server.user'
+import { userUseCases } from '../../usecases/user.usecases'
+import { revalidateTag } from 'next/cache'
 
 const schema = object({
   name: string().min(1),
   number: number().min(1),
   year: number().min(1),
-  idUser: string().min(1),
-  idCourse: string().min(1),
+  idUser: cuid(),
+  idCourse: cuid(),
 })
 
 export const createTp = createAction(schema, async ({ name, number, year, idUser, idCourse }) => {
-  const session = await getSession()
+  const session = await userUseCases.getSession()
   if (!session) throw new Error('No estas logueado')
 
-  return db.tp.create({
+  const tp = await db.tp.create({
     data: {
       name: name,
       ...(number ? { number: number } : { number: 0 }),
@@ -25,4 +26,7 @@ export const createTp = createAction(schema, async ({ name, number, year, idUser
       idCourse,
     },
   })
+
+  revalidateTag('tps', 'max')
+  return tp
 })

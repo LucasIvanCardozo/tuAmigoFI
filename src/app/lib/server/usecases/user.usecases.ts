@@ -2,6 +2,8 @@ import { cacheLife, cacheTag } from 'next/cache'
 import db from '../db/db'
 import { User } from '../db/prisma/prismaClient/client'
 import { userRepository } from '../db/repository/user.repository'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '../auth/authOptions'
 
 export const userUseCases = {
   async getById(id: string) {
@@ -46,6 +48,10 @@ export const userUseCases = {
     data.sort((a, b) => b.score - a.score)
 
     return data
+  },
+  async getSession() {
+    const session = await getServerSession(authOptions)
+    return session
   },
 }
 

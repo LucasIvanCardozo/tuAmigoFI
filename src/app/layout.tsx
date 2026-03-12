@@ -6,8 +6,8 @@ import Providers from './components/layout/providers'
 import Footer from './components/layout/footer'
 import { Loader } from './components/layout/loader'
 import { IconBackground } from './components/layout/IconBackground'
-import { getSession } from './lib/server/actions/users/get.server.user'
 import { Suspense } from 'react'
+import { userUseCases } from './lib/server/usecases/user.usecases'
 
 export const metadata: Metadata = {
   title: 'Tu amigo FI',
@@ -19,7 +19,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const callbackSession = getSession()
+  const callbackSession = userUseCases.getSession()
   return (
     <html lang="es">
       <body id="root" className={cabin.className + ' flex flex-col h-dvh'}>

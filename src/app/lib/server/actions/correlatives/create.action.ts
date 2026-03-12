@@ -1,22 +1,25 @@
 'use server'
-import { object, string } from 'zod'
+import { cuid, object } from 'zod'
 import createAction from '../createActions'
 import db from '../../db/db'
-import { getSession } from '../users/get.server.user'
+import { userUseCases } from '../../usecases/user.usecases'
+import { revalidateTag } from 'next/cache'
 
 const schema = object({
-  idCourse: string().min(1),
-  idCorrelativeCourse: string().min(1),
+  idCourse: cuid(),
+  idCorrelativeCourse: cuid(),
 })
 
 export const createCorrelative = createAction(schema, async ({ idCourse, idCorrelativeCourse }) => {
-  const session = await getSession()
+  const session = await userUseCases.getSession()
   if (!session) throw new Error('No estas logueado')
 
-  return db.correlative.create({
+  const correlatives = await db.correlative.create({
     data: {
       idCourse,
       idCorrelativeCourse,
     },
   })
+  revalidateTag('correlatives', 'max')
+  return correlatives
 })

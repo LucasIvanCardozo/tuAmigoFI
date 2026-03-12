@@ -1,16 +1,17 @@
 'use server'
-import { object, string } from 'zod'
+import { cuid, email, object, string } from 'zod'
 import createAction from '../createActions'
 import db from '../../db/db'
+import { revalidateTag } from 'next/cache'
 
 const schema = object({
-  name: string().min(1),
-  email: string().email(),
+  name: cuid(),
+  email: email(),
   image: string().min(1),
 })
 
 export const createUser = createAction(schema, async ({ name, email, image }) => {
-  return db.user.create({
+  const user = await db.user.create({
     data: {
       email: email,
       name: name,
@@ -19,4 +20,6 @@ export const createUser = createAction(schema, async ({ name, email, image }) =>
       banned: false,
     },
   })
+  revalidateTag('users', 'max')
+  return user
 })

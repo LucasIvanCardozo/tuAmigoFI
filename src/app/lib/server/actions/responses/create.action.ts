@@ -1,15 +1,16 @@
 'use server'
-import z, { number, string } from 'zod'
+import z, { cuid, number, string } from 'zod'
 import createAction from '../createActions'
 import db from '../../db/db'
 import { TypeResponse } from '../../db/prisma/prismaClient/enums'
-import { getSession } from '../users/get.server.user'
+import { userUseCases } from '../../usecases/user.usecases'
+import { revalidateTag } from 'next/cache'
 
 const schema = z
   .object({
-    idUser: string().min(1),
-    idTp: string().min(1).nullable().optional(),
-    idMidterm: string().min(1).nullable().optional(),
+    idUser: cuid(),
+    idTp: cuid().nullable().optional(),
+    idMidterm: cuid().nullable().optional(),
     number: number().min(1),
     type: z.enum(Object.values(TypeResponse) as [string, ...string[]]),
     text: string().min(1).nullable().optional(),
@@ -20,7 +21,7 @@ const schema = z
 
     if (hasTp === hasMid) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         message: 'Debe existir idTp o idMidterm, pero no ambos',
       })
     }
@@ -28,7 +29,7 @@ const schema = z
 
 export const createResponse = createAction(schema, async ({ idUser, idTp, idMidterm, number, type, text }) => {
   if (idMidterm && idTp) throw new Error('No puedes tener un parcial y un tp')
-  const session = await getSession()
+  const session = await userUseCases.getSession()
   if (!session) throw new Error('No estas logueado')
 
   const validation = await db.response.findFirst({
@@ -40,7 +41,7 @@ export const createResponse = createAction(schema, async ({ idUser, idTp, idMidt
     },
   })
   if (!validation) {
-    return await db.response.create({
+    const response = await db.response.create({
       data: {
         idTp,
         number,
@@ -49,5 +50,7 @@ export const createResponse = createAction(schema, async ({ idUser, idTp, idMidt
         ...(text && { text: text }),
       },
     })
+    revalidateTag('responses', 'max')
+    return response
   } else throw new Error('No puedes tener mas de una respueste a un problema!')
 })
