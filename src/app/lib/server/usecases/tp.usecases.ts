@@ -14,7 +14,7 @@ export const tpUseCases = {
   async findByCourseIdWithAllData(idCourse: string) {
     'use cache: remote'
     cacheLife('days')
-    cacheTag('tps')
+    cacheTag('tps', 'responses', 'comments', 'users')
     const moduleList = await tpRepository(db).findByCourseIdWithAllData(idCourse)
     const reactions = await reactionUseCases.findSplitAll()
     return makeModules({ moduleList, reactions, type: 'tp' })

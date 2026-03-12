@@ -14,7 +14,7 @@ export const midtermUseCases = {
   async findByCourseIdWithAllData(idCourse: string) {
     'use cache: remote'
     cacheLife('days')
-    cacheTag('midterms')
+    cacheTag('midterms', 'responses', 'comments', 'users')
     const moduleList = await midtermRepository(db).findByCourseIdWithAllData(idCourse)
     const reactions = await reactionUseCases.findSplitAll()
     return makeModules({ moduleList, reactions, type: 'midterm' })
