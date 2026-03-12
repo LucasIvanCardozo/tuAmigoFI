@@ -21,25 +21,15 @@ export const ModalAddTp = ({ course }: { course: Course }) => {
     const file = values.find((val) => val.id == 'file')
     if (!year || !number || !name || !file || !(file.value instanceof File)) throw new Error('Faltan completar datos.')
     if (!session) throw new Error('No hay sesion')
-    const { data, error } = await createTp({
+    const { error } = await createTp({
       name: name.value,
       number: Number(number?.value),
       year: Number(year?.value),
       idUser: session.user.id,
       idCourse: course.id,
+      file: file.value,
     })
     if (error) throw new Error('Error: ' + error)
-    if (data) {
-      const formData = new FormData()
-      formData.set('file', file.value)
-      formData.set('id', data.id.toString())
-      formData.set('subFolder', `tps/problemas`)
-
-      await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      })
-    }
     startReload()
   }
 

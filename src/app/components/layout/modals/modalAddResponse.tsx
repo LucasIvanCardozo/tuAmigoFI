@@ -26,19 +26,10 @@ export const ModalAddResponse = ({ module, session }: { module: Module; session:
       idMidterm: !isTp ? module.id : null,
       number: Number(number.value),
       text: typeResponse == 'TEXT' || typeResponse == 'CODE' ? (selectResponse.value as string) : null,
+      file: typeResponse == 'IMAGE' || typeResponse == 'PDF' ? (selectResponse.value as File) : null,
       type: typeResponse,
     })
     if (error) throw new Error(error)
-    if (typeResponse == 'IMAGE' || typeResponse == 'PDF') {
-      const formData = new FormData()
-      formData.set('file', selectResponse.value as File)
-      formData.set('id', session.user.id.toString())
-      formData.set('subFolder', `${isTp ? 'tps' : 'parciales'}/respuestas/${module.id}/${Number(number.value)}`)
-      await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      })
-    }
     startReload()
   }
 
