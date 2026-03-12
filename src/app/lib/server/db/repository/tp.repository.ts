@@ -11,6 +11,7 @@ export const tpRepository = (db: PrismaClient | Prisma.TransactionClient) => ({
   },
   findByCourseIdWithAllData(idCourse: string) {
     return db.tp.findMany({
+      where: { idCourse },
       include: {
         responses: {
           include: {
