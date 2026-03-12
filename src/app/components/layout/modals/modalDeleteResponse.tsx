@@ -21,25 +21,9 @@ export const ModalDeleteResponse = ({ response, user }: { response: Response; us
     if (!session) throw new Error('No hay sesion')
     if (session.user.tier != 2 && session.user.id != user.id) throw new Error('Debes ser administrador o el creador para eliminar una respuesta')
 
-    const deleteModuleDB = async () => {
-      const { error } = await deleteResponse({ id, idUser })
-      if (error) throw new Error('Error: ' + error)
-      startReload()
-    }
-    if (response.type == 'IMAGE' || response.type == 'PDF') {
-      const formData = new FormData()
-      formData.set('id', response.idUser)
-      formData.set('subFolder', `${response.idTp ? 'tps' : 'parciales'}/respuestas/${response.idTp ? response.idTp : response.idMidterm}/${response.number}`)
-      const res = await fetch('/api/destroy', {
-        method: 'POST',
-        body: formData,
-      })
-      if (res.ok) {
-        deleteModuleDB()
-      } else throw new Error('Error al eliminar respuesta')
-    } else {
-      deleteModuleDB()
-    }
+    const { error } = await deleteResponse({ id, idUser })
+    if (error) throw new Error('Error: ' + error)
+    startReload()
   }
 
   return (
