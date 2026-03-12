@@ -35,12 +35,15 @@ export const userUseCases = {
     cacheLife('hours')
     cacheTag('users')
     const contributors = await userRepository(db).findContributors()
-    const data: ContributorsFullType[] = contributors.map((user) => {
+    const data = contributors.flatMap((user) => {
       const { comments, links, midterms, reactions, responses, tps } = user._count
-      return {
-        user,
-        score: links + midterms * 5 + tps * 6 + reactions + responses * 3 + comments,
-      }
+      const score = links + midterms * 5 + tps * 6 + reactions + responses * 3 + comments
+      return score
+        ? ({
+            user,
+            score,
+          } as ContributorsFullType)
+        : []
     })
     return data.sort((a, b) => b.score - a.score)
   },
