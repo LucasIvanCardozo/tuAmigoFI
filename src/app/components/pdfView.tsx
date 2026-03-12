@@ -34,6 +34,7 @@ export default function PdfView({ id, url }: { id: string; url: string }) {
           alt="PDF"
           onLoad={() => setLoadingImage(false)}
           onError={() => {
+            if (pageNumber == 1) return
             setLastPage(pageNumber - 1)
             setPageNumber(pageNumber - 1)
             setLoadingImage(false)
