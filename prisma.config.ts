@@ -1,6 +1,5 @@
 import type { PrismaConfig } from 'prisma'
 import { env } from 'prisma/config'
-process.loadEnvFile()
 
 export default {
   schema: 'src/app/lib/server/db/prisma/schema.prisma',

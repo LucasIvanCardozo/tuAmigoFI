@@ -121,7 +121,7 @@ export default function Nav({ callbackSession }: { callbackSession: Promise<Sess
               <p>Cerrar sesion</p>
             </Link>
           ) : (
-            <Link href={''} className="inline-block text-center w-40 py-2 font-bold px-3 sm:w-28 sm:font-normal" onClick={() => signIn()}>
+            <Link href={''} className="inline-block text-center w-40 py-2 font-bold px-3 sm:w-28 sm:font-normal" onClick={() => signIn('google')}>
               Iniciar sesion
             </Link>
           )}

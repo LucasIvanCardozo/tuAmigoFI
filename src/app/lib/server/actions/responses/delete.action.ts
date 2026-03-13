@@ -1,9 +1,17 @@
 'use server'
+
 import { cuid, object } from 'zod'
 import createAction from '../createActions'
 import db from '../../db/db'
 import { userUseCases } from '../../usecases/user.usecases'
 import { revalidateTag } from 'next/cache'
+import { v2 as cloudinary } from 'cloudinary'
+
+cloudinary.config({
+  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
 
 const schema = object({
   id: cuid(),
@@ -20,6 +28,10 @@ export const deleteResponse = createAction(schema, async ({ id, idUser }) => {
       id: id,
     },
   })
+
+  if (response.type == 'IMAGE' || response.type == 'PDF')
+    await cloudinary.uploader.destroy(`${response.idTp ? 'tps' : 'parciales'}/respuestas/${response.idTp || response.idMidterm}/${response.number}/${idUser}`)
+
   revalidateTag('responses', 'max')
   return response
 })

@@ -21,25 +21,15 @@ export const ModalAddMidterm = ({ course }: { course: Course }) => {
     if (!session) throw new Error('No hay sesion')
     if (!date || !name || !file || typeof name.value != 'string' || !(file.value instanceof File) || typeof date.value != 'string')
       throw new Error('Faltan completar datos.')
-    const { data, error } = await createMidterm({
+    const { error } = await createMidterm({
       name: name.value,
       date: new Date(date?.value as string),
       idCourse: course.id,
       idUser: session.user.id,
+      file: file.value,
     })
     if (error) throw new Error('Error: ' + error)
-    if (data) {
-      const formData = new FormData()
-      formData.set('file', file.value)
-      formData.set('id', data.id.toString())
-      formData.set('subFolder', `parciales/problemas`)
-
-      await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      })
-      startReload()
-    }
+    startReload()
   }
 
   return (

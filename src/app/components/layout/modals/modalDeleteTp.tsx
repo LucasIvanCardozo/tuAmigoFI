@@ -18,8 +18,6 @@ export const ModalDeleteTp = ({ tp, user, session }: { tp: Tp; user: User; sessi
     const check = values.find((val) => val.id == 'check')
     if (!check) throw new Error('Debes estar de acuerdo con la eliminacion del TP')
     if (!session) throw new Error('No hay sesion')
-    console.log(session.user.id)
-    console.log(user.id)
     if (session.user.tier != 2 && session.user.id != user.id) throw new Error('Debes ser administrador o el creador para eliminar un TP')
 
     const formData = new FormData()

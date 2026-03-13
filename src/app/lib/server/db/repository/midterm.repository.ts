@@ -9,6 +9,7 @@ export const midtermRepository = (db: PrismaClient | Prisma.TransactionClient) =
   },
   findByCourseIdWithAllData(idCourse: string) {
     return db.midterm.findMany({
+      where: { idCourse },
       include: {
         responses: {
           include: {
