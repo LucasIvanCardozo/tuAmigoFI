@@ -1,11 +1,11 @@
 'use server'
-import { cuid, email, object, string } from 'zod'
+import { email, object, string } from 'zod'
 import createAction from '../createActions'
 import db from '../../db/db'
 import { revalidateTag } from 'next/cache'
 
 const schema = object({
-  name: cuid(),
+  name: string().min(1),
   email: email(),
   image: string().min(1),
 })

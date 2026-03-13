@@ -58,9 +58,9 @@ export const authOptions: AuthOptions = {
         let existingUser = await userUseCases.findByEmail(user.email)
         if (!existingUser) {
           const { data, error } = await createUser({
-            name: user.name!,
-            email: user.email!,
-            image: user.image!,
+            name: user.name,
+            email: user.email,
+            image: user.image,
           })
           if (error) throw new Error(error)
           if (data) existingUser = data
