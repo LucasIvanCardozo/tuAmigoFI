@@ -18,7 +18,13 @@ export const midtermRepository = (db: PrismaClient | Prisma.TransactionClient) =
               include: {
                 user: true,
               },
+              orderBy: {
+                updatedAt: 'desc',
+              },
             },
+          },
+          orderBy: {
+            updatedAt: 'desc',
           },
         },
         users: true,
