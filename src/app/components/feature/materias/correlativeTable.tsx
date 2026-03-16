@@ -3,8 +3,10 @@ import CorrelativeList from './correlativeList'
 import { courseUseCases } from '@/app/lib/server/usecases/course.usecases'
 
 export default async function CorrelativeTable({ idCourse, idDegree }: { idCourse: string; idDegree?: string }) {
-  const dataCorrelatives = await courseUseCases.findCorrelativesById({ idCourse, idDegree })
-  const dataEnabler = await courseUseCases.findEnablesById({ idCourse, idDegree })
+  const [dataCorrelatives, dataEnabler] = await Promise.all([
+    courseUseCases.findCorrelativesById({ idCourse, idDegree }),
+    courseUseCases.findEnablesById({ idCourse, idDegree })
+  ])
 
   return (
     <div className="pl-2 my-1">

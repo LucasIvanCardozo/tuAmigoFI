@@ -1,4 +1,3 @@
-'use client'
 import { TbSquareAsteriskFilled } from 'react-icons/tb'
 import { CgMenu } from 'react-icons/cg'
 

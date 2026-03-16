@@ -22,7 +22,7 @@ export default async function Home() {
     <>
       <main className="pt-14 relative flex text-(--black) h-max w-11/12 justify-between mx-auto max-w-(--breakpoint-md) my-6 sm:pt-20 sm:justify-around">
         <div className="relative h-max w-2/5 max-w-52">
-          <Image className="object-contain w-full " src="/FI.svg" width={200} height={200} alt="" />
+          <Image className="object-contain w-full " src="/FI.svg" width={200} height={200} alt="" priority />
           <h1 className="font-bold absolute text-4xl top-0 left-full text-left bg-[#F3F4F6] ml-1 p-1 rounded-2xl rounded-es-none shadow-md sm:ml-6 sm:p-2">
             Bienvenido!
             <p className="whitespace-nowrap text-xl font-normal">Aquí tu amigo 'FI'</p>
@@ -41,6 +41,7 @@ export default async function Home() {
                     height={25}
                     alt={`Logo de ${data.name}`}
                     aria-label={`Ir a la pagina de ${data.name}`}
+                    priority
                   />
                 </a>
               </li>

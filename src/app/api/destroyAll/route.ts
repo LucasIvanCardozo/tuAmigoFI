@@ -23,7 +23,8 @@ export async function POST(request: NextRequest) {
       }
     }
     return NextResponse.json({ success: true })
-  } catch (error: any) {
+  } catch (error: unknown) {
+    console.error('Error destroying all files:', error)
     return NextResponse.json({ success: false })
   }
 }

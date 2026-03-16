@@ -8,7 +8,7 @@ export default function createAction<T extends z.ZodTypeAny | null, K>(
   return async (values) => {
     try {
       const parsed = schema ? schema.parse(values) : (values ?? {})
-      const data = await callback(parsed as any)
+      const data = await callback(parsed as T extends z.ZodTypeAny ? z.infer<T> : Record<string, unknown>)
 
       return {
         success: true,

@@ -1,5 +1,11 @@
 'use cache: remote'
 import Image from 'next/image'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Contactame - TuAmigoFI',
+  description: 'Contacta con el creador de TuAmigoFI. WhatsApp, Instagram o Email para consultas, reportes de errores o sugerencias.',
+}
 
 export default async function Contactame() {
   return (

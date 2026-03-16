@@ -10,8 +10,10 @@ interface Params {
 export default async function Practica({ params, searchParams }: Params) {
   const { id } = await params
   const { idModule } = await searchParams
-  const course = await courseUseCases.getById(id)
-  const modules = await midtermUseCases.findByCourseIdWithAllData(id)
+  const [course, modules] = await Promise.all([
+    courseUseCases.getById(id),
+    midtermUseCases.findByCourseIdWithAllData(id)
+  ])
 
   return <MainModule modules={modules} course={course} idModule={idModule} typeModule="Practica" />
 }

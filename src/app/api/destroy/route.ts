@@ -19,7 +19,8 @@ export async function POST(request: NextRequest) {
       const deleteAsset = await cloudinary.uploader.destroy(`${subFolder}/${id}`)
     }
     return NextResponse.json({ success: true })
-  } catch (error: any) {
+  } catch (error: unknown) {
+    console.error('Error destroying file:', error)
     return NextResponse.json({ success: false })
   }
 }

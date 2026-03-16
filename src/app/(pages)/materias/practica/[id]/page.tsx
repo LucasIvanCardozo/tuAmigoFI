@@ -10,8 +10,10 @@ interface Props {
 export default async function Practica({ params, searchParams }: Props) {
   const { id } = await params
   const { idModule } = await searchParams
-  const course = await courseUseCases.getById(id)
-  const modules = await tpUseCases.findByCourseIdWithAllData(id)
+  const [course, modules] = await Promise.all([
+    courseUseCases.getById(id),
+    tpUseCases.findByCourseIdWithAllData(id)
+  ])
 
   return <MainModule modules={modules} course={course} typeModule="TP" idModule={idModule} />
 }

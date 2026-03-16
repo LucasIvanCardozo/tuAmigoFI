@@ -1,5 +1,11 @@
 'use cache: remote'
 import PrivacitySection from '@/app/components/privacitySection'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Política de Privacidad - TuAmigoFI',
+  description: 'Política de privacidad de TuAmigoFI. Cómo recopilamos, usamos y protegemos tus datos personales.',
+}
 
 export default async function Privacidad() {
   return (
