@@ -6,6 +6,8 @@
 .pnp.js
 .yarn/install-state.gz
   
+.agents
+skills-lock.json
 AGENTS.md
 
 # testing
