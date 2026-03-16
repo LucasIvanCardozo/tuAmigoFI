@@ -24,7 +24,7 @@ export const midtermRepository = (db: PrismaClient | Prisma.TransactionClient) =
             },
           },
           orderBy: {
-            number: 'desc',
+            number: 'asc',
           },
         },
         users: true,

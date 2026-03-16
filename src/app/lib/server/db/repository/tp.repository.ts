@@ -26,7 +26,7 @@ export const tpRepository = (db: PrismaClient | Prisma.TransactionClient) => ({
             },
           },
           orderBy: {
-            number: 'desc',
+            number: 'asc',
           },
         },
         users: true,
