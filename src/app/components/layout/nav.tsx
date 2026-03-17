@@ -114,7 +114,7 @@ export default function Nav({ callbackSession }: { callbackSession: Promise<Sess
               onClick={() => signOut()}
             >
               {session.user.image && (
-                <div className="h-6 rounded-2xl overflow-hidden aspect-square">
+                <div className="h-6 rounded-md overflow-hidden aspect-square">
                   <Image className="" src={session.user.image} width={100} height={100} alt="Imagen del usuario" />
                 </div>
               )}
