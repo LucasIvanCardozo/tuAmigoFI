@@ -71,9 +71,9 @@ export default async function Home() {
               key={index}
               target="_blank"
               href={link}
-              className="flex items-center gap-3 p-4 bg-white rounded-xl shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-200 border border-gray-200"
+              className="flex items-center gap-3 p-2 bg-white rounded-md shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-200 border border-gray-200"
             >
-              <div className="flex-shrink-0 w-8 h-8 bg-(--dark-cyan)/10 rounded-full flex items-center justify-center">
+              <div className="shrink-0 w-8 h-8 bg-(--dark-cyan)/10 rounded-xl flex items-center justify-center">
                 <FaArrowRight className="w-3 h-3 text-(--dark-cyan)" />
               </div>
               <div className="min-w-0">
