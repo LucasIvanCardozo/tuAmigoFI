@@ -79,7 +79,7 @@ export default function ModuleResponse({
               </div>
             </div>
             {responses[indexResponse].response.type == 'TEXT' ? (
-              <div className="whitespace-pre px-2 pb-7">
+              <div className="whitespace-pre px-2 pb-7 overflow-x-scroll">
                 <p>{responses[indexResponse].response.text}</p>
               </div>
             ) : responses[indexResponse].response.type == 'IMAGE' ? (
