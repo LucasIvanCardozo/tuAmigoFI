@@ -1,5 +1,5 @@
 'use server'
-import { boolean, cuid, object, string } from 'zod'
+import { boolean, cuid, object, string, url } from 'zod'
 import createAction from '../createActions'
 import db from '../../db/db'
 import { userUseCases } from '../../usecases/user.usecases'
@@ -8,7 +8,10 @@ import { revalidateTag } from 'next/cache'
 const schema = object({
   idCourse: cuid(),
   name: string().min(1),
-  link: string().min(1),
+  link: url().refine((url) => {
+    const parsed = new URL(url)
+    return ['https:'].includes(parsed.protocol)
+  }, 'Solo URLs HTTPS permitidas'),
   official: boolean(),
 })
 
