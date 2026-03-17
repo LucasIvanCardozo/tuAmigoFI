@@ -60,24 +60,29 @@ export default async function Home() {
         sea más llevadero.
       </section>
 
-      <section className="text-(--black) my-4 relative max-w-(--breakpoint-md) m-auto w-11/12">
-        <h2 className="w-full text-center font-bold -z-10 text-3xl mb-2 sm:text-4xl">Consultas</h2>
+      <section className="text-(--black) my-6 relative max-w-(--breakpoint-md) m-auto w-11/12">
+        <h2 className="w-full text-center font-bold text-3xl mb-4 sm:text-4xl">Consultas</h2>
         <Suspense fallback={<QuestionSkeleton />}>
           <Questions callback={degreesCallback} />
         </Suspense>
-        <ul className="w-full overflow-hidden my-2 flex flex-col gap-1">
+        <div className="grid gap-3 sm:grid-cols-3 my-4">
           {questionList.map(({ question, link, value }, index) => (
-            <li key={index} className="flex flex-nowrap gap-1 items-center whitespace-nowrap ">
-              <span className="w-max">
-                <b>{question}</b>
-              </span>
-              <FaArrowRight />
-              <a className="underline" target="_blank" href={link}>
-                {value}
-              </a>
-            </li>
+            <a
+              key={index}
+              target="_blank"
+              href={link}
+              className="flex items-center gap-3 p-4 bg-white rounded-xl shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-200 border border-gray-200"
+            >
+              <div className="flex-shrink-0 w-8 h-8 bg-(--dark-cyan)/10 rounded-full flex items-center justify-center">
+                <FaArrowRight className="w-3 h-3 text-(--dark-cyan)" />
+              </div>
+              <div className="min-w-0">
+                <p className="font-semibold text-sm truncate">{question}</p>
+                <p className="text-xs text-(--dark-cyan) truncate">{value}</p>
+              </div>
+            </a>
           ))}
-        </ul>
+        </div>
       </section>
       <CalendarSection callbackYear={callbackYear()} />
       <section className="text-(--black) relative max-w-(--breakpoint-md) m-auto w-11/12 my-4">
