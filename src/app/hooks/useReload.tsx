@@ -5,7 +5,9 @@ export const useReload = () => {
   const { refresh } = useRouter()
 
   const startReload = useCallback(() => {
-    startTransition(refresh)
+    startTransition(() => {
+      refresh()
+    })
   }, [refresh])
 
   return { startReload }
