@@ -40,3 +40,9 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+# Local Pi runtime state
+.atl/
+
+# Local dev artifacts (script outputs)
+/materias.txt
+/result.json
