@@ -96,7 +96,7 @@ export const AsideModules = ({
               }
             >
               {'number' in module ? (
-                module.number !== undefined && numberIconsModules[module.number] ? (
+                typeof module.number === 'number' && numberIconsModules[module.number] ? (
                   numberIconsModules[module.number]
                 ) : (
                   <TbSquareMinusFilled />
