@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 /* @theme debe estar en top-level y crea las utilidades correspondientes */
 @theme {

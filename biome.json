@@ -15,7 +15,9 @@
       "!coverage",
       "!.vercel",
       "!node_modules",
-      "!next-env.d.ts"
+      "!next-env.d.ts",
+      "!public",
+      "!src/app/lib/server/db/prisma/prismaClient"
     ]
   },
   "formatter": {
@@ -135,6 +137,11 @@
     "formatter": {
       "indentScriptAndStyle": false,
       "selfCloseVoidElements": "always"
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
     }
   },
   "assist": {
