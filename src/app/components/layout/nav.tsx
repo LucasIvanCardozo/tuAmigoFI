@@ -68,6 +68,7 @@ export default function Nav({ callbackSession }: { callbackSession: Promise<Sess
         <b className="">Tu Amigo FI</b>
       </Link>
       <button
+        type="button"
         className="relative m-1 bg-(--dark-cyan) rounded-md aspect-square sm:hidden"
         aria-label="Menú"
         title="Menú"

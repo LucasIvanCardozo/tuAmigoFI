@@ -51,6 +51,7 @@ export default function ModalCreateCorrelative({
       refAux={modalRef}
       opener={
         <button
+          type="button"
           className="text-(--black-olive) p-1"
           aria-label="Añadir correlativa"
           title="Añadir correlativa"

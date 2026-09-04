@@ -56,7 +56,7 @@ export const ModalDeleteTp = ({
     <Modal
       refAux={modalRef}
       opener={
-        <button title="Eliminar TP" aria-label="Eliminar TP">
+        <button type="button" title="Eliminar TP" aria-label="Eliminar TP">
           <MdDelete />
         </button>
       }

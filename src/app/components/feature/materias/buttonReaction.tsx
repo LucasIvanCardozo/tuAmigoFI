@@ -15,7 +15,10 @@ export default function ButtonReaction({
   responses: DataModuleResponse[];
 }) {
   const [stateReaction, setStateReaction] = useState<boolean | null>(null);
-  const [amountReaction, setAmountReaction] = useState<{ likes: number; dislikes: number }>({
+  const [amountReaction, setAmountReaction] = useState<{
+    likes: number;
+    dislikes: number;
+  }>({
     likes: 0,
     dislikes: 0,
   });
@@ -23,7 +26,9 @@ export default function ButtonReaction({
 
   async function handleLike(reaction: boolean) {
     if (!session?.user.id)
-      sileo.error({ title: 'Debes iniciar sesion para reaccionar a la respuesta.' });
+      sileo.error({
+        title: 'Debes iniciar sesion para reaccionar a la respuesta.',
+      });
     else {
       const response = responses[indexResponse];
       setStateReaction(reaction === stateReaction ? null : reaction);
@@ -64,6 +69,7 @@ export default function ButtonReaction({
   return (
     <>
       <button
+        type="button"
         className="flex"
         aria-label="Dar me gusta"
         title="Me gusta"
@@ -73,6 +79,7 @@ export default function ButtonReaction({
         {amountReaction.likes}
       </button>
       <button
+        type="button"
         className="flex"
         aria-label="Reportar"
         title="Reportar"

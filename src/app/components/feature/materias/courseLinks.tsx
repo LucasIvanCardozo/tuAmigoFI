@@ -19,6 +19,7 @@ export default function CourseLinks({ callbackLinks }: { callbackLinks: Promise<
   return (
     <>
       <button
+        type="button"
         className="flex items-center cursor-pointer w-fit"
         onClick={handleClickOfficial}
         aria-label="Ver links oficiales"

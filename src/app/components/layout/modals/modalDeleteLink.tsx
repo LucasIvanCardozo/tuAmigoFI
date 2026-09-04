@@ -41,7 +41,7 @@ export default function ModalDeleteLink({ link }: { link: Link }) {
     <Modal
       refAux={modalRef}
       opener={
-        <button className="h-full" aria-label="Eliminar link" title="Eliminar link">
+        <button type="button" className="h-full" aria-label="Eliminar link" title="Eliminar link">
           <MdDelete className="h-full" />
         </button>
       }

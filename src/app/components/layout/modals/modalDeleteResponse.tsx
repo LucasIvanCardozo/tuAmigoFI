@@ -31,7 +31,7 @@ export const ModalDeleteResponse = ({ response, user }: { response: Response; us
     <Modal
       refAux={modalRef}
       opener={
-        <button aria-label="Eliminar respuesta" title="Eliminar respuesta">
+        <button type="button" aria-label="Eliminar respuesta" title="Eliminar respuesta">
           <MdDelete className="h-full w-full" />
         </button>
       }

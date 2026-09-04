@@ -58,6 +58,7 @@ export default function PdfView({ id, url }: { id: string; url: string }) {
           <span className="relative my-1 bg-white/65">
             {
               <button
+                type="button"
                 className={`${
                   pageNumber === 1 && 'opacity-0 pointer-events-none'
                 } absolute h-full right-full top-0 bottom-0 bg-white/65 transform-gpu transition-opacity rounded-tl-md rounded-bl-md`}
@@ -71,6 +72,7 @@ export default function PdfView({ id, url }: { id: string; url: string }) {
             Página {pageNumber}
             {
               <button
+                type="button"
                 className={`${
                   pageNumber === lastPage && 'opacity-0 pointer-events-none'
                 } absolute h-full left-full top-0 bottom-0 bg-white/65 transform-gpu transition-opacity rounded-tr-md rounded-br-md`}
@@ -99,6 +101,7 @@ export default function PdfView({ id, url }: { id: string; url: string }) {
         </div>
       </div>
       <button
+        type="button"
         className="absolute h-6 w-6 top-0 right-0 m-2 bg-white/65 rounded-md select-none"
         onClick={downloadFile}
         aria-label="Descargar PDF"

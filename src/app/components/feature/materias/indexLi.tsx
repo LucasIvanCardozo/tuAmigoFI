@@ -19,6 +19,7 @@ export default function IndexLi({
       }
     >
       <button
+        type="button"
         className="min-h-6 min-w-6"
         aria-label={`Ir a la pagina numero ${index + modifier}`}
         onClick={() => callback((index + modifier).toString())}

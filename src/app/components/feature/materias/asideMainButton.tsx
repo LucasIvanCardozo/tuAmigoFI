@@ -12,6 +12,7 @@ export const AsideMainButton = ({ viewAside, onClick }: Params) => {
 
   return (
     <button
+      type="button"
       className="fixed top-0 left-0 m-1 h-8 bg-(--black-olive) rounded-md aspect-square rounded-e-none z-50 sm:hidden"
       aria-label="Abrir o cerrar menú"
       onClick={onClick}

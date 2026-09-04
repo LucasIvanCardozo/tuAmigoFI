@@ -45,7 +45,12 @@ export default function ModalAddLink({ course }: { course: Course }) {
   return (
     <Modal
       opener={
-        <button className="text-(--black-olive) p-1" aria-label="Añadir link" title="Añadir link">
+        <button
+          type="button"
+          className="text-(--black-olive) p-1"
+          aria-label="Añadir link"
+          title="Añadir link"
+        >
           Añadir Link
         </button>
       }

@@ -48,7 +48,7 @@ export default function ModuleResponse({
               <b className="bg-[#9fc8cf] p-1">{`Ejercicio ${problem.number}:`}</b>
               <span className="opacity-75 p-1 flex gap-1">
                 Por {`${responses[indexResponse].user.name}`}
-                <button onClick={() => setViewResponses(!viewResponses)}>
+                <button type="button" onClick={() => setViewResponses(!viewResponses)}>
                   <CgMathMinus className="text-xl " />
                 </button>
               </span>
@@ -64,6 +64,7 @@ export default function ModuleResponse({
               <span></span>
               <div className="flex gap-1">
                 <button
+                  type="button"
                   className="h-full aspect-square text-(--black-olive) opacity-90"
                   aria-label="Cambiar usuario que respondió hacia la izquierda"
                   title="Cambiar hacia izquierda"
@@ -73,6 +74,7 @@ export default function ModuleResponse({
                 </button>
                 <span className="text-nowrap">{`${indexResponse + 1} de ${responses.length}`}</span>
                 <button
+                  type="button"
                   className="h-full aspect-square text-(--black-olive) opacity-90"
                   aria-label="Cambiar usuario que respondió hacia la derecha"
                   title="Cambiar hacia derecha"
@@ -118,7 +120,7 @@ export default function ModuleResponse({
             ) : null}
             <div className="flex absolute bottom-0 right-0 z-10 gap-1 p-1 bg-(--white) rounded-md select-none">
               <ButtonReaction indexResponse={indexResponse} responses={responses} />|
-              <button onClick={handleComment}>
+              <button type="button" onClick={handleComment}>
                 <FaCommentDots className="text-xl" />
               </button>
               {responses[indexResponse].comments.length}
@@ -138,7 +140,7 @@ export default function ModuleResponse({
             <b className=" p-1">{`Ejercicio ${problem.number}`}</b>
             <span className="opacity-75 p-1 flex gap-1">
               {`Hay ${responses.length} respuesta disponible`}
-              <button onClick={() => setViewResponses(!viewResponses)}>
+              <button type="button" onClick={() => setViewResponses(!viewResponses)}>
                 <CgMathPlus className="text-xl " />
               </button>
             </span>

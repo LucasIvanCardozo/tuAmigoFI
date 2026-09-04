@@ -46,6 +46,7 @@ export const Comment = ({ comment, session }: Params) => {
       </div>
       <div className="flex items-center gap-1">
         <button
+          type="button"
           className="flex items-center gap-1 px-2 py-1 rounded-lg hover:bg-gray-100 transition"
           aria-label="Dar me gusta"
           title="Me gusta"

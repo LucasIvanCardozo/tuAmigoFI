@@ -47,7 +47,12 @@ export default function ModalReportLink({ link }: { link: Link }) {
     <Modal
       refAux={modalRef}
       opener={
-        <button className="h-full text-red-700" aria-label="Reportar link" title="Reportar link">
+        <button
+          type="button"
+          className="h-full text-red-700"
+          aria-label="Reportar link"
+          title="Reportar link"
+        >
           <MdOutlineReport className="h-full" />
         </button>
       }

@@ -77,6 +77,7 @@ export const AsideModules = ({
           >
             <TbSquareAsteriskFilled />
             <button
+              type="button"
               className="text-start"
               onClick={() => handleViewModules(null)}
               aria-label="Mostrar todos"
@@ -104,6 +105,7 @@ export const AsideModules = ({
                 <SiGoogledocs />
               )}
               <button
+                type="button"
                 className="text-start"
                 aria-label={
                   'number' in module
@@ -129,9 +131,9 @@ export const AsideModules = ({
               'order-last gap-1 p-1 rounded-md transform-gpu text-center transition-transform sm:hover:scale-105'
             }
           >
-            <span onClick={() => setViewAside(false)}>
+            <button type="button" onClick={() => setViewAside(false)}>
               {isTp ? <ModalAddTp course={course} /> : <ModalAddMidterm course={course} />}
-            </span>
+            </button>
           </li>
         </ul>
       </aside>

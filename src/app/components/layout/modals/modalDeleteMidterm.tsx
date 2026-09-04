@@ -46,7 +46,10 @@ export const ModalDeleteMidterm = ({
     });
 
     if (res.ok && res2.ok) {
-      const { error } = await deleteMidterm({ id: midterm.id, idUser: midterm.idUser });
+      const { error } = await deleteMidterm({
+        id: midterm.id,
+        idUser: midterm.idUser,
+      });
       if (error) throw new Error(error);
       startReload();
     }
@@ -56,7 +59,7 @@ export const ModalDeleteMidterm = ({
     <Modal
       refAux={modalRef}
       opener={
-        <button title="Eliminar Examen" aria-label="Eliminar Examen">
+        <button type="button" title="Eliminar Examen" aria-label="Eliminar Examen">
           <MdDelete />
         </button>
       }

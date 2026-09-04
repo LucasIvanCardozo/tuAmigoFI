@@ -9,6 +9,7 @@ export default function ButtonInfoScore() {
   return (
     <>
       <button
+        type="button"
         title="Como obtener puntos?"
         aria-label="Info sobre como obtener puntos"
         onClick={() => setViewModal(true)}
