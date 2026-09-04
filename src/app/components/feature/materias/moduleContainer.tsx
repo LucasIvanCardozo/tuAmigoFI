@@ -1,9 +1,12 @@
+'use client';
+import { useSession } from 'next-auth/react';
+import { CgMathPlus } from 'react-icons/cg';
 import { SiGoogledocs } from 'react-icons/si';
 import PdfView from '@/app/components/pdfView';
-import { userUseCases } from '@/app/lib/server/usecases/user.usecases';
+import { useModal } from '@/app/contexts/ModalContext';
 import type { DataModule } from '@/app/types';
 import { numberIconsModules } from '../../../assets/icons';
-import { ModalAddResponse } from '../../layout/modals/modalAddResponse';
+import { ModalAddResponseContent } from '../../layout/modals/ModalAddResponseContent';
 import { ModalDeleteMidterm } from '../../layout/modals/modalDeleteMidterm';
 import { ModalDeleteTp } from '../../layout/modals/modalDeleteTp';
 import ModuleResponse from './moduleResponse';
@@ -14,8 +17,9 @@ interface Props {
   typeModule: 'TP' | 'Practica';
 }
 
-export const ModuleContainer = async ({ module, idModule, typeModule }: Props) => {
-  const session = await userUseCases.getSession();
+export const ModuleContainer = ({ module, idModule, typeModule }: Props) => {
+  const { data: session } = useSession();
+  const { openModal } = useModal();
   const moduleInd = module.module;
   const problems = module.problems;
   const isTp = 'number' in moduleInd;
@@ -50,71 +54,23 @@ export const ModuleContainer = async ({ module, idModule, typeModule }: Props) =
               <ModalDeleteMidterm midterm={moduleInd} user={module.user} session={session} />
             ))}
 
-          <ModalAddResponse module={moduleInd} session={session} />
+          <button
+            type="button"
+            className="flex text-base h-6 pr-1 items-center border-2 border-gray-600 rounded-md hover:bg-[#92C1C9] transition-colors hover:border-[#92C1C9]"
+            title="Añadir una respuesta"
+            aria-label="Añadir una respuesta"
+            onClick={() =>
+              openModal(<ModalAddResponseContent module={moduleInd} session={session} />)
+            }
+          >
+            <CgMathPlus />
+            <span>Respuesta</span>
+          </button>
         </div>
       </div>
       <div className="bg-(--white) text-base leading-5 drop-shadow-md flex flex-col gap-1">
         <div className="relative overflow-hidden bg-[#96cad3] h-min rounded-b-lg p-1 sm:p-2">
           <div className="absolute z-10 bg-(--white) rounded-md m-2 opacity-65 top-0 left-0">{`Por ${module.user.name}`}</div>
-          {/* {session && (
-            <button
-              className="absolute z-10 m-2 bottom-0 right-0 w-6 h-6 bg-white/65 rounded-md"
-              title="Reportar TP"
-              aria-label="Reportar TP"
-              onClick={() => {
-                stateForm.setDataForm({
-                  onSubmit: submitReportModule,
-                  children: (
-                    <>
-                      <div className="flex flex-col *:flex *:gap-1">
-                        <p>
-                          <b>Nombre:</b>
-                          {moduleInd.name}
-                        </p>
-                        <p>
-                          <b>Subido por:</b>
-                          {module.user.name}
-                        </p>
-                        {isTp ? (
-                          <>
-                            <p>
-                              <b>Año:</b>
-                              {moduleInd.year}
-                            </p>
-                            <p>
-                              <b>Numero:</b>
-                              {moduleInd.number || 'No tiene'}
-                            </p>
-                          </>
-                        ) : (
-                          <p>
-                            <b>Fecha:</b>
-                            {`${moduleInd.date.getMonth()}/${moduleInd.date.getFullYear()}`}
-                          </p>
-                        )}
-                      </div>
-                      <div>
-                        <h3 className="text-sm">Recuerda!</h3>
-                        <p className="text-xs">
-                          Por favor asegurate de que el examen que quieres reportar sea el correcto. En caso de cualquier problema podes contactarme:{' '}
-                          <a className="underline" target="_blank" href="https://wa.me/+5492235319564">
-                            2235319564
-                          </a>
-                        </p>
-                      </div>
-                      <HandlerInputs type="checkbox" id="check" name="check" placeholder="Confirmo mi reporte." required={true} />
-                    </>
-                  ),
-                })
-                stateModal.setDataModal({
-                  title: `Reportar  ${isTp ? 'TP' : 'Examen'}`,
-                  viewModal: true,
-                })
-              }}
-            >
-              <MdOutlineReport className="h-full w-full text-red-700" />
-            </button>
-          )} */}
           <PdfView id={moduleInd.id} url={isTp ? `tps/problemas` : `parciales/problemas`} />
         </div>
         <ul className="flex flex-col gap-1 pl-1">

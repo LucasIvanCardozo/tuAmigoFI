@@ -1,0 +1,121 @@
+'use client';
+import { useSession } from 'next-auth/react';
+import { type FormEvent, useState } from 'react';
+import { sileo } from 'sileo';
+import { useReload } from '@/app/hooks/useReload';
+import { createLink } from '@/app/lib/server/actions/links/create.action';
+import type { Course } from '@/app/lib/server/db/prisma/prismaClient/client';
+
+export const ModalAddLinkContent = ({ course }: { course: Course }) => {
+  const [name, setName] = useState<string | undefined>();
+  const [link, setLink] = useState<string | undefined>();
+  const [official, setOfficial] = useState<boolean | undefined>();
+  const { data: session } = useSession();
+  const { startReload } = useReload();
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    sileo.promise(
+      async () => {
+        if (!session) throw new Error('No hay sesion');
+        const { error } = await createLink({
+          idCourse: course.id,
+          link: link,
+          name: name,
+          official: official,
+        });
+        if (error) throw new Error(error);
+        startReload();
+      },
+      {
+        loading: { title: 'Cargando...' },
+        success: { title: 'Muchas gracias por tu aporte! ❤️' },
+        error: (error) => {
+          const err = error as Error;
+          return {
+            title: err.message,
+          };
+        },
+      },
+    );
+  };
+
+  return (
+    <>
+      <h2 className="text-lg mb-2">Añadir link</h2>
+      <p>
+        Este link será añadido a la materia <b>&quot;{course.name}&quot;</b>
+      </p>
+      <form className="relative flex flex-col w-full" onSubmit={handleSubmit}>
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-col">
+            <label htmlFor="name">Titulo del link</label>
+            <input
+              className="text-black"
+              type="text"
+              name="name"
+              id="name"
+              autoComplete="off"
+              placeholder="Ingresa el titulo del link"
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="link">Link</label>
+            <input
+              className="text-black"
+              type="url"
+              name="link"
+              id="link"
+              autoComplete="off"
+              placeholder="Ingresa el link"
+              onChange={(e) => setLink(e.target.value)}
+              required
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="official">Título</label>
+            <select
+              className="text-black"
+              name="official"
+              id="official"
+              onChange={(e) => {
+                setOfficial(Boolean(e.target.value));
+              }}
+              required
+            >
+              <option hidden>Selecciona el tipo de link</option>
+              <option value="1">Oficial</option>
+              <option value="">No oficial</option>
+            </select>
+          </div>
+        </div>
+        <div className="my-2">
+          <h3 className="text-sm">Recuerda!</h3>
+          <p className="text-xs">
+            Por favor verifica que el link que quiere subir sea el correcto y no este ya disponible
+            en la lista. Los links tienen que ser de alta prioridad. En caso de cualquier problema
+            podes contactarme:{' '}
+            <a
+              className="underline"
+              target="_blank"
+              href="https://wa.me/+5492235319564"
+              rel="noopener"
+            >
+              2235319564
+            </a>
+          </p>
+        </div>
+        <div className="flex justify-center">
+          <button
+            className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700 transition-colors"
+            type="submit"
+          >
+            Aceptar
+          </button>
+        </div>
+      </form>
+    </>
+  );
+};

@@ -1,23 +1,21 @@
 'use client';
 import type { Session } from 'next-auth';
-import { useRef } from 'react';
-import { CgMathPlus } from 'react-icons/cg';
+import { useModal } from '@/app/contexts/ModalContext';
 import { useReload } from '@/app/hooks/useReload';
 import { createResponse } from '@/app/lib/server/actions/responses/create.action';
 import type { Module, TypeValues } from '@/app/types';
 import { Form } from '../form/form';
 import { HandlerInputs } from '../form/inputs/handlerInputs';
-import { Modal, type ModalRef } from './Modal';
 
-export const ModalAddResponse = ({
+export const ModalAddResponseContent = ({
   module,
   session,
 }: {
   module: Module;
   session: Session | null;
 }) => {
+  const { closeModal } = useModal();
   const { startReload } = useReload();
-  const modalRef = useRef<ModalRef>(null);
   const isTp = 'number' in module;
 
   const submitAddResponse = async (values: TypeValues[]) => {
@@ -44,25 +42,9 @@ export const ModalAddResponse = ({
   };
 
   return (
-    <Modal
-      refAux={modalRef}
-      opener={
-        <button
-          type="button"
-          className="flex text-base h-6 pr-1 items-center border-2 border-gray-600 rounded-md hover:bg-[#92C1C9] transition-colors hover:border-[#92C1C9]"
-          title="Añadir una respuesta"
-          aria-label="Añadir una respuesta"
-        >
-          <CgMathPlus />
-          <span>Respuesta</span>
-        </button>
-      }
-    >
+    <>
       <h2 className="text-lg">Añadir una respuesta</h2>
-      <Form
-        onSubmit={(e: TypeValues[]) => submitAddResponse(e)}
-        onEnd={() => modalRef.current?.close()}
-      >
+      <Form onSubmit={(e: TypeValues[]) => submitAddResponse(e)} onEnd={() => closeModal()}>
         <div className="flex flex-col">
           <label htmlFor="number">Número</label>
           <HandlerInputs
@@ -82,7 +64,7 @@ export const ModalAddResponse = ({
           name="selectResponse"
         />
         <div>
-          <p>Esta respuesta se añadirá al módulo "{module.name}"</p>
+          <p>Esta respuesta se añadirá al módulo &quot;{module.name}&quot;</p>
         </div>
         <div>
           <h3 className="text-sm">Recuerda!</h3>
@@ -100,6 +82,6 @@ export const ModalAddResponse = ({
           </p>
         </div>
       </Form>
-    </Modal>
+    </>
   );
 };

@@ -6,7 +6,7 @@ import type { Course as CourseType } from '@/app/lib/server/db/prisma/prismaClie
 import { courseUseCases } from '@/app/lib/server/usecases/course.usecases';
 import { linkUseCases } from '@/app/lib/server/usecases/link.usecases';
 import { userUseCases } from '@/app/lib/server/usecases/user.usecases';
-import ModalAddLink from '../../layout/modals/modalAddLink';
+import { ModalAddLinkOpener } from '../../layout/modals/ModalAddLinkOpener';
 import ModalCreateCorrelative from '../../layout/modals/modalCreateCorrelative';
 import { ButtonUrl } from './buttonUrl';
 import CorrelativeTable from './correlativeTable';
@@ -53,7 +53,7 @@ export default async function Course({
         {session?.user && (
           <>
             <ModalCreateCorrelative course={course} callback={callbackCourses} />
-            <ModalAddLink course={course} />
+            <ModalAddLinkOpener course={course} />
           </>
         )}
         <ButtonUrl url={`./materias/parciales/${id}`} label="Ver exámenes" />
