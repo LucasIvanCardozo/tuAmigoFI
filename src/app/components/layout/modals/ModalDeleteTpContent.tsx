@@ -1,16 +1,14 @@
 'use client';
 import type { Session } from 'next-auth';
-import { useRef } from 'react';
-import { MdDelete } from 'react-icons/md';
+import { useModal } from '@/app/contexts/ModalContext';
 import { useReload } from '@/app/hooks/useReload';
 import { deleteTp } from '@/app/lib/server/actions/tps/delete.action';
 import type { Tp, User } from '@/app/lib/server/db/prisma/prismaClient/client';
 import type { TypeValues } from '@/app/types';
 import { Form } from '../form/form';
 import { HandlerInputs } from '../form/inputs/handlerInputs';
-import { Modal, type ModalRef } from './Modal';
 
-export const ModalDeleteTp = ({
+export const ModalDeleteTpContent = ({
   tp,
   user,
   session,
@@ -19,8 +17,8 @@ export const ModalDeleteTp = ({
   user: User;
   session: Session | null;
 }) => {
+  const { closeModal } = useModal();
   const { startReload } = useReload();
-  const modalRef = useRef<ModalRef>(null);
 
   const submitDeleteModule = async (values: TypeValues[]) => {
     const check = values.find((val) => val.id === 'check');
@@ -53,19 +51,9 @@ export const ModalDeleteTp = ({
   };
 
   return (
-    <Modal
-      refAux={modalRef}
-      opener={
-        <button type="button" title="Eliminar TP" aria-label="Eliminar TP">
-          <MdDelete />
-        </button>
-      }
-    >
+    <>
       <h2 className="text-lg">Eliminar TP</h2>
-      <Form
-        onSubmit={(e: TypeValues[]) => submitDeleteModule(e)}
-        onEnd={() => modalRef.current?.close()}
-      >
+      <Form onSubmit={(e: TypeValues[]) => submitDeleteModule(e)} onEnd={() => closeModal()}>
         <div className="flex flex-col *:flex *:gap-1">
           <p>
             <b>Nombre:</b>
@@ -109,6 +97,6 @@ export const ModalDeleteTp = ({
           required={true}
         />
       </Form>
-    </Modal>
+    </>
   );
 };

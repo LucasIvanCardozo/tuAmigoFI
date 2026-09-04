@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react';
 import { use, useState } from 'react';
 import { VscTriangleDown, VscTriangleRight } from 'react-icons/vsc';
 import type { Link } from '@/app/lib/server/db/prisma/prismaClient/client';
-import ModalDeleteLink from '../../layout/modals/modalDeleteLink';
+import { ModalDeleteLinkOpener } from '../../layout/modals/ModalDeleteLinkOpener';
 
 export default function CourseLinks({ callbackLinks }: { callbackLinks: Promise<Link[]> }) {
   const [viewStateOfficial, setViewStateOfficial] = useState<boolean>(false);
@@ -51,7 +51,7 @@ export default function CourseLinks({ callbackLinks }: { callbackLinks: Promise<
                 </a>
                 {/* {session && <ModalReportLink link={link} />} */}
                 {(session?.user.tier === 2 || session?.user.id === link.idUser) && (
-                  <ModalDeleteLink link={link} />
+                  <ModalDeleteLinkOpener link={link} />
                 )}
                 {index !== links.length - 1 && ' -'}
               </span>

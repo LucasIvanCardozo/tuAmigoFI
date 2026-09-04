@@ -7,7 +7,7 @@ import { CgMathMinus, CgMathPlus } from 'react-icons/cg';
 import { FaCommentDots } from 'react-icons/fa';
 import PdfView from '@/app/components/pdfView';
 import type { DataModuleProblem } from '@/app/types';
-import { ModalDeleteResponse } from '../../layout/modals/modalDeleteResponse';
+import { ModalDeleteResponseOpener } from '../../layout/modals/ModalDeleteResponseOpener';
 import ButtonReaction from './buttonReaction';
 import { Code } from './code';
 import { CommentsLi } from './commentsLi';
@@ -56,7 +56,7 @@ export default function ModuleResponse({
             <div className="w-full h-5 relative flex justify-between">
               {(session?.user.tier === 2 ||
                 session?.user.id === responses[indexResponse].response.idUser) && (
-                <ModalDeleteResponse
+                <ModalDeleteResponseOpener
                   response={responses[indexResponse].response}
                   user={responses[indexResponse].user}
                 />

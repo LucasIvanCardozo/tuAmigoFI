@@ -1,14 +1,15 @@
 'use client';
 import { useSession } from 'next-auth/react';
 import { CgMathPlus } from 'react-icons/cg';
+import { MdDelete } from 'react-icons/md';
 import { SiGoogledocs } from 'react-icons/si';
 import PdfView from '@/app/components/pdfView';
 import { useModal } from '@/app/contexts/ModalContext';
 import type { DataModule } from '@/app/types';
 import { numberIconsModules } from '../../../assets/icons';
 import { ModalAddResponseContent } from '../../layout/modals/ModalAddResponseContent';
-import { ModalDeleteMidterm } from '../../layout/modals/modalDeleteMidterm';
-import { ModalDeleteTp } from '../../layout/modals/modalDeleteTp';
+import { ModalDeleteMidtermContent } from '../../layout/modals/ModalDeleteMidtermContent';
+import { ModalDeleteTpContent } from '../../layout/modals/ModalDeleteTpContent';
 import ModuleResponse from './moduleResponse';
 
 interface Props {
@@ -49,9 +50,35 @@ export const ModuleContainer = ({ module, idModule, typeModule }: Props) => {
           {session &&
             (session.user?.tier === 2 || session.user?.id === module.user.id) &&
             (isTp ? (
-              <ModalDeleteTp tp={moduleInd} user={module.user} session={session} />
+              <button
+                type="button"
+                title="Eliminar TP"
+                aria-label="Eliminar TP"
+                onClick={() =>
+                  openModal(
+                    <ModalDeleteTpContent tp={moduleInd} user={module.user} session={session} />,
+                  )
+                }
+              >
+                <MdDelete />
+              </button>
             ) : (
-              <ModalDeleteMidterm midterm={moduleInd} user={module.user} session={session} />
+              <button
+                type="button"
+                title="Eliminar Examen"
+                aria-label="Eliminar Examen"
+                onClick={() =>
+                  openModal(
+                    <ModalDeleteMidtermContent
+                      midterm={moduleInd}
+                      user={module.user}
+                      session={session}
+                    />,
+                  )
+                }
+              >
+                <MdDelete />
+              </button>
             ))}
 
           <button
