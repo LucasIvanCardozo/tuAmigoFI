@@ -6,7 +6,7 @@ export default async function Contributors() {
 
   return (
     <ul className="flex flex-col gap-1 w-full items-center">
-      {contributors.map(({ user: { name }, score }, index) => (
+      {contributors.map(({ user: { id, name }, score }, index) => (
         <li
           className={`${
             index === 0
@@ -17,7 +17,7 @@ export default async function Contributors() {
                   ? 'text-lg'
                   : 'text-base'
           } flex gap-1`}
-          key={index}
+          key={id}
         >
           <div className="flex gap-1 max-w-56 items-center bg-(--white) rounded-md px-1 whitespace-nowrap overflow-hidden text-ellipsis">
             {index === 0 ? (

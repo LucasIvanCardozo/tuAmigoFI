@@ -88,7 +88,7 @@ export const HandlerInputs = (input: TypeInput) => {
               : inputType === 'file' || inputType === 'date'
                 ? undefined
                 : false,
-          inputType: typeResponse as any,
+          inputType: typeResponse as TypeResponse,
           validate: !input.required,
         };
         return [...validates, thisvalidate];
@@ -119,7 +119,7 @@ export const HandlerInputs = (input: TypeInput) => {
                           : inputType === 'date'
                             ? date
                             : checkbox,
-                    inputType: typeResponse ?? (inputType as any),
+                    inputType: typeResponse ?? (inputType as unknown as TypeResponse),
                     validate: true,
                   }
                 : val,

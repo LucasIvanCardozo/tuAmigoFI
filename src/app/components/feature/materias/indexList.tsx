@@ -45,32 +45,56 @@ export default function IndexList({
       <IndexLi index={1} page={page} modifier={0} callback={handlePage} />
       {total > 8 && page > 5 && <li>...</li>}
       {total <= 8
-        ? Array.from({ length: Math.max(0, total - 2) }).map((_, index) => (
-            <IndexLi key={index} index={index} page={page} modifier={2} callback={handlePage} />
-          ))
+        ? Array.from({ length: Math.max(0, total - 2) }).map((_, offset) => {
+            const pageNumber = offset + 2;
+            return (
+              <IndexLi
+                key={pageNumber}
+                index={offset}
+                page={page}
+                modifier={2}
+                callback={handlePage}
+              />
+            );
+          })
         : page <= 5
-          ? Array.from({ length: 6 }).map((_, index) => (
-              <IndexLi key={index} index={index} page={page} modifier={2} callback={handlePage} />
-            ))
+          ? Array.from({ length: 6 }).map((_, offset) => {
+              const pageNumber = offset + 2;
+              return (
+                <IndexLi
+                  key={pageNumber}
+                  index={offset}
+                  page={page}
+                  modifier={2}
+                  callback={handlePage}
+                />
+              );
+            })
           : page >= total - 4
-            ? Array.from({ length: 5 }).map((_, index) => (
-                <IndexLi
-                  key={index}
-                  index={index}
-                  page={page}
-                  modifier={total - 5}
-                  callback={handlePage}
-                />
-              ))
-            : Array.from({ length: 5 }).map((_, index) => (
-                <IndexLi
-                  key={index}
-                  index={index}
-                  page={page}
-                  modifier={page - 2}
-                  callback={handlePage}
-                />
-              ))}
+            ? Array.from({ length: 5 }).map((_, offset) => {
+                const pageNumber = offset + (total - 5);
+                return (
+                  <IndexLi
+                    key={pageNumber}
+                    index={offset}
+                    page={page}
+                    modifier={total - 5}
+                    callback={handlePage}
+                  />
+                );
+              })
+            : Array.from({ length: 5 }).map((_, offset) => {
+                const pageNumber = offset + (page - 2);
+                return (
+                  <IndexLi
+                    key={pageNumber}
+                    index={offset}
+                    page={page}
+                    modifier={page - 2}
+                    callback={handlePage}
+                  />
+                );
+              })}
       {total > 8 && page < total - 4 && <li>...</li>}
       {total > 1 && <IndexLi index={total} page={page} modifier={0} callback={handlePage} />}
     </ul>

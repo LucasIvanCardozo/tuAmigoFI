@@ -1,4 +1,5 @@
-import type { AuthOptions } from 'next-auth';
+import type { Account, AuthOptions, Session, User } from 'next-auth';
+import type { AdapterUser } from 'next-auth/adapters';
 import type { JWT } from 'next-auth/jwt';
 import GoogleProvider from 'next-auth/providers/google';
 import { createUser } from '../actions/users/create.action';
@@ -69,7 +70,15 @@ export const authOptions: AuthOptions = {
       user.tier = existingUser.tier;
       return true;
     },
-    async jwt({ token, user, account }: { token: JWT; user?: any; account?: any }) {
+    async jwt({
+      token,
+      user,
+      account,
+    }: {
+      token: JWT;
+      user?: User | AdapterUser;
+      account?: Account | null;
+    }) {
       if (user) {
         token.idUser = user.idUser;
         token.tier = user.tier;
@@ -78,7 +87,7 @@ export const authOptions: AuthOptions = {
       if (account?.access_token) {
         token.accessToken = account.access_token;
         token.refreshToken = account.refresh_token;
-        token.expires = Date.now() + account.expires_in * 1000;
+        token.expires = Date.now() + (account.expires_in as number) * 1000;
       }
 
       if (token.expires && Date.now() > token.expires) {
@@ -87,11 +96,11 @@ export const authOptions: AuthOptions = {
 
       return token;
     },
-    async session({ session, token }: { session: any; token: JWT }) {
+    async session({ session, token }: { session: Session; token: JWT }) {
       const existingUser = await userUseCases.getById(session.user.id);
       if (existingUser.banned) {
         console.warn(`Usuario baneado detectado: ${session.user.email}`);
-        return null;
+        return null as unknown as Session;
       }
       session.user = {
         id: token.idUser,

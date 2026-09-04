@@ -59,7 +59,10 @@ export default function ModalReportLink({ link }: { link: Link }) {
     >
       <form
         className="relative flex flex-col w-full"
-        onSubmit={(e) => (setLoading(true), handleSubmit(e))}
+        onSubmit={(e) => {
+          setLoading(true);
+          handleSubmit(e);
+        }}
       >
         <div>
           <h3 className="text-lg mb-4">

@@ -40,9 +40,11 @@ export default function SearchCourses() {
       placeholder="Ingresar tu materia"
       className="p-1 grow"
       value={search}
-      onChange={(e) => (
-        setSearch(e.target.value), handleLoader(true), handleSearch(e.target.value)
-      )}
+      onChange={(e) => {
+        setSearch(e.target.value);
+        handleLoader(true);
+        handleSearch(e.target.value);
+      }}
     />
   );
 }

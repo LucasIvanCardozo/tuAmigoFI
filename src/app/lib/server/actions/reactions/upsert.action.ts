@@ -2,6 +2,7 @@
 import { revalidateTag } from 'next/cache';
 import z, { boolean, cuid, object } from 'zod';
 import db from '../../db/db';
+import type { Reaction } from '../../db/prisma/prismaClient/client';
 import { ReactionTo } from '../../db/prisma/prismaClient/enums';
 import { userUseCases } from '../../usecases/user.usecases';
 import createAction from '../createActions';
@@ -26,7 +27,7 @@ export const upsertReaction = createAction(schema, async ({ idTarget, typeTarget
     },
   });
 
-  let reactionAux;
+  let reactionAux: Reaction;
   if (!existing) {
     reactionAux = await db.reaction.create({
       data: {

@@ -61,16 +61,13 @@ export const ModalAddMidterm = ({ course }: { course: Course }) => {
             id="name"
             name="name"
             required={true}
-            children={
-              <>
-                <option value="Primer parcial">Primer parcial</option>
-                <option value="Segundo parcial">Segundo parcial</option>
-                <option value="Tercer parcial">Tercer parcial</option>
-                <option value="Final">Final</option>
-                <option value="Otros">Otros</option>
-              </>
-            }
-          />
+          >
+            <option value="Primer parcial">Primer parcial</option>
+            <option value="Segundo parcial">Segundo parcial</option>
+            <option value="Tercer parcial">Tercer parcial</option>
+            <option value="Final">Final</option>
+            <option value="Otros">Otros</option>
+          </HandlerInputs>
         </div>
         <div className="flex flex-col">
           <label htmlFor="date">Fecha</label>

@@ -97,9 +97,9 @@ export default function Nav({ callbackSession }: { callbackSession: Promise<Sess
           { href: '/', name: 'Inicio' },
           { href: '/materias', name: 'Materias' },
           { href: '/contactame', name: 'Contáctame' },
-        ].map(({ href, name }, index) => (
+        ].map(({ href, name }) => (
           <li
-            key={index}
+            key={href}
             className={
               'rounded-md ' +
               (pathname === href ? 'bg-(--midnight-green)' : 'hover:bg-(--midnight-green)')

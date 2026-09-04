@@ -71,7 +71,7 @@ export default function ModalAddLink({ course }: { course: Course }) {
                 type="text"
                 name="name"
                 id="name"
-                autoComplete="ÑÖcompletes"
+                autoComplete="off"
                 placeholder={'Ingresa el titulo del link'}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -96,9 +96,10 @@ export default function ModalAddLink({ course }: { course: Course }) {
                 className="text-black"
                 name="official"
                 id="official"
-                onChange={(e) => (
-                  console.log(Boolean(e.target.value)), setOfficial(Boolean(e.target.value))
-                )}
+                onChange={(e) => {
+                  console.log(Boolean(e.target.value));
+                  setOfficial(Boolean(e.target.value));
+                }}
                 required
               >
                 <option hidden>Selecciona el tipo de link</option>

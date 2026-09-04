@@ -7,10 +7,14 @@ export const correlativeSeed = async (db: PrismaClient) => {
 
   const courseMap = new Map(courses.map((c) => [c.name, c.id]));
 
-  const data = correlativesData.map((c) => ({
-    idCourse: courseMap.get(c.course)!,
-    idCorrelativeCourse: courseMap.get(c.required)!,
-  }));
+  const data = correlativesData.map((c) => {
+    const idCourse = courseMap.get(c.course);
+    const idCorrelativeCourse = courseMap.get(c.required);
+    if (!idCourse || !idCorrelativeCourse) {
+      throw new Error(`Missing course mapping for ${c.course} or ${c.required}`);
+    }
+    return { idCourse, idCorrelativeCourse };
+  });
 
   await db.correlative.createMany({
     data,

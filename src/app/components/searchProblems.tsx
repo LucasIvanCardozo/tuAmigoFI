@@ -38,7 +38,10 @@ export default function SearchProblems() {
       placeholder="Ingresa palabras clave de tu probelma"
       className="p-1 w-full"
       value={text}
-      onChange={(e) => (setText(e.target.value), handleSearch(e.target.value))}
+      onChange={(e) => {
+        setText(e.target.value);
+        handleSearch(e.target.value);
+      }}
     />
   );
 }

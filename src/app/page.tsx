@@ -38,8 +38,8 @@ export default async function Home() {
         <div className="self-end h-auto">
           <span>Canales oficiales</span>
           <ul className="flex justify-around w-full drop-shadow-sm">
-            {channelList.map((data, index) => (
-              <li key={index}>
+            {channelList.map((data) => (
+              <li key={data.link}>
                 <a href={data.link} target="_blank" rel="noopener">
                   <Image
                     className="object-contain rounded-md"
@@ -75,9 +75,9 @@ export default async function Home() {
           <Questions callback={degreesCallback} />
         </Suspense>
         <div className="grid gap-3 sm:grid-cols-3 my-4">
-          {questionList.map(({ question, link, value }, index) => (
+          {questionList.map(({ question, link, value }) => (
             <a
-              key={index}
+              key={link}
               target="_blank"
               href={link}
               className="flex items-center gap-3 p-2 bg-white rounded-md shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-200 border border-gray-200"

@@ -124,15 +124,10 @@ export const ModuleContainer = async ({ module, idModule, typeModule }: Props) =
             </li>
           ) : (
             problems
-              .map((problem, index) =>
+              .map((problem) =>
                 problem.responses.length > 0 ? (
                   <ModuleResponse
-                    key={
-                      ((index + problem.responses.length) *
-                        (index + problem.responses.length + 1)) /
-                        2 +
-                      index
-                    }
+                    key={problem.number}
                     problem={problem}
                     typeModule={typeModule}
                     session={session}
