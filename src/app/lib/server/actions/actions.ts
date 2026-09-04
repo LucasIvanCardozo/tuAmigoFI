@@ -1,6 +1,4 @@
 'use server';
-import db from '../db/db';
-import { Correlative, Link, User } from '../db/prisma/prismaClient/client';
 
 // export async function addReactionTp({ id, id_response, reaction }: { id: number; id_response: number; reaction: boolean }) {
 //   try {

@@ -14,7 +14,7 @@ export default function YearCourse({ callback }: { callback: Promise<Year[]> }) 
 
   const handleYears = (year: string) => {
     const params = new URLSearchParams(searchParams);
-    if (year && year != '0') {
+    if (year && year !== '0') {
       params.set('idYear', year);
     } else {
       params.delete('idYear');

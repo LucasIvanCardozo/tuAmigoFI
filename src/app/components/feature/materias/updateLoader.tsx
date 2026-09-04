@@ -10,6 +10,6 @@ interface Params {
 export const UpdateLoader = ({ courses }: Params) => {
   useEffect(() => {
     handleLoader(false);
-  }, [courses]);
+  }, []);
   return <></>;
 };

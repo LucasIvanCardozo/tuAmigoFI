@@ -51,27 +51,23 @@ export const authOptions: AuthOptions = {
 
   callbacks: {
     async signIn({ user }) {
-      try {
-        if (!user?.email || !user?.name || !user?.image) {
-          throw new Error('Datos del usuario incompletos');
-        }
-        let existingUser = await userUseCases.findByEmail(user.email);
-        if (!existingUser) {
-          const { data, error } = await createUser({
-            name: user.name,
-            email: user.email,
-            image: user.image,
-          });
-          if (error) throw new Error(error);
-          if (data) existingUser = data;
-        } else if (existingUser.banned) throw new Error('Estas baneado de esta pagina');
-        if (!existingUser) throw new Error('Error al crear usuario');
-        user.idUser = existingUser.id;
-        user.tier = existingUser.tier;
-        return true;
-      } catch (error) {
-        throw error;
+      if (!user?.email || !user?.name || !user?.image) {
+        throw new Error('Datos del usuario incompletos');
       }
+      let existingUser = await userUseCases.findByEmail(user.email);
+      if (!existingUser) {
+        const { data, error } = await createUser({
+          name: user.name,
+          email: user.email,
+          image: user.image,
+        });
+        if (error) throw new Error(error);
+        if (data) existingUser = data;
+      } else if (existingUser.banned) throw new Error('Estas baneado de esta pagina');
+      if (!existingUser) throw new Error('Error al crear usuario');
+      user.idUser = existingUser.id;
+      user.tier = existingUser.tier;
+      return true;
     },
     async jwt({ token, user, account }: { token: JWT; user?: any; account?: any }) {
       if (user) {

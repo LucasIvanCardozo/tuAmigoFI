@@ -17,7 +17,7 @@ export default function SearchCourses() {
       setSearch(searchParams.get('search')?.toString() || '');
     }
     setIsHandleSearch(false);
-  }, [searchParams]);
+  }, [searchParams, isHandleSearch]);
 
   const handleSearch = useDebouncedCallback((search: string) => {
     setIsHandleSearch(true);

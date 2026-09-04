@@ -15,10 +15,10 @@ export const ModalAddTp = ({ course }: { course: Course }) => {
   const { data: session } = useSession();
 
   const submitAddModule = async (values: TypeValues[]) => {
-    const name = values.find((val) => val.id == 'name');
-    const year = values.find((val) => val.id == 'year');
-    const number = values.find((val) => val.id == 'number');
-    const file = values.find((val) => val.id == 'file');
+    const name = values.find((val) => val.id === 'name');
+    const year = values.find((val) => val.id === 'year');
+    const number = values.find((val) => val.id === 'number');
+    const file = values.find((val) => val.id === 'file');
     if (!year || !number || !name || !file || !(file.value instanceof File))
       throw new Error('Faltan completar datos.');
     if (!session) throw new Error('No hay sesion');
@@ -30,7 +30,7 @@ export const ModalAddTp = ({ course }: { course: Course }) => {
       idCourse: course.id,
       file: file.value,
     });
-    if (error) throw new Error('Error: ' + error);
+    if (error) throw new Error(`Error: ${error}`);
     startReload();
   };
 

@@ -49,7 +49,7 @@ export const createTp = createAction(
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     const subFolder = `tps/problemas`;
-    if (type == 'pdf')
+    if (type === 'pdf')
       await cloudinary.uploader.unsigned_upload(
         `data:application/${type};base64,${buffer.toString('base64')}`,
         'ml_default',

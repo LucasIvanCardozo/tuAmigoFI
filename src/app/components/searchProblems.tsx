@@ -16,7 +16,7 @@ export default function SearchProblems() {
       setText(searchParams.get('text')?.toString() || '');
     }
     setIsHandleSearch(false);
-  }, [searchParams]);
+  }, [searchParams, isHandleSearch]);
 
   const handleSearch = useDebouncedCallback((text: string) => {
     setIsHandleSearch(true);

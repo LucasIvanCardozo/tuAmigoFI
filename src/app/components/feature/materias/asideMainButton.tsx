@@ -8,7 +8,7 @@ interface Params {
 
 export const AsideMainButton = ({ viewAside, onClick }: Params) => {
   const { typeModule } = useMainContext();
-  const isTp = typeModule == 'TP';
+  const isTp = typeModule === 'TP';
 
   return (
     <button

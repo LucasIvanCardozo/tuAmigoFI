@@ -14,18 +14,18 @@ export const ModalAddMidterm = ({ course }: { course: Course }) => {
   const modaleRef = useRef<ModalRef>(null);
 
   const submitAddModule = async (values: TypeValues[]) => {
-    const name = values.find((val) => val.id == 'name');
-    const date = values.find((val) => val.id == 'date');
-    const file = values.find((val) => val.id == 'file');
+    const name = values.find((val) => val.id === 'name');
+    const date = values.find((val) => val.id === 'date');
+    const file = values.find((val) => val.id === 'file');
 
     if (!session) throw new Error('No hay sesion');
     if (
       !date ||
       !name ||
       !file ||
-      typeof name.value != 'string' ||
+      typeof name.value !== 'string' ||
       !(file.value instanceof File) ||
-      typeof date.value != 'string'
+      typeof date.value !== 'string'
     )
       throw new Error('Faltan completar datos.');
     const { error } = await createMidterm({
@@ -35,7 +35,7 @@ export const ModalAddMidterm = ({ course }: { course: Course }) => {
       idUser: session.user.id,
       file: file.value,
     });
-    if (error) throw new Error('Error: ' + error);
+    if (error) throw new Error(`Error: ${error}`);
     startReload();
   };
 

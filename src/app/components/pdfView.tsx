@@ -40,7 +40,7 @@ export default function PdfView({ id, url }: { id: string; url: string }) {
           alt="PDF"
           onLoad={() => setLoadingImage(false)}
           onError={() => {
-            if (pageNumber == 1) return;
+            if (pageNumber === 1) return;
             setLastPage(pageNumber - 1);
             setPageNumber(pageNumber - 1);
             setLoadingImage(false);
@@ -59,7 +59,7 @@ export default function PdfView({ id, url }: { id: string; url: string }) {
             {
               <button
                 className={`${
-                  pageNumber == 1 && 'opacity-0 pointer-events-none'
+                  pageNumber === 1 && 'opacity-0 pointer-events-none'
                 } absolute h-full right-full top-0 bottom-0 bg-white/65 transform-gpu transition-opacity rounded-tl-md rounded-bl-md`}
                 aria-label="Ir a página izquierda"
                 title="Ir a izquierda"
@@ -72,7 +72,7 @@ export default function PdfView({ id, url }: { id: string; url: string }) {
             {
               <button
                 className={`${
-                  pageNumber == lastPage && 'opacity-0 pointer-events-none'
+                  pageNumber === lastPage && 'opacity-0 pointer-events-none'
                 } absolute h-full left-full top-0 bottom-0 bg-white/65 transform-gpu transition-opacity rounded-tr-md rounded-br-md`}
                 aria-label="Ir a página derecha"
                 title="Ir a derecha"

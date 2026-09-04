@@ -1,4 +1,4 @@
-import { type inputSelect, TypeInput } from '@/app/types';
+import type { inputSelect } from '@/app/types';
 
 interface Params {
   input: inputSelect;

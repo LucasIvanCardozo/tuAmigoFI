@@ -26,7 +26,7 @@ export const HandlerInputs = (input: TypeInput) => {
   const handlePDF = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.type == 'application/pdf') {
+      if (file.type === 'application/pdf') {
         if (file.size > 31457280) {
           e.target.value = '';
           setError('El archivo pesa más de 3 MB');
@@ -47,7 +47,7 @@ export const HandlerInputs = (input: TypeInput) => {
   const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.type.split('/')[0] == 'image') {
+      if (file.type.split('/')[0] === 'image') {
         if (file.size > 5242880) {
           e.target.value = '';
           setError('El archivo pesa más de 1 MB');
@@ -74,18 +74,18 @@ export const HandlerInputs = (input: TypeInput) => {
 
   useEffect(() => {
     setValues((validates: TypeValues[]) => {
-      const validate = values.find((val) => val.id == input.id);
+      const validate = values.find((val) => val.id === input.id);
       if (!validate) {
         const thisvalidate: TypeValues = {
           id: input.id,
           value:
-            inputType == 'text' ||
-            inputType == 'number' ||
-            inputType == 'textarea' ||
-            inputType == 'select' ||
-            inputType == 'selectResponse'
+            inputType === 'text' ||
+            inputType === 'number' ||
+            inputType === 'textarea' ||
+            inputType === 'select' ||
+            inputType === 'selectResponse'
               ? ''
-              : inputType == 'file' || inputType == 'date'
+              : inputType === 'file' || inputType === 'date'
                 ? undefined
                 : false,
           inputType: typeResponse as any,
@@ -94,29 +94,29 @@ export const HandlerInputs = (input: TypeInput) => {
         return [...validates, thisvalidate];
       } else return validates;
     });
-  }, []);
+  }, [inputType, typeResponse, values.find, input.required, input.id, setValues]);
 
   useEffect(() => {
     if (input.required) {
-      const validate = values.find((val) => val.id == input.id);
+      const validate = values.find((val) => val.id === input.id);
       if (validate) {
         if (value || file || checkbox || date) {
           setValues(
             values.map((val) =>
-              val.id == input.id
+              val.id === input.id
                 ? {
                     ...val,
                     value:
-                      inputType == 'text' ||
-                      inputType == 'number' ||
-                      inputType == 'textarea' ||
-                      inputType == 'select' ||
-                      typeResponse == 'TEXT' ||
-                      typeResponse == 'CODE'
+                      inputType === 'text' ||
+                      inputType === 'number' ||
+                      inputType === 'textarea' ||
+                      inputType === 'select' ||
+                      typeResponse === 'TEXT' ||
+                      typeResponse === 'CODE'
                         ? value
-                        : inputType == 'file' || typeResponse == 'IMAGE' || typeResponse == 'PDF'
+                        : inputType === 'file' || typeResponse === 'IMAGE' || typeResponse === 'PDF'
                           ? file
-                          : inputType == 'date'
+                          : inputType === 'date'
                             ? date
                             : checkbox,
                     inputType: typeResponse ?? (inputType as any),
@@ -129,7 +129,7 @@ export const HandlerInputs = (input: TypeInput) => {
         } else {
           setValues(
             values.map((val) =>
-              val.id == input.id
+              val.id === input.id
                 ? {
                     ...val,
                     validate: false,
@@ -138,42 +138,54 @@ export const HandlerInputs = (input: TypeInput) => {
             ),
           );
           setError(
-            inputType == 'text' || inputType == 'textarea'
+            inputType === 'text' || inputType === 'textarea'
               ? 'debe colocar texto aquí'
-              : inputType == 'number'
+              : inputType === 'number'
                 ? 'debe colocar un número aquí.'
-                : inputType == 'file'
+                : inputType === 'file'
                   ? 'debe colocar un archivo aquí.'
-                  : inputType == 'select'
+                  : inputType === 'select'
                     ? 'debe seleccionar una opción.'
-                    : inputType == 'checkbox'
+                    : inputType === 'checkbox'
                       ? 'debe hacer check aquí.'
-                      : inputType == 'selectResponse'
+                      : inputType === 'selectResponse'
                         ? 'debes subir tu respuesta'
-                        : inputType == 'date'
+                        : inputType === 'date'
                           ? 'debes seleccionar una fecha'
                           : 'error.',
           );
         }
       }
     }
-  }, [value, file, checkbox, date]);
+  }, [
+    value,
+    file,
+    checkbox,
+    date,
+    values.find,
+    typeResponse,
+    setValues,
+    inputType,
+    values.map,
+    input.required,
+    input.id,
+  ]);
 
   return (
     <div className="relative flex flex-col text-black">
-      {inputType == 'text' ? (
+      {inputType === 'text' ? (
         <InputText input={input} onChange={setValue} />
-      ) : inputType == 'number' ? (
+      ) : inputType === 'number' ? (
         <InputNumber input={input} onChange={setValue} />
-      ) : inputType == 'file' ? (
+      ) : inputType === 'file' ? (
         <InputFile input={input} onChange={handlePDF} />
-      ) : inputType == 'select' ? (
+      ) : inputType === 'select' ? (
         <InputSelect input={input} onChange={setValue} />
-      ) : inputType == 'textarea' ? (
+      ) : inputType === 'textarea' ? (
         <InputTextarea input={input} onChange={setValue} />
-      ) : inputType == 'checkbox' ? (
+      ) : inputType === 'checkbox' ? (
         <InputCheckbox input={input} onChange={setCheckbox} />
-      ) : inputType == 'selectResponse' ? (
+      ) : inputType === 'selectResponse' ? (
         <InputSelectResponse
           input={input}
           typeResponse={typeResponse}
@@ -182,7 +194,7 @@ export const HandlerInputs = (input: TypeInput) => {
           setPDF={handlePDF}
           setValue={setValue}
         />
-      ) : inputType == 'date' ? (
+      ) : inputType === 'date' ? (
         <InputDate input={input} onChange={setDate} />
       ) : null}
       {error && <p className="text-red-600 text-sm">{error}</p>}

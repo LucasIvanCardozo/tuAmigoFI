@@ -50,7 +50,7 @@ export default async function Course({
         </Suspense>
       </div>
       <div className="flex justify-end gap-1 pt-1 text-(--white) items-center text-sm sm:text-base">
-        {session && session?.user && (
+        {session?.user && (
           <>
             <ModalCreateCorrelative course={course} callback={callbackCourses} />
             <ModalAddLink course={course} />

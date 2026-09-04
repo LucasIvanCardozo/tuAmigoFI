@@ -25,7 +25,7 @@ export const AsideModules = ({
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const [viewAside, setViewAside] = useState(false);
-  const isTp = typeModule == 'TP';
+  const isTp = typeModule === 'TP';
 
   const handleViewModules = (module: string | null) => {
     setViewAside(false);
@@ -90,12 +90,12 @@ export const AsideModules = ({
             <li
               key={module.id}
               className={
-                (idModule == module.id ? 'bg-[#3D4731] ' : '') +
+                (idModule === module.id ? 'bg-[#3D4731] ' : '') +
                 'grid grid-cols-[1.2rem_1fr] gap-1 p-1 rounded-md [&>svg]:self-start [&>svg]:h-max [&>svg]:w-full transform-gpu transition-transform sm:hover:scale-105'
               }
             >
               {'number' in module ? (
-                module.number != undefined && numberIconsModules[module.number] ? (
+                module.number !== undefined && numberIconsModules[module.number] ? (
                   numberIconsModules[module.number]
                 ) : (
                   <TbSquareMinusFilled />

@@ -72,13 +72,13 @@ export const createResponse = createAction(
         },
       });
 
-      if ((type == 'IMAGE' || type == 'PDF') && file) {
-        const id = response.id;
+      if ((type === 'IMAGE' || type === 'PDF') && file) {
+        const _id = response.id;
         const type = file.type.split('/').reverse()[0];
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
         const subFolder = `${idTp ? 'tps' : 'parciales'}/respuestas/${idTp || idMidterm}/${number}`;
-        if (type == 'pdf')
+        if (type === 'pdf')
           await cloudinary.uploader.unsigned_upload(
             `data:application/${type};base64,${buffer.toString('base64')}`,
             'ml_default',

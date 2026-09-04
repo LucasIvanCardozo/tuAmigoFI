@@ -41,7 +41,7 @@ type Props = {
 
 export const makeModules = ({ moduleList, reactions, type }: Props): DataModule[] => {
   const modules: DataModule[] = [];
-  const isTp = type == 'tp';
+  const isTp = type === 'tp';
 
   // Itera sobre cada módulo de la lista
   for (const module of moduleList) {
@@ -66,13 +66,13 @@ export const makeModules = ({ moduleList, reactions, type }: Props): DataModule[
           comment: comment,
           user: comment.user,
           reactions: reactions.commentReactions.filter(
-            (reaction) => reaction.idTarget == comment.id,
+            (reaction) => reaction.idTarget === comment.id,
           ),
         });
       }
 
       // Si el número del problema cambia, se inicia un nuevo grupo
-      if (numAux != response.number) {
+      if (numAux !== response.number) {
         dataModuleProblems.push({ number: response.number, responses: [] });
         numAux = response.number;
         i++;
@@ -83,7 +83,7 @@ export const makeModules = ({ moduleList, reactions, type }: Props): DataModule[
         user: response.user,
         comments: dataModuleComment,
         reactions: reactions.responseReactions.filter(
-          (reaction) => reaction.idTarget == response.id,
+          (reaction) => reaction.idTarget === response.id,
         ),
       });
     }

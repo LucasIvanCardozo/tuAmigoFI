@@ -26,9 +26,9 @@ export default function ButtonReaction({
       sileo.error({ title: 'Debes iniciar sesion para reaccionar a la respuesta.' });
     else {
       const response = responses[indexResponse];
-      setStateReaction(reaction == stateReaction ? null : reaction);
+      setStateReaction(reaction === stateReaction ? null : reaction);
       setAmountReaction(
-        reaction == stateReaction
+        reaction === stateReaction
           ? {
               likes: reaction ? amountReaction.likes - 1 : amountReaction.likes,
               dislikes: reaction ? amountReaction.dislikes : amountReaction.dislikes - 1,
@@ -57,7 +57,7 @@ export default function ButtonReaction({
     const likes = reactions.filter((reaction) => reaction.reaction).length;
     const dislikes = reactions.length - likes;
     setAmountReaction({ likes, dislikes });
-    const reaction = reactions.find((reaction) => reaction.idUser == session?.user.id);
+    const reaction = reactions.find((reaction) => reaction.idUser === session?.user.id);
     setStateReaction(reaction ? reaction.reaction : null);
   }, [session, responses, indexResponse]);
 
@@ -69,7 +69,7 @@ export default function ButtonReaction({
         title="Me gusta"
         onClick={() => handleLike(true)}
       >
-        <AiFillLike className={(stateReaction == true ? 'text-green-500' : '') + ' text-xl'} />
+        <AiFillLike className={`${stateReaction === true ? 'text-green-500' : ''} text-xl`} />
         {amountReaction.likes}
       </button>
       <button
@@ -78,7 +78,7 @@ export default function ButtonReaction({
         title="Reportar"
         onClick={() => handleLike(false)}
       >
-        <TbAlertHexagon className={(stateReaction == false ? 'text-red-500' : '') + ' text-xl'} />
+        <TbAlertHexagon className={`${stateReaction === false ? 'text-red-500' : ''} text-xl`} />
         {amountReaction.dislikes}
       </button>
     </>

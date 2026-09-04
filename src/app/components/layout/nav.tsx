@@ -52,15 +52,12 @@ export default function Nav({ callbackSession }: { callbackSession: Promise<Sess
   }, []);
 
   return (
-    <nav
-      className="fixed select-none top-0 h-10 w-full z-30 flex justify-end sm:justify-center sm:mx-auto sm:left-0 sm:right-0 sm:max-w-max sm:mt-2 sm:z-50"
-      role="navigation"
-    >
+    <nav className="fixed select-none top-0 h-10 w-full z-30 flex justify-end sm:justify-center sm:mx-auto sm:left-0 sm:right-0 sm:max-w-max sm:mt-2 sm:z-50">
       <Link
         className="text-xl bg-(--dark-cyan) drop-shadow-sm rounded-md m-1 px-1 flex items-center justify-center sm:hidden"
         href="/"
         onClick={
-          pathname != '/'
+          pathname !== '/'
             ? () => {
                 handleLoader(true);
                 setNavState(false);
@@ -104,14 +101,14 @@ export default function Nav({ callbackSession }: { callbackSession: Promise<Sess
             key={index}
             className={
               'rounded-md ' +
-              (pathname == href ? 'bg-(--midnight-green)' : 'hover:bg-(--midnight-green)')
+              (pathname === href ? 'bg-(--midnight-green)' : 'hover:bg-(--midnight-green)')
             }
           >
             <Link
               href={href}
               className="inline-block text-center w-40 py-2 font-bold px-3 sm:w-28 sm:font-normal"
               onClick={
-                pathname != href
+                pathname !== href
                   ? () => {
                       handleLoader(true);
                       handleNavState();

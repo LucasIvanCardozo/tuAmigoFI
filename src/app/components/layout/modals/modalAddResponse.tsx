@@ -21,8 +21,8 @@ export const ModalAddResponse = ({
   const isTp = 'number' in module;
 
   const submitAddResponse = async (values: TypeValues[]) => {
-    const number = values.find((val) => val.id == 'number');
-    const selectResponse = values.find((val) => val.id == 'selectResponse');
+    const number = values.find((val) => val.id === 'number');
+    const selectResponse = values.find((val) => val.id === 'selectResponse');
     if (!session) throw new Error('No hay sesion');
     if (!number || !selectResponse) throw new Error('Faltan datos');
     const typeResponse = selectResponse.inputType;
@@ -32,9 +32,11 @@ export const ModalAddResponse = ({
       idMidterm: !isTp ? module.id : null,
       number: Number(number.value),
       text:
-        typeResponse == 'TEXT' || typeResponse == 'CODE' ? (selectResponse.value as string) : null,
+        typeResponse === 'TEXT' || typeResponse === 'CODE'
+          ? (selectResponse.value as string)
+          : null,
       file:
-        typeResponse == 'IMAGE' || typeResponse == 'PDF' ? (selectResponse.value as File) : null,
+        typeResponse === 'IMAGE' || typeResponse === 'PDF' ? (selectResponse.value as File) : null,
       type: typeResponse,
     });
     if (error) throw new Error(error);

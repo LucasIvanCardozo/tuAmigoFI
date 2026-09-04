@@ -23,7 +23,7 @@ export default async function RootLayout({
   const callbackSession = userUseCases.getSession();
   return (
     <html lang="es">
-      <body id="root" className={cabin.className + ' flex flex-col h-dvh'}>
+      <body id="root" className={`${cabin.className} flex flex-col h-dvh`}>
         <Providers>
           <Suspense>
             <Nav callbackSession={callbackSession} />

@@ -22,7 +22,7 @@ export default function createAction<T extends z.ZodTypeAny | null, K>(
         return {
           success: false,
           data: null,
-          error: error.issues.map(({ message }) => ' 🡆 ' + message).join('\n'),
+          error: error.issues.map(({ message }) => ` 🡆 ${message}`).join('\n'),
         };
 
       return {

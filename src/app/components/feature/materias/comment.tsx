@@ -24,7 +24,7 @@ export const Comment = ({ comment, session }: Params) => {
       )
     )
       setStateLike(true);
-  }, [comment]);
+  }, [comment, session?.user?.id]);
 
   const handleLike = async () => {
     setStateLike(!stateLike);
@@ -51,7 +51,7 @@ export const Comment = ({ comment, session }: Params) => {
           title="Me gusta"
           onClick={handleLike}
         >
-          <AiFillLike className={(stateLike ? 'text-green-500' : 'text-gray-400') + ' text-xl'} />
+          <AiFillLike className={`${stateLike ? 'text-green-500' : 'text-gray-400'} text-xl`} />
           <span className="text-sm font-medium text-gray-600">{numberLike}</span>
         </button>
       </div>

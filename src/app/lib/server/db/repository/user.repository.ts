@@ -1,4 +1,3 @@
-import { get } from 'http';
 import type { Prisma, PrismaClient } from '../prisma/prismaClient/client';
 
 export const userRepository = (db: PrismaClient | Prisma.TransactionClient) => ({

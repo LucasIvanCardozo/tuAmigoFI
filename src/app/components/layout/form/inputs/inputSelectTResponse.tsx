@@ -40,7 +40,7 @@ export const InputSelectResponse = ({
           <option value="CODE">Código</option>
         </select>
       </div>
-      {typeResponse == 'TEXT' ? (
+      {typeResponse === 'TEXT' ? (
         <div className="flex flex-col text-(--black)">
           <textarea
             name="code"
@@ -52,7 +52,7 @@ export const InputSelectResponse = ({
             onChange={(e) => setValue(e.target.value)}
           ></textarea>
         </div>
-      ) : typeResponse == 'IMAGE' ? (
+      ) : typeResponse === 'IMAGE' ? (
         <input
           className="text-white"
           type="file"
@@ -60,7 +60,7 @@ export const InputSelectResponse = ({
           required
           onChange={(e) => setImage(e)}
         />
-      ) : typeResponse == 'PDF' ? (
+      ) : typeResponse === 'PDF' ? (
         <input
           className="text-white"
           type="file"
@@ -68,7 +68,7 @@ export const InputSelectResponse = ({
           required
           onChange={(e) => setPDF(e)}
         />
-      ) : typeResponse == 'CODE' ? (
+      ) : typeResponse === 'CODE' ? (
         <div className="flex flex-col text-(--black)">
           <textarea
             name="code"

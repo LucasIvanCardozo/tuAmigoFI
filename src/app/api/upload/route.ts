@@ -14,15 +14,15 @@ export async function POST(request: NextRequest) {
   const file: File | null = data.get('file') as unknown as File;
   const id = data.get('id')?.toString() || '';
 
-  if (!file || id == '') return NextResponse.json({ success: false });
+  if (!file || id === '') return NextResponse.json({ success: false });
 
   const type = file.type.split('/').reverse()[0];
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
   const subFolder = data.get('subFolder')?.toString() || '';
   try {
-    if (type == 'pdf') {
-      const upload: UploadApiResponse = await cloudinary.uploader.unsigned_upload(
+    if (type === 'pdf') {
+      const _upload: UploadApiResponse = await cloudinary.uploader.unsigned_upload(
         `data:application/${type};base64,${buffer.toString('base64')}`,
         'ml_default',
         {
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
         },
       );
     } else {
-      const upload = await cloudinary.uploader.unsigned_upload(
+      const _upload = await cloudinary.uploader.unsigned_upload(
         `data:image/${type};base64,${buffer.toString('base64')}`,
         'ml_default',
         {

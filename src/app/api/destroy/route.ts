@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
   try {
     const subFolder = data.get('subFolder')?.toString() || '';
     if (subFolder) {
-      const deleteAsset = await cloudinary.uploader.destroy(`${subFolder}/${id}`);
+      const _deleteAsset = await cloudinary.uploader.destroy(`${subFolder}/${id}`);
     }
     return NextResponse.json({ success: true });
   } catch (error: unknown) {

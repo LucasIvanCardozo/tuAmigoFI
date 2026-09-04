@@ -26,7 +26,7 @@ export default function ModuleResponse({
   const [viewResponses, setViewResponses] = useState(false);
 
   const responses = problem.responses;
-  const isTp = typeModule == 'TP';
+  const isTp = typeModule === 'TP';
 
   const handlePageUser = (add: number) => {
     const suma = indexResponse + add;
@@ -54,8 +54,8 @@ export default function ModuleResponse({
               </span>
             </span>
             <div className="w-full h-5 relative flex justify-between">
-              {(session?.user.tier == 2 ||
-                session?.user.id == responses[indexResponse].response.idUser) && (
+              {(session?.user.tier === 2 ||
+                session?.user.id === responses[indexResponse].response.idUser) && (
                 <ModalDeleteResponse
                   response={responses[indexResponse].response}
                   user={responses[indexResponse].user}
@@ -82,11 +82,11 @@ export default function ModuleResponse({
                 </button>
               </div>
             </div>
-            {responses[indexResponse].response.type == 'TEXT' ? (
+            {responses[indexResponse].response.type === 'TEXT' ? (
               <div className="whitespace-pre px-2 pb-7 overflow-x-scroll">
                 <p>{responses[indexResponse].response.text}</p>
               </div>
-            ) : responses[indexResponse].response.type == 'IMAGE' ? (
+            ) : responses[indexResponse].response.type === 'IMAGE' ? (
               <div className="relative flex justify-center w-full max-h-250 pb-7">
                 <CldImage
                   src={`https://res.cloudinary.com/donzj5rlf/image/upload/f_auto,q_auto/v${Math.floor(
@@ -104,14 +104,14 @@ export default function ModuleResponse({
                   }}
                 />
               </div>
-            ) : responses[indexResponse].response.type == 'PDF' ? (
+            ) : responses[indexResponse].response.type === 'PDF' ? (
               <div className="relative overflow-hidden bg-[#C8E0E4] h-min max-w-full py-1 pb-7 rounded-md sm:p-1">
                 <PdfView
                   id={responses[indexResponse].response.idUser}
                   url={`${isTp ? 'tps' : 'parciales'}/respuestas/${isTp ? responses[indexResponse].response.idTp : responses[indexResponse].response.idMidterm}/${responses[indexResponse].response.number}`}
                 />
               </div>
-            ) : responses[indexResponse].response.type == 'CODE' ? (
+            ) : responses[indexResponse].response.type === 'CODE' ? (
               <div className="bg-gray-900 p-3 text-white rounded-md overflow-x-auto pb-7">
                 <Code code={responses[indexResponse].response.text ?? ''} />
               </div>

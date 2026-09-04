@@ -185,7 +185,7 @@ export default function CalendarSection({ callbackYear }: { callbackYear: Promis
           mapDays={({ date, today }) => {
             const dateStr = date.toString().split('T')[0];
             const add =
-              date.toDate().toDateString() == today.toDate().toDateString()
+              date.toDate().toDateString() === today.toDate().toDateString()
                 ? {
                     border: '3px solid #FFD700',
                   }
@@ -226,7 +226,7 @@ export default function CalendarSection({ callbackYear }: { callbackYear: Promis
                   borderRadius: '20%',
                 },
               };
-            else if (date.toDate().toDateString() == today.toDate().toDateString()) {
+            else if (date.toDate().toDateString() === today.toDate().toDateString()) {
               return {
                 style: {
                   backgroundColor: '#FFD700',

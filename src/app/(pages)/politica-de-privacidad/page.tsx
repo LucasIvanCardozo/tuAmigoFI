@@ -97,14 +97,12 @@ export default async function Privacidad() {
         <PrivacitySection
           header="Almacenamiento y seguridad"
           description={
-            <>
-              <p>
-                La información se almacena de manera segura en los servidores de la plataforma,
-                ubicados en Estados Unidos. Implemento medidas de seguridad físicas, electrónicas y
-                de procedimiento para proteger tus datos contra el acceso no autorizado. No
-                obstante, debes saber que ningún sistema de seguridad es completamente infalible.
-              </p>
-            </>
+            <p>
+              La información se almacena de manera segura en los servidores de la plataforma,
+              ubicados en Estados Unidos. Implemento medidas de seguridad físicas, electrónicas y de
+              procedimiento para proteger tus datos contra el acceso no autorizado. No obstante,
+              debes saber que ningún sistema de seguridad es completamente infalible.
+            </p>
           }
         />
         <PrivacitySection
@@ -138,44 +136,37 @@ export default async function Privacidad() {
         <PrivacitySection
           header="Uso de cookies"
           description={
-            <>
-              <p>
-                Utilizo cookies para mejorar tu experiencia en el sitio. Estas cookies se usan para
-                recordar tus preferencias y para fines de análisis y rendimiento. Puedes desactivar
-                las cookies desde la configuración de tu navegador, aunque esto podría limitar
-                algunas funciones de la plataforma.
-              </p>
-            </>
+            <p>
+              Utilizo cookies para mejorar tu experiencia en el sitio. Estas cookies se usan para
+              recordar tus preferencias y para fines de análisis y rendimiento. Puedes desactivar
+              las cookies desde la configuración de tu navegador, aunque esto podría limitar algunas
+              funciones de la plataforma.
+            </p>
           }
         />
         <PrivacitySection
           header="Cambios en la política de privacidad"
           description={
-            <>
-              <p>
-                Esta política puede actualizarse para reflejar cambios en el sitio o en la
-                legislación aplicable. La fecha de la última actualizacion estará al principio de
-                esta página.
-              </p>
-            </>
+            <p>
+              Esta política puede actualizarse para reflejar cambios en el sitio o en la legislación
+              aplicable. La fecha de la última actualizacion estará al principio de esta página.
+            </p>
           }
         />
         <PrivacitySection
           header="Contacto"
           description={
-            <>
-              <p>
-                Si tienes dudas o comentarios sobre esta Política de Privacidad, puedes escribirme a{' '}
-                <a className="underline" href="mailto:lucasivancardozo27@gmail.com">
-                  lucasivancardozo27@gmail.com
-                </a>{' '}
-                o a través de mi Whatsapp personal{' '}
-                <a className="underline" href="https://wa.me/2235319564">
-                  +542235319564
-                </a>
-                .
-              </p>
-            </>
+            <p>
+              Si tienes dudas o comentarios sobre esta Política de Privacidad, puedes escribirme a{' '}
+              <a className="underline" href="mailto:lucasivancardozo27@gmail.com">
+                lucasivancardozo27@gmail.com
+              </a>{' '}
+              o a través de mi Whatsapp personal{' '}
+              <a className="underline" href="https://wa.me/2235319564">
+                +542235319564
+              </a>
+              .
+            </p>
           }
         />
       </article>

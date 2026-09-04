@@ -10,7 +10,7 @@ export const Form = ({ children, onSubmit, onEnd }: DataForm) => {
     return () => {
       setValues([]);
     };
-  }, []);
+  }, [setValues]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

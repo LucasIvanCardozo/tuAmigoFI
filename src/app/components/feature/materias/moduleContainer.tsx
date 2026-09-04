@@ -21,7 +21,7 @@ export const ModuleContainer = async ({ module, idModule, typeModule }: Props) =
   const isTp = 'number' in moduleInd;
 
   return (
-    <li className={'relative ' + `${idModule != null && idModule != moduleInd.id && 'hidden'}`}>
+    <li className={`relative ${idModule != null && idModule !== moduleInd.id && 'hidden'}`}>
       <div className="flex items-center text-xl sticky top-0 z-20 bg-(--platinum) py-1 ">
         {isTp ? (
           moduleInd.number && numberIconsModules[moduleInd.number] ? (
@@ -43,7 +43,7 @@ export const ModuleContainer = async ({ module, idModule, typeModule }: Props) =
 
         <div className="flex gap-1 px-1 ml-auto">
           {session &&
-            (session.user?.tier == 2 || session.user?.id == module.user.id) &&
+            (session.user?.tier === 2 || session.user?.id === module.user.id) &&
             (isTp ? (
               <ModalDeleteTp tp={moduleInd} user={module.user} session={session} />
             ) : (
@@ -118,30 +118,28 @@ export const ModuleContainer = async ({ module, idModule, typeModule }: Props) =
           <PdfView id={moduleInd.id} url={isTp ? `tps/problemas` : `parciales/problemas`} />
         </div>
         <ul className="flex flex-col gap-1 pl-1">
-          {problems.length == 0 ? (
+          {problems.length === 0 ? (
             <li className="pl-3">
               <p>Sin respuestas :c</p>
             </li>
           ) : (
-            <>
-              {problems
-                .map((problem, index) =>
-                  problem.responses.length > 0 ? (
-                    <ModuleResponse
-                      key={
-                        ((index + problem.responses.length) *
-                          (index + problem.responses.length + 1)) /
-                          2 +
-                        index
-                      }
-                      problem={problem}
-                      typeModule={typeModule}
-                      session={session}
-                    />
-                  ) : undefined,
-                )
-                .filter((prob) => prob != undefined)}
-            </>
+            problems
+              .map((problem, index) =>
+                problem.responses.length > 0 ? (
+                  <ModuleResponse
+                    key={
+                      ((index + problem.responses.length) *
+                        (index + problem.responses.length + 1)) /
+                        2 +
+                      index
+                    }
+                    problem={problem}
+                    typeModule={typeModule}
+                    session={session}
+                  />
+                ) : undefined,
+              )
+              .filter((prob) => prob !== undefined)
           )}
         </ul>
       </div>

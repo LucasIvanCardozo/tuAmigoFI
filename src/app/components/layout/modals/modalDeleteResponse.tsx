@@ -16,14 +16,14 @@ export const ModalDeleteResponse = ({ response, user }: { response: Response; us
   const { data: session } = useSession();
 
   const submitDeleteResponse = async (values: TypeValues[]) => {
-    const check = values.find((val) => val.id == 'check');
+    const check = values.find((val) => val.id === 'check');
     if (!check) throw new Error('Debes estar de acuerdo con la eliminacion de la respuesta');
     if (!session) throw new Error('No hay sesion');
-    if (session.user.tier != 2 && session.user.id != user.id)
+    if (session.user.tier !== 2 && session.user.id !== user.id)
       throw new Error('Debes ser administrador o el creador para eliminar una respuesta');
 
     const { error } = await deleteResponse({ id, idUser });
-    if (error) throw new Error('Error: ' + error);
+    if (error) throw new Error(`Error: ${error}`);
     startReload();
   };
 

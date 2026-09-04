@@ -47,7 +47,7 @@ export const createMidterm = createAction(
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     const subFolder = `parciales/problemas`;
-    if (type == 'pdf')
+    if (type === 'pdf')
       await cloudinary.uploader.unsigned_upload(
         `data:application/${type};base64,${buffer.toString('base64')}`,
         'ml_default',

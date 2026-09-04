@@ -13,7 +13,7 @@ export default function DegreeCourse({ callback }: { callback: Promise<DegreesWi
 
   const handleDegree = (degree: string) => {
     const params = new URLSearchParams(searchParams);
-    if (degree && degree != '0') {
+    if (degree && degree !== '0') {
       params.set('idDegree', degree);
     } else {
       params.delete('idDegree');

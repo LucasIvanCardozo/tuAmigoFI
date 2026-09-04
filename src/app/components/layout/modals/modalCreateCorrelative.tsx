@@ -26,7 +26,7 @@ export default function ModalCreateCorrelative({
       async () => {
         if (!idCorrelative) throw new Error('Debes seleccionar una correlativa');
         if (!session) throw new Error('No hay sesion');
-        if (session.user.tier == 0)
+        if (session.user.tier === 0)
           throw new Error('Debes tener un rango superior para añadir correlativas');
         const { error } = await createCorrelative({
           idCourse: course.id,

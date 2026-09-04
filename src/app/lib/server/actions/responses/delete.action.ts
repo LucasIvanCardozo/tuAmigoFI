@@ -30,7 +30,7 @@ export const deleteResponse = createAction(schema, async ({ id, idUser }) => {
     },
   });
 
-  if (response.type == 'IMAGE' || response.type == 'PDF')
+  if (response.type === 'IMAGE' || response.type === 'PDF')
     await cloudinary.uploader.destroy(
       `${response.idTp ? 'tps' : 'parciales'}/respuestas/${response.idTp || response.idMidterm}/${response.number}/${idUser}`,
     );

@@ -22,7 +22,7 @@ export default async function CorrelativeTable({
           <CgArrowRightO className="self-center text-(--midnight-green)" />
         </div>
         <div className="flex  items-center overflow-x-auto overflow-y-hidden sm:overflow-hidden sm:flex-wrap">
-          {dataCorrelatives.length != 0 ? (
+          {dataCorrelatives.length !== 0 ? (
             dataCorrelatives.map(({ id, name }, index) => (
               <CorrelativeList key={id} index={index} name={name} />
             ))
@@ -37,7 +37,7 @@ export default async function CorrelativeTable({
           <CgArrowRightO className="self-center text-(--midnight-green)" />
         </div>
         <div className="flex items-center overflow-x-auto overflow-y-hidden sm:overflow-hidden sm:flex-wrap">
-          {dataEnabler.length != 0 ? (
+          {dataEnabler.length !== 0 ? (
             dataEnabler.map(({ id, name }, index) => (
               <CorrelativeList key={id} index={index} name={name} />
             ))

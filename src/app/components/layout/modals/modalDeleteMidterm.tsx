@@ -23,9 +23,9 @@ export const ModalDeleteMidterm = ({
   const modalRef = useRef<ModalRef>(null);
 
   const submitDeleteModule = async (values: TypeValues[]) => {
-    const check = values.find((val) => val.id == 'check');
+    const check = values.find((val) => val.id === 'check');
     if (!session) throw new Error('No hay sesion');
-    if (session.user.tier != 2 && session.user.id != user.id)
+    if (session.user.tier !== 2 && session.user.id !== user.id)
       throw new Error('Debes ser administrador o el creador para eliminar un examen');
     if (!check) throw new Error('Debes estar de acuerdo con la eliminacion del examen');
 
