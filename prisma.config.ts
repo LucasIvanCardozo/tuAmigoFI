@@ -4,7 +4,7 @@ import { env } from 'prisma/config';
 export default {
   schema: 'src/app/lib/server/db/prisma/schema.prisma',
   migrations: {
-    path: 'src/app/lib/server/db/prisma/',
+    path: 'src/app/lib/server/db/prisma/migrations',
     seed: 'tsx src/app/lib/server/db/prisma/seed.ts',
   },
   datasource: {
