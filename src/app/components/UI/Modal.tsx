@@ -14,7 +14,7 @@ export const Modal = ({ children, title }: { children: ReactNode; title?: string
     const dialog = dialogRef.current;
     if (!dialog) return;
     if (!dialog.open) {
-      dialog.showModal();
+      dialog.show();
     }
   }, []);
 
