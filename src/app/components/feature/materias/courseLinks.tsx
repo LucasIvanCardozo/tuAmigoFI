@@ -49,7 +49,6 @@ export default function CourseLinks({ callbackLinks }: { callbackLinks: Promise<
                 >
                   {link.name}
                 </a>
-                {/* {session && <ModalReportLink link={link} />} */}
                 {(session?.user.tier === 2 || session?.user.id === link.idUser) && (
                   <ModalDeleteLinkOpener link={link} />
                 )}

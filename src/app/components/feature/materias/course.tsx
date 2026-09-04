@@ -7,7 +7,7 @@ import { courseUseCases } from '@/app/lib/server/usecases/course.usecases';
 import { linkUseCases } from '@/app/lib/server/usecases/link.usecases';
 import { userUseCases } from '@/app/lib/server/usecases/user.usecases';
 import { ModalAddLinkOpener } from '../../layout/modals/ModalAddLinkOpener';
-import ModalCreateCorrelative from '../../layout/modals/modalCreateCorrelative';
+import { ModalCreateCorrelativeOpener } from '../../layout/modals/ModalCreateCorrelativeOpener';
 import { ButtonUrl } from './buttonUrl';
 import CorrelativeTable from './correlativeTable';
 import CourseLinks from './courseLinks';
@@ -52,7 +52,7 @@ export default async function Course({
       <div className="flex justify-end gap-1 pt-1 text-(--white) items-center text-sm sm:text-base">
         {session?.user && (
           <>
-            <ModalCreateCorrelative course={course} callback={callbackCourses} />
+            <ModalCreateCorrelativeOpener course={course} callback={callbackCourses} />
             <ModalAddLinkOpener course={course} />
           </>
         )}
