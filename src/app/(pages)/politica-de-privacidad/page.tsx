@@ -1,11 +1,12 @@
-'use cache: remote'
-import PrivacitySection from '@/app/components/privacitySection'
-import type { Metadata } from 'next'
+'use cache: remote';
+import type { Metadata } from 'next';
+import PrivacitySection from '@/app/components/privacitySection';
 
 export const metadata: Metadata = {
   title: 'Política de Privacidad - TuAmigoFI',
-  description: 'Política de privacidad de TuAmigoFI. Cómo recopilamos, usamos y protegemos tus datos personales.',
-}
+  description:
+    'Política de privacidad de TuAmigoFI. Cómo recopilamos, usamos y protegemos tus datos personales.',
+};
 
 export default async function Privacidad() {
   return (
@@ -21,8 +22,10 @@ export default async function Privacidad() {
                 <b>Última actualización:</b> 28/02/2025
               </p>
               <p>
-                Bienvenido a Tu-Amigo-FI. Valoro tu privacidad y estoy comprometido a proteger tus datos personales. Esta Política de Privacidad describe cómo
-                recopilo, utilizo y protejo tu información cuando usas mi sitio, diseñado para ayudar a estudiantes de ingeniería en Mar del Plata.
+                Bienvenido a Tu-Amigo-FI. Valoro tu privacidad y estoy comprometido a proteger tus
+                datos personales. Esta Política de Privacidad describe cómo recopilo, utilizo y
+                protejo tu información cuando usas mi sitio, diseñado para ayudar a estudiantes de
+                ingeniería en Mar del Plata.
               </p>
             </>
           }
@@ -33,19 +36,25 @@ export default async function Privacidad() {
           header="Información que recopilo"
           description={
             <>
-              <p>Para ofrecer y mejorar los servicios de Tu-Amigo-FI, recolecto distintos tipos de información:</p>
+              <p>
+                Para ofrecer y mejorar los servicios de Tu-Amigo-FI, recolecto distintos tipos de
+                información:
+              </p>
               <ul>
                 <li>
-                  <strong>Información personal:</strong> Al registrarte, solicito información como tu nombre y dirección de correo electrónico para
-                  identificarte como usuario de la plataforma.
+                  <strong>Información personal:</strong> Al registrarte, solicito información como
+                  tu nombre y dirección de correo electrónico para identificarte como usuario de la
+                  plataforma.
                 </li>
                 <li>
-                  <strong>Información de uso:</strong> Recolecto datos sobre cómo accedes y usas Tu-Amigo-FI, incluyendo el tipo de tu dispositivo, navegador, y
-                  comportamiento de navegación en el sitio.
+                  <strong>Información de uso:</strong> Recolecto datos sobre cómo accedes y usas
+                  Tu-Amigo-FI, incluyendo el tipo de tu dispositivo, navegador, y comportamiento de
+                  navegación en el sitio.
                 </li>
                 <li>
-                  <strong>Contenido generado por el usuario:</strong> Todo el material que subas (como respuestas a trabajos prácticos o finales) quedará
-                  almacenado en la base de datos de la plataforma para que esté disponible.
+                  <strong>Contenido generado por el usuario:</strong> Todo el material que subas
+                  (como respuestas a trabajos prácticos o finales) quedará almacenado en la base de
+                  datos de la plataforma para que esté disponible.
                 </li>
               </ul>
             </>
@@ -57,7 +66,10 @@ export default async function Privacidad() {
             <>
               <p>Utilizo tus datos para:</p>
               <ul>
-                <li>Proporcionarte acceso a los recursos disponibles, como trabajos prácticos, finales resueltos y otros materiales académicos.</li>
+                <li>
+                  Proporcionarte acceso a los recursos disponibles, como trabajos prácticos, finales
+                  resueltos y otros materiales académicos.
+                </li>
                 <li>Mejorar la plataforma mediante el análisis de cómo la usan los usuarios.</li>
                 <li>Personalizar tu experiencia en Tu-Amigo-FI.</li>
               </ul>
@@ -68,11 +80,15 @@ export default async function Privacidad() {
           header="Compartición de la información"
           description={
             <>
-              <p>Me comprometo a no vender, alquilar o intercambiar tus datos personales. Solo comparto información con terceros en estas situaciones:</p>
+              <p>
+                Me comprometo a no vender, alquilar o intercambiar tus datos personales. Solo
+                comparto información con terceros en estas situaciones:
+              </p>
               <ul>
                 <li>
-                  <strong>Cumplimiento legal:</strong> En caso de que la ley lo requiera, podré divulgar tu información para cumplir con obligaciones legales o
-                  responder a solicitudes de autoridades judiciales.
+                  <strong>Cumplimiento legal:</strong> En caso de que la ley lo requiera, podré
+                  divulgar tu información para cumplir con obligaciones legales o responder a
+                  solicitudes de autoridades judiciales.
                 </li>
               </ul>
             </>
@@ -83,9 +99,10 @@ export default async function Privacidad() {
           description={
             <>
               <p>
-                La información se almacena de manera segura en los servidores de la plataforma, ubicados en Estados Unidos. Implemento medidas de seguridad
-                físicas, electrónicas y de procedimiento para proteger tus datos contra el acceso no autorizado. No obstante, debes saber que ningún sistema de
-                seguridad es completamente infalible.
+                La información se almacena de manera segura en los servidores de la plataforma,
+                ubicados en Estados Unidos. Implemento medidas de seguridad físicas, electrónicas y
+                de procedimiento para proteger tus datos contra el acceso no autorizado. No
+                obstante, debes saber que ningún sistema de seguridad es completamente infalible.
               </p>
             </>
           }
@@ -94,7 +111,10 @@ export default async function Privacidad() {
           header="Derechos de los usuarios"
           description={
             <>
-              <p>De acuerdo con la Ley de Protección de Datos Personales en Argentina, tienes derecho a:</p>
+              <p>
+                De acuerdo con la Ley de Protección de Datos Personales en Argentina, tienes derecho
+                a:
+              </p>
               <ul>
                 <li>Acceder a tus datos personales.</li>
                 <li>Solicitar la rectificación de datos incorrectos o desactualizados.</li>
@@ -120,9 +140,10 @@ export default async function Privacidad() {
           description={
             <>
               <p>
-                Utilizo cookies para mejorar tu experiencia en el sitio. Estas cookies se usan para recordar tus preferencias y para fines de análisis y
-                rendimiento. Puedes desactivar las cookies desde la configuración de tu navegador, aunque esto podría limitar algunas funciones de la
-                plataforma.
+                Utilizo cookies para mejorar tu experiencia en el sitio. Estas cookies se usan para
+                recordar tus preferencias y para fines de análisis y rendimiento. Puedes desactivar
+                las cookies desde la configuración de tu navegador, aunque esto podría limitar
+                algunas funciones de la plataforma.
               </p>
             </>
           }
@@ -132,8 +153,9 @@ export default async function Privacidad() {
           description={
             <>
               <p>
-                Esta política puede actualizarse para reflejar cambios en el sitio o en la legislación aplicable. La fecha de la última actualizacion estará al
-                principio de esta página.
+                Esta política puede actualizarse para reflejar cambios en el sitio o en la
+                legislación aplicable. La fecha de la última actualizacion estará al principio de
+                esta página.
               </p>
             </>
           }
@@ -158,5 +180,5 @@ export default async function Privacidad() {
         />
       </article>
     </>
-  )
+  );
 }

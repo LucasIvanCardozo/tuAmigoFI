@@ -1,50 +1,50 @@
-'use client'
-import { createComment } from '@/app/lib/server/actions/comments/create.action'
-import { Comment } from './comment'
-import { DataModuleComment } from '@/app/types'
-import { Response } from '@/app/lib/server/db/prisma/prismaClient/client'
-import { useReload } from '@/app/hooks/useReload'
-import { sileo } from 'sileo'
-import { useState } from 'react'
-import { Session } from 'next-auth'
+'use client';
+import type { Session } from 'next-auth';
+import { useState } from 'react';
+import { sileo } from 'sileo';
+import { useReload } from '@/app/hooks/useReload';
+import { createComment } from '@/app/lib/server/actions/comments/create.action';
+import type { Response } from '@/app/lib/server/db/prisma/prismaClient/client';
+import type { DataModuleComment } from '@/app/types';
+import { Comment } from './comment';
 
 interface Params {
-  comments: DataModuleComment[]
-  response: Response
-  session: Session | null
+  comments: DataModuleComment[];
+  response: Response;
+  session: Session | null;
 }
 
 export const CommentsLi = ({ comments, response, session }: Params) => {
-  const { startReload } = useReload()
-  const [inputText, setInputText] = useState<string>('')
+  const { startReload } = useReload();
+  const [inputText, setInputText] = useState<string>('');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const text = formData.get('comment')
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const text = formData.get('comment');
     sileo.promise(
       async () => {
-        if (!session) throw new Error('No hay sesion')
+        if (!session) throw new Error('No hay sesion');
         const { error } = await createComment({
           idResponse: response.id,
           text,
-        })
-        if (error) throw new Error(error)
-        setInputText('')
-        startReload()
+        });
+        if (error) throw new Error(error);
+        setInputText('');
+        startReload();
       },
       {
         loading: { title: 'Publicando comentario...' },
         success: { title: 'Muchas gracias por tu aporte! ❤️' },
         error: (error) => {
-          const err = error as Error
+          const err = error as Error;
           return {
             title: err.message,
-          }
+          };
         },
-      }
-    )
-  }
+      },
+    );
+  };
   return (
     <div className="mx-1 shadow-[0px_0px_2px_0px_rgba(0,0,0,0.5)]">
       <form className="flex p-1 gap-1  bg-slate-200" onSubmit={handleSubmit}>
@@ -68,5 +68,5 @@ export const CommentsLi = ({ comments, response, session }: Params) => {
         <p>No hay comentarios por el momento :D</p>
       )}
     </div>
-  )
-}
+  );
+};

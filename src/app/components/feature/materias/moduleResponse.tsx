@@ -1,43 +1,43 @@
-'use client'
-import { useState } from 'react'
-import { CldImage } from 'next-cloudinary'
-import PdfView from '@/app/components/pdfView'
-import { BiSolidRightArrowSquare, BiSolidLeftArrowSquare } from 'react-icons/bi'
-import { FaCommentDots } from 'react-icons/fa'
-import { DataModuleProblem } from '@/app/types'
-import { Code } from './code'
-import { CommentsLi } from './commentsLi'
-import { CgMathMinus, CgMathPlus } from 'react-icons/cg'
-import { ModalDeleteResponse } from '../../layout/modals/modalDeleteResponse'
-import ButtonReaction from './buttonReaction'
-import { Session } from 'next-auth'
+'use client';
+import type { Session } from 'next-auth';
+import { CldImage } from 'next-cloudinary';
+import { useState } from 'react';
+import { BiSolidLeftArrowSquare, BiSolidRightArrowSquare } from 'react-icons/bi';
+import { CgMathMinus, CgMathPlus } from 'react-icons/cg';
+import { FaCommentDots } from 'react-icons/fa';
+import PdfView from '@/app/components/pdfView';
+import type { DataModuleProblem } from '@/app/types';
+import { ModalDeleteResponse } from '../../layout/modals/modalDeleteResponse';
+import ButtonReaction from './buttonReaction';
+import { Code } from './code';
+import { CommentsLi } from './commentsLi';
 
 export default function ModuleResponse({
   problem,
   session,
   typeModule,
 }: {
-  problem: DataModuleProblem
-  session: Session | null
-  typeModule: 'TP' | 'Practica'
+  problem: DataModuleProblem;
+  session: Session | null;
+  typeModule: 'TP' | 'Practica';
 }) {
-  const [indexResponse, setIndexResponse] = useState<number>(0)
-  const [stateComment, setStateComment] = useState(false)
-  const [viewResponses, setViewResponses] = useState(false)
+  const [indexResponse, setIndexResponse] = useState<number>(0);
+  const [stateComment, setStateComment] = useState(false);
+  const [viewResponses, setViewResponses] = useState(false);
 
-  const responses = problem.responses
-  const isTp = typeModule == 'TP'
+  const responses = problem.responses;
+  const isTp = typeModule == 'TP';
 
   const handlePageUser = (add: number) => {
-    const suma = indexResponse + add
+    const suma = indexResponse + add;
     if (!(suma >= problem.responses.length || suma < 0)) {
-      setIndexResponse(suma)
+      setIndexResponse(suma);
     }
-  }
+  };
 
   const handleComment = () => {
-    setStateComment(!stateComment)
-  }
+    setStateComment(!stateComment);
+  };
 
   return (
     <li className="mx-2 my-1">
@@ -54,8 +54,12 @@ export default function ModuleResponse({
               </span>
             </span>
             <div className="w-full h-5 relative flex justify-between">
-              {(session?.user.tier == 2 || session?.user.id == responses[indexResponse].response.idUser) && (
-                <ModalDeleteResponse response={responses[indexResponse].response} user={responses[indexResponse].user} />
+              {(session?.user.tier == 2 ||
+                session?.user.id == responses[indexResponse].response.idUser) && (
+                <ModalDeleteResponse
+                  response={responses[indexResponse].response}
+                  user={responses[indexResponse].user}
+                />
               )}
               <span></span>
               <div className="flex gap-1">
@@ -86,7 +90,7 @@ export default function ModuleResponse({
               <div className="relative flex justify-center w-full max-h-250 pb-7">
                 <CldImage
                   src={`https://res.cloudinary.com/donzj5rlf/image/upload/f_auto,q_auto/v${Math.floor(
-                    Date.now() / (1000 * 60 * 60 * 24 * 7)
+                    Date.now() / (1000 * 60 * 60 * 24 * 7),
                   )}/${isTp ? 'tps' : 'parciales'}/respuestas/${isTp ? responses[indexResponse].response.idTp : responses[indexResponse].response.idMidterm}/${responses[indexResponse].response.number}/${
                     responses[indexResponse].response.idUser
                   }`}
@@ -120,7 +124,13 @@ export default function ModuleResponse({
               {responses[indexResponse].comments.length}
             </div>
           </div>
-          {stateComment && <CommentsLi comments={responses[indexResponse].comments} response={responses[indexResponse].response} session={session} />}
+          {stateComment && (
+            <CommentsLi
+              comments={responses[indexResponse].comments}
+              response={responses[indexResponse].response}
+              session={session}
+            />
+          )}
         </>
       ) : (
         <div className="relative bg-(--white) text-base leading-5 shadow-[0px_0px_5px_0px_rgba(0,0,0,0.5)] flex flex-col">
@@ -136,5 +146,5 @@ export default function ModuleResponse({
         </div>
       )}
     </li>
-  )
+  );
 }

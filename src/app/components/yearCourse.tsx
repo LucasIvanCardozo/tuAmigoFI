@@ -1,30 +1,37 @@
-'use client'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { use, useState } from 'react'
-import { Year } from '../lib/server/db/prisma/prismaClient/client'
+'use client';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { use, useState } from 'react';
+import type { Year } from '../lib/server/db/prisma/prismaClient/client';
 
 export default function YearCourse({ callback }: { callback: Promise<Year[]> }) {
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
-  const { replace } = useRouter()
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
 
-  const years = use(callback)
+  const years = use(callback);
 
-  const [year, setYear] = useState<string>(searchParams.get('idYear')?.toString() ?? '')
+  const [year, setYear] = useState<string>(searchParams.get('idYear')?.toString() ?? '');
 
   const handleYears = (year: string) => {
-    const params = new URLSearchParams(searchParams)
+    const params = new URLSearchParams(searchParams);
     if (year && year != '0') {
-      params.set('idYear', year)
+      params.set('idYear', year);
     } else {
-      params.delete('idYear')
+      params.delete('idYear');
     }
-    setYear(year)
-    replace(`${pathname}?${params.toString()}`)
-  }
+    setYear(year);
+    replace(`${pathname}?${params.toString()}`);
+  };
 
   return (
-    <select name="years" id="years" className="w-full sm:w-16" value={year} aria-label="Elegir año de la materia" onChange={(e) => handleYears(e.target.value)}>
+    <select
+      name="years"
+      id="years"
+      className="w-full sm:w-16"
+      value={year}
+      aria-label="Elegir año de la materia"
+      onChange={(e) => handleYears(e.target.value)}
+    >
       <option hidden>Año</option>
       <option value="0">Todos</option>
       {years.map((year) => (
@@ -33,5 +40,5 @@ export default function YearCourse({ callback }: { callback: Promise<Year[]> }) 
         </option>
       ))}
     </select>
-  )
+  );
 }

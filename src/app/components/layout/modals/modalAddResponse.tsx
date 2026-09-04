@@ -1,37 +1,45 @@
-'use client'
-import { Module, TypeValues } from '@/app/types'
-import { Form } from '../form/form'
-import { Modal, ModalRef } from './Modal'
-import { CgMathPlus } from 'react-icons/cg'
-import { HandlerInputs } from '../form/inputs/handlerInputs'
-import { useRef } from 'react'
-import { useReload } from '@/app/hooks/useReload'
-import { createResponse } from '@/app/lib/server/actions/responses/create.action'
-import { Session } from 'next-auth'
+'use client';
+import type { Session } from 'next-auth';
+import { useRef } from 'react';
+import { CgMathPlus } from 'react-icons/cg';
+import { useReload } from '@/app/hooks/useReload';
+import { createResponse } from '@/app/lib/server/actions/responses/create.action';
+import type { Module, TypeValues } from '@/app/types';
+import { Form } from '../form/form';
+import { HandlerInputs } from '../form/inputs/handlerInputs';
+import { Modal, type ModalRef } from './Modal';
 
-export const ModalAddResponse = ({ module, session }: { module: Module; session: Session | null }) => {
-  const { startReload } = useReload()
-  const modalRef = useRef<ModalRef>(null)
-  const isTp = 'number' in module
+export const ModalAddResponse = ({
+  module,
+  session,
+}: {
+  module: Module;
+  session: Session | null;
+}) => {
+  const { startReload } = useReload();
+  const modalRef = useRef<ModalRef>(null);
+  const isTp = 'number' in module;
 
   const submitAddResponse = async (values: TypeValues[]) => {
-    const number = values.find((val) => val.id == 'number')
-    const selectResponse = values.find((val) => val.id == 'selectResponse')
-    if (!session) throw new Error('No hay sesion')
-    if (!number || !selectResponse) throw new Error('Faltan datos')
-    const typeResponse = selectResponse.inputType
+    const number = values.find((val) => val.id == 'number');
+    const selectResponse = values.find((val) => val.id == 'selectResponse');
+    if (!session) throw new Error('No hay sesion');
+    if (!number || !selectResponse) throw new Error('Faltan datos');
+    const typeResponse = selectResponse.inputType;
     const { error } = await createResponse({
       idUser: session.user.id,
       idTp: isTp ? module.id : null,
       idMidterm: !isTp ? module.id : null,
       number: Number(number.value),
-      text: typeResponse == 'TEXT' || typeResponse == 'CODE' ? (selectResponse.value as string) : null,
-      file: typeResponse == 'IMAGE' || typeResponse == 'PDF' ? (selectResponse.value as File) : null,
+      text:
+        typeResponse == 'TEXT' || typeResponse == 'CODE' ? (selectResponse.value as string) : null,
+      file:
+        typeResponse == 'IMAGE' || typeResponse == 'PDF' ? (selectResponse.value as File) : null,
       type: typeResponse,
-    })
-    if (error) throw new Error(error)
-    startReload()
-  }
+    });
+    if (error) throw new Error(error);
+    startReload();
+  };
 
   return (
     <Modal
@@ -48,25 +56,47 @@ export const ModalAddResponse = ({ module, session }: { module: Module; session:
       }
     >
       <h2 className="text-lg">Añadir una respuesta</h2>
-      <Form onSubmit={(e: TypeValues[]) => submitAddResponse(e)} onEnd={() => modalRef.current?.close()}>
+      <Form
+        onSubmit={(e: TypeValues[]) => submitAddResponse(e)}
+        onEnd={() => modalRef.current?.close()}
+      >
         <div className="flex flex-col">
           <label htmlFor="number">Número</label>
-          <HandlerInputs type="number" id="number" name="number" min={0} max={100} placeholder="Número del problema" required={true} />
+          <HandlerInputs
+            type="number"
+            id="number"
+            name="number"
+            min={0}
+            max={100}
+            placeholder="Número del problema"
+            required={true}
+          />
         </div>
-        <HandlerInputs type="selectResponse" id="selectResponse" required={true} name="selectResponse" />
+        <HandlerInputs
+          type="selectResponse"
+          id="selectResponse"
+          required={true}
+          name="selectResponse"
+        />
         <div>
           <p>Esta respuesta se añadirá al módulo "{module.name}"</p>
         </div>
         <div>
           <h3 className="text-sm">Recuerda!</h3>
           <p className="text-xs">
-            Por favor asegurate de que las respuestas estén legibles y sean para este módulo. En caso de cualquier problema podes contactarme:{' '}
-            <a className="underline" target="_blank" href="https://wa.me/+5492235319564">
+            Por favor asegurate de que las respuestas estén legibles y sean para este módulo. En
+            caso de cualquier problema podes contactarme:{' '}
+            <a
+              className="underline"
+              target="_blank"
+              href="https://wa.me/+5492235319564"
+              rel="noopener"
+            >
               2235319564
             </a>
           </p>
         </div>
       </Form>
     </Modal>
-  )
-}
+  );
+};

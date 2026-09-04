@@ -1,29 +1,37 @@
-import { numberIconsModules } from '../../../assets/icons'
-import PdfView from '@/app/components/pdfView'
-import { DataModule } from '@/app/types'
-import { SiGoogledocs } from 'react-icons/si'
-import ModuleResponse from './moduleResponse'
-import { ModalDeleteTp } from '../../layout/modals/modalDeleteTp'
-import { ModalDeleteMidterm } from '../../layout/modals/modalDeleteMidterm'
-import { ModalAddResponse } from '../../layout/modals/modalAddResponse'
-import { userUseCases } from '@/app/lib/server/usecases/user.usecases'
+import { SiGoogledocs } from 'react-icons/si';
+import PdfView from '@/app/components/pdfView';
+import { userUseCases } from '@/app/lib/server/usecases/user.usecases';
+import type { DataModule } from '@/app/types';
+import { numberIconsModules } from '../../../assets/icons';
+import { ModalAddResponse } from '../../layout/modals/modalAddResponse';
+import { ModalDeleteMidterm } from '../../layout/modals/modalDeleteMidterm';
+import { ModalDeleteTp } from '../../layout/modals/modalDeleteTp';
+import ModuleResponse from './moduleResponse';
 
 interface Props {
-  module: DataModule
-  idModule?: string
-  typeModule: 'TP' | 'Practica'
+  module: DataModule;
+  idModule?: string;
+  typeModule: 'TP' | 'Practica';
 }
 
 export const ModuleContainer = async ({ module, idModule, typeModule }: Props) => {
-  const session = await userUseCases.getSession()
-  const moduleInd = module.module
-  const problems = module.problems
-  const isTp = 'number' in moduleInd
+  const session = await userUseCases.getSession();
+  const moduleInd = module.module;
+  const problems = module.problems;
+  const isTp = 'number' in moduleInd;
 
   return (
     <li className={'relative ' + `${idModule != null && idModule != moduleInd.id && 'hidden'}`}>
       <div className="flex items-center text-xl sticky top-0 z-20 bg-(--platinum) py-1 ">
-        {isTp ? moduleInd.number && numberIconsModules[moduleInd.number] ? numberIconsModules[moduleInd.number] : numberIconsModules[0] : <SiGoogledocs />}
+        {isTp ? (
+          moduleInd.number && numberIconsModules[moduleInd.number] ? (
+            numberIconsModules[moduleInd.number]
+          ) : (
+            numberIconsModules[0]
+          )
+        ) : (
+          <SiGoogledocs />
+        )}
         <h2>
           {moduleInd.name}{' '}
           {isTp ? (
@@ -120,12 +128,17 @@ export const ModuleContainer = async ({ module, idModule, typeModule }: Props) =
                 .map((problem, index) =>
                   problem.responses.length > 0 ? (
                     <ModuleResponse
-                      key={((index + problem.responses.length) * (index + problem.responses.length + 1)) / 2 + index}
+                      key={
+                        ((index + problem.responses.length) *
+                          (index + problem.responses.length + 1)) /
+                          2 +
+                        index
+                      }
                       problem={problem}
                       typeModule={typeModule}
                       session={session}
                     />
-                  ) : undefined
+                  ) : undefined,
                 )
                 .filter((prob) => prob != undefined)}
             </>
@@ -133,5 +146,5 @@ export const ModuleContainer = async ({ module, idModule, typeModule }: Props) =
         </ul>
       </div>
     </li>
-  )
-}
+  );
+};

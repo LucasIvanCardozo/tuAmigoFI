@@ -1,48 +1,47 @@
 // 'src/app/components/ModalImportImage.tsx'
-'use client'
-import { Modal } from './Modal'
-import { Loading } from '@/app/components/layout/loading'
-import { Link } from '@/app/lib/server/db/prisma/prismaClient/client'
-import { useSession } from 'next-auth/react'
-import { FormEvent, useRef, useState } from 'react'
-import { MdOutlineReport } from 'react-icons/md'
-import { ModalRef } from './Modal'
+'use client';
+import { useSession } from 'next-auth/react';
+import { type FormEvent, useRef, useState } from 'react';
+import { MdOutlineReport } from 'react-icons/md';
+import { Loading } from '@/app/components/layout/loading';
+import type { Link } from '@/app/lib/server/db/prisma/prismaClient/client';
+import { Modal, type ModalRef } from './Modal';
 
 export default function ModalReportLink({ link }: { link: Link }) {
-  const [check, setCheck] = useState<boolean>()
-  const [confirmed, setConfirmed] = useState<boolean>(false)
-  const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState<boolean>(false)
-  const modalRef = useRef<ModalRef>(null)
-  const { data: session } = useSession()
+  const [check, setCheck] = useState<boolean>();
+  const [confirmed, setConfirmed] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const modalRef = useRef<ModalRef>(null);
+  const { data: session } = useSession();
 
   const formValidate = (): boolean => {
     if (!check) {
-      setError('Debes estar de acuerdo con la eliminacion del link')
-      return false
+      setError('Debes estar de acuerdo con la eliminacion del link');
+      return false;
     }
     if (!session?.user) {
-      setError('Debes iniciar sesion y ser administrador para eliminar un TP')
-      return false
+      setError('Debes iniciar sesion y ser administrador para eliminar un TP');
+      return false;
     }
-    return true
-  }
+    return true;
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
     if (formValidate() && session) {
       try {
         // await addReportLink({ id_link: link.id, id_user: session.user.id })
-        setConfirmed(true)
-        modalRef.current?.close()
+        setConfirmed(true);
+        modalRef.current?.close();
       } catch (error) {
         if (error instanceof Error) {
-          setError(error.message)
-        } else setError('Ocurrio un error inesperado')
+          setError(error.message);
+        } else setError('Ocurrio un error inesperado');
       }
     }
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   return (
     <Modal
@@ -53,7 +52,10 @@ export default function ModalReportLink({ link }: { link: Link }) {
         </button>
       }
     >
-      <form className="relative flex flex-col w-full" onSubmit={(e) => (setLoading(true), handleSubmit(e))}>
+      <form
+        className="relative flex flex-col w-full"
+        onSubmit={(e) => (setLoading(true), handleSubmit(e))}
+      >
         <div>
           <h3 className="text-lg mb-4">
             <b>{`Reportar link`}</b>
@@ -70,7 +72,13 @@ export default function ModalReportLink({ link }: { link: Link }) {
               </a>
             </span>
             <div>
-              <input type="checkbox" name="check" id="check" onChange={(e) => setCheck(e.target.checked)} required />
+              <input
+                type="checkbox"
+                name="check"
+                id="check"
+                onChange={(e) => setCheck(e.target.checked)}
+                required
+              />
               <label htmlFor="check">Quiero reportarlo</label>
             </div>
           </div>
@@ -78,8 +86,14 @@ export default function ModalReportLink({ link }: { link: Link }) {
         <div>
           <h3 className="text-sm">Recuerda!</h3>
           <p className="text-xs">
-            Por favor sea reporte el link solo si considera que este no debería estar presente en la pagina. En caso de cualquier problema podes contactarme:{' '}
-            <a className="underline" target="_blank" href="https://wa.me/+5492235319564">
+            Por favor sea reporte el link solo si considera que este no debería estar presente en la
+            pagina. En caso de cualquier problema podes contactarme:{' '}
+            <a
+              className="underline"
+              target="_blank"
+              href="https://wa.me/+5492235319564"
+              rel="noopener"
+            >
               2235319564
             </a>
           </p>
@@ -90,7 +104,10 @@ export default function ModalReportLink({ link }: { link: Link }) {
             <Loading size={6} mode="white" />
           ) : (
             !confirmed && (
-              <button className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700  transition-colors" type="submit">
+              <button
+                className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700  transition-colors"
+                type="submit"
+              >
                 Reportar
               </button>
             )
@@ -99,5 +116,5 @@ export default function ModalReportLink({ link }: { link: Link }) {
         {error && <p style={{ color: 'red' }}>{error}</p>}
       </form>
     </Modal>
-  )
+  );
 }

@@ -1,28 +1,35 @@
-import Image from 'next/image'
-import CalendarSection from './components/calendar'
-import Contributors from './components/contributors'
-import { Suspense } from 'react'
-import ContributorsSkeleton from './components/skeletons/contributors.skeleton'
-import ButtonInfoScore from './components/buttonInfoScore'
-import { FaArrowRight } from 'react-icons/fa'
-import QuestionSkeleton from './components/skeletons/question.skeleton'
-import Questions from './components/questions'
-import { degreeUseCases } from './lib/server/usecases/degree.usecases'
-import { cacheLife } from 'next/cache'
+import { cacheLife } from 'next/cache';
+import Image from 'next/image';
+import { Suspense } from 'react';
+import { FaArrowRight } from 'react-icons/fa';
+import ButtonInfoScore from './components/buttonInfoScore';
+import CalendarSection from './components/calendar';
+import Contributors from './components/contributors';
+import Questions from './components/questions';
+import ContributorsSkeleton from './components/skeletons/contributors.skeleton';
+import QuestionSkeleton from './components/skeletons/question.skeleton';
+import { degreeUseCases } from './lib/server/usecases/degree.usecases';
 
 export default async function Home() {
-  const degreesCallback = degreeUseCases.findAllWithPlans()
+  const degreesCallback = degreeUseCases.findAllWithPlans();
   const callbackYear = async () => {
-    'use cache: remote'
-    cacheLife('weeks')
-    return new Date().getFullYear()
-  }
+    'use cache: remote';
+    cacheLife('weeks');
+    return new Date().getFullYear();
+  };
 
   return (
     <>
       <main className="pt-14 relative flex text-(--black) h-max w-11/12 justify-between mx-auto max-w-(--breakpoint-md) my-6 sm:pt-20 sm:justify-around">
         <div className="relative h-max w-2/5 max-w-52">
-          <Image className="object-contain w-full " src="/FI.svg" width={200} height={200} alt="" priority />
+          <Image
+            className="object-contain w-full "
+            src="/FI.svg"
+            width={200}
+            height={200}
+            alt=""
+            priority
+          />
           <h1 className="font-bold absolute text-4xl top-0 left-full text-left bg-[#F3F4F6] ml-1 p-1 rounded-2xl rounded-es-none shadow-md sm:ml-6 sm:p-2">
             Bienvenido!
             <p className="whitespace-nowrap text-xl font-normal">Aquí tu amigo 'FI'</p>
@@ -33,7 +40,7 @@ export default async function Home() {
           <ul className="flex justify-around w-full drop-shadow-sm">
             {channelList.map((data, index) => (
               <li key={index}>
-                <a href={data.link} target="_blank">
+                <a href={data.link} target="_blank" rel="noopener">
                   <Image
                     className="object-contain rounded-md"
                     src={data.src}
@@ -50,14 +57,16 @@ export default async function Home() {
         </div>
       </main>
       <section className="text-(--black) max-w-(--breakpoint-md) m-auto my-4 w-full text-balance text-center sm:hidden">
-        En <strong>Tu-Amigo-FI</strong> encontrás <strong>finales</strong>, <strong>trabajos prácticos</strong>, un <strong>calendario académico</strong> y
-        mucho más. Todo pensado para darte una mano en tu carrera de ingeniería.
+        En <strong>Tu-Amigo-FI</strong> encontrás <strong>finales</strong>,{' '}
+        <strong>trabajos prácticos</strong>, un <strong>calendario académico</strong> y mucho más.
+        Todo pensado para darte una mano en tu carrera de ingeniería.
       </section>
       <section className="hidden text-(--black) max-w-(--breakpoint-md) my-4 m-auto w-full text-balance text-center sm:block">
-        En <strong>Tu-Amigo-FI</strong> tenés todo lo que necesitás para avanzar en ingeniería: <strong>finales</strong>,{' '}
-        <strong>trabajos prácticos resueltos por la comunidad</strong>, y mucho más para facilitarte el estudio. También podés consultar el{' '}
-        <strong>calendario académico</strong> y subir tus propios aportes para ayudar a otros estudiantes. Todo en un solo lugar para que tu paso por la facu
-        sea más llevadero.
+        En <strong>Tu-Amigo-FI</strong> tenés todo lo que necesitás para avanzar en ingeniería:{' '}
+        <strong>finales</strong>, <strong>trabajos prácticos resueltos por la comunidad</strong>, y
+        mucho más para facilitarte el estudio. También podés consultar el{' '}
+        <strong>calendario académico</strong> y subir tus propios aportes para ayudar a otros
+        estudiantes. Todo en un solo lugar para que tu paso por la facu sea más llevadero.
       </section>
 
       <section className="text-(--black) my-6 relative max-w-(--breakpoint-md) m-auto w-11/12">
@@ -72,6 +81,7 @@ export default async function Home() {
               target="_blank"
               href={link}
               className="flex items-center gap-3 p-2 bg-white rounded-md shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-200 border border-gray-200"
+              rel="noopener"
             >
               <div className="shrink-0 w-8 h-8 bg-(--dark-cyan)/10 rounded-md flex items-center justify-center">
                 <FaArrowRight className="w-3 h-3 text-(--dark-cyan)" />
@@ -91,30 +101,43 @@ export default async function Home() {
           <ButtonInfoScore />
         </h2>
         <p className="text-balance pb-2 text-center">
-          Gracias a quienes suman su esfuerzo compartiendo recursos y soluciones, ayudando a construir una comunidad más fuerte para todos los estudiantes. ¡Tu
-          aporte marca la diferencia! 💖
+          Gracias a quienes suman su esfuerzo compartiendo recursos y soluciones, ayudando a
+          construir una comunidad más fuerte para todos los estudiantes. ¡Tu aporte marca la
+          diferencia! 💖
         </p>
         <Suspense fallback={<ContributorsSkeleton />}>
           <Contributors />
         </Suspense>
       </section>
       <section className="flex text-(--black) justify-center  max-w-(--breakpoint-md) m-auto my-4 w-11/12">
-        <Image className="object-contain w-1/4 min-w-24" src="/FI.svg" width={200} height={200} alt="" />
+        <Image
+          className="object-contain w-1/4 min-w-24"
+          src="/FI.svg"
+          width={200}
+          height={200}
+          alt=""
+        />
         <div className="max-w-96 pl-2">
           <h2 className="text-2xl sm:text-3xl">
             <b>¿Algún problema?</b>
           </h2>
           <p className="pl-1 text-balance sm:text-lg">
             No dudes en contactarte con{' '}
-            <a className="text-blue-700" href="https://www.instagram.com/cei_unmdp/" target="_blank">
+            <a
+              className="text-blue-700"
+              href="https://www.instagram.com/cei_unmdp/"
+              target="_blank"
+              rel="noopener"
+            >
               <b>Cauces</b>
             </a>
-            , éste es el centro de estudiantes actual de la facultad. Ellos no dudarán en darte una mano.
+            , éste es el centro de estudiantes actual de la facultad. Ellos no dudarán en darte una
+            mano.
           </p>
         </div>
       </section>
     </>
-  )
+  );
 }
 
 const questionList = [
@@ -133,7 +156,7 @@ const questionList = [
     link: 'https://www.instagram.com/cei_unmdp/',
     value: 'instagram.com/cei',
   },
-]
+];
 
 const channelList = [
   {
@@ -151,4 +174,4 @@ const channelList = [
     src: '/campus.ico',
     name: 'campus de la UNMDP de Ingenieria',
   },
-]
+];

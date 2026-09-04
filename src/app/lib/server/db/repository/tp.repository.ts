@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from '../prisma/prismaClient/client'
+import type { Prisma, PrismaClient } from '../prisma/prismaClient/client';
 
 export const tpRepository = (db: PrismaClient | Prisma.TransactionClient) => ({
   findByCourseId(idCourse: string) {
@@ -7,7 +7,7 @@ export const tpRepository = (db: PrismaClient | Prisma.TransactionClient) => ({
       orderBy: {
         number: 'asc',
       },
-    })
+    });
   },
   findByCourseIdWithAllData(idCourse: string) {
     return db.tp.findMany({
@@ -34,6 +34,6 @@ export const tpRepository = (db: PrismaClient | Prisma.TransactionClient) => ({
       orderBy: {
         number: 'asc',
       },
-    })
+    });
   },
-})
+});

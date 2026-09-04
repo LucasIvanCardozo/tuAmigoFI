@@ -1,25 +1,26 @@
-import type { Metadata } from 'next'
-import './globals.css'
-import { cabin } from './assets/fonts'
-import Nav from './components/layout/nav'
-import Providers from './components/layout/providers'
-import Footer from './components/layout/footer'
-import { Loader } from './components/layout/loader'
-import { IconBackground } from './components/layout/IconBackground'
-import { Suspense } from 'react'
-import { userUseCases } from './lib/server/usecases/user.usecases'
+import type { Metadata } from 'next';
+import './globals.css';
+import { Suspense } from 'react';
+import { cabin } from './assets/fonts';
+import Footer from './components/layout/footer';
+import { IconBackground } from './components/layout/IconBackground';
+import { Loader } from './components/layout/loader';
+import Nav from './components/layout/nav';
+import Providers from './components/layout/providers';
+import { userUseCases } from './lib/server/usecases/user.usecases';
 
 export const metadata: Metadata = {
   title: 'Tu amigo FI',
-  description: 'Creada para ayudar a ingresantes y avanzados alumnos, en la Facultad de Ingenieria de Mar del Plata, con su desafiante carrera.',
-}
+  description:
+    'Creada para ayudar a ingresantes y avanzados alumnos, en la Facultad de Ingenieria de Mar del Plata, con su desafiante carrera.',
+};
 
 export default async function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
-  const callbackSession = userUseCases.getSession()
+  const callbackSession = userUseCases.getSession();
   return (
     <html lang="es">
       <body id="root" className={cabin.className + ' flex flex-col h-dvh'}>
@@ -36,5 +37,5 @@ export default async function RootLayout({
         </Providers>
       </body>
     </html>
-  )
+  );
 }

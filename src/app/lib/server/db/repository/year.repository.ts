@@ -1,7 +1,7 @@
-import { Prisma, PrismaClient } from '../prisma/prismaClient/client'
+import type { Prisma, PrismaClient } from '../prisma/prismaClient/client';
 
 export const yearRepository = (db: PrismaClient | Prisma.TransactionClient) => ({
   findAll() {
-    return db.year.findMany()
+    return db.year.findMany();
   },
-})
+});

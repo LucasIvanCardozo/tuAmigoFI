@@ -1,8 +1,8 @@
 'use client';
-import { handleLoader } from '@/app/utils/handleLoader';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
+import { handleLoader } from '@/app/utils/handleLoader';
 
 export default function SearchCourses() {
   const searchParams = useSearchParams();
@@ -10,9 +10,7 @@ export default function SearchCourses() {
   const { replace } = useRouter();
 
   const [isHandleSearch, setIsHandleSearch] = useState(false);
-  const [search, setSearch] = useState<string>(
-    searchParams.get('search')?.toString() || ''
-  );
+  const [search, setSearch] = useState<string>(searchParams.get('search')?.toString() || '');
 
   useEffect(() => {
     if (!isHandleSearch) {
@@ -25,10 +23,7 @@ export default function SearchCourses() {
     setIsHandleSearch(true);
     const params = new URLSearchParams(searchParams);
     if (search) {
-      params.set(
-        'search',
-        search.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      );
+      params.set('search', search.normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
     } else {
       params.delete('search');
     }
@@ -46,9 +41,7 @@ export default function SearchCourses() {
       className="p-1 grow"
       value={search}
       onChange={(e) => (
-        setSearch(e.target.value),
-        handleLoader(true),
-        handleSearch(e.target.value)
+        setSearch(e.target.value), handleLoader(true), handleSearch(e.target.value)
       )}
     />
   );

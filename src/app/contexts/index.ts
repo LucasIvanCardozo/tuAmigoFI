@@ -1,2 +1,2 @@
-export * from './mainContext'
-export * from './formContext'
+export * from './formContext';
+export * from './mainContext';

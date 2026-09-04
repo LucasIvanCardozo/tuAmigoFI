@@ -1,12 +1,18 @@
-import { CgArrowRightO } from 'react-icons/cg'
-import CorrelativeList from './correlativeList'
-import { courseUseCases } from '@/app/lib/server/usecases/course.usecases'
+import { CgArrowRightO } from 'react-icons/cg';
+import { courseUseCases } from '@/app/lib/server/usecases/course.usecases';
+import CorrelativeList from './correlativeList';
 
-export default async function CorrelativeTable({ idCourse, idDegree }: { idCourse: string; idDegree?: string }) {
+export default async function CorrelativeTable({
+  idCourse,
+  idDegree,
+}: {
+  idCourse: string;
+  idDegree?: string;
+}) {
   const [dataCorrelatives, dataEnabler] = await Promise.all([
     courseUseCases.findCorrelativesById({ idCourse, idDegree }),
-    courseUseCases.findEnablesById({ idCourse, idDegree })
-  ])
+    courseUseCases.findEnablesById({ idCourse, idDegree }),
+  ]);
 
   return (
     <div className="pl-2 my-1">
@@ -17,7 +23,9 @@ export default async function CorrelativeTable({ idCourse, idDegree }: { idCours
         </div>
         <div className="flex  items-center overflow-x-auto overflow-y-hidden sm:overflow-hidden sm:flex-wrap">
           {dataCorrelatives.length != 0 ? (
-            dataCorrelatives.map(({ id, name }, index) => <CorrelativeList key={id} index={index} name={name} />)
+            dataCorrelatives.map(({ id, name }, index) => (
+              <CorrelativeList key={id} index={index} name={name} />
+            ))
           ) : (
             <p className="opacity-75">No tiene correlativas</p>
           )}
@@ -30,12 +38,14 @@ export default async function CorrelativeTable({ idCourse, idDegree }: { idCours
         </div>
         <div className="flex items-center overflow-x-auto overflow-y-hidden sm:overflow-hidden sm:flex-wrap">
           {dataEnabler.length != 0 ? (
-            dataEnabler.map(({ id, name }, index) => <CorrelativeList key={id} index={index} name={name} />)
+            dataEnabler.map(({ id, name }, index) => (
+              <CorrelativeList key={id} index={index} name={name} />
+            ))
           ) : (
             <p className="opacity-75">No tiene habilitantes</p>
           )}
         </div>
       </div>
     </div>
-  )
+  );
 }

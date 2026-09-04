@@ -1,7 +1,7 @@
-import { PrismaClient } from '../prismaClient/client'
+import type { PrismaClient } from '../prismaClient/client';
 
 export const planSeed = async (db: PrismaClient) => {
-  const plans = await db.plan.findMany()
+  const plans = await db.plan.findMany();
   if (!plans.length) {
     await db.plan.create({
       data: {
@@ -19,7 +19,7 @@ export const planSeed = async (db: PrismaClient) => {
           ],
         },
       },
-    })
+    });
     await db.plan.create({
       data: {
         year: 2010,
@@ -30,7 +30,7 @@ export const planSeed = async (db: PrismaClient) => {
           ],
         },
       },
-    })
+    });
     await db.plan.create({
       data: {
         year: 2024,
@@ -49,6 +49,6 @@ export const planSeed = async (db: PrismaClient) => {
           ],
         },
       },
-    })
+    });
   }
-}
+};

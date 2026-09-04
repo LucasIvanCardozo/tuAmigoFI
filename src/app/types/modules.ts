@@ -1,28 +1,35 @@
-import { Comment, Midterm, Reaction, Response, Tp, User } from '../lib/server/db/prisma/prismaClient/client'
+import type {
+  Comment,
+  Midterm,
+  Reaction,
+  Response,
+  Tp,
+  User,
+} from '../lib/server/db/prisma/prismaClient/client';
 
 export interface DataModuleComment {
-  comment: Comment
-  user: User
-  reactions: Reaction[]
+  comment: Comment;
+  user: User;
+  reactions: Reaction[];
 }
 
 export interface DataModuleResponse {
-  response: Response
-  user: User
-  reactions: Reaction[]
-  comments: DataModuleComment[]
+  response: Response;
+  user: User;
+  reactions: Reaction[];
+  comments: DataModuleComment[];
 }
 
 export interface DataModuleProblem {
-  number: number
-  responses: DataModuleResponse[]
+  number: number;
+  responses: DataModuleResponse[];
 }
 
 export interface DataModule {
-  module: Tp | Midterm
-  problems: DataModuleProblem[]
-  reactions: Reaction[]
-  user: User
+  module: Tp | Midterm;
+  problems: DataModuleProblem[];
+  reactions: Reaction[];
+  user: User;
 }
 
-export type Module = Tp | Midterm
+export type Module = Tp | Midterm;

@@ -1,91 +1,104 @@
-import { useForm } from '@/app/contexts'
-import { TypeInput, TypeValues } from '@/app/types'
-import { ChangeEvent, useEffect, useState } from 'react'
-import { InputText, InputNumber, InputFile, InputSelect, InputTextarea, InputCheckbox, InputSelectResponse, InputDate } from './index'
-import { TypeResponse } from '@/app/lib/server/db/prisma/prismaClient/enums'
+import { type ChangeEvent, useEffect, useState } from 'react';
+import { useForm } from '@/app/contexts';
+import type { TypeResponse } from '@/app/lib/server/db/prisma/prismaClient/enums';
+import type { TypeInput, TypeValues } from '@/app/types';
+import {
+  InputCheckbox,
+  InputDate,
+  InputFile,
+  InputNumber,
+  InputSelect,
+  InputSelectResponse,
+  InputText,
+  InputTextarea,
+} from './index';
 
 export const HandlerInputs = (input: TypeInput) => {
-  const inputType = input.type
-  const { values, setValues } = useForm()
-  const [typeResponse, setTypeResponse] = useState<TypeResponse>()
-  const [value, setValue] = useState('')
-  const [file, setFile] = useState<File>()
-  const [checkbox, setCheckbox] = useState<boolean>(false)
-  const [date, setDate] = useState<Date>()
-  const [error, setError] = useState('')
+  const inputType = input.type;
+  const { values, setValues } = useForm();
+  const [typeResponse, setTypeResponse] = useState<TypeResponse>();
+  const [value, setValue] = useState('');
+  const [file, setFile] = useState<File>();
+  const [checkbox, setCheckbox] = useState<boolean>(false);
+  const [date, setDate] = useState<Date>();
+  const [error, setError] = useState('');
 
   const handlePDF = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const file = e.target.files?.[0];
     if (file) {
       if (file.type == 'application/pdf') {
         if (file.size > 31457280) {
-          e.target.value = ''
-          setError('El archivo pesa más de 3 MB')
+          e.target.value = '';
+          setError('El archivo pesa más de 3 MB');
         } else {
-          setFile(file)
-          setError('')
+          setFile(file);
+          setError('');
         }
       } else {
-        setError('Por favor selecciona un archivo .pdf')
-        setFile(undefined)
-        e.target.value = ''
+        setError('Por favor selecciona un archivo .pdf');
+        setFile(undefined);
+        e.target.value = '';
       }
     } else {
-      setFile(undefined)
+      setFile(undefined);
     }
-  }
+  };
 
   const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const file = e.target.files?.[0];
     if (file) {
       if (file.type.split('/')[0] == 'image') {
         if (file.size > 5242880) {
-          e.target.value = ''
-          setError('El archivo pesa más de 1 MB')
+          e.target.value = '';
+          setError('El archivo pesa más de 1 MB');
         } else {
-          setFile(file)
-          setError('')
+          setFile(file);
+          setError('');
         }
       } else {
-        setError('Por favor selecciona una imagen')
-        setFile(undefined)
-        e.target.value = ''
+        setError('Por favor selecciona una imagen');
+        setFile(undefined);
+        e.target.value = '';
       }
     } else {
-      setFile(undefined)
+      setFile(undefined);
     }
-  }
+  };
 
   const handleSelectResponse = (value: TypeResponse) => {
-    setTypeResponse(value)
-    setValue('')
-    setFile(undefined)
-    setError('')
-  }
+    setTypeResponse(value);
+    setValue('');
+    setFile(undefined);
+    setError('');
+  };
 
   useEffect(() => {
     setValues((validates: TypeValues[]) => {
-      const validate = values.find((val) => val.id == input.id)
+      const validate = values.find((val) => val.id == input.id);
       if (!validate) {
         const thisvalidate: TypeValues = {
           id: input.id,
           value:
-            inputType == 'text' || inputType == 'number' || inputType == 'textarea' || inputType == 'select' || inputType == 'selectResponse'
+            inputType == 'text' ||
+            inputType == 'number' ||
+            inputType == 'textarea' ||
+            inputType == 'select' ||
+            inputType == 'selectResponse'
               ? ''
               : inputType == 'file' || inputType == 'date'
                 ? undefined
                 : false,
           inputType: typeResponse as any,
           validate: !input.required,
-        }
-        return [...validates, thisvalidate]
-      } else return validates
-    })
-  }, [])
+        };
+        return [...validates, thisvalidate];
+      } else return validates;
+    });
+  }, []);
 
   useEffect(() => {
     if (input.required) {
-      const validate = values.find((val) => val.id == input.id)
+      const validate = values.find((val) => val.id == input.id);
       if (validate) {
         if (value || file || checkbox || date) {
           setValues(
@@ -109,10 +122,10 @@ export const HandlerInputs = (input: TypeInput) => {
                     inputType: typeResponse ?? (inputType as any),
                     validate: true,
                   }
-                : val
-            )
-          )
-          setError('')
+                : val,
+            ),
+          );
+          setError('');
         } else {
           setValues(
             values.map((val) =>
@@ -121,9 +134,9 @@ export const HandlerInputs = (input: TypeInput) => {
                     ...val,
                     validate: false,
                   }
-                : val
-            )
-          )
+                : val,
+            ),
+          );
           setError(
             inputType == 'text' || inputType == 'textarea'
               ? 'debe colocar texto aquí'
@@ -139,12 +152,12 @@ export const HandlerInputs = (input: TypeInput) => {
                         ? 'debes subir tu respuesta'
                         : inputType == 'date'
                           ? 'debes seleccionar una fecha'
-                          : 'error.'
-          )
+                          : 'error.',
+          );
         }
       }
     }
-  }, [value, file, checkbox, date])
+  }, [value, file, checkbox, date]);
 
   return (
     <div className="relative flex flex-col text-black">
@@ -174,5 +187,5 @@ export const HandlerInputs = (input: TypeInput) => {
       ) : null}
       {error && <p className="text-red-600 text-sm">{error}</p>}
     </div>
-  )
-}
+  );
+};

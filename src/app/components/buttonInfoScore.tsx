@@ -31,20 +31,16 @@ export default function ButtonInfoScore() {
                   Añade exámenes para ganar <b>5 puntos</b>.
                 </li>
                 <li>
-                  Responde consultas de TPs y/o exámenes y obtendrás{' '}
-                  <b>3 puntos</b>.
+                  Responde consultas de TPs y/o exámenes y obtendrás <b>3 puntos</b>.
                 </li>
                 <li>
-                  Recibe likes en tus respuestas para sumar <b>1 punto</b> por
-                  cada uno.
+                  Recibe likes en tus respuestas para sumar <b>1 punto</b> por cada uno.
                 </li>
                 <li>
                   Comparte links útiles y obtendrás <b>1 punto</b>.
                 </li>
               </ul>
-              <span>
-                ¡Colabora y construyamos juntos una comunidad más fuerte!
-              </span>
+              <span>¡Colabora y construyamos juntos una comunidad más fuerte!</span>
               <span>
                 <b>Los datos se actualizan cada 24 hs</b>
               </span>

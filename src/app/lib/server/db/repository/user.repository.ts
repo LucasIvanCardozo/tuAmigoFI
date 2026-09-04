@@ -1,18 +1,18 @@
-import { get } from 'http'
-import { Prisma, PrismaClient } from '../prisma/prismaClient/client'
+import { get } from 'http';
+import type { Prisma, PrismaClient } from '../prisma/prismaClient/client';
 
 export const userRepository = (db: PrismaClient | Prisma.TransactionClient) => ({
   getById(id: string) {
-    return db.user.findFirstOrThrow({ where: { id } })
+    return db.user.findFirstOrThrow({ where: { id } });
   },
   getByEmail(email: string) {
-    return db.user.findFirstOrThrow({ where: { email } })
+    return db.user.findFirstOrThrow({ where: { email } });
   },
   findById(id: string) {
-    return db.user.findFirst({ where: { id } })
+    return db.user.findFirst({ where: { id } });
   },
   findByEmail(email: string) {
-    return db.user.findFirst({ where: { email } })
+    return db.user.findFirst({ where: { email } });
   },
   findContributors() {
     return db.user.findMany({
@@ -28,6 +28,6 @@ export const userRepository = (db: PrismaClient | Prisma.TransactionClient) => (
           },
         },
       },
-    })
+    });
   },
-})
+});

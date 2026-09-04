@@ -1,30 +1,36 @@
-'use client'
-import { useState } from 'react'
-import Image from 'next/image'
-import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight, MdDownload } from 'react-icons/md'
+'use client';
+import Image from 'next/image';
+import { useState } from 'react';
+import {
+  MdDownload,
+  MdOutlineKeyboardArrowLeft,
+  MdOutlineKeyboardArrowRight,
+} from 'react-icons/md';
 
 export default function PdfView({ id, url }: { id: string; url: string }) {
-  const [pageNumber, setPageNumber] = useState<number>(1)
-  const [lastPage, setLastPage] = useState<number>(0)
-  const [loadingImage, setLoadingImage] = useState<boolean>(false)
+  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [lastPage, setLastPage] = useState<number>(0);
+  const [loadingImage, setLoadingImage] = useState<boolean>(false);
 
   const imageUrl = `https://res.cloudinary.com/donzj5rlf/image/upload/pg_${pageNumber}/f_auto/q_auto:eco/v${Math.floor(
-    Date.now() / (1000 * 60 * 60 * 24 * 7)
-  )}/${url}/${id}`
+    Date.now() / (1000 * 60 * 60 * 24 * 7),
+  )}/${url}/${id}`;
 
   const handlePage = (newPage: number) => {
-    setLoadingImage(true)
-    setPageNumber(newPage)
-  }
+    setLoadingImage(true);
+    setPageNumber(newPage);
+  };
 
   const downloadFile = async () => {
-    const response = await fetch(`https://res.cloudinary.com/donzj5rlf/image/upload/fl_attachment/${url}/${id}.pdf`)
-    const blob = await response.blob()
-    const link = document.createElement('a')
-    link.href = window.URL.createObjectURL(blob)
-    link.download = 'Tu-Amigo-FI-descarga.pdf'
-    link.click()
-  }
+    const response = await fetch(
+      `https://res.cloudinary.com/donzj5rlf/image/upload/fl_attachment/${url}/${id}.pdf`,
+    );
+    const blob = await response.blob();
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = 'Tu-Amigo-FI-descarga.pdf';
+    link.click();
+  };
 
   return (
     <>
@@ -34,10 +40,10 @@ export default function PdfView({ id, url }: { id: string; url: string }) {
           alt="PDF"
           onLoad={() => setLoadingImage(false)}
           onError={() => {
-            if (pageNumber == 1) return
-            setLastPage(pageNumber - 1)
-            setPageNumber(pageNumber - 1)
-            setLoadingImage(false)
+            if (pageNumber == 1) return;
+            setLastPage(pageNumber - 1);
+            setPageNumber(pageNumber - 1);
+            setLoadingImage(false);
           }}
           style={{
             objectFit: 'contain',
@@ -76,12 +82,16 @@ export default function PdfView({ id, url }: { id: string; url: string }) {
               </button>
             }
             {
-              <div className={`${!loadingImage && 'opacity-0'} absolute bottom-full flex justify-center w-full sm:w-full transform-gpu transition-opacity`}>
+              <div
+                className={`${!loadingImage && 'opacity-0'} absolute bottom-full flex justify-center w-full sm:w-full transform-gpu transition-opacity`}
+              >
                 <div
                   className="border-black inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] bg-white/65"
                   role="status"
                 >
-                  <span className="absolute! -m-px! h-px! w-px! overflow-hidden! whitespace-nowrap! border-0! p-0! [clip:rect(0,0,0,0)]!">Loading...</span>
+                  <span className="absolute! -m-px! h-px! w-px! overflow-hidden! whitespace-nowrap! border-0! p-0! [clip:rect(0,0,0,0)]!">
+                    Loading...
+                  </span>
                 </div>
               </div>
             }
@@ -97,5 +107,5 @@ export default function PdfView({ id, url }: { id: string; url: string }) {
         <MdDownload className="h-full w-full" />
       </button>
     </>
-  )
+  );
 }

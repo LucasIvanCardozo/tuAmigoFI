@@ -1,7 +1,15 @@
-import { ModuleContainer } from './moduleContainer'
-import { DataModule } from '@/app/types'
+import type { DataModule } from '@/app/types';
+import { ModuleContainer } from './moduleContainer';
 
-export const ProblemsTable = ({ modules, idModule, typeModule }: { modules: DataModule[]; idModule?: string; typeModule: 'TP' | 'Practica' }) => {
+export const ProblemsTable = ({
+  modules,
+  idModule,
+  typeModule,
+}: {
+  modules: DataModule[];
+  idModule?: string;
+  typeModule: 'TP' | 'Practica';
+}) => {
   return (
     <>
       <ul className="flex flex-col gap-1 grow relative overflow-y-auto overflow-x-hidden">
@@ -10,9 +18,16 @@ export const ProblemsTable = ({ modules, idModule, typeModule }: { modules: Data
             <p>No hay datos :,c</p>
           </li>
         ) : (
-          modules.map((module) => <ModuleContainer key={module.module.id} module={module} idModule={idModule} typeModule={typeModule} />)
+          modules.map((module) => (
+            <ModuleContainer
+              key={module.module.id}
+              module={module}
+              idModule={idModule}
+              typeModule={typeModule}
+            />
+          ))
         )}
       </ul>
     </>
-  )
-}
+  );
+};

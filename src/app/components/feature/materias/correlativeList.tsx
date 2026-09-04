@@ -1,14 +1,7 @@
 'use client';
 import Link from 'next/link';
 
-export default function CorrelativeList({
-  index,
-  name,
-}: {
-  index: number;
-  name: string;
-}) {
-
+export default function CorrelativeList({ index, name }: { index: number; name: string }) {
   return (
     <div className="flex">
       {index != 0 && <span className="flex whitespace-pre"> - </span>}

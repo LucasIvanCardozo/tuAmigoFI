@@ -9,10 +9,10 @@ export default async function ContributorsSkeleton() {
             (index == 0
               ? 'text-2xl w-72'
               : index == 1
-              ? 'text-xl w-56'
-              : index == 2
-              ? 'text-lg w-36'
-              : 'text-base') + ` flex items-center bg-(--white) rounded-md`
+                ? 'text-xl w-56'
+                : index == 2
+                  ? 'text-lg w-36'
+                  : 'text-base') + ` flex items-center bg-(--white) rounded-md`
           }
           key={index}
         >

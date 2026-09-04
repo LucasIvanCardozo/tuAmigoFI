@@ -1,7 +1,7 @@
-import { PrismaClient } from '../prismaClient/client'
+import type { PrismaClient } from '../prismaClient/client';
 
 export const yearSeed = async (db: PrismaClient) => {
-  const years = await db.year.findMany()
+  const years = await db.year.findMany();
   if (!years.length) {
     await db.year.create({
       data: {
@@ -34,7 +34,7 @@ export const yearSeed = async (db: PrismaClient) => {
           ],
         },
       },
-    })
+    });
     await db.year.create({
       data: {
         name: '2°Año',
@@ -64,10 +64,16 @@ export const yearSeed = async (db: PrismaClient) => {
             { courses: { connect: { name: 'Fisicoquímica II' } } },
             { courses: { connect: { name: 'Operación de Plantas de Procesos' } } },
             { courses: { connect: { name: 'Tecnología de los Materiales' } } },
-            { courses: { connect: { name: 'Fundamentos de la Estática y Resistencia de Materiales' } } },
+            {
+              courses: {
+                connect: { name: 'Fundamentos de la Estática y Resistencia de Materiales' },
+              },
+            },
             { courses: { connect: { name: 'Física C-I' } } },
             { courses: { connect: { name: 'Electrotecnia A' } } },
-            { courses: { connect: { name: 'Introducción a la Termodinámica y Máquinas Térmicas' } } },
+            {
+              courses: { connect: { name: 'Introducción a la Termodinámica y Máquinas Térmicas' } },
+            },
             { courses: { connect: { name: 'Estática I' } } },
             { courses: { connect: { name: 'Estática II' } } },
             { courses: { connect: { name: 'Proyecto Transversal II' } } },
@@ -95,7 +101,7 @@ export const yearSeed = async (db: PrismaClient) => {
           ],
         },
       },
-    })
+    });
     await db.year.create({
       data: {
         name: '3°Año',
@@ -106,10 +112,20 @@ export const yearSeed = async (db: PrismaClient) => {
             { courses: { connect: { name: 'Estructura y Organización de Datos' } } },
             { courses: { connect: { name: 'Fundamentos de Sistemas Operativos' } } },
             { courses: { connect: { name: 'Fundamentos de Lenguajes Formales' } } },
-            { courses: { connect: { name: 'Ética, Legislación y Propiedad Intelectual en el Ejercicio Profesional' } } },
+            {
+              courses: {
+                connect: {
+                  name: 'Ética, Legislación y Propiedad Intelectual en el Ejercicio Profesional',
+                },
+              },
+            },
             { courses: { connect: { name: 'Inglés II' } } },
             { courses: { connect: { name: 'Calidad de Software A' } } },
-            { courses: { connect: { name: 'Administración Empresarial en la Economía del Conocimiento' } } },
+            {
+              courses: {
+                connect: { name: 'Administración Empresarial en la Economía del Conocimiento' },
+              },
+            },
             { courses: { connect: { name: 'Redes y Computación de Datos A' } } },
             { courses: { connect: { name: 'Análisis y Diseño de Sistemas A' } } },
             { courses: { connect: { name: 'Proyecto Transversal C II' } } },
@@ -174,7 +190,11 @@ export const yearSeed = async (db: PrismaClient) => {
             { courses: { connect: { name: 'Planificación y Control de la Producción' } } },
             { courses: { connect: { name: 'Investigación Operativa B' } } },
             { courses: { connect: { name: 'Mecánica de Fluidos' } } },
-            { courses: { connect: { name: 'Gestión de la Logística Integral y Cadena de Suministros' } } },
+            {
+              courses: {
+                connect: { name: 'Gestión de la Logística Integral y Cadena de Suministros' },
+              },
+            },
             { courses: { connect: { name: 'Control de la Producción' } } },
             { courses: { connect: { name: 'Termodinámica de Alimentos I' } } },
             { courses: { connect: { name: 'Química Biológica' } } },
@@ -184,7 +204,7 @@ export const yearSeed = async (db: PrismaClient) => {
           ],
         },
       },
-    })
+    });
     await db.year.create({
       data: {
         name: '4°Año',
@@ -194,8 +214,18 @@ export const yearSeed = async (db: PrismaClient) => {
             { courses: { connect: { name: 'Introducción a la Inteligencia Artificial' } } },
             { courses: { connect: { name: 'Redes y Comunicación de Datos B' } } },
             { courses: { connect: { name: 'Análisis y Diseño de Sistemas B' } } },
-            { courses: { connect: { name: 'Comportamiento Organizacional y Relaciones del Trabajo' } } },
-            { courses: { connect: { name: 'Ética, Legislación y Propiedad Intelectual en el Ejercicio Profesional' } } },
+            {
+              courses: {
+                connect: { name: 'Comportamiento Organizacional y Relaciones del Trabajo' },
+              },
+            },
+            {
+              courses: {
+                connect: {
+                  name: 'Ética, Legislación y Propiedad Intelectual en el Ejercicio Profesional',
+                },
+              },
+            },
             { courses: { connect: { name: 'Inglés II' } } },
             { courses: { connect: { name: 'Calidad de Software B' } } },
             { courses: { connect: { name: 'Gestión de Proyectos Informáticos' } } },
@@ -216,7 +246,9 @@ export const yearSeed = async (db: PrismaClient) => {
             { courses: { connect: { name: 'Técnicas de Análisis Fisicoquímicos' } } },
             { courses: { connect: { name: 'Máquinas eléctricas B' } } },
             { courses: { connect: { name: 'Materiales Electrotécnicos' } } },
-            { courses: { connect: { name: 'Formulación y Evaluación de Proyectos de Inversión' } } },
+            {
+              courses: { connect: { name: 'Formulación y Evaluación de Proyectos de Inversión' } },
+            },
             { courses: { connect: { name: 'Instalaciones Eléctricas A' } } },
             { courses: { connect: { name: 'Sistemas de Transmisión de Energía Eléctrica' } } },
             { courses: { connect: { name: 'Instalaciones Eléctricas B' } } },
@@ -264,7 +296,7 @@ export const yearSeed = async (db: PrismaClient) => {
           ],
         },
       },
-    })
+    });
     await db.year.create({
       data: {
         name: '5°Año',
@@ -272,7 +304,13 @@ export const yearSeed = async (db: PrismaClient) => {
           create: [
             { courses: { connect: { name: 'Sistemas de Bases de Datos' } } },
             { courses: { connect: { name: 'Teoría de Modelos y Simulación' } } },
-            { courses: { connect: { name: 'Ética, Legislación y Propiedad Intelectual en el Ejercicio Profesional' } } },
+            {
+              courses: {
+                connect: {
+                  name: 'Ética, Legislación y Propiedad Intelectual en el Ejercicio Profesional',
+                },
+              },
+            },
             { courses: { connect: { name: 'Auditoría y homologación' } } },
             { courses: { connect: { name: 'Seguridad y Salud Ocupacional' } } },
             { courses: { connect: { name: 'Organización Empresarial e Industrial' } } },
@@ -286,18 +324,26 @@ export const yearSeed = async (db: PrismaClient) => {
             { courses: { connect: { name: 'Dinámica, Instrumentación y Control de Procesos' } } },
             { courses: { connect: { name: 'Tecnología de los Materiales' } } },
             { courses: { connect: { name: 'Ingeniería de los Procesos Biotecnológicos' } } },
-            { courses: { connect: { name: 'Formulación y Evaluación de Proyectos de Inversión' } } },
+            {
+              courses: { connect: { name: 'Formulación y Evaluación de Proyectos de Inversión' } },
+            },
             { courses: { connect: { name: 'Generación de Energía Eléctrica B' } } },
             { courses: { connect: { name: 'Protección y Análisis de Sistemas de Potencia' } } },
             { courses: { connect: { name: 'Redes Eléctricas Inteligentes' } } },
             { courses: { connect: { name: 'Introducción a la Metrología y Fabricación' } } },
             { courses: { connect: { name: 'Mantenimiento Industrial' } } },
             { courses: { connect: { name: 'Elementos de máquinas' } } },
-            { courses: { connect: { name: 'Componentes de los Sistemas Eléctricos de Potencia' } } },
+            {
+              courses: { connect: { name: 'Componentes de los Sistemas Eléctricos de Potencia' } },
+            },
             { courses: { connect: { name: 'Transferencia y Tecnología del Calor' } } },
             { courses: { connect: { name: 'Laboratorio de Transformación de Materiales' } } },
             { courses: { connect: { name: 'Selección de Materiales' } } },
-            { courses: { connect: { name: 'Adquisición y Análisis de la Información Experimental' } } },
+            {
+              courses: {
+                connect: { name: 'Adquisición y Análisis de la Información Experimental' },
+              },
+            },
             { courses: { connect: { name: 'Procesamiento de Metales' } } },
             { courses: { connect: { name: 'Conversión Electromecánica de la Energía' } } },
             { courses: { connect: { name: 'Procesos de Fabricación I' } } },
@@ -319,16 +365,14 @@ export const yearSeed = async (db: PrismaClient) => {
           ],
         },
       },
-    })
+    });
     await db.year.create({
       data: {
         name: '6°Año',
         courses_years: {
-          create: [
-            { courses: { connect: { name: 'Proyecto de Ingeniería Industrial IV' } } },
-          ],
+          create: [{ courses: { connect: { name: 'Proyecto de Ingeniería Industrial IV' } } }],
         },
       },
-    })
+    });
   }
-}
+};

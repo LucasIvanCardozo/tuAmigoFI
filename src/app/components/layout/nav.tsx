@@ -1,55 +1,55 @@
-'use client'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { use, useEffect, useState } from 'react'
-import { CgMenu, CgClose } from 'react-icons/cg'
-import { signIn, signOut } from 'next-auth/react'
-import { handleLoader } from '@/app/utils/handleLoader'
-import { Loading } from './loading'
-import { Session } from 'next-auth'
-import Image from 'next/image'
+'use client';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import type { Session } from 'next-auth';
+import { signIn, signOut } from 'next-auth/react';
+import { use, useEffect, useState } from 'react';
+import { CgClose, CgMenu } from 'react-icons/cg';
+import { handleLoader } from '@/app/utils/handleLoader';
+import { Loading } from './loading';
 
 export default function Nav({ callbackSession }: { callbackSession: Promise<Session | null> }) {
-  const [navState, setNavState] = useState<boolean>(false)
-  const pathname: string = usePathname()
+  const [navState, setNavState] = useState<boolean>(false);
+  const pathname: string = usePathname();
 
-  const session = use(callbackSession)
+  const session = use(callbackSession);
 
   const handleNavState = () => {
     if (document.documentElement.scrollWidth < 640) {
-      setNavState(!navState)
+      setNavState(!navState);
     }
-  }
+  };
 
   useEffect(() => {
     if (navState) {
-      document.body.style.overflow = 'hidden'
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = ''
+      document.body.style.overflow = '';
     }
     return () => {
-      document.body.style.overflow = ''
-    }
-  }, [navState])
+      document.body.style.overflow = '';
+    };
+  }, [navState]);
 
   //no bloquear el scroll en pantallas escritorio
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(min-width: 640px)') // Tailwind 'sm' breakpoint is 640px
+    const mediaQuery = window.matchMedia('(min-width: 640px)'); // Tailwind 'sm' breakpoint is 640px
 
     const handleMediaChange = (e: MediaQueryListEvent) => {
       if (e.matches) {
-        setNavState(false)
+        setNavState(false);
       }
-    }
+    };
 
     // Escucha los cambios de la media query
-    mediaQuery.addEventListener('change', (e) => handleMediaChange(e))
+    mediaQuery.addEventListener('change', (e) => handleMediaChange(e));
 
     // Limpieza para remover el event listener
     return () => {
-      mediaQuery.removeEventListener('change', (e) => handleMediaChange(e))
-    }
-  }, [])
+      mediaQuery.removeEventListener('change', (e) => handleMediaChange(e));
+    };
+  }, []);
 
   return (
     <nav
@@ -62,17 +62,32 @@ export default function Nav({ callbackSession }: { callbackSession: Promise<Sess
         onClick={
           pathname != '/'
             ? () => {
-                handleLoader(true)
-                setNavState(false)
+                handleLoader(true);
+                setNavState(false);
               }
             : undefined
         }
       >
         <b className="">Tu Amigo FI</b>
       </Link>
-      <button className="relative m-1 bg-(--dark-cyan) rounded-md aspect-square sm:hidden" aria-label="Menú" title="Menú" onClick={handleNavState}>
-        <CgMenu className={(navState ? 'opacity-0' : 'opacity-100') + ' transform-gpu transition-opacity absolute top-0 left-0 w-full h-full p-1'} />
-        <CgClose className={(navState ? 'opacity-100' : 'opacity-0') + ' transform-gpu transition-opacity absolute top-0 left-0 w-full h-full p-1'} />
+      <button
+        className="relative m-1 bg-(--dark-cyan) rounded-md aspect-square sm:hidden"
+        aria-label="Menú"
+        title="Menú"
+        onClick={handleNavState}
+      >
+        <CgMenu
+          className={
+            (navState ? 'opacity-0' : 'opacity-100') +
+            ' transform-gpu transition-opacity absolute top-0 left-0 w-full h-full p-1'
+          }
+        />
+        <CgClose
+          className={
+            (navState ? 'opacity-100' : 'opacity-0') +
+            ' transform-gpu transition-opacity absolute top-0 left-0 w-full h-full p-1'
+          }
+        />
       </button>
       <ul
         className={
@@ -85,15 +100,21 @@ export default function Nav({ callbackSession }: { callbackSession: Promise<Sess
           { href: '/materias', name: 'Materias' },
           { href: '/contactame', name: 'Contáctame' },
         ].map(({ href, name }, index) => (
-          <li key={index} className={'rounded-md ' + (pathname == href ? 'bg-(--midnight-green)' : 'hover:bg-(--midnight-green)')}>
+          <li
+            key={index}
+            className={
+              'rounded-md ' +
+              (pathname == href ? 'bg-(--midnight-green)' : 'hover:bg-(--midnight-green)')
+            }
+          >
             <Link
               href={href}
               className="inline-block text-center w-40 py-2 font-bold px-3 sm:w-28 sm:font-normal"
               onClick={
                 pathname != href
                   ? () => {
-                      handleLoader(true)
-                      handleNavState()
+                      handleLoader(true);
+                      handleNavState();
                     }
                   : undefined
               }
@@ -115,18 +136,28 @@ export default function Nav({ callbackSession }: { callbackSession: Promise<Sess
             >
               {session.user.image && (
                 <div className="h-6 rounded-md overflow-hidden aspect-square">
-                  <Image className="" src={session.user.image} width={100} height={100} alt="Imagen del usuario" />
+                  <Image
+                    className=""
+                    src={session.user.image}
+                    width={100}
+                    height={100}
+                    alt="Imagen del usuario"
+                  />
                 </div>
               )}
               <p>Cerrar sesion</p>
             </Link>
           ) : (
-            <Link href={''} className="inline-block text-center w-40 py-2 font-bold px-3 sm:w-28 sm:font-normal" onClick={() => signIn('google')}>
+            <Link
+              href={''}
+              className="inline-block text-center w-40 py-2 font-bold px-3 sm:w-28 sm:font-normal"
+              onClick={() => signIn('google')}
+            >
               Iniciar sesion
             </Link>
           )}
         </li>
       </ul>
     </nav>
-  )
+  );
 }

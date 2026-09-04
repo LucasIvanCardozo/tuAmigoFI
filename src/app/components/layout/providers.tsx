@@ -1,7 +1,7 @@
-'use client'
-import { FormProvider } from '@/app/contexts'
-import { SessionProvider } from 'next-auth/react'
-import { Toaster } from 'sileo'
+'use client';
+import { SessionProvider } from 'next-auth/react';
+import { Toaster } from 'sileo';
+import { FormProvider } from '@/app/contexts';
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -12,5 +12,5 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         </Toaster>
       </FormProvider>
     </SessionProvider>
-  )
+  );
 }

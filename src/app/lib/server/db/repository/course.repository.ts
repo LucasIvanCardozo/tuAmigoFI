@@ -1,8 +1,8 @@
-import { Prisma, PrismaClient } from '../prisma/prismaClient/client'
+import type { Prisma, PrismaClient } from '../prisma/prismaClient/client';
 
 export const courseRepository = (db: PrismaClient | Prisma.TransactionClient) => ({
   getById(id: string) {
-    return db.course.findFirstOrThrow({ where: { id } })
+    return db.course.findFirstOrThrow({ where: { id } });
   },
   getAmount({ search, idYear, idDegree }: { search?: string; idYear?: string; idDegree?: string }) {
     return db.course.count({
@@ -26,7 +26,7 @@ export const courseRepository = (db: PrismaClient | Prisma.TransactionClient) =>
             }
           : {}),
       },
-    })
+    });
   },
   findAll() {
     return db.course.findMany({
@@ -35,9 +35,21 @@ export const courseRepository = (db: PrismaClient | Prisma.TransactionClient) =>
         name: true,
       },
       orderBy: { name: 'asc' },
-    })
+    });
   },
-  findByPage({ search, idYear, idDegree, page, max = 5 }: { search?: string; idYear?: string; idDegree?: string; page?: number; max?: number }) {
+  findByPage({
+    search,
+    idYear,
+    idDegree,
+    page,
+    max = 5,
+  }: {
+    search?: string;
+    idYear?: string;
+    idDegree?: string;
+    page?: number;
+    max?: number;
+  }) {
     return db.course.findMany({
       where: {
         nameNormalized: {
@@ -54,7 +66,7 @@ export const courseRepository = (db: PrismaClient | Prisma.TransactionClient) =>
             skip: (page - 1) * max,
           }
         : { take: max, skip: 0 }),
-    })
+    });
   },
   findCorrelativesById({ idCourse, idDegree }: { idCourse: string; idDegree?: string }) {
     return db.course.findMany({
@@ -66,7 +78,7 @@ export const courseRepository = (db: PrismaClient | Prisma.TransactionClient) =>
         id: true,
         name: true,
       },
-    })
+    });
   },
   findEnablesById({ idCourse, idDegree }: { idCourse: string; idDegree?: string }) {
     return db.course.findMany({
@@ -80,6 +92,6 @@ export const courseRepository = (db: PrismaClient | Prisma.TransactionClient) =>
         id: true,
         name: true,
       },
-    })
+    });
   },
-})
+});

@@ -9,9 +9,7 @@ export default function SearchProblems() {
   const { replace } = useRouter();
 
   const [isHandleSearch, setIsHandleSearch] = useState(false);
-  const [text, setText] = useState<string>(
-    searchParams.get('text')?.toString() || ''
-  );
+  const [text, setText] = useState<string>(searchParams.get('text')?.toString() || '');
 
   useEffect(() => {
     if (!isHandleSearch) {

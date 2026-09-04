@@ -1,22 +1,22 @@
-import { makeModules } from '@/app/utils/makeModules'
-import db from '../db/db'
-import { tpRepository } from '../db/repository/tp.repository'
-import { reactionUseCases } from './reaction.usecases'
-import { cacheLife, cacheTag } from 'next/cache'
+import { cacheLife, cacheTag } from 'next/cache';
+import { makeModules } from '@/app/utils/makeModules';
+import db from '../db/db';
+import { tpRepository } from '../db/repository/tp.repository';
+import { reactionUseCases } from './reaction.usecases';
 
 export const tpUseCases = {
   async findByCourseId(idCourse: string) {
-    'use cache: remote'
-    cacheLife('days')
-    cacheTag('tps')
-    return tpRepository(db).findByCourseId(idCourse)
+    'use cache: remote';
+    cacheLife('days');
+    cacheTag('tps');
+    return tpRepository(db).findByCourseId(idCourse);
   },
   async findByCourseIdWithAllData(idCourse: string) {
-    'use cache: remote'
-    cacheLife('days')
-    cacheTag('tps', 'responses', 'comments', 'users')
-    const moduleList = await tpRepository(db).findByCourseIdWithAllData(idCourse)
-    const reactions = await reactionUseCases.findSplitAll()
-    return makeModules({ moduleList, reactions, type: 'tp' })
+    'use cache: remote';
+    cacheLife('days');
+    cacheTag('tps', 'responses', 'comments', 'users');
+    const moduleList = await tpRepository(db).findByCourseIdWithAllData(idCourse);
+    const reactions = await reactionUseCases.findSplitAll();
+    return makeModules({ moduleList, reactions, type: 'tp' });
   },
-}
+};

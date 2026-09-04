@@ -1,28 +1,36 @@
-import CorrelativeTable from './correlativeTable'
-import { Suspense } from 'react'
-import CorrelativeTableSkeleton from '@/app/components/skeletons/correlativeTable.skeleton'
-import DegreesListSkeleton from '@/app/components/skeletons/degreesList.skeleton'
-import CourseLinksSkeleton from '@/app/components/skeletons/courseLinks.skeleton'
-import { ButtonUrl } from './buttonUrl'
-import { Course as CourseType } from '@/app/lib/server/db/prisma/prismaClient/client'
-import CourseLinks from './courseLinks'
-import DegreeList from './degreeList'
-import ModalCreateCorrelative from '../../layout/modals/modalCreateCorrelative'
-import ModalAddLink from '../../layout/modals/modalAddLink'
-import { linkUseCases } from '@/app/lib/server/usecases/link.usecases'
-import { courseUseCases } from '@/app/lib/server/usecases/course.usecases'
-import { userUseCases } from '@/app/lib/server/usecases/user.usecases'
+import { Suspense } from 'react';
+import CorrelativeTableSkeleton from '@/app/components/skeletons/correlativeTable.skeleton';
+import CourseLinksSkeleton from '@/app/components/skeletons/courseLinks.skeleton';
+import DegreesListSkeleton from '@/app/components/skeletons/degreesList.skeleton';
+import type { Course as CourseType } from '@/app/lib/server/db/prisma/prismaClient/client';
+import { courseUseCases } from '@/app/lib/server/usecases/course.usecases';
+import { linkUseCases } from '@/app/lib/server/usecases/link.usecases';
+import { userUseCases } from '@/app/lib/server/usecases/user.usecases';
+import ModalAddLink from '../../layout/modals/modalAddLink';
+import ModalCreateCorrelative from '../../layout/modals/modalCreateCorrelative';
+import { ButtonUrl } from './buttonUrl';
+import CorrelativeTable from './correlativeTable';
+import CourseLinks from './courseLinks';
+import DegreeList from './degreeList';
 
-export default async function Course({ course, idDegree }: { course: CourseType; idDegree?: string }) {
-  const { id, name, cg, hs, optional } = course
-  const session = await userUseCases.getSession()
-  const callbackLinks = linkUseCases.findByCourseId(id)
-  const callbackCourses = courseUseCases.findAll()
+export default async function Course({
+  course,
+  idDegree,
+}: {
+  course: CourseType;
+  idDegree?: string;
+}) {
+  const { id, name, cg, hs, optional } = course;
+  const session = await userUseCases.getSession();
+  const callbackLinks = linkUseCases.findByCourseId(id);
+  const callbackCourses = courseUseCases.findAll();
 
   return (
     <li className="relative select-none flex flex-col w-full h-min bg-(--white) shadow-md p-2 transform-gpu transition-transform sm:w-11/12 sm:will-change-transform">
       <div className="relative flex gap-1 justify-between w-full select-text">
-        <h2 className="font-bold whitespace-nowrap overflow-x-auto text-lg text-(--white) bg-(--dark-cyan) sm:font-normal sm:text-wrap sm:leading-6">{name}</h2>
+        <h2 className="font-bold whitespace-nowrap overflow-x-auto text-lg text-(--white) bg-(--dark-cyan) sm:font-normal sm:text-wrap sm:leading-6">
+          {name}
+        </h2>
         {optional ? <span className="absolute left-full text-sm">{`(Opcional)`}</span> : ''}
         <div className="flex items-center text-center whitespace-nowrap px-1">
           <span>{`${cg}CG / ${hs}Hs`}</span>
@@ -52,5 +60,5 @@ export default async function Course({ course, idDegree }: { course: CourseType;
         <ButtonUrl url={`./materias/practica/${id}`} label="Ir a la práctica" />
       </div>
     </li>
-  )
+  );
 }

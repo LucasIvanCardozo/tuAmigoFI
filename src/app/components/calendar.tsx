@@ -1,6 +1,6 @@
-'use client'
-import { use, useEffect, useState } from 'react'
-import { Calendar } from 'react-multi-date-picker'
+'use client';
+import { use, useEffect, useState } from 'react';
+import { Calendar } from 'react-multi-date-picker';
 
 const spanish_es = {
   name: 'gregorian_es',
@@ -32,12 +32,12 @@ const spanish_es = {
     ['AM', 'am'], // En español, AM y PM suelen usarse igual que en inglés
     ['PM', 'pm'],
   ],
-}
+};
 
 export default function CalendarSection({ callbackYear }: { callbackYear: Promise<number> }) {
-  const [countCalendar, setCountCalendar] = useState<number>(1)
+  const [countCalendar, setCountCalendar] = useState<number>(1);
 
-  const yearCurrent = use(callbackYear)
+  const yearCurrent = use(callbackYear);
   const recessDays = new Set([
     `${yearCurrent}/01/01`,
     `${yearCurrent}/01/02`,
@@ -82,7 +82,7 @@ export default function CalendarSection({ callbackYear }: { callbackYear: Promis
     `${yearCurrent}/07/29`,
     `${yearCurrent}/07/30`,
     `${yearCurrent}/07/31`,
-  ])
+  ]);
 
   const holidays = new Set([
     `${yearCurrent}/02/16`,
@@ -99,7 +99,7 @@ export default function CalendarSection({ callbackYear }: { callbackYear: Promis
     `${yearCurrent}/11/20`,
     `${yearCurrent}/12/08`,
     `${yearCurrent}/12/25`,
-  ])
+  ]);
 
   const midtermsDays = new Set([
     `${yearCurrent}/02/18`,
@@ -137,30 +137,34 @@ export default function CalendarSection({ callbackYear }: { callbackYear: Promis
     `${yearCurrent}/12/17`,
     `${yearCurrent}/12/18`,
     `${yearCurrent}/12/19`,
-  ])
+  ]);
 
-  const startEndDays = new Set([`${yearCurrent}/03/09`, `${yearCurrent}/06/26`, `${yearCurrent}/08/18`])
+  const startEndDays = new Set([
+    `${yearCurrent}/03/09`,
+    `${yearCurrent}/06/26`,
+    `${yearCurrent}/08/18`,
+  ]);
 
   useEffect(() => {
     const updateCountCalendar = () => {
-      const width = document.documentElement.clientWidth
-      const newCount = width < 640 ? 1 : width < 1024 ? 2 : 3
-      setCountCalendar(newCount)
-    }
-    updateCountCalendar()
-    const mediaQuery640 = window.matchMedia('(min-width: 640px)')
-    const mediaQuery1024 = window.matchMedia('(min-width: 1024px)')
+      const width = document.documentElement.clientWidth;
+      const newCount = width < 640 ? 1 : width < 1024 ? 2 : 3;
+      setCountCalendar(newCount);
+    };
+    updateCountCalendar();
+    const mediaQuery640 = window.matchMedia('(min-width: 640px)');
+    const mediaQuery1024 = window.matchMedia('(min-width: 1024px)');
 
     // Escucha los cambios en las media queries
-    mediaQuery640.addEventListener('change', updateCountCalendar)
-    mediaQuery1024.addEventListener('change', updateCountCalendar)
+    mediaQuery640.addEventListener('change', updateCountCalendar);
+    mediaQuery1024.addEventListener('change', updateCountCalendar);
 
     // Limpieza para remover los event listeners
     return () => {
-      mediaQuery640.removeEventListener('change', updateCountCalendar)
-      mediaQuery1024.removeEventListener('change', updateCountCalendar)
-    }
-  }, [])
+      mediaQuery640.removeEventListener('change', updateCountCalendar);
+      mediaQuery1024.removeEventListener('change', updateCountCalendar);
+    };
+  }, []);
 
   return (
     <section className="relative my-4 text-(--black) max-w-(--breakpoint-md) m-auto w-11/12 select-none">
@@ -179,13 +183,13 @@ export default function CalendarSection({ callbackYear }: { callbackYear: Promis
           minDate={`${yearCurrent}/01/01`}
           maxDate={`${yearCurrent}/12/31`}
           mapDays={({ date, today }) => {
-            let dateStr = date.toString().split('T')[0]
+            const dateStr = date.toString().split('T')[0];
             const add =
               date.toDate().toDateString() == today.toDate().toDateString()
                 ? {
                     border: '3px solid #FFD700',
                   }
-                : {}
+                : {};
             if (recessDays.has(dateStr)) {
               return {
                 style: {
@@ -194,7 +198,7 @@ export default function CalendarSection({ callbackYear }: { callbackYear: Promis
                   color: 'white',
                   borderRadius: '20%',
                 },
-              }
+              };
             } else if (midtermsDays.has(dateStr))
               return {
                 style: {
@@ -203,7 +207,7 @@ export default function CalendarSection({ callbackYear }: { callbackYear: Promis
                   color: 'white',
                   borderRadius: '20%',
                 },
-              }
+              };
             else if (holidays.has(dateStr))
               return {
                 style: {
@@ -212,7 +216,7 @@ export default function CalendarSection({ callbackYear }: { callbackYear: Promis
                   color: 'white',
                   borderRadius: '20%',
                 },
-              }
+              };
             else if (startEndDays.has(dateStr))
               return {
                 style: {
@@ -221,7 +225,7 @@ export default function CalendarSection({ callbackYear }: { callbackYear: Promis
                   color: 'white',
                   borderRadius: '20%',
                 },
-              }
+              };
             else if (date.toDate().toDateString() == today.toDate().toDateString()) {
               return {
                 style: {
@@ -230,7 +234,7 @@ export default function CalendarSection({ callbackYear }: { callbackYear: Promis
                   fontWeight: 'bold',
                   borderRadius: '20%',
                 },
-              }
+              };
             }
           }}
         />
@@ -258,5 +262,5 @@ export default function CalendarSection({ callbackYear }: { callbackYear: Promis
         </div>
       </div>
     </section>
-  )
+  );
 }

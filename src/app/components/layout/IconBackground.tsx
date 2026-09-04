@@ -1,5 +1,13 @@
-'use cache: remote'
-import { TbMathIntegral, TbTools, TbRulerMeasure, TbCircuitCellPlus, TbMathFunction, TbBulbFilled, TbHammer } from 'react-icons/tb'
+'use cache: remote';
+import {
+  TbBulbFilled,
+  TbCircuitCellPlus,
+  TbHammer,
+  TbMathFunction,
+  TbMathIntegral,
+  TbRulerMeasure,
+  TbTools,
+} from 'react-icons/tb';
 
 export const IconBackground = async () => {
   return (
@@ -29,5 +37,5 @@ export const IconBackground = async () => {
         </div>
       ))}
     </div>
-  )
-}
+  );
+};

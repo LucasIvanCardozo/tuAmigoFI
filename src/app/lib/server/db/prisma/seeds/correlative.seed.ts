@@ -1,22 +1,22 @@
-import { PrismaClient } from '../prismaClient/client'
+import type { PrismaClient } from '../prismaClient/client';
 
 export const correlativeSeed = async (db: PrismaClient) => {
   const courses = await db.course.findMany({
     select: { id: true, name: true },
-  })
+  });
 
-  const courseMap = new Map(courses.map((c) => [c.name, c.id]))
+  const courseMap = new Map(courses.map((c) => [c.name, c.id]));
 
   const data = correlativesData.map((c) => ({
     idCourse: courseMap.get(c.course)!,
     idCorrelativeCourse: courseMap.get(c.required)!,
-  }))
+  }));
 
   await db.correlative.createMany({
     data,
     skipDuplicates: true,
-  })
-}
+  });
+};
 
 const correlativesData = [
   {
@@ -1631,4 +1631,4 @@ const correlativesData = [
     course: 'Ingeniería de Procesos Biotecnológicos',
     required: 'Microbiología',
   },
-]
+];

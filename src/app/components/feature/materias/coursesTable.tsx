@@ -1,13 +1,13 @@
-import Course from './course'
-import IndexList from './indexList'
-import { UpdateLoader } from './updateLoader'
-import { CourseSearchParams } from '../../../(pages)/materias/page'
-import { courseUseCases } from '@/app/lib/server/usecases/course.usecases'
-import { Suspense } from 'react'
+import { Suspense } from 'react';
+import { courseUseCases } from '@/app/lib/server/usecases/course.usecases';
+import type { CourseSearchParams } from '../../../(pages)/materias/page';
+import Course from './course';
+import IndexList from './indexList';
+import { UpdateLoader } from './updateLoader';
 
 export default async function CoursesTable({ query }: { query: CourseSearchParams }) {
-  const courses = await courseUseCases.findByPage(query)
-  const callbackAmount = courseUseCases.getAmountPages(query)
+  const courses = await courseUseCases.findByPage(query);
+  const callbackAmount = courseUseCases.getAmountPages(query);
 
   return (
     <>
@@ -21,5 +21,5 @@ export default async function CoursesTable({ query }: { query: CourseSearchParam
         <IndexList query={query} callback={callbackAmount} />
       </Suspense>
     </>
-  )
+  );
 }

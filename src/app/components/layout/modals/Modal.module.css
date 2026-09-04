@@ -1,12 +1,12 @@
 .close {
-    aspect-ratio: 1;
-    height: 35px;
-    width: 35px;
-    padding: 0;
-    background-color: black;
+  aspect-ratio: 1;
+  height: 35px;
+  width: 35px;
+  padding: 0;
+  background-color: black;
 }
 
 .close svg {
-    width: 80%;
-    height: 80%;
+  width: 80%;
+  height: 80%;
 }

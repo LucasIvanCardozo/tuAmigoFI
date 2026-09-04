@@ -1,31 +1,44 @@
-import CoursesTable from '../../components/feature/materias/coursesTable'
-import SearchCourses from '../../components/feature/materias/searchCourses'
-import Image from 'next/image'
-import { Suspense } from 'react'
-import CoursesSkeleton from '../../components/skeletons/courses.skeleton'
-import YearSkeleton from '../../components/skeletons/year.skeleton'
-import DegreeCourseSkeleton from '../../components/skeletons/degreeCourse.skeleton'
-import YearCourse from '@/app/components/yearCourse'
-import DegreeCourse from '@/app/components/degreeCourse'
-import { yearUseCases } from '@/app/lib/server/usecases/year.usecases'
-import { degreeUseCases } from '@/app/lib/server/usecases/degree.usecases'
+import Image from 'next/image';
+import { Suspense } from 'react';
+import DegreeCourse from '@/app/components/degreeCourse';
+import YearCourse from '@/app/components/yearCourse';
+import { degreeUseCases } from '@/app/lib/server/usecases/degree.usecases';
+import { yearUseCases } from '@/app/lib/server/usecases/year.usecases';
+import CoursesTable from '../../components/feature/materias/coursesTable';
+import SearchCourses from '../../components/feature/materias/searchCourses';
+import CoursesSkeleton from '../../components/skeletons/courses.skeleton';
+import DegreeCourseSkeleton from '../../components/skeletons/degreeCourse.skeleton';
+import YearSkeleton from '../../components/skeletons/year.skeleton';
 
-export default async function Materias({ searchParams }: { searchParams: Promise<CourseSearchParams> }) {
-  const { search, idYear, idDegree, page } = await searchParams
-  const query: CourseSearchParams = { search, idYear, idDegree, page }
+export default async function Materias({
+  searchParams,
+}: {
+  searchParams: Promise<CourseSearchParams>;
+}) {
+  const { search, idYear, idDegree, page } = await searchParams;
+  const query: CourseSearchParams = { search, idYear, idDegree, page };
 
-  const callbackYears = yearUseCases.findAll()
-  const callbackDegrees = degreeUseCases.findAllWithPlans()
+  const callbackYears = yearUseCases.findAll();
+  const callbackDegrees = degreeUseCases.findAllWithPlans();
 
   return (
     <>
       <main className="relative flex justify-center pb-4 w-10/12 max-w-(--breakpoint-sm) pt-12 m-auto my-6 gap-2 h-auto text-(--black) sm:pt-16">
         <div className="select-none">
-          <Image className="object-contain h-full" src="/FI.svg" width={200} height={200} alt="" unoptimized />
+          <Image
+            className="object-contain h-full"
+            src="/FI.svg"
+            width={200}
+            height={200}
+            alt=""
+            unoptimized
+          />
         </div>
         <h1 className="font-bold bg-[#F3F4F6] ml-1 p-1 rounded-2xl text-4xl text-balance h-fit max-w-72 rounded-es-none shadow-md sm:ml-6 sm:p-2">
           Buscá tu materia!
-          <p className="text-lg font-normal hidden sm:block">Aquí encontrarás todo lo necesario para mejorar tus prácticas c:</p>
+          <p className="text-lg font-normal hidden sm:block">
+            Aquí encontrarás todo lo necesario para mejorar tus prácticas c:
+          </p>
         </h1>
       </main>
       <section className="flex flex-col max-w-(--breakpoint-md) w-11/12 mb-4 m-auto grow items-center">
@@ -43,12 +56,12 @@ export default async function Materias({ searchParams }: { searchParams: Promise
         </Suspense>
       </section>
     </>
-  )
+  );
 }
 
 export type CourseSearchParams = {
-  search?: string
-  idYear?: string
-  idDegree?: string
-  page?: string
-}
+  search?: string;
+  idYear?: string;
+  idDegree?: string;
+  page?: string;
+};

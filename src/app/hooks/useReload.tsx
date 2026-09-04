@@ -1,14 +1,14 @@
-import { useRouter } from 'next/navigation'
-import { startTransition, useCallback } from 'react'
+import { useRouter } from 'next/navigation';
+import { startTransition, useCallback } from 'react';
 
 export const useReload = () => {
-  const { refresh } = useRouter()
+  const { refresh } = useRouter();
 
   const startReload = useCallback(() => {
     startTransition(() => {
-      refresh()
-    })
-  }, [refresh])
+      refresh();
+    });
+  }, [refresh]);
 
-  return { startReload }
-}
+  return { startReload };
+};

@@ -1,13 +1,13 @@
-import { ProblemsTable } from './problemsTable'
-import { DataModule } from '@/app/types'
-import { AsideModules } from './asideModules'
-import { Course } from '@/app/lib/server/db/prisma/prismaClient/client'
+import type { Course } from '@/app/lib/server/db/prisma/prismaClient/client';
+import type { DataModule } from '@/app/types';
+import { AsideModules } from './asideModules';
+import { ProblemsTable } from './problemsTable';
 
 interface Props {
-  modules: DataModule[]
-  course: Course
-  typeModule: 'TP' | 'Practica'
-  idModule?: string
+  modules: DataModule[];
+  course: Course;
+  typeModule: 'TP' | 'Practica';
+  idModule?: string;
 }
 
 export const MainModule = async ({ modules, course, typeModule, idModule }: Props) => {
@@ -25,5 +25,5 @@ export const MainModule = async ({ modules, course, typeModule, idModule }: Prop
         <ProblemsTable idModule={idModule} modules={modules} typeModule={typeModule} />
       </section>
     </main>
-  )
-}
+  );
+};

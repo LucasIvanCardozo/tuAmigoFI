@@ -1,7 +1,7 @@
 'use client';
 
-import { handleLoader } from '@/app/utils/handleLoader';
 import Link from 'next/link';
+import { handleLoader } from '@/app/utils/handleLoader';
 
 interface Params {
   url: string;

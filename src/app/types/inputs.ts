@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactNode } from 'react';
+import { ChangeEvent, type ReactNode } from 'react';
 
 export interface inputText {
   type: 'text';

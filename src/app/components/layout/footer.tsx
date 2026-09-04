@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from 'next/link';
 export default function Footer() {
   return (
     <footer className="w-full bg-(--black) text-white py-6 mt-auto" role="Info">
@@ -9,14 +9,18 @@ export default function Footer() {
             className="text-(--dark-cyan) hover:underline font-medium transition-colors"
             target="_blank"
             href="https://www.linkedin.com/in/lucas-ivan-cardozo/"
+            rel="noopener"
           >
             Lucas Cardozo
           </a>
         </div>
-        <Link className="text-sm text-gray-400 hover:text-white transition-colors" href="/politica-de-privacidad">
+        <Link
+          className="text-sm text-gray-400 hover:text-white transition-colors"
+          href="/politica-de-privacidad"
+        >
           Política de Privacidad
         </Link>
       </div>
     </footer>
-  )
+  );
 }

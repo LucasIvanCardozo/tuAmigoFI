@@ -1,46 +1,46 @@
 // 'src/app/components/ModalImportImage.tsx'
-'use client'
-import { createLink } from '@/app/lib/server/actions/links/create.action'
-import { Modal } from './Modal'
-import { Course } from '@/app/lib/server/db/prisma/prismaClient/client'
-import { useSession } from 'next-auth/react'
-import { FormEvent, useState } from 'react'
-import { sileo } from 'sileo'
-import { useReload } from '@/app/hooks/useReload'
+'use client';
+import { useSession } from 'next-auth/react';
+import { type FormEvent, useState } from 'react';
+import { sileo } from 'sileo';
+import { useReload } from '@/app/hooks/useReload';
+import { createLink } from '@/app/lib/server/actions/links/create.action';
+import type { Course } from '@/app/lib/server/db/prisma/prismaClient/client';
+import { Modal } from './Modal';
 
 export default function ModalAddLink({ course }: { course: Course }) {
-  const [name, setName] = useState<string | undefined>()
-  const [link, setLink] = useState<string | undefined>()
-  const [official, setOfficial] = useState<boolean | undefined>()
-  const { data: session } = useSession()
-  const { startReload } = useReload()
+  const [name, setName] = useState<string | undefined>();
+  const [link, setLink] = useState<string | undefined>();
+  const [official, setOfficial] = useState<boolean | undefined>();
+  const { data: session } = useSession();
+  const { startReload } = useReload();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
     sileo.promise(
       async () => {
-        if (!session) throw new Error('No hay sesion')
+        if (!session) throw new Error('No hay sesion');
         const { error } = await createLink({
           idCourse: course.id,
           link: link,
           name: name,
           official: official,
-        })
-        if (error) throw new Error(error)
-        startReload()
+        });
+        if (error) throw new Error(error);
+        startReload();
       },
       {
         loading: { title: 'Cargando...' },
         success: { title: 'Muchas gracias por tu aporte! ❤️' },
         error: (error) => {
-          const err = error as Error
+          const err = error as Error;
           return {
             title: err.message,
-          }
+          };
         },
-      }
-    )
-  }
+      },
+    );
+  };
 
   return (
     <Modal
@@ -91,7 +91,9 @@ export default function ModalAddLink({ course }: { course: Course }) {
                 className="text-black"
                 name="official"
                 id="official"
-                onChange={(e) => (console.log(Boolean(e.target.value)), setOfficial(Boolean(e.target.value)))}
+                onChange={(e) => (
+                  console.log(Boolean(e.target.value)), setOfficial(Boolean(e.target.value))
+                )}
                 required
               >
                 <option hidden>Selecciona el tipo de link</option>
@@ -104,19 +106,28 @@ export default function ModalAddLink({ course }: { course: Course }) {
         <div className="my-2">
           <h3 className="text-sm">Recuerda!</h3>
           <p className="text-xs">
-            Por favor verifica que el link que quiere subir sea el correcto y no este ya disponible en la lista. Los links tienen que ser de alta prioridad. En
-            caso de cualquier problema podes contactarme:{' '}
-            <a className="underline" target="_blank" href="https://wa.me/+5492235319564">
+            Por favor verifica que el link que quiere subir sea el correcto y no este ya disponible
+            en la lista. Los links tienen que ser de alta prioridad. En caso de cualquier problema
+            podes contactarme:{' '}
+            <a
+              className="underline"
+              target="_blank"
+              href="https://wa.me/+5492235319564"
+              rel="noopener"
+            >
               2235319564
             </a>
           </p>
         </div>
         <div className="flex justify-center">
-          <button className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700  transition-colors" type="submit">
+          <button
+            className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700  transition-colors"
+            type="submit"
+          >
             Aceptar
           </button>
         </div>
       </form>
     </Modal>
-  )
+  );
 }

@@ -1,26 +1,26 @@
-'use client'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { use, useState } from 'react'
-import { DegreesWithPlansType } from '../lib/server/db/repository/degree.repository'
+'use client';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { use, useState } from 'react';
+import type { DegreesWithPlansType } from '../lib/server/db/repository/degree.repository';
 
 export default function DegreeCourse({ callback }: { callback: Promise<DegreesWithPlansType[]> }) {
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
-  const { replace } = useRouter()
-  const [degree, setDegree] = useState<string>(searchParams.get('idDegree')?.toString() ?? '')
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+  const [degree, setDegree] = useState<string>(searchParams.get('idDegree')?.toString() ?? '');
 
-  const degrees = use(callback)
+  const degrees = use(callback);
 
   const handleDegree = (degree: string) => {
-    const params = new URLSearchParams(searchParams)
+    const params = new URLSearchParams(searchParams);
     if (degree && degree != '0') {
-      params.set('idDegree', degree)
+      params.set('idDegree', degree);
     } else {
-      params.delete('idDegree')
+      params.delete('idDegree');
     }
-    setDegree(degree)
-    replace(`${pathname}?${params.toString()}`)
-  }
+    setDegree(degree);
+    replace(`${pathname}?${params.toString()}`);
+  };
 
   return (
     <select
@@ -40,5 +40,5 @@ export default function DegreeCourse({ callback }: { callback: Promise<DegreesWi
         </option>
       ))}
     </select>
-  )
+  );
 }

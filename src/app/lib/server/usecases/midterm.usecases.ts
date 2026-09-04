@@ -1,22 +1,22 @@
-import { makeModules } from '@/app/utils/makeModules'
-import db from '../db/db'
-import { midtermRepository } from '../db/repository/midterm.repository'
-import { reactionUseCases } from './reaction.usecases'
-import { cacheLife, cacheTag } from 'next/cache'
+import { cacheLife, cacheTag } from 'next/cache';
+import { makeModules } from '@/app/utils/makeModules';
+import db from '../db/db';
+import { midtermRepository } from '../db/repository/midterm.repository';
+import { reactionUseCases } from './reaction.usecases';
 
 export const midtermUseCases = {
   async findByCourseId(idCourse: string) {
-    'use cache: remote'
-    cacheLife('days')
-    cacheTag('midterms')
-    return midtermRepository(db).findByCourseId(idCourse)
+    'use cache: remote';
+    cacheLife('days');
+    cacheTag('midterms');
+    return midtermRepository(db).findByCourseId(idCourse);
   },
   async findByCourseIdWithAllData(idCourse: string) {
-    'use cache: remote'
-    cacheLife('days')
-    cacheTag('midterms', 'responses', 'comments', 'users')
-    const moduleList = await midtermRepository(db).findByCourseIdWithAllData(idCourse)
-    const reactions = await reactionUseCases.findSplitAll()
-    return makeModules({ moduleList, reactions, type: 'midterm' })
+    'use cache: remote';
+    cacheLife('days');
+    cacheTag('midterms', 'responses', 'comments', 'users');
+    const moduleList = await midtermRepository(db).findByCourseIdWithAllData(idCourse);
+    const reactions = await reactionUseCases.findSplitAll();
+    return makeModules({ moduleList, reactions, type: 'midterm' });
   },
-}
+};

@@ -1,7 +1,11 @@
 // 'src/app/components/ModalImportImage.tsx'
-'use client'
+'use client';
 
-export default function ModalInfoScore({ callback }: { callback: (display: boolean | undefined) => void }) {
+export default function ModalInfoScore({
+  callback,
+}: {
+  callback: (display: boolean | undefined) => void;
+}) {
   return (
     <div className="fixed z-50 inset-0 bg-slate-800/30 text-(--white) flex justify-center items-center font-normal">
       <div className="flex flex-col max-w-80 w-11/12 bg-slate-800 p-5 rounded-lg gap-3">
@@ -34,10 +38,15 @@ export default function ModalInfoScore({ callback }: { callback: (display: boole
             </span>
           </p>
         </div>
-        <button className="mt-4 py-2 px-4 text-base font-semibold rounded-lg" aria-label="Cerrar modal" title="Atrás" onClick={() => callback(false)}>
+        <button
+          className="mt-4 py-2 px-4 text-base font-semibold rounded-lg"
+          aria-label="Cerrar modal"
+          title="Atrás"
+          onClick={() => callback(false)}
+        >
           Atrás
         </button>
       </div>
     </div>
-  )
+  );
 }

@@ -1,33 +1,42 @@
-'use client'
-import { useReload } from '@/app/hooks/useReload'
-import { upsertReaction } from '@/app/lib/server/actions/reactions/upsert.action'
-import { DataModuleComment } from '@/app/types'
-import { Session } from 'next-auth'
-import { useEffect, useState } from 'react'
-import { AiFillLike } from 'react-icons/ai'
-import { sileo } from 'sileo'
+'use client';
+import type { Session } from 'next-auth';
+import { useEffect, useState } from 'react';
+import { AiFillLike } from 'react-icons/ai';
+import { sileo } from 'sileo';
+import { useReload } from '@/app/hooks/useReload';
+import { upsertReaction } from '@/app/lib/server/actions/reactions/upsert.action';
+import type { DataModuleComment } from '@/app/types';
 
 interface Params {
-  comment: DataModuleComment
-  session: Session | null
+  comment: DataModuleComment;
+  session: Session | null;
 }
 
 export const Comment = ({ comment, session }: Params) => {
-  const [numberLike, setNumberLike] = useState(comment.reactions.length)
-  const [stateLike, setStateLike] = useState(false)
-  const { startReload } = useReload()
+  const [numberLike, setNumberLike] = useState(comment.reactions.length);
+  const [stateLike, setStateLike] = useState(false);
+  const { startReload } = useReload();
 
   useEffect(() => {
-    if (comment.reactions.find((reaction) => reaction.reaction && reaction.idUser === session?.user?.id)) setStateLike(true)
-  }, [comment])
+    if (
+      comment.reactions.find(
+        (reaction) => reaction.reaction && reaction.idUser === session?.user?.id,
+      )
+    )
+      setStateLike(true);
+  }, [comment]);
 
   const handleLike = async () => {
-    setStateLike(!stateLike)
-    setNumberLike(stateLike ? numberLike - 1 : numberLike + 1)
-    const { error } = await upsertReaction({ idTarget: comment.comment.id, typeTarget: 'COMMENT', reaction: !stateLike })
-    if (error) sileo.error({ title: error })
-    startReload()
-  }
+    setStateLike(!stateLike);
+    setNumberLike(stateLike ? numberLike - 1 : numberLike + 1);
+    const { error } = await upsertReaction({
+      idTarget: comment.comment.id,
+      typeTarget: 'COMMENT',
+      reaction: !stateLike,
+    });
+    if (error) sileo.error({ title: error });
+    startReload();
+  };
 
   return (
     <div className="flex items-start gap-2 p-1 bg-white rounded-lg shadow-sm">
@@ -47,5 +56,5 @@ export const Comment = ({ comment, session }: Params) => {
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
