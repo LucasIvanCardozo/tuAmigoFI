@@ -47,7 +47,7 @@ body {
 }
 
 [data-sileo-viewport] {
-  z-index: 100000;
+  z-index: 100000 !important;
 }
 
 .displayBlock {
