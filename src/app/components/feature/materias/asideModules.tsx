@@ -4,10 +4,11 @@ import { useEffect, useState } from 'react';
 import { SiGoogledocs } from 'react-icons/si';
 import { TbSquareAsteriskFilled, TbSquareMinusFilled } from 'react-icons/tb';
 import { numberIconsModules } from '@/app/assets/icons';
+import { useModal } from '@/app/contexts/ModalContext';
 import type { Course } from '@/app/lib/server/db/prisma/prismaClient/client';
 import type { DataModule } from '@/app/types';
-import { ModalAddMidterm } from '../../layout/modals/modalAddMidterm';
-import { ModalAddTp } from '../../layout/modals/modalAddTp';
+import { ModalAddMidtermContent } from '../../layout/modals/ModalAddMidtermContent';
+import { ModalAddTpContent } from '../../layout/modals/ModalAddTpContent';
 import { AsideMainButton } from './asideMainButton';
 
 export const AsideModules = ({
@@ -25,7 +26,14 @@ export const AsideModules = ({
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const [viewAside, setViewAside] = useState(false);
+  const { openModal } = useModal();
   const isTp = typeModule === 'TP';
+
+  const handleOpenAddModal = () => {
+    setViewAside(false);
+    if (isTp) openModal(<ModalAddTpContent course={course} />);
+    else openModal(<ModalAddMidtermContent course={course} />);
+  };
 
   const handleViewModules = (module: string | null) => {
     setViewAside(false);
@@ -131,8 +139,16 @@ export const AsideModules = ({
               'order-last gap-1 p-1 rounded-md transform-gpu text-center transition-transform sm:hover:scale-105'
             }
           >
-            <button type="button" onClick={() => setViewAside(false)}>
-              {isTp ? <ModalAddTp course={course} /> : <ModalAddMidterm course={course} />}
+            <button
+              type="button"
+              className="text-start bg-(--white) text-(--black-olive) py-1 px-2 rounded-md cursor-pointer"
+              onClick={handleOpenAddModal}
+            >
+              {isTp ? (
+                <p className="text-base leading-4">Agregar TP</p>
+              ) : (
+                <p className="text-base leading-4">Agregar Examen</p>
+              )}
             </button>
           </li>
         </ul>

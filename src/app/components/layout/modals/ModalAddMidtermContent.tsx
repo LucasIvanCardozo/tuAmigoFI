@@ -1,33 +1,38 @@
 'use client';
 import { useSession } from 'next-auth/react';
-import { useRef } from 'react';
+import { useModal } from '@/app/contexts/ModalContext';
 import { useReload } from '@/app/hooks/useReload';
-import { createTp } from '@/app/lib/server/actions/tps/create.action';
+import { createMidterm } from '@/app/lib/server/actions/midterms/create.action';
 import type { Course } from '@/app/lib/server/db/prisma/prismaClient/client';
 import type { TypeValues } from '@/app/types';
 import { Form } from '../form/form';
 import { HandlerInputs } from '../form/inputs/handlerInputs';
-import { Modal, type ModalRef } from './Modal';
 
-export const ModalAddTp = ({ course }: { course: Course }) => {
-  const modalRef = useRef<ModalRef>(null);
+export const ModalAddMidtermContent = ({ course }: { course: Course }) => {
+  const { closeModal } = useModal();
   const { startReload } = useReload();
   const { data: session } = useSession();
 
   const submitAddModule = async (values: TypeValues[]) => {
     const name = values.find((val) => val.id === 'name');
-    const year = values.find((val) => val.id === 'year');
-    const number = values.find((val) => val.id === 'number');
+    const date = values.find((val) => val.id === 'date');
     const file = values.find((val) => val.id === 'file');
-    if (!year || !number || !name || !file || !(file.value instanceof File))
-      throw new Error('Faltan completar datos.');
+
     if (!session) throw new Error('No hay sesion');
-    const { error } = await createTp({
+    if (
+      !date ||
+      !name ||
+      !file ||
+      typeof name.value !== 'string' ||
+      !(file.value instanceof File) ||
+      typeof date.value !== 'string'
+    )
+      throw new Error('Faltan completar datos.');
+    const { error } = await createMidterm({
       name: name.value,
-      number: Number(number?.value),
-      year: Number(year?.value),
-      idUser: session.user.id,
+      date: new Date(date?.value as string),
       idCourse: course.id,
+      idUser: session.user.id,
       file: file.value,
     });
     if (error) throw new Error(`Error: ${error}`);
@@ -35,52 +40,28 @@ export const ModalAddTp = ({ course }: { course: Course }) => {
   };
 
   return (
-    <Modal
-      refAux={modalRef}
-      opener={
-        <button type="button" className="text-start bg-(--white) py-1 px-2 rounded-md">
-          <p className="text-base text-(--black-olive) leading-4">Agregar TP</p>
-        </button>
-      }
-    >
-      <h2 className="text-lg">Agregar TP</h2>
-      <Form
-        onSubmit={(e: TypeValues[]) => submitAddModule(e)}
-        onEnd={() => modalRef.current?.close()}
-      >
+    <>
+      <h2 className="text-lg">Agregar Examen</h2>
+      <Form onSubmit={(e: TypeValues[]) => submitAddModule(e)} onEnd={() => closeModal()}>
         <div className="flex flex-col">
-          <label htmlFor="name">Titulo</label>
+          <label htmlFor="name">Título</label>
           <HandlerInputs
+            type="select"
+            placeholder="Selecciona el tipo de parcial"
             id="name"
             name="name"
-            type="text"
-            placeholder="Título del TP"
             required={true}
-          />
+          >
+            <option value="Primer parcial">Primer parcial</option>
+            <option value="Segundo parcial">Segundo parcial</option>
+            <option value="Tercer parcial">Tercer parcial</option>
+            <option value="Final">Final</option>
+            <option value="Otros">Otros</option>
+          </HandlerInputs>
         </div>
         <div className="flex flex-col">
-          <label htmlFor="number">Número</label>
-          <HandlerInputs
-            id="number"
-            name="number"
-            type="number"
-            placeholder="Número del TP"
-            min={0}
-            max={30}
-            required={true}
-          />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="year">Año</label>
-          <HandlerInputs
-            id="year"
-            name="year"
-            type="number"
-            placeholder="Año del TP"
-            min={2000}
-            max={new Date().getFullYear()}
-            required={true}
-          />
+          <label htmlFor="date">Fecha</label>
+          <HandlerInputs type="date" name="date" id="date" required={true} />
         </div>
         <HandlerInputs type="file" id="file" accept="application/pdf" required={true} />
         <div>
@@ -120,6 +101,6 @@ export const ModalAddTp = ({ course }: { course: Course }) => {
           </p>
         </div>
       </Form>
-    </Modal>
+    </>
   );
 };
