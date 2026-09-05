@@ -30,6 +30,8 @@ export type MidtermMinAggregateOutputType = {
   idUser: string | null
   name: string | null
   date: Date | null
+  fileUrl: string | null
+  fileKey: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -40,6 +42,8 @@ export type MidtermMaxAggregateOutputType = {
   idUser: string | null
   name: string | null
   date: Date | null
+  fileUrl: string | null
+  fileKey: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -50,6 +54,8 @@ export type MidtermCountAggregateOutputType = {
   idUser: number
   name: number
   date: number
+  fileUrl: number
+  fileKey: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -62,6 +68,8 @@ export type MidtermMinAggregateInputType = {
   idUser?: true
   name?: true
   date?: true
+  fileUrl?: true
+  fileKey?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -72,6 +80,8 @@ export type MidtermMaxAggregateInputType = {
   idUser?: true
   name?: true
   date?: true
+  fileUrl?: true
+  fileKey?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -82,6 +92,8 @@ export type MidtermCountAggregateInputType = {
   idUser?: true
   name?: true
   date?: true
+  fileUrl?: true
+  fileKey?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -165,6 +177,8 @@ export type MidtermGroupByOutputType = {
   idUser: string
   name: string
   date: Date
+  fileUrl: string | null
+  fileKey: string | null
   createdAt: Date
   updatedAt: Date
   _count: MidtermCountAggregateOutputType | null
@@ -172,7 +186,7 @@ export type MidtermGroupByOutputType = {
   _max: MidtermMaxAggregateOutputType | null
 }
 
-type GetMidtermGroupByPayload<T extends MidtermGroupByArgs> = Prisma.PrismaPromise<
+export type GetMidtermGroupByPayload<T extends MidtermGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<MidtermGroupByOutputType, T['by']> &
       {
@@ -196,6 +210,8 @@ export type MidtermWhereInput = {
   idUser?: Prisma.StringFilter<"Midterm"> | string
   name?: Prisma.StringFilter<"Midterm"> | string
   date?: Prisma.DateTimeFilter<"Midterm"> | Date | string
+  fileUrl?: Prisma.StringNullableFilter<"Midterm"> | string | null
+  fileKey?: Prisma.StringNullableFilter<"Midterm"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Midterm"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Midterm"> | Date | string
   responses?: Prisma.ResponseListRelationFilter
@@ -209,6 +225,8 @@ export type MidtermOrderByWithRelationInput = {
   idUser?: Prisma.SortOrder
   name?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  fileUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  fileKey?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   responses?: Prisma.ResponseOrderByRelationAggregateInput
@@ -225,6 +243,8 @@ export type MidtermWhereUniqueInput = Prisma.AtLeast<{
   idUser?: Prisma.StringFilter<"Midterm"> | string
   name?: Prisma.StringFilter<"Midterm"> | string
   date?: Prisma.DateTimeFilter<"Midterm"> | Date | string
+  fileUrl?: Prisma.StringNullableFilter<"Midterm"> | string | null
+  fileKey?: Prisma.StringNullableFilter<"Midterm"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Midterm"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Midterm"> | Date | string
   responses?: Prisma.ResponseListRelationFilter
@@ -238,6 +258,8 @@ export type MidtermOrderByWithAggregationInput = {
   idUser?: Prisma.SortOrder
   name?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  fileUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  fileKey?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.MidtermCountOrderByAggregateInput
@@ -254,6 +276,8 @@ export type MidtermScalarWhereWithAggregatesInput = {
   idUser?: Prisma.StringWithAggregatesFilter<"Midterm"> | string
   name?: Prisma.StringWithAggregatesFilter<"Midterm"> | string
   date?: Prisma.DateTimeWithAggregatesFilter<"Midterm"> | Date | string
+  fileUrl?: Prisma.StringNullableWithAggregatesFilter<"Midterm"> | string | null
+  fileKey?: Prisma.StringNullableWithAggregatesFilter<"Midterm"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Midterm"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Midterm"> | Date | string
 }
@@ -262,6 +286,8 @@ export type MidtermCreateInput = {
   id?: string
   name: string
   date: Date | string
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   responses?: Prisma.ResponseCreateNestedManyWithoutMidtermInput
@@ -275,6 +301,8 @@ export type MidtermUncheckedCreateInput = {
   idUser: string
   name: string
   date: Date | string
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   responses?: Prisma.ResponseUncheckedCreateNestedManyWithoutMidtermInput
@@ -284,6 +312,8 @@ export type MidtermUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   responses?: Prisma.ResponseUpdateManyWithoutMidtermNestedInput
@@ -297,6 +327,8 @@ export type MidtermUncheckedUpdateInput = {
   idUser?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   responses?: Prisma.ResponseUncheckedUpdateManyWithoutMidtermNestedInput
@@ -308,6 +340,8 @@ export type MidtermCreateManyInput = {
   idUser: string
   name: string
   date: Date | string
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -316,6 +350,8 @@ export type MidtermUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -326,6 +362,8 @@ export type MidtermUncheckedUpdateManyInput = {
   idUser?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -346,6 +384,8 @@ export type MidtermCountOrderByAggregateInput = {
   idUser?: Prisma.SortOrder
   name?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  fileUrl?: Prisma.SortOrder
+  fileKey?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -356,6 +396,8 @@ export type MidtermMaxOrderByAggregateInput = {
   idUser?: Prisma.SortOrder
   name?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  fileUrl?: Prisma.SortOrder
+  fileKey?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -366,6 +408,8 @@ export type MidtermMinOrderByAggregateInput = {
   idUser?: Prisma.SortOrder
   name?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  fileUrl?: Prisma.SortOrder
+  fileKey?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -415,6 +459,10 @@ export type MidtermUncheckedUpdateManyWithoutCoursesNestedInput = {
   update?: Prisma.MidtermUpdateWithWhereUniqueWithoutCoursesInput | Prisma.MidtermUpdateWithWhereUniqueWithoutCoursesInput[]
   updateMany?: Prisma.MidtermUpdateManyWithWhereWithoutCoursesInput | Prisma.MidtermUpdateManyWithWhereWithoutCoursesInput[]
   deleteMany?: Prisma.MidtermScalarWhereInput | Prisma.MidtermScalarWhereInput[]
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type MidtermCreateNestedOneWithoutResponsesInput = {
@@ -479,6 +527,8 @@ export type MidtermCreateWithoutCoursesInput = {
   id?: string
   name: string
   date: Date | string
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   responses?: Prisma.ResponseCreateNestedManyWithoutMidtermInput
@@ -490,6 +540,8 @@ export type MidtermUncheckedCreateWithoutCoursesInput = {
   idUser: string
   name: string
   date: Date | string
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   responses?: Prisma.ResponseUncheckedCreateNestedManyWithoutMidtermInput
@@ -530,6 +582,8 @@ export type MidtermScalarWhereInput = {
   idUser?: Prisma.StringFilter<"Midterm"> | string
   name?: Prisma.StringFilter<"Midterm"> | string
   date?: Prisma.DateTimeFilter<"Midterm"> | Date | string
+  fileUrl?: Prisma.StringNullableFilter<"Midterm"> | string | null
+  fileKey?: Prisma.StringNullableFilter<"Midterm"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Midterm"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Midterm"> | Date | string
 }
@@ -538,6 +592,8 @@ export type MidtermCreateWithoutResponsesInput = {
   id?: string
   name: string
   date: Date | string
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   courses: Prisma.CourseCreateNestedOneWithoutMidtermsInput
@@ -550,6 +606,8 @@ export type MidtermUncheckedCreateWithoutResponsesInput = {
   idUser: string
   name: string
   date: Date | string
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -574,6 +632,8 @@ export type MidtermUpdateWithoutResponsesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   courses?: Prisma.CourseUpdateOneRequiredWithoutMidtermsNestedInput
@@ -586,6 +646,8 @@ export type MidtermUncheckedUpdateWithoutResponsesInput = {
   idUser?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -594,6 +656,8 @@ export type MidtermCreateWithoutUsersInput = {
   id?: string
   name: string
   date: Date | string
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   responses?: Prisma.ResponseCreateNestedManyWithoutMidtermInput
@@ -605,6 +669,8 @@ export type MidtermUncheckedCreateWithoutUsersInput = {
   idCourse: string
   name: string
   date: Date | string
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   responses?: Prisma.ResponseUncheckedCreateNestedManyWithoutMidtermInput
@@ -641,6 +707,8 @@ export type MidtermCreateManyCoursesInput = {
   idUser: string
   name: string
   date: Date | string
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -649,6 +717,8 @@ export type MidtermUpdateWithoutCoursesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   responses?: Prisma.ResponseUpdateManyWithoutMidtermNestedInput
@@ -660,6 +730,8 @@ export type MidtermUncheckedUpdateWithoutCoursesInput = {
   idUser?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   responses?: Prisma.ResponseUncheckedUpdateManyWithoutMidtermNestedInput
@@ -670,6 +742,8 @@ export type MidtermUncheckedUpdateManyWithoutCoursesInput = {
   idUser?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -679,6 +753,8 @@ export type MidtermCreateManyUsersInput = {
   idCourse: string
   name: string
   date: Date | string
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -687,6 +763,8 @@ export type MidtermUpdateWithoutUsersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   responses?: Prisma.ResponseUpdateManyWithoutMidtermNestedInput
@@ -698,6 +776,8 @@ export type MidtermUncheckedUpdateWithoutUsersInput = {
   idCourse?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   responses?: Prisma.ResponseUncheckedUpdateManyWithoutMidtermNestedInput
@@ -708,6 +788,8 @@ export type MidtermUncheckedUpdateManyWithoutUsersInput = {
   idCourse?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -749,6 +831,8 @@ export type MidtermSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   idUser?: boolean
   name?: boolean
   date?: boolean
+  fileUrl?: boolean
+  fileKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   responses?: boolean | Prisma.Midterm$responsesArgs<ExtArgs>
@@ -763,6 +847,8 @@ export type MidtermSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   idUser?: boolean
   name?: boolean
   date?: boolean
+  fileUrl?: boolean
+  fileKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   courses?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
@@ -775,6 +861,8 @@ export type MidtermSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   idUser?: boolean
   name?: boolean
   date?: boolean
+  fileUrl?: boolean
+  fileKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   courses?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
@@ -787,11 +875,13 @@ export type MidtermSelectScalar = {
   idUser?: boolean
   name?: boolean
   date?: boolean
+  fileUrl?: boolean
+  fileKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type MidtermOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "idCourse" | "idUser" | "name" | "date" | "createdAt" | "updatedAt", ExtArgs["result"]["midterm"]>
+export type MidtermOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "idCourse" | "idUser" | "name" | "date" | "fileUrl" | "fileKey" | "createdAt" | "updatedAt", ExtArgs["result"]["midterm"]>
 export type MidtermInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   responses?: boolean | Prisma.Midterm$responsesArgs<ExtArgs>
   courses?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
@@ -820,6 +910,8 @@ export type $MidtermPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     idUser: string
     name: string
     date: Date
+    fileUrl: string | null
+    fileKey: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["midterm"]>
@@ -1253,6 +1345,8 @@ export interface MidtermFieldRefs {
   readonly idUser: Prisma.FieldRef<"Midterm", 'String'>
   readonly name: Prisma.FieldRef<"Midterm", 'String'>
   readonly date: Prisma.FieldRef<"Midterm", 'DateTime'>
+  readonly fileUrl: Prisma.FieldRef<"Midterm", 'String'>
+  readonly fileKey: Prisma.FieldRef<"Midterm", 'String'>
   readonly createdAt: Prisma.FieldRef<"Midterm", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Midterm", 'DateTime'>
 }
@@ -1451,6 +1545,11 @@ export type MidtermFindManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Skip the first `n` Midterms.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Midterms.
+   */
   distinct?: Prisma.MidtermScalarFieldEnum | Prisma.MidtermScalarFieldEnum[]
 }
 

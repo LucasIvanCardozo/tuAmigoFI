@@ -43,6 +43,8 @@ export type TpMinAggregateOutputType = {
   name: string | null
   number: number | null
   year: number | null
+  fileUrl: string | null
+  fileKey: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -54,6 +56,8 @@ export type TpMaxAggregateOutputType = {
   name: string | null
   number: number | null
   year: number | null
+  fileUrl: string | null
+  fileKey: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -65,6 +69,8 @@ export type TpCountAggregateOutputType = {
   name: number
   number: number
   year: number
+  fileUrl: number
+  fileKey: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -88,6 +94,8 @@ export type TpMinAggregateInputType = {
   name?: true
   number?: true
   year?: true
+  fileUrl?: true
+  fileKey?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -99,6 +107,8 @@ export type TpMaxAggregateInputType = {
   name?: true
   number?: true
   year?: true
+  fileUrl?: true
+  fileKey?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -110,6 +120,8 @@ export type TpCountAggregateInputType = {
   name?: true
   number?: true
   year?: true
+  fileUrl?: true
+  fileKey?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -208,6 +220,8 @@ export type TpGroupByOutputType = {
   name: string
   number: number | null
   year: number
+  fileUrl: string | null
+  fileKey: string | null
   createdAt: Date
   updatedAt: Date
   _count: TpCountAggregateOutputType | null
@@ -217,7 +231,7 @@ export type TpGroupByOutputType = {
   _max: TpMaxAggregateOutputType | null
 }
 
-type GetTpGroupByPayload<T extends TpGroupByArgs> = Prisma.PrismaPromise<
+export type GetTpGroupByPayload<T extends TpGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<TpGroupByOutputType, T['by']> &
       {
@@ -242,6 +256,8 @@ export type TpWhereInput = {
   name?: Prisma.StringFilter<"Tp"> | string
   number?: Prisma.IntNullableFilter<"Tp"> | number | null
   year?: Prisma.IntFilter<"Tp"> | number
+  fileUrl?: Prisma.StringNullableFilter<"Tp"> | string | null
+  fileKey?: Prisma.StringNullableFilter<"Tp"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Tp"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Tp"> | Date | string
   responses?: Prisma.ResponseListRelationFilter
@@ -256,6 +272,8 @@ export type TpOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   number?: Prisma.SortOrderInput | Prisma.SortOrder
   year?: Prisma.SortOrder
+  fileUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  fileKey?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   responses?: Prisma.ResponseOrderByRelationAggregateInput
@@ -273,6 +291,8 @@ export type TpWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Tp"> | string
   number?: Prisma.IntNullableFilter<"Tp"> | number | null
   year?: Prisma.IntFilter<"Tp"> | number
+  fileUrl?: Prisma.StringNullableFilter<"Tp"> | string | null
+  fileKey?: Prisma.StringNullableFilter<"Tp"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Tp"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Tp"> | Date | string
   responses?: Prisma.ResponseListRelationFilter
@@ -287,6 +307,8 @@ export type TpOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   number?: Prisma.SortOrderInput | Prisma.SortOrder
   year?: Prisma.SortOrder
+  fileUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  fileKey?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.TpCountOrderByAggregateInput
@@ -306,6 +328,8 @@ export type TpScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Tp"> | string
   number?: Prisma.IntNullableWithAggregatesFilter<"Tp"> | number | null
   year?: Prisma.IntWithAggregatesFilter<"Tp"> | number
+  fileUrl?: Prisma.StringNullableWithAggregatesFilter<"Tp"> | string | null
+  fileKey?: Prisma.StringNullableWithAggregatesFilter<"Tp"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Tp"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Tp"> | Date | string
 }
@@ -315,6 +339,8 @@ export type TpCreateInput = {
   name: string
   number?: number | null
   year: number
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   responses?: Prisma.ResponseCreateNestedManyWithoutTpInput
@@ -329,6 +355,8 @@ export type TpUncheckedCreateInput = {
   name: string
   number?: number | null
   year: number
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   responses?: Prisma.ResponseUncheckedCreateNestedManyWithoutTpInput
@@ -339,6 +367,8 @@ export type TpUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   responses?: Prisma.ResponseUpdateManyWithoutTpNestedInput
@@ -353,6 +383,8 @@ export type TpUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   responses?: Prisma.ResponseUncheckedUpdateManyWithoutTpNestedInput
@@ -365,6 +397,8 @@ export type TpCreateManyInput = {
   name: string
   number?: number | null
   year: number
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -374,6 +408,8 @@ export type TpUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -385,6 +421,8 @@ export type TpUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -411,6 +449,8 @@ export type TpCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   number?: Prisma.SortOrder
   year?: Prisma.SortOrder
+  fileUrl?: Prisma.SortOrder
+  fileKey?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -427,6 +467,8 @@ export type TpMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   number?: Prisma.SortOrder
   year?: Prisma.SortOrder
+  fileUrl?: Prisma.SortOrder
+  fileKey?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -438,6 +480,8 @@ export type TpMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   number?: Prisma.SortOrder
   year?: Prisma.SortOrder
+  fileUrl?: Prisma.SortOrder
+  fileKey?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -552,6 +596,8 @@ export type TpCreateWithoutCoursesInput = {
   name: string
   number?: number | null
   year: number
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   responses?: Prisma.ResponseCreateNestedManyWithoutTpInput
@@ -564,6 +610,8 @@ export type TpUncheckedCreateWithoutCoursesInput = {
   name: string
   number?: number | null
   year: number
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   responses?: Prisma.ResponseUncheckedCreateNestedManyWithoutTpInput
@@ -605,6 +653,8 @@ export type TpScalarWhereInput = {
   name?: Prisma.StringFilter<"Tp"> | string
   number?: Prisma.IntNullableFilter<"Tp"> | number | null
   year?: Prisma.IntFilter<"Tp"> | number
+  fileUrl?: Prisma.StringNullableFilter<"Tp"> | string | null
+  fileKey?: Prisma.StringNullableFilter<"Tp"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Tp"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Tp"> | Date | string
 }
@@ -614,6 +664,8 @@ export type TpCreateWithoutResponsesInput = {
   name: string
   number?: number | null
   year: number
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   courses: Prisma.CourseCreateNestedOneWithoutTpsInput
@@ -627,6 +679,8 @@ export type TpUncheckedCreateWithoutResponsesInput = {
   name: string
   number?: number | null
   year: number
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -652,6 +706,8 @@ export type TpUpdateWithoutResponsesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   courses?: Prisma.CourseUpdateOneRequiredWithoutTpsNestedInput
@@ -665,6 +721,8 @@ export type TpUncheckedUpdateWithoutResponsesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -674,6 +732,8 @@ export type TpCreateWithoutUsersInput = {
   name: string
   number?: number | null
   year: number
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   responses?: Prisma.ResponseCreateNestedManyWithoutTpInput
@@ -686,6 +746,8 @@ export type TpUncheckedCreateWithoutUsersInput = {
   name: string
   number?: number | null
   year: number
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   responses?: Prisma.ResponseUncheckedCreateNestedManyWithoutTpInput
@@ -723,6 +785,8 @@ export type TpCreateManyCoursesInput = {
   name: string
   number?: number | null
   year: number
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -732,6 +796,8 @@ export type TpUpdateWithoutCoursesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   responses?: Prisma.ResponseUpdateManyWithoutTpNestedInput
@@ -744,6 +810,8 @@ export type TpUncheckedUpdateWithoutCoursesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   responses?: Prisma.ResponseUncheckedUpdateManyWithoutTpNestedInput
@@ -755,6 +823,8 @@ export type TpUncheckedUpdateManyWithoutCoursesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -765,6 +835,8 @@ export type TpCreateManyUsersInput = {
   name: string
   number?: number | null
   year: number
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -774,6 +846,8 @@ export type TpUpdateWithoutUsersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   responses?: Prisma.ResponseUpdateManyWithoutTpNestedInput
@@ -786,6 +860,8 @@ export type TpUncheckedUpdateWithoutUsersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   responses?: Prisma.ResponseUncheckedUpdateManyWithoutTpNestedInput
@@ -797,6 +873,8 @@ export type TpUncheckedUpdateManyWithoutUsersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -839,6 +917,8 @@ export type TpSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
   name?: boolean
   number?: boolean
   year?: boolean
+  fileUrl?: boolean
+  fileKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   responses?: boolean | Prisma.Tp$responsesArgs<ExtArgs>
@@ -854,6 +934,8 @@ export type TpSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions
   name?: boolean
   number?: boolean
   year?: boolean
+  fileUrl?: boolean
+  fileKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   courses?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
@@ -867,6 +949,8 @@ export type TpSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions
   name?: boolean
   number?: boolean
   year?: boolean
+  fileUrl?: boolean
+  fileKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   courses?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
@@ -880,11 +964,13 @@ export type TpSelectScalar = {
   name?: boolean
   number?: boolean
   year?: boolean
+  fileUrl?: boolean
+  fileKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TpOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "idCourse" | "idUser" | "name" | "number" | "year" | "createdAt" | "updatedAt", ExtArgs["result"]["tp"]>
+export type TpOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "idCourse" | "idUser" | "name" | "number" | "year" | "fileUrl" | "fileKey" | "createdAt" | "updatedAt", ExtArgs["result"]["tp"]>
 export type TpInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   responses?: boolean | Prisma.Tp$responsesArgs<ExtArgs>
   courses?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
@@ -914,6 +1000,8 @@ export type $TpPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
     name: string
     number: number | null
     year: number
+    fileUrl: string | null
+    fileKey: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["tp"]>
@@ -1348,6 +1436,8 @@ export interface TpFieldRefs {
   readonly name: Prisma.FieldRef<"Tp", 'String'>
   readonly number: Prisma.FieldRef<"Tp", 'Int'>
   readonly year: Prisma.FieldRef<"Tp", 'Int'>
+  readonly fileUrl: Prisma.FieldRef<"Tp", 'String'>
+  readonly fileKey: Prisma.FieldRef<"Tp", 'String'>
   readonly createdAt: Prisma.FieldRef<"Tp", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Tp", 'DateTime'>
 }
@@ -1546,6 +1636,11 @@ export type TpFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    * Skip the first `n` Tps.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Tps.
+   */
   distinct?: Prisma.TpScalarFieldEnum | Prisma.TpScalarFieldEnum[]
 }
 

@@ -151,7 +151,7 @@ export type CorrelativeGroupByOutputType = {
   _max: CorrelativeMaxAggregateOutputType | null
 }
 
-type GetCorrelativeGroupByPayload<T extends CorrelativeGroupByArgs> = Prisma.PrismaPromise<
+export type GetCorrelativeGroupByPayload<T extends CorrelativeGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<CorrelativeGroupByOutputType, T['by']> &
       {
@@ -1215,6 +1215,11 @@ export type CorrelativeFindManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Skip the first `n` Correlatives.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Correlatives.
+   */
   distinct?: Prisma.CorrelativeScalarFieldEnum | Prisma.CorrelativeScalarFieldEnum[]
 }
 

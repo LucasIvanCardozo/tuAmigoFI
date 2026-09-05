@@ -151,7 +151,7 @@ export type CourseYearGroupByOutputType = {
   _max: CourseYearMaxAggregateOutputType | null
 }
 
-type GetCourseYearGroupByPayload<T extends CourseYearGroupByArgs> = Prisma.PrismaPromise<
+export type GetCourseYearGroupByPayload<T extends CourseYearGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<CourseYearGroupByOutputType, T['by']> &
       {
@@ -1207,6 +1207,11 @@ export type CourseYearFindManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Skip the first `n` CourseYears.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of CourseYears.
+   */
   distinct?: Prisma.CourseYearScalarFieldEnum | Prisma.CourseYearScalarFieldEnum[]
 }
 

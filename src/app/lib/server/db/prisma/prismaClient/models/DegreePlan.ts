@@ -151,7 +151,7 @@ export type DegreePlanGroupByOutputType = {
   _max: DegreePlanMaxAggregateOutputType | null
 }
 
-type GetDegreePlanGroupByPayload<T extends DegreePlanGroupByArgs> = Prisma.PrismaPromise<
+export type GetDegreePlanGroupByPayload<T extends DegreePlanGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<DegreePlanGroupByOutputType, T['by']> &
       {
@@ -1207,6 +1207,11 @@ export type DegreePlanFindManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Skip the first `n` DegreePlans.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of DegreePlans.
+   */
   distinct?: Prisma.DegreePlanScalarFieldEnum | Prisma.DegreePlanScalarFieldEnum[]
 }
 

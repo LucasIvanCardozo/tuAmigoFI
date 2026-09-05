@@ -42,6 +42,8 @@ export type ResponseMinAggregateOutputType = {
   number: number | null
   type: $Enums.TypeResponse | null
   text: string | null
+  fileUrl: string | null
+  fileKey: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -54,6 +56,8 @@ export type ResponseMaxAggregateOutputType = {
   number: number | null
   type: $Enums.TypeResponse | null
   text: string | null
+  fileUrl: string | null
+  fileKey: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -66,6 +70,8 @@ export type ResponseCountAggregateOutputType = {
   number: number
   type: number
   text: number
+  fileUrl: number
+  fileKey: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -88,6 +94,8 @@ export type ResponseMinAggregateInputType = {
   number?: true
   type?: true
   text?: true
+  fileUrl?: true
+  fileKey?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -100,6 +108,8 @@ export type ResponseMaxAggregateInputType = {
   number?: true
   type?: true
   text?: true
+  fileUrl?: true
+  fileKey?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -112,6 +122,8 @@ export type ResponseCountAggregateInputType = {
   number?: true
   type?: true
   text?: true
+  fileUrl?: true
+  fileKey?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -211,6 +223,8 @@ export type ResponseGroupByOutputType = {
   number: number
   type: $Enums.TypeResponse
   text: string | null
+  fileUrl: string | null
+  fileKey: string | null
   createdAt: Date
   updatedAt: Date
   _count: ResponseCountAggregateOutputType | null
@@ -220,7 +234,7 @@ export type ResponseGroupByOutputType = {
   _max: ResponseMaxAggregateOutputType | null
 }
 
-type GetResponseGroupByPayload<T extends ResponseGroupByArgs> = Prisma.PrismaPromise<
+export type GetResponseGroupByPayload<T extends ResponseGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<ResponseGroupByOutputType, T['by']> &
       {
@@ -246,6 +260,8 @@ export type ResponseWhereInput = {
   number?: Prisma.IntFilter<"Response"> | number
   type?: Prisma.EnumTypeResponseFilter<"Response"> | $Enums.TypeResponse
   text?: Prisma.StringNullableFilter<"Response"> | string | null
+  fileUrl?: Prisma.StringNullableFilter<"Response"> | string | null
+  fileKey?: Prisma.StringNullableFilter<"Response"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Response"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Response"> | Date | string
   comments?: Prisma.CommentListRelationFilter
@@ -262,6 +278,8 @@ export type ResponseOrderByWithRelationInput = {
   number?: Prisma.SortOrder
   type?: Prisma.SortOrder
   text?: Prisma.SortOrderInput | Prisma.SortOrder
+  fileUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  fileKey?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   comments?: Prisma.CommentOrderByRelationAggregateInput
@@ -281,6 +299,8 @@ export type ResponseWhereUniqueInput = Prisma.AtLeast<{
   number?: Prisma.IntFilter<"Response"> | number
   type?: Prisma.EnumTypeResponseFilter<"Response"> | $Enums.TypeResponse
   text?: Prisma.StringNullableFilter<"Response"> | string | null
+  fileUrl?: Prisma.StringNullableFilter<"Response"> | string | null
+  fileKey?: Prisma.StringNullableFilter<"Response"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Response"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Response"> | Date | string
   comments?: Prisma.CommentListRelationFilter
@@ -297,6 +317,8 @@ export type ResponseOrderByWithAggregationInput = {
   number?: Prisma.SortOrder
   type?: Prisma.SortOrder
   text?: Prisma.SortOrderInput | Prisma.SortOrder
+  fileUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  fileKey?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ResponseCountOrderByAggregateInput
@@ -317,6 +339,8 @@ export type ResponseScalarWhereWithAggregatesInput = {
   number?: Prisma.IntWithAggregatesFilter<"Response"> | number
   type?: Prisma.EnumTypeResponseWithAggregatesFilter<"Response"> | $Enums.TypeResponse
   text?: Prisma.StringNullableWithAggregatesFilter<"Response"> | string | null
+  fileUrl?: Prisma.StringNullableWithAggregatesFilter<"Response"> | string | null
+  fileKey?: Prisma.StringNullableWithAggregatesFilter<"Response"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Response"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Response"> | Date | string
 }
@@ -326,6 +350,8 @@ export type ResponseCreateInput = {
   number: number
   type: $Enums.TypeResponse
   text?: string | null
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   comments?: Prisma.CommentCreateNestedManyWithoutResponseInput
@@ -342,6 +368,8 @@ export type ResponseUncheckedCreateInput = {
   number: number
   type: $Enums.TypeResponse
   text?: string | null
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutResponseInput
@@ -352,6 +380,8 @@ export type ResponseUpdateInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   comments?: Prisma.CommentUpdateManyWithoutResponseNestedInput
@@ -368,6 +398,8 @@ export type ResponseUncheckedUpdateInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   comments?: Prisma.CommentUncheckedUpdateManyWithoutResponseNestedInput
@@ -381,6 +413,8 @@ export type ResponseCreateManyInput = {
   number: number
   type: $Enums.TypeResponse
   text?: string | null
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -390,6 +424,8 @@ export type ResponseUpdateManyMutationInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -402,6 +438,8 @@ export type ResponseUncheckedUpdateManyInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -429,6 +467,8 @@ export type ResponseCountOrderByAggregateInput = {
   number?: Prisma.SortOrder
   type?: Prisma.SortOrder
   text?: Prisma.SortOrder
+  fileUrl?: Prisma.SortOrder
+  fileKey?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -445,6 +485,8 @@ export type ResponseMaxOrderByAggregateInput = {
   number?: Prisma.SortOrder
   type?: Prisma.SortOrder
   text?: Prisma.SortOrder
+  fileUrl?: Prisma.SortOrder
+  fileKey?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -457,6 +499,8 @@ export type ResponseMinOrderByAggregateInput = {
   number?: Prisma.SortOrder
   type?: Prisma.SortOrder
   text?: Prisma.SortOrder
+  fileUrl?: Prisma.SortOrder
+  fileKey?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -531,10 +575,6 @@ export type IntFieldUpdateOperationsInput = {
 
 export type EnumTypeResponseFieldUpdateOperationsInput = {
   set?: $Enums.TypeResponse
-}
-
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
 }
 
 export type ResponseCreateNestedManyWithoutTpInput = {
@@ -626,6 +666,8 @@ export type ResponseCreateWithoutMidtermInput = {
   number: number
   type: $Enums.TypeResponse
   text?: string | null
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   comments?: Prisma.CommentCreateNestedManyWithoutResponseInput
@@ -640,6 +682,8 @@ export type ResponseUncheckedCreateWithoutMidtermInput = {
   number: number
   type: $Enums.TypeResponse
   text?: string | null
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutResponseInput
@@ -682,6 +726,8 @@ export type ResponseScalarWhereInput = {
   number?: Prisma.IntFilter<"Response"> | number
   type?: Prisma.EnumTypeResponseFilter<"Response"> | $Enums.TypeResponse
   text?: Prisma.StringNullableFilter<"Response"> | string | null
+  fileUrl?: Prisma.StringNullableFilter<"Response"> | string | null
+  fileKey?: Prisma.StringNullableFilter<"Response"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Response"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Response"> | Date | string
 }
@@ -691,6 +737,8 @@ export type ResponseCreateWithoutCommentsInput = {
   number: number
   type: $Enums.TypeResponse
   text?: string | null
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   midterm?: Prisma.MidtermCreateNestedOneWithoutResponsesInput
@@ -706,6 +754,8 @@ export type ResponseUncheckedCreateWithoutCommentsInput = {
   number: number
   type: $Enums.TypeResponse
   text?: string | null
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -731,6 +781,8 @@ export type ResponseUpdateWithoutCommentsInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   midterm?: Prisma.MidtermUpdateOneWithoutResponsesNestedInput
@@ -746,6 +798,8 @@ export type ResponseUncheckedUpdateWithoutCommentsInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -755,6 +809,8 @@ export type ResponseCreateWithoutTpInput = {
   number: number
   type: $Enums.TypeResponse
   text?: string | null
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   comments?: Prisma.CommentCreateNestedManyWithoutResponseInput
@@ -769,6 +825,8 @@ export type ResponseUncheckedCreateWithoutTpInput = {
   number: number
   type: $Enums.TypeResponse
   text?: string | null
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutResponseInput
@@ -805,6 +863,8 @@ export type ResponseCreateWithoutUserInput = {
   number: number
   type: $Enums.TypeResponse
   text?: string | null
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   comments?: Prisma.CommentCreateNestedManyWithoutResponseInput
@@ -819,6 +879,8 @@ export type ResponseUncheckedCreateWithoutUserInput = {
   number: number
   type: $Enums.TypeResponse
   text?: string | null
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutResponseInput
@@ -857,6 +919,8 @@ export type ResponseCreateManyMidtermInput = {
   number: number
   type: $Enums.TypeResponse
   text?: string | null
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -866,6 +930,8 @@ export type ResponseUpdateWithoutMidtermInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   comments?: Prisma.CommentUpdateManyWithoutResponseNestedInput
@@ -880,6 +946,8 @@ export type ResponseUncheckedUpdateWithoutMidtermInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   comments?: Prisma.CommentUncheckedUpdateManyWithoutResponseNestedInput
@@ -892,6 +960,8 @@ export type ResponseUncheckedUpdateManyWithoutMidtermInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -903,6 +973,8 @@ export type ResponseCreateManyTpInput = {
   number: number
   type: $Enums.TypeResponse
   text?: string | null
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -912,6 +984,8 @@ export type ResponseUpdateWithoutTpInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   comments?: Prisma.CommentUpdateManyWithoutResponseNestedInput
@@ -926,6 +1000,8 @@ export type ResponseUncheckedUpdateWithoutTpInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   comments?: Prisma.CommentUncheckedUpdateManyWithoutResponseNestedInput
@@ -938,6 +1014,8 @@ export type ResponseUncheckedUpdateManyWithoutTpInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -949,6 +1027,8 @@ export type ResponseCreateManyUserInput = {
   number: number
   type: $Enums.TypeResponse
   text?: string | null
+  fileUrl?: string | null
+  fileKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -958,6 +1038,8 @@ export type ResponseUpdateWithoutUserInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   comments?: Prisma.CommentUpdateManyWithoutResponseNestedInput
@@ -972,6 +1054,8 @@ export type ResponseUncheckedUpdateWithoutUserInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   comments?: Prisma.CommentUncheckedUpdateManyWithoutResponseNestedInput
@@ -984,6 +1068,8 @@ export type ResponseUncheckedUpdateManyWithoutUserInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1027,6 +1113,8 @@ export type ResponseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   number?: boolean
   type?: boolean
   text?: boolean
+  fileUrl?: boolean
+  fileKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   comments?: boolean | Prisma.Response$commentsArgs<ExtArgs>
@@ -1044,6 +1132,8 @@ export type ResponseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   number?: boolean
   type?: boolean
   text?: boolean
+  fileUrl?: boolean
+  fileKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   midterm?: boolean | Prisma.Response$midtermArgs<ExtArgs>
@@ -1059,6 +1149,8 @@ export type ResponseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   number?: boolean
   type?: boolean
   text?: boolean
+  fileUrl?: boolean
+  fileKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   midterm?: boolean | Prisma.Response$midtermArgs<ExtArgs>
@@ -1074,11 +1166,13 @@ export type ResponseSelectScalar = {
   number?: boolean
   type?: boolean
   text?: boolean
+  fileUrl?: boolean
+  fileKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ResponseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "idUser" | "idTp" | "idMidterm" | "number" | "type" | "text" | "createdAt" | "updatedAt", ExtArgs["result"]["response"]>
+export type ResponseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "idUser" | "idTp" | "idMidterm" | "number" | "type" | "text" | "fileUrl" | "fileKey" | "createdAt" | "updatedAt", ExtArgs["result"]["response"]>
 export type ResponseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   comments?: boolean | Prisma.Response$commentsArgs<ExtArgs>
   midterm?: boolean | Prisma.Response$midtermArgs<ExtArgs>
@@ -1113,6 +1207,8 @@ export type $ResponsePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     number: number
     type: $Enums.TypeResponse
     text: string | null
+    fileUrl: string | null
+    fileKey: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["response"]>
@@ -1549,6 +1645,8 @@ export interface ResponseFieldRefs {
   readonly number: Prisma.FieldRef<"Response", 'Int'>
   readonly type: Prisma.FieldRef<"Response", 'TypeResponse'>
   readonly text: Prisma.FieldRef<"Response", 'String'>
+  readonly fileUrl: Prisma.FieldRef<"Response", 'String'>
+  readonly fileKey: Prisma.FieldRef<"Response", 'String'>
   readonly createdAt: Prisma.FieldRef<"Response", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Response", 'DateTime'>
 }
@@ -1747,6 +1845,11 @@ export type ResponseFindManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Skip the first `n` Responses.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Responses.
+   */
   distinct?: Prisma.ResponseScalarFieldEnum | Prisma.ResponseScalarFieldEnum[]
 }
 

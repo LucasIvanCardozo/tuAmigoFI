@@ -168,6 +168,8 @@ export const MidtermScalarFieldEnum = {
   idUser: 'idUser',
   name: 'name',
   date: 'date',
+  fileUrl: 'fileUrl',
+  fileKey: 'fileKey',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -195,6 +197,8 @@ export const ResponseScalarFieldEnum = {
   number: 'number',
   type: 'type',
   text: 'text',
+  fileUrl: 'fileUrl',
+  fileKey: 'fileKey',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -219,6 +223,8 @@ export const TpScalarFieldEnum = {
   name: 'name',
   number: 'number',
   year: 'year',
+  fileUrl: 'fileUrl',
+  fileKey: 'fileKey',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
