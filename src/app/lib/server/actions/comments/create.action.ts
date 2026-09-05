@@ -1,5 +1,5 @@
 'use server';
-import { revalidateTag } from 'next/cache';
+import { updateTag } from 'next/cache';
 import { cuid, object, string } from 'zod';
 import db from '../../db/db';
 import { commentRepository } from '../../db/repository/comment.repository';
@@ -26,6 +26,6 @@ export const createComment = createAction(schema, async ({ idResponse, text }) =
       idUser: session.user.id,
     },
   });
-  revalidateTag('comments', 'max');
+  updateTag('comments');
   return comments;
 });

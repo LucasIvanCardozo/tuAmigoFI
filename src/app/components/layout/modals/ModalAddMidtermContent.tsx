@@ -1,69 +1,79 @@
 'use client';
+
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
+import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useModal } from '@/app/contexts/ModalContext';
+import { useFormSubmit } from '@/app/hooks/useFormSubmit';
 import { useReload } from '@/app/hooks/useReload';
 import { createMidterm } from '@/app/lib/server/actions/midterms/create.action';
 import type { Course } from '@/app/lib/server/db/prisma/prismaClient/client';
-import type { TypeValues } from '@/app/types';
-import { Form } from '../form/form';
-import { HandlerInputs } from '../form/inputs/handlerInputs';
+import { type AddMidtermInput, addMidtermSchema } from '@/app/lib/shared/schemas';
+import { FileForm, Form, InputForm, SectionForm, SelectForm } from '../form';
 
 export const ModalAddMidtermContent = ({ course }: { course: Course }) => {
-  const { closeModal } = useModal();
-  const { startReload } = useReload();
   const { data: session } = useSession();
+  const { control, handleSubmit } = useForm<AddMidtermInput>({
+    resolver: zodResolver(addMidtermSchema),
+    defaultValues: { name: '', date: '' },
+  });
 
-  const submitAddModule = async (values: TypeValues[]) => {
-    const name = values.find((val) => val.id === 'name');
-    const date = values.find((val) => val.id === 'date');
-    const file = values.find((val) => val.id === 'file');
-
+  const action: SubmitHandler<AddMidtermInput> = async (data) => {
     if (!session) throw new Error('No hay sesion');
-    if (
-      !date ||
-      !name ||
-      !file ||
-      typeof name.value !== 'string' ||
-      !(file.value instanceof File) ||
-      typeof date.value !== 'string'
-    )
-      throw new Error('Faltan completar datos.');
     const { error } = await createMidterm({
-      name: name.value,
-      date: new Date(date?.value as string),
+      name: data.name,
+      date: new Date(data.date).toISOString(),
       idCourse: course.id,
       idUser: session.user.id,
-      file: file.value,
+      file: data.file,
     });
     if (error) throw new Error(`Error: ${error}`);
-    startReload();
   };
+
+  const { closeModal } = useModal();
+  const { startReload } = useReload();
+  const { submit, isLoading } = useFormSubmit({
+    action,
+    successMessage: 'Muchas gracias por tu aporte! ❤️',
+    onSuccess: async () => {
+      startReload();
+      closeModal();
+    },
+  });
 
   return (
     <>
       <h2 className="text-lg">Agregar Examen</h2>
-      <Form onSubmit={(e: TypeValues[]) => submitAddModule(e)} onEnd={() => closeModal()}>
-        <div className="flex flex-col">
-          <label htmlFor="name">Título</label>
-          <HandlerInputs
-            type="select"
-            placeholder="Selecciona el tipo de parcial"
-            id="name"
+      <Form onSubmit={handleSubmit(submit)} noValidate>
+        <SectionForm title="Datos del examen">
+          <SelectForm<AddMidtermInput>
             name="name"
-            required={true}
+            control={control}
+            label="Tipo de parcial"
+            placeholder="Selecciona el tipo de parcial"
+            required
           >
             <option value="Primer parcial">Primer parcial</option>
             <option value="Segundo parcial">Segundo parcial</option>
             <option value="Tercer parcial">Tercer parcial</option>
             <option value="Final">Final</option>
             <option value="Otros">Otros</option>
-          </HandlerInputs>
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="date">Fecha</label>
-          <HandlerInputs type="date" name="date" id="date" required={true} />
-        </div>
-        <HandlerInputs type="file" id="file" accept="application/pdf" required={true} />
+          </SelectForm>
+          <InputForm<AddMidtermInput>
+            name="date"
+            type="date"
+            control={control}
+            label="Fecha"
+            required
+          />
+        </SectionForm>
+        <FileForm<AddMidtermInput>
+          name="file"
+          control={control}
+          label="Archivo (PDF)"
+          accept="application/pdf"
+          required
+        />
         <div>
           <a
             href="https://www.ilovepdf.com/es/eliminar-paginas"
@@ -99,6 +109,15 @@ export const ModalAddMidtermContent = ({ course }: { course: Course }) => {
               2235319564
             </a>
           </p>
+        </div>
+        <div className="flex gap-4 justify-center mt-4">
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Aceptar
+          </button>
         </div>
       </Form>
     </>

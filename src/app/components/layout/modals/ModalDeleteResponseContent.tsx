@@ -1,12 +1,15 @@
 'use client';
+
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
+import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useModal } from '@/app/contexts/ModalContext';
+import { useFormSubmit } from '@/app/hooks/useFormSubmit';
 import { useReload } from '@/app/hooks/useReload';
 import { deleteResponse } from '@/app/lib/server/actions/responses/delete.action';
 import type { Response, User } from '@/app/lib/server/db/prisma/prismaClient/client';
-import type { TypeValues } from '@/app/types';
-import { Form } from '../form/form';
-import { HandlerInputs } from '../form/inputs/handlerInputs';
+import { type ConfirmationInput, confirmationSchema } from '@/app/lib/shared/schemas';
+import { CheckboxForm, Form } from '../form';
 
 export const ModalDeleteResponseContent = ({
   response,
@@ -16,26 +19,37 @@ export const ModalDeleteResponseContent = ({
   user: User;
 }) => {
   const { id, idUser } = response;
-  const { closeModal } = useModal();
-  const { startReload } = useReload();
+  const { control, handleSubmit } = useForm<ConfirmationInput>({
+    resolver: zodResolver(confirmationSchema),
+    defaultValues: { confirm: false },
+  });
+
   const { data: session } = useSession();
 
-  const submitDeleteResponse = async (values: TypeValues[]) => {
-    const check = values.find((val) => val.id === 'check');
-    if (!check) throw new Error('Debes estar de acuerdo con la eliminacion de la respuesta');
+  const action: SubmitHandler<ConfirmationInput> = async () => {
     if (!session) throw new Error('No hay sesion');
     if (session.user.tier !== 2 && session.user.id !== user.id)
       throw new Error('Debes ser administrador o el creador para eliminar una respuesta');
 
     const { error } = await deleteResponse({ id, idUser });
     if (error) throw new Error(`Error: ${error}`);
-    startReload();
   };
+
+  const { closeModal } = useModal();
+  const { startReload } = useReload();
+  const { submit, isLoading } = useFormSubmit({
+    action,
+    successMessage: 'Respuesta eliminada.',
+    onSuccess: async () => {
+      startReload();
+      closeModal();
+    },
+  });
 
   return (
     <>
       <h2 className="text-lg">Eliminar respuesta</h2>
-      <Form onSubmit={(e: TypeValues[]) => submitDeleteResponse(e)} onEnd={() => closeModal()}>
+      <Form onSubmit={handleSubmit(submit)} noValidate>
         <div>
           <div className="flex flex-col *:flex *:gap-1">
             <p>
@@ -63,13 +77,21 @@ export const ModalDeleteResponseContent = ({
             </a>
           </p>
         </div>
-        <HandlerInputs
-          type="checkbox"
-          id="check"
-          name="check"
-          placeholder="Confirmo la eliminación."
-          required={true}
+        <CheckboxForm<ConfirmationInput>
+          name="confirm"
+          control={control}
+          label="Confirmo la eliminación."
+          required
         />
+        <div className="flex gap-4 justify-center mt-4">
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Eliminar
+          </button>
+        </div>
       </Form>
     </>
   );

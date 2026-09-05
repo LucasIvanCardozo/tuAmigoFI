@@ -1,44 +1,41 @@
 'use client';
+
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
-import { type FormEvent, useState } from 'react';
-import { sileo } from 'sileo';
+import { type SubmitHandler, useForm } from 'react-hook-form';
+import { useFormSubmit } from '@/app/hooks/useFormSubmit';
 import { useReload } from '@/app/hooks/useReload';
 import { createLink } from '@/app/lib/server/actions/links/create.action';
 import type { Course } from '@/app/lib/server/db/prisma/prismaClient/client';
+import { type AddLinkInput, addLinkSchema } from '@/app/lib/shared/schemas';
+import { Form, InputForm, SectionForm, SelectForm } from '../form';
 
 export const ModalAddLinkContent = ({ course }: { course: Course }) => {
-  const [name, setName] = useState<string | undefined>();
-  const [link, setLink] = useState<string | undefined>();
-  const [official, setOfficial] = useState<boolean | undefined>();
   const { data: session } = useSession();
-  const { startReload } = useReload();
+  const { control, handleSubmit } = useForm<AddLinkInput>({
+    resolver: zodResolver(addLinkSchema),
+    defaultValues: { name: '', link: '', official: false },
+  });
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    sileo.promise(
-      async () => {
-        if (!session) throw new Error('No hay sesion');
-        const { error } = await createLink({
-          idCourse: course.id,
-          link: link,
-          name: name,
-          official: official,
-        });
-        if (error) throw new Error(error);
-        startReload();
-      },
-      {
-        loading: { title: 'Cargando...' },
-        success: { title: 'Muchas gracias por tu aporte! ❤️' },
-        error: (error) => {
-          const err = error as Error;
-          return {
-            title: err.message,
-          };
-        },
-      },
-    );
+  const action: SubmitHandler<AddLinkInput> = async (data) => {
+    if (!session) throw new Error('No hay sesion');
+    const { error } = await createLink({
+      idCourse: course.id,
+      link: data.link,
+      name: data.name,
+      official: data.official,
+    });
+    if (error) throw new Error(error);
   };
+
+  const { startReload } = useReload();
+  const { submit, isLoading } = useFormSubmit({
+    action,
+    successMessage: 'Muchas gracias por tu aporte! ❤️',
+    onSuccess: async () => {
+      startReload();
+    },
+  });
 
   return (
     <>
@@ -46,51 +43,34 @@ export const ModalAddLinkContent = ({ course }: { course: Course }) => {
       <p>
         Este link será añadido a la materia <b>&quot;{course.name}&quot;</b>
       </p>
-      <form className="relative flex flex-col w-full" onSubmit={handleSubmit}>
-        <div className="flex flex-col gap-2">
-          <div className="flex flex-col">
-            <label htmlFor="name">Titulo del link</label>
-            <input
-              className="text-black"
-              type="text"
-              name="name"
-              id="name"
-              autoComplete="off"
-              placeholder="Ingresa el titulo del link"
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="link">Link</label>
-            <input
-              className="text-black"
-              type="url"
-              name="link"
-              id="link"
-              autoComplete="off"
-              placeholder="Ingresa el link"
-              onChange={(e) => setLink(e.target.value)}
-              required
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="official">Título</label>
-            <select
-              className="text-black"
-              name="official"
-              id="official"
-              onChange={(e) => {
-                setOfficial(Boolean(e.target.value));
-              }}
-              required
-            >
-              <option hidden>Selecciona el tipo de link</option>
-              <option value="1">Oficial</option>
-              <option value="">No oficial</option>
-            </select>
-          </div>
-        </div>
+      <Form onSubmit={handleSubmit(submit)} noValidate>
+        <SectionForm title="Datos del link">
+          <InputForm<AddLinkInput>
+            name="name"
+            control={control}
+            label="Título del link"
+            placeholder="Ingresa el titulo del link"
+            required
+          />
+          <InputForm<AddLinkInput>
+            name="link"
+            type="url"
+            control={control}
+            label="Link"
+            placeholder="Ingresa el link"
+            required
+          />
+          <SelectForm<AddLinkInput>
+            name="official"
+            control={control}
+            label="Tipo de link"
+            placeholder="Selecciona el tipo de link"
+            required
+          >
+            <option value="true">Oficial</option>
+            <option value="false">No oficial</option>
+          </SelectForm>
+        </SectionForm>
         <div className="my-2">
           <h3 className="text-sm">Recuerda!</h3>
           <p className="text-xs">
@@ -107,15 +87,16 @@ export const ModalAddLinkContent = ({ course }: { course: Course }) => {
             </a>
           </p>
         </div>
-        <div className="flex justify-center">
+        <div className="flex gap-4 justify-center mt-4">
           <button
-            className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700 transition-colors"
             type="submit"
+            disabled={isLoading}
+            className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Aceptar
           </button>
         </div>
-      </form>
+      </Form>
     </>
   );
 };

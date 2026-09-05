@@ -1,5 +1,5 @@
 'use server';
-import { revalidateTag } from 'next/cache';
+import { updateTag } from 'next/cache';
 import z, { boolean, cuid, object } from 'zod';
 import db from '../../db/db';
 import type { Reaction } from '../../db/prisma/prismaClient/client';
@@ -47,6 +47,6 @@ export const upsertReaction = createAction(schema, async ({ idTarget, typeTarget
       data: { reaction },
     });
   }
-  revalidateTag('reactions', 'max');
+  updateTag('reactions');
   return reactionAux;
 });

@@ -1,7 +1,7 @@
 'use server';
 
 import { v2 as cloudinary } from 'cloudinary';
-import { revalidateTag } from 'next/cache';
+import { updateTag } from 'next/cache';
 import { cuid, file, object, string } from 'zod';
 import db from '../../db/db';
 import { userUseCases } from '../../usecases/user.usecases';
@@ -66,7 +66,7 @@ export const createMidterm = createAction(
         },
       );
 
-    revalidateTag(`midterms`, 'max');
+    updateTag('midterms');
     return midterm;
   },
 );

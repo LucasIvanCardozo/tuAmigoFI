@@ -1,5 +1,5 @@
 'use server';
-import { revalidateTag } from 'next/cache';
+import { updateTag } from 'next/cache';
 import { email, object, string } from 'zod';
 import db from '../../db/db';
 import createAction from '../createActions';
@@ -20,6 +20,6 @@ export const createUser = createAction(schema, async ({ name, email, image }) =>
       banned: false,
     },
   });
-  revalidateTag('users', 'max');
+  updateTag('users');
   return user;
 });

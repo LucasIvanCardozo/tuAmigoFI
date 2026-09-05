@@ -5,6 +5,7 @@ import { MdDelete } from 'react-icons/md';
 import { SiGoogledocs } from 'react-icons/si';
 import PdfView from '@/app/components/pdfView';
 import { useModal } from '@/app/contexts/ModalContext';
+import { useModuleSelection } from '@/app/contexts/ModuleSelectionContext';
 import type { DataModule } from '@/app/types';
 import { numberIconsModules } from '../../../assets/icons';
 import { ModalAddResponseContent } from '../../layout/modals/ModalAddResponseContent';
@@ -14,13 +15,13 @@ import ModuleResponse from './moduleResponse';
 
 interface Props {
   module: DataModule;
-  idModule?: string;
   typeModule: 'TP' | 'Practica';
 }
 
-export const ModuleContainer = ({ module, idModule, typeModule }: Props) => {
+export const ModuleContainer = ({ module, typeModule }: Props) => {
   const { data: session } = useSession();
   const { openModal } = useModal();
+  const { idModule } = useModuleSelection();
   const moduleInd = module.module;
   const problems = module.problems;
   const isTp = 'number' in moduleInd;

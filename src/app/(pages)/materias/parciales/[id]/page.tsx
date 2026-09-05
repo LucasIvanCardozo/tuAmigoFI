@@ -15,5 +15,12 @@ export default async function Practica({ params, searchParams }: Params) {
     midtermUseCases.findByCourseIdWithAllData(id),
   ]);
 
-  return <MainModule modules={modules} course={course} idModule={idModule} typeModule="Practica" />;
+  return (
+    <MainModule
+      modules={modules}
+      course={course}
+      initialIdModule={idModule}
+      typeModule="Practica"
+    />
+  );
 }

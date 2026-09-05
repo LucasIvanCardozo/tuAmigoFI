@@ -1,7 +1,7 @@
 'use server';
 
 import { v2 as cloudinary } from 'cloudinary';
-import { revalidateTag } from 'next/cache';
+import { updateTag } from 'next/cache';
 import z, { cuid, file, number, string } from 'zod';
 import db from '../../db/db';
 import { TypeResponse } from '../../db/prisma/prismaClient/enums';
@@ -98,7 +98,7 @@ export const createResponse = createAction(
           );
       }
 
-      revalidateTag('responses', 'max');
+      updateTag('responses');
       return response;
     } else throw new Error('No puedes tener mas de una respueste a un problema!');
   },

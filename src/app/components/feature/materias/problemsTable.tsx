@@ -1,13 +1,12 @@
+'use client';
 import type { DataModule } from '@/app/types';
 import { ModuleContainer } from './moduleContainer';
 
 export const ProblemsTable = ({
   modules,
-  idModule,
   typeModule,
 }: {
   modules: DataModule[];
-  idModule?: string;
   typeModule: 'TP' | 'Practica';
 }) => {
   return (
@@ -18,12 +17,7 @@ export const ProblemsTable = ({
         </li>
       ) : (
         modules.map((module) => (
-          <ModuleContainer
-            key={module.module.id}
-            module={module}
-            idModule={idModule}
-            typeModule={typeModule}
-          />
+          <ModuleContainer key={module.module.id} module={module} typeModule={typeModule} />
         ))
       )}
     </ul>

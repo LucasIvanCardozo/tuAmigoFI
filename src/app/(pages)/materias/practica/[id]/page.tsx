@@ -15,5 +15,7 @@ export default async function Practica({ params, searchParams }: Props) {
     tpUseCases.findByCourseIdWithAllData(id),
   ]);
 
-  return <MainModule modules={modules} course={course} typeModule="TP" idModule={idModule} />;
+  return (
+    <MainModule modules={modules} course={course} typeModule="TP" initialIdModule={idModule} />
+  );
 }

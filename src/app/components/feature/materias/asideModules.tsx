@@ -1,32 +1,26 @@
 'use client';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { SiGoogledocs } from 'react-icons/si';
 import { TbSquareAsteriskFilled, TbSquareMinusFilled } from 'react-icons/tb';
 import { numberIconsModules } from '@/app/assets/icons';
 import { useModal } from '@/app/contexts/ModalContext';
+import { useModuleSelection } from '@/app/contexts/ModuleSelectionContext';
 import type { Course } from '@/app/lib/server/db/prisma/prismaClient/client';
 import type { DataModule } from '@/app/types';
 import { ModalAddMidtermContent } from '../../layout/modals/ModalAddMidtermContent';
 import { ModalAddTpContent } from '../../layout/modals/ModalAddTpContent';
 import { AsideMainButton } from './asideMainButton';
 
-export const AsideModules = ({
-  modules,
-  course,
-  typeModule,
-  idModule,
-}: {
+interface Props {
   modules: DataModule[];
   course: Course;
   typeModule: 'TP' | 'Practica';
-  idModule?: string;
-}) => {
-  const { replace } = useRouter();
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
+}
+
+export const AsideModules = ({ modules, course, typeModule }: Props) => {
   const [viewAside, setViewAside] = useState(false);
   const { openModal } = useModal();
+  const { idModule, setIdModule } = useModuleSelection();
   const isTp = typeModule === 'TP';
 
   const handleOpenAddModal = () => {
@@ -37,10 +31,7 @@ export const AsideModules = ({
 
   const handleViewModules = (module: string | null) => {
     setViewAside(false);
-    const params = new URLSearchParams(searchParams);
-    if (module) params.set('idModule', module);
-    else params.delete('idModule');
-    replace(`${pathname}?${params.toString()}`);
+    setIdModule(module);
   };
 
   useEffect(() => {

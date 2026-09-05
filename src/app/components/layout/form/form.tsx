@@ -1,44 +1,18 @@
-import { type FormEvent, useEffect } from 'react';
-import { sileo } from 'sileo';
-import { useForm } from '@/app/contexts';
-import type { DataForm } from '@/app/types';
+'use client';
 
-export const Form = ({ children, onSubmit, onEnd }: DataForm) => {
-  const { values, setValues } = useForm();
+import type { FormHTMLAttributes, ReactNode } from 'react';
 
-  useEffect(() => {
-    return () => {
-      setValues([]);
-    };
-  }, [setValues]);
+type FormProps = Omit<FormHTMLAttributes<HTMLFormElement>, 'children'> & {
+  children: ReactNode;
+};
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    sileo.promise(
-      async () => {
-        if (values.some((val) => !val.validate)) throw new Error('No deberías hacer esto...');
-        await onSubmit(values);
-        if (onEnd) onEnd();
-      },
-      {
-        loading: { title: 'Cargando...' },
-        success: { title: 'Muchas gracias por tu aporte! ❤️' },
-        error: (error) => ({ title: (error as Error).message }),
-      },
-    );
-  };
+const baseClass = 'relative flex flex-col w-full';
 
+export function Form({ children, className, ...props }: FormProps) {
+  const classes = className ? `${baseClass} ${className}` : baseClass;
   return (
-    <form className="relative flex flex-col w-full" onSubmit={(e) => handleSubmit(e)}>
+    <form {...props} className={classes}>
       {children}
-      <div className="flex gap-4 justify-center mt-4">
-        <button
-          className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700  transition-colors"
-          type="submit"
-        >
-          Aceptar
-        </button>
-      </div>
     </form>
   );
-};
+}

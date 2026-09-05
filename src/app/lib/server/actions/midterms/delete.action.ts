@@ -1,5 +1,5 @@
 'use server';
-import { revalidateTag } from 'next/cache';
+import { updateTag } from 'next/cache';
 import { cuid, object } from 'zod';
 import db from '../../db/db';
 import { userUseCases } from '../../usecases/user.usecases';
@@ -21,6 +21,6 @@ export const deleteMidterm = createAction(schema, async ({ id, idUser }) => {
       id: id,
     },
   });
-  revalidateTag('midterms', 'max');
+  updateTag('midterms');
   return midterms;
 });

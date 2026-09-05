@@ -1,7 +1,7 @@
 'use server';
 
 import { v2 as cloudinary } from 'cloudinary';
-import { revalidateTag } from 'next/cache';
+import { updateTag } from 'next/cache';
 import { cuid, file, number, object, string } from 'zod';
 import db from '../../db/db';
 import { userUseCases } from '../../usecases/user.usecases';
@@ -68,7 +68,7 @@ export const createTp = createAction(
         },
       );
 
-    revalidateTag('tps', 'max');
+    updateTag('tps');
     return tp;
   },
 );

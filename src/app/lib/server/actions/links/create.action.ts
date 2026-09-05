@@ -1,5 +1,5 @@
 'use server';
-import { revalidateTag } from 'next/cache';
+import { updateTag } from 'next/cache';
 import { boolean, cuid, object, string, url } from 'zod';
 import db from '../../db/db';
 import { userUseCases } from '../../usecases/user.usecases';
@@ -29,6 +29,6 @@ export const createLink = createAction(schema, async ({ idCourse, name, link, of
     },
   });
 
-  revalidateTag('links', 'max');
+  updateTag('links');
   return newLink;
 });

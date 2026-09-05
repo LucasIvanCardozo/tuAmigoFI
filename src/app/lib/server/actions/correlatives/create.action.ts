@@ -1,5 +1,5 @@
 'use server';
-import { revalidateTag } from 'next/cache';
+import { updateTag } from 'next/cache';
 import { cuid, object } from 'zod';
 import db from '../../db/db';
 import { userUseCases } from '../../usecases/user.usecases';
@@ -20,6 +20,6 @@ export const createCorrelative = createAction(schema, async ({ idCourse, idCorre
       idCorrelativeCourse,
     },
   });
-  revalidateTag('correlatives', 'max');
+  updateTag('correlatives');
   return correlatives;
 });

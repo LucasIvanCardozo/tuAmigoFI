@@ -1,77 +1,87 @@
 'use client';
+
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
+import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useModal } from '@/app/contexts/ModalContext';
+import { useFormSubmit } from '@/app/hooks/useFormSubmit';
 import { useReload } from '@/app/hooks/useReload';
 import { createTp } from '@/app/lib/server/actions/tps/create.action';
 import type { Course } from '@/app/lib/server/db/prisma/prismaClient/client';
-import type { TypeValues } from '@/app/types';
-import { Form } from '../form/form';
-import { HandlerInputs } from '../form/inputs/handlerInputs';
+import { type AddTpInput, addTpSchema } from '@/app/lib/shared/schemas';
+import { FileForm, Form, InputForm, SectionForm } from '../form';
 
 export const ModalAddTpContent = ({ course }: { course: Course }) => {
-  const { closeModal } = useModal();
-  const { startReload } = useReload();
   const { data: session } = useSession();
+  const { control, handleSubmit } = useForm<AddTpInput>({
+    resolver: zodResolver(addTpSchema),
+    defaultValues: { name: '', number: 1, year: new Date().getFullYear() },
+  });
 
-  const submitAddModule = async (values: TypeValues[]) => {
-    const name = values.find((val) => val.id === 'name');
-    const year = values.find((val) => val.id === 'year');
-    const number = values.find((val) => val.id === 'number');
-    const file = values.find((val) => val.id === 'file');
-    if (!year || !number || !name || !file || !(file.value instanceof File))
-      throw new Error('Faltan completar datos.');
+  const action: SubmitHandler<AddTpInput> = async (data) => {
     if (!session) throw new Error('No hay sesion');
     const { error } = await createTp({
-      name: name.value,
-      number: Number(number?.value),
-      year: Number(year?.value),
+      name: data.name,
+      number: data.number,
+      year: data.year,
       idUser: session.user.id,
       idCourse: course.id,
-      file: file.value,
+      file: data.file,
     });
     if (error) throw new Error(`Error: ${error}`);
-    startReload();
   };
+
+  const { closeModal } = useModal();
+  const { startReload } = useReload();
+  const { submit, isLoading } = useFormSubmit({
+    action,
+    successMessage: 'Muchas gracias por tu aporte! ❤️',
+    onSuccess: async () => {
+      startReload();
+      closeModal();
+    },
+  });
 
   return (
     <>
       <h2 className="text-lg">Agregar TP</h2>
-      <Form onSubmit={(e: TypeValues[]) => submitAddModule(e)} onEnd={() => closeModal()}>
-        <div className="flex flex-col">
-          <label htmlFor="name">Titulo</label>
-          <HandlerInputs
-            id="name"
+      <Form onSubmit={handleSubmit(submit)} noValidate>
+        <SectionForm title="Datos del TP">
+          <InputForm<AddTpInput>
             name="name"
-            type="text"
+            control={control}
+            label="Título"
             placeholder="Título del TP"
-            required={true}
+            required
           />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="number">Número</label>
-          <HandlerInputs
-            id="number"
+          <InputForm<AddTpInput>
             name="number"
             type="number"
+            control={control}
+            label="Número"
             placeholder="Número del TP"
-            min={0}
+            min={1}
             max={30}
-            required={true}
+            required
           />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="year">Año</label>
-          <HandlerInputs
-            id="year"
+          <InputForm<AddTpInput>
             name="year"
             type="number"
+            control={control}
+            label="Año"
             placeholder="Año del TP"
             min={2000}
             max={new Date().getFullYear()}
-            required={true}
+            required
           />
-        </div>
-        <HandlerInputs type="file" id="file" accept="application/pdf" required={true} />
+        </SectionForm>
+        <FileForm<AddTpInput>
+          name="file"
+          control={control}
+          label="Archivo (PDF)"
+          accept="application/pdf"
+          required
+        />
         <div>
           <a
             href="https://www.ilovepdf.com/es/eliminar-paginas"
@@ -107,6 +117,15 @@ export const ModalAddTpContent = ({ course }: { course: Course }) => {
               2235319564
             </a>
           </p>
+        </div>
+        <div className="flex gap-4 justify-center mt-4">
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Aceptar
+          </button>
         </div>
       </Form>
     </>
