@@ -1,29 +1,33 @@
 'use client';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { handleLoader } from '@/app/utils/handleLoader';
+
+const normalize = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
 export default function SearchCourses() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const [isHandleSearch, setIsHandleSearch] = useState(false);
-  const [search, setSearch] = useState<string>(searchParams.get('search')?.toString() || '');
+  const urlSearch = searchParams.get('search')?.toString() || '';
+  const [search, setSearch] = useState<string>(urlSearch);
+  const lastUrlSearch = useRef(urlSearch);
 
   useEffect(() => {
-    if (!isHandleSearch) {
-      setSearch(searchParams.get('search')?.toString() || '');
+    if (urlSearch !== lastUrlSearch.current) {
+      lastUrlSearch.current = urlSearch;
+      setSearch(urlSearch);
     }
-    setIsHandleSearch(false);
-  }, [searchParams, isHandleSearch]);
+  }, [urlSearch]);
 
-  const handleSearch = useDebouncedCallback((search: string) => {
-    setIsHandleSearch(true);
+  const handleSearch = useDebouncedCallback((value: string) => {
+    const normalized = value ? normalize(value) : '';
+    lastUrlSearch.current = normalized;
     const params = new URLSearchParams(searchParams);
-    if (search) {
-      params.set('search', search.normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
+    if (normalized) {
+      params.set('search', normalized);
     } else {
       params.delete('search');
     }
