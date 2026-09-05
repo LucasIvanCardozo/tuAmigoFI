@@ -5,7 +5,7 @@ import { cuid, file, number, object, string } from 'zod';
 import db from '../../db/db';
 import { buildUploadMeta } from '../../uploadthing/meta';
 import { userUseCases } from '../../usecases/user.usecases';
-import { uploadFile } from '../../utils/uploadthing';
+import { withUploadRollback } from '../../utils/uploadthing';
 import createAction from '../createActions';
 
 const schema = object({
@@ -29,29 +29,27 @@ export const createTp = createAction(
     const session = await userUseCases.getSession();
     if (!session) throw new Error('Necesitas iniciar sesion!');
 
-    const tp = await db.tp.create({
-      data: {
-        name: name,
-        ...(number ? { number: number } : { number: 0 }),
-        year: year,
-        idUser,
-        idCourse,
+    const tp = await withUploadRollback(
+      file,
+      buildUploadMeta({ courseId: idCourse, entityType: 'tp', entityId: '__pending__' }),
+      async (url, key) => {
+        const created = await db.tp.create({
+          data: {
+            name: name,
+            ...(number ? { number: number } : { number: 0 }),
+            year: year,
+            idUser,
+            idCourse,
+          },
+        });
+        return db.tp.update({
+          where: { id: created.id },
+          data: { fileUrl: url, fileKey: key },
+        });
       },
-    });
-
-    const meta = buildUploadMeta({
-      courseId: idCourse,
-      entityType: 'tp',
-      entityId: tp.id,
-    });
-    const upload = await uploadFile(file, meta);
-    if (!upload.success) throw new Error(upload.error);
-    const tpWithFile = await db.tp.update({
-      where: { id: tp.id },
-      data: { fileUrl: upload.url, fileKey: upload.fileKey },
-    });
+    );
 
     updateTag('tps');
-    return tpWithFile;
+    return tp;
   },
 );

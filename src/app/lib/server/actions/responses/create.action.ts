@@ -6,7 +6,7 @@ import db from '../../db/db';
 import { TypeResponse } from '../../db/prisma/prismaClient/enums';
 import { buildUploadMeta } from '../../uploadthing/meta';
 import { userUseCases } from '../../usecases/user.usecases';
-import { uploadFile } from '../../utils/uploadthing';
+import { withUploadRollback } from '../../utils/uploadthing';
 import createAction from '../createActions';
 
 const schema = z
@@ -57,16 +57,6 @@ export const createResponse = createAction(
       },
     });
     if (!validation) {
-      const response = await db.response.create({
-        data: {
-          idTp,
-          number,
-          type: type as TypeResponse,
-          idUser,
-          ...(text && { text: text }),
-        },
-      });
-
       if ((type === 'IMAGE' || type === 'PDF') && file) {
         let courseId: string | undefined;
         if (idTp) {
@@ -83,18 +73,40 @@ export const createResponse = createAction(
           courseId = midterm?.idCourse;
         }
         if (!courseId) throw new Error('No se encontró la materia');
-        const meta = buildUploadMeta({
-          courseId,
-          entityType: 'response',
-          entityId: response.id,
-        });
-        const upload = await uploadFile(file, meta);
-        if (!upload.success) throw new Error(upload.error);
-        await db.response.update({
-          where: { id: response.id },
-          data: { fileUrl: upload.url, fileKey: upload.fileKey },
-        });
+
+        const response = await withUploadRollback(
+          file,
+          buildUploadMeta({ courseId, entityType: 'response', entityId: '__pending__' }),
+          async (url, key) => {
+            const created = await db.response.create({
+              data: {
+                idTp,
+                number,
+                type: type as TypeResponse,
+                idUser,
+                ...(text && { text: text }),
+              },
+            });
+            return db.response.update({
+              where: { id: created.id },
+              data: { fileUrl: url, fileKey: key },
+            });
+          },
+        );
+
+        updateTag('responses');
+        return response;
       }
+
+      const response = await db.response.create({
+        data: {
+          idTp,
+          number,
+          type: type as TypeResponse,
+          idUser,
+          ...(text && { text: text }),
+        },
+      });
 
       updateTag('responses');
       return response;

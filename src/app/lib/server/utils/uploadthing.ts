@@ -169,3 +169,20 @@ export async function cleanupCourseAssets(
     return { deleted: 0, failed: keys.length };
   }
 }
+
+export async function withUploadRollback<T>(
+  file: File,
+  meta: UploadMeta,
+  save: (url: string, fileKey: string) => Promise<T>,
+): Promise<T> {
+  let uploadedFileKey: string | undefined;
+  try {
+    const upload = await uploadFile(file, meta);
+    if (!upload.success) throw new Error(upload.error);
+    uploadedFileKey = upload.fileKey;
+    return await save(upload.url, upload.fileKey);
+  } catch (error) {
+    if (uploadedFileKey) await deleteUploadThingFile(uploadedFileKey);
+    throw error;
+  }
+}

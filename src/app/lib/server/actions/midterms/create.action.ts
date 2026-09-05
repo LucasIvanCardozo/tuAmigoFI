@@ -5,7 +5,7 @@ import { cuid, file, object, string } from 'zod';
 import db from '../../db/db';
 import { buildUploadMeta } from '../../uploadthing/meta';
 import { userUseCases } from '../../usecases/user.usecases';
-import { uploadFile } from '../../utils/uploadthing';
+import { withUploadRollback } from '../../utils/uploadthing';
 import createAction from '../createActions';
 
 const schema = object({
@@ -28,28 +28,26 @@ export const createMidterm = createAction(
     const session = await userUseCases.getSession();
     if (!session) throw new Error('Necesitas iniciar sesion!');
 
-    const midterm = await db.midterm.create({
-      data: {
-        name: name,
-        date: date,
-        idCourse,
-        idUser,
+    const midterm = await withUploadRollback(
+      file,
+      buildUploadMeta({ courseId: idCourse, entityType: 'midterm', entityId: '__pending__' }),
+      async (url, key) => {
+        const created = await db.midterm.create({
+          data: {
+            name: name,
+            date: date,
+            idCourse,
+            idUser,
+          },
+        });
+        return db.midterm.update({
+          where: { id: created.id },
+          data: { fileUrl: url, fileKey: key },
+        });
       },
-    });
-
-    const meta = buildUploadMeta({
-      courseId: idCourse,
-      entityType: 'midterm',
-      entityId: midterm.id,
-    });
-    const upload = await uploadFile(file, meta);
-    if (!upload.success) throw new Error(upload.error);
-    const midtermWithFile = await db.midterm.update({
-      where: { id: midterm.id },
-      data: { fileUrl: upload.url, fileKey: upload.fileKey },
-    });
+    );
 
     updateTag('midterms');
-    return midtermWithFile;
+    return midterm;
   },
 );
