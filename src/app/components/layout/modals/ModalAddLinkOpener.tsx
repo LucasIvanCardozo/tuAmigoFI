@@ -26,11 +26,7 @@ export const ModalAddLinkOpener = ({
       type="button"
       aria-label={ariaLabel}
       title={title}
-      className={
-        className
-          ? `text-start bg-(--white) py-1 px-2 rounded-md ${className}`
-          : 'text-start bg-(--white) py-1 px-2 rounded-md'
-      }
+      className={className ? `text-(--black-olive) p-1 ${className}` : 'text-(--black-olive) p-1'}
       onClick={(event) => {
         openModal(<ModalAddLinkContent course={course} />);
         onClick?.(event);
