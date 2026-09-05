@@ -12,6 +12,9 @@ export default function YearCourse({ callback }: { callback: Promise<Year[]> }) 
 
   const [year, setYear] = useState<string>(searchParams.get('idYear')?.toString() ?? '');
 
+  const idDegree = searchParams.get('idDegree');
+  if (!idDegree || idDegree === '0') return null;
+
   const handleYears = (year: string) => {
     const params = new URLSearchParams(searchParams);
     if (year && year !== '0') {
