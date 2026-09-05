@@ -21,7 +21,7 @@ TuAmigoFI is a Next.js application for students at Facultad de Ingeniería de Ma
 - **Auth:** NextAuth.js
 - **Validation:** Zod v4 (single source of truth for both client and server)
 - **Forms:** react-hook-form + @hookform/resolvers/zod + `useFormSubmit` (hook) + sileo (toasts)
-- **File Storage:** Cloudinary
+- **File Storage:** UploadThing
 - **Package Manager:** pnpm
 
 ## Commands
@@ -250,7 +250,18 @@ Subject line max 100 chars. Imperative mood. Body in present tense; bullets for 
 
 ## Environment Variables
 
-Required (see `.env`): `DATABASE_URL`, `NEXTAUTH_SECRET`, `NEXTAUTH_URL`, Cloudinary credentials.
+Required (see `.env`): `DATABASE_URL`, `NEXTAUTH_SECRET`, `NEXTAUTH_URL`, `UPLOADTHING_TOKEN`.
+
+## File Uploads
+
+Server actions receive the `File` via FormData and upload server-side. The client never talks to UploadThing directly.
+
+- **Entry point:** `uploadFile(file, meta)` from `@/app/lib/server/utils/uploadthing`.
+- **Pattern:** actions receive `File` via FormData, call `uploadFile(file, meta)`, persist `fileUrl + fileKey` in the entity row, and surface failures by throwing.
+- **Cleanup:** `deleteUploadThingFile(fileKey)` with try/catch — failures must not block the DB delete. Bulk cleanup of a TP/midterm iterates its responses and deletes each `fileKey` before deleting the parent row.
+- **Metadata:** `UploadMeta = { courseId, entityType, entityId }` from `@/app/lib/server/uploadthing/meta`. Used as logging context today (UploadThing 7.x does not support server-side tags); ready to forward into tags when the SDK supports them.
+- **No client upload widget.** No `<UploadButton>`, `<UploadDropzone>`, `<NextSSRPlugin />`, or `/api/uploadthing` route handler. The form input is a plain `<input type="file">` wrapped by `FileForm`/`ResponseForm`.
+- **PDF rendering:** `@react-pdf-viewer/core` + `@react-pdf-viewer/toolbar`. PDF.js worker pinned to `pdfjs-dist@3.11.174` loaded from `https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js`. The viewer wrapper uses `dynamic({ ssr: false })` to avoid the top-level `DOMMatrix` access in pdf.js.
 
 ## What NOT To Do
 
@@ -261,6 +272,9 @@ Required (see `.env`): `DATABASE_URL`, `NEXTAUTH_SECRET`, `NEXTAUTH_URL`, Cloudi
 5. **No secrets** committed.
 6. **No second form pattern.** Do not introduce `useState` + `FormEvent` + manual validation alongside `react-hook-form` + zod. Migrate existing inline forms to `<Form>` + schemas.
 7. **No duplicated validation.** Zod schemas exist to be reused; do not re-validate in components or actions with ad-hoc logic.
+8. **No cloudinary references** in code or comments.
+9. **No file uploads without persisting `fileKey` alongside `fileUrl`.** Cleanup requires `fileKey`.
+10. **No `/api/upload` or `/api/destroy` endpoints.** Use server actions. Cleanup goes through `deleteUploadThingFile` in the same action that deletes the DB row.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
