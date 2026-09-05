@@ -261,7 +261,7 @@ Server actions receive the `File` via FormData and upload server-side. The clien
 - **Cleanup:** `deleteUploadThingFile(fileKey)` with try/catch — failures must not block the DB delete. Bulk cleanup of a TP/midterm iterates its responses and deletes each `fileKey` before deleting the parent row.
 - **Metadata:** `UploadMeta = { courseId, entityType, entityId }` from `@/app/lib/server/uploadthing/meta`. Used as logging context today (UploadThing 7.x does not support server-side tags); ready to forward into tags when the SDK supports them.
 - **No client upload widget.** No `<UploadButton>`, `<UploadDropzone>`, `<NextSSRPlugin />`, or `/api/uploadthing` route handler. The form input is a plain `<input type="file">` wrapped by `FileForm`/`ResponseForm`.
-- **PDF rendering:** `@react-pdf-viewer/core` + `@react-pdf-viewer/toolbar`. PDF.js worker pinned to `pdfjs-dist@3.11.174` loaded from `https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js`. The viewer wrapper uses `dynamic({ ssr: false })` to avoid the top-level `DOMMatrix` access in pdf.js.
+- **PDF rendering:** `@react-pdf-viewer/core` + `@react-pdf-viewer/toolbar`. PDF.js worker pinned to `pdfjs-dist@3.11.174` loaded from `https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js`. The viewer wrapper uses `dynamic({ ssr: false })` to avoid the top-level `DOMMatrix` access in pdf.js. The `<Viewer />` passes `transformGetDocumentParams` with `isEvalSupported: false` and `enableScripting: false` to mitigate CVE-2024-4367 and CVE-2026-16633 in the pinned `pdfjs-dist@3.11.174` (Dependabot still flags the version; we accept the warning because the runtime is sandboxed).
 
 ## What NOT To Do
 
