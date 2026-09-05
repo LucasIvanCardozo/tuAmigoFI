@@ -7,9 +7,7 @@ export default function CorrelativeList({ index, name }: { index: number; name: 
       {index !== 0 && <span className="flex whitespace-pre"> - </span>}
       <Link
         className="whitespace-nowrap min-h-6 hover:text-(--midnight-green) hover:underline"
-        href={`https://tuamigofi.ar/materias?search=${name
-          .normalize('NFD')
-          .replace(/[\u0300-\u036f]/g, '')}`}
+        href={`/materias?search=${name.normalize('NFD').replace(/[\u0300-\u036f]/g, '')}`}
       >
         {name}
       </Link>
