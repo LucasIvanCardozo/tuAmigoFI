@@ -114,6 +114,8 @@ model Midterm {
   idUser   String   @map("id_user")
   name     String
   date     DateTime
+  fileUrl  String?  @map("file_url")
+  fileKey  String?  @map("file_key")
 
   responses Response[]
 
@@ -152,6 +154,8 @@ model Response {
   number    Int
   type      TypeResponse
   text      String?
+  fileUrl   String?      @map("file_url")
+  fileKey   String?      @map("file_key")
 
   comments Comment[]
 
@@ -180,6 +184,8 @@ model Tp {
   name     String
   number   Int?
   year     Int
+  fileUrl  String? @map("file_url")
+  fileKey  String? @map("file_key")
 
   responses Response[]
 

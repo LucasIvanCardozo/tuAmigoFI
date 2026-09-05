@@ -30,26 +30,8 @@ export const ModalDeleteTpContent = ({
     if (session.user.tier !== 2 && session.user.id !== user.id)
       throw new Error('Debes ser administrador o el creador para eliminar un TP');
 
-    const formData = new FormData();
-    formData.set('id', tp.id.toString());
-    formData.set('subFolder', `tps/respuestas/${tp.id}`);
-    const res = await fetch('/api/destroyAll', {
-      method: 'POST',
-      body: formData,
-    });
-
-    formData.set('id', tp.id.toString());
-    formData.set('subFolder', `tps/problemas`);
-
-    const res2 = await fetch('/api/destroy', {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (res.ok && res2.ok) {
-      const { error } = await deleteTp({ id: tp.id, idUser: tp.idUser });
-      if (error) throw new Error(error);
-    }
+    const { error } = await deleteTp({ id: tp.id, idUser: tp.idUser });
+    if (error) throw new Error(error);
   };
 
   const { closeModal } = useModal();

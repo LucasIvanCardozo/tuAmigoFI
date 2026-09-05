@@ -1,17 +1,12 @@
 'use server';
 
-import { v2 as cloudinary } from 'cloudinary';
 import { updateTag } from 'next/cache';
 import { cuid, file, object, string } from 'zod';
 import db from '../../db/db';
+import { buildUploadMeta } from '../../uploadthing/meta';
 import { userUseCases } from '../../usecases/user.usecases';
+import { uploadFile } from '../../utils/uploadthing';
 import createAction from '../createActions';
-
-cloudinary.config({
-  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
 
 const schema = object({
   name: string().min(1),
@@ -42,31 +37,19 @@ export const createMidterm = createAction(
       },
     });
 
-    const id = midterm.id;
-    const type = file.type.split('/').reverse()[0];
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    const subFolder = `parciales/problemas`;
-    if (type === 'pdf')
-      await cloudinary.uploader.unsigned_upload(
-        `data:application/${type};base64,${buffer.toString('base64')}`,
-        'ml_default',
-        {
-          public_id: id,
-          folder: subFolder,
-        },
-      );
-    else
-      await cloudinary.uploader.unsigned_upload(
-        `data:image/${type};base64,${buffer.toString('base64')}`,
-        'ml_default',
-        {
-          public_id: id,
-          folder: subFolder,
-        },
-      );
+    const meta = buildUploadMeta({
+      courseId: idCourse,
+      entityType: 'midterm',
+      entityId: midterm.id,
+    });
+    const upload = await uploadFile(file, meta);
+    if (!upload.success) throw new Error(upload.error);
+    const midtermWithFile = await db.midterm.update({
+      where: { id: midterm.id },
+      data: { fileUrl: upload.url, fileKey: upload.fileKey },
+    });
 
     updateTag('midterms');
-    return midterm;
+    return midtermWithFile;
   },
 );

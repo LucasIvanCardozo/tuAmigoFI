@@ -1,18 +1,13 @@
 'use server';
 
-import { v2 as cloudinary } from 'cloudinary';
 import { updateTag } from 'next/cache';
 import z, { cuid, file, number, string } from 'zod';
 import db from '../../db/db';
 import { TypeResponse } from '../../db/prisma/prismaClient/enums';
+import { buildUploadMeta } from '../../uploadthing/meta';
 import { userUseCases } from '../../usecases/user.usecases';
+import { uploadFile } from '../../utils/uploadthing';
 import createAction from '../createActions';
-
-cloudinary.config({
-  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
 
 const schema = z
   .object({
@@ -73,29 +68,32 @@ export const createResponse = createAction(
       });
 
       if ((type === 'IMAGE' || type === 'PDF') && file) {
-        const _id = response.id;
-        const type = file.type.split('/').reverse()[0];
-        const bytes = await file.arrayBuffer();
-        const buffer = Buffer.from(bytes);
-        const subFolder = `${idTp ? 'tps' : 'parciales'}/respuestas/${idTp || idMidterm}/${number}`;
-        if (type === 'pdf')
-          await cloudinary.uploader.unsigned_upload(
-            `data:application/${type};base64,${buffer.toString('base64')}`,
-            'ml_default',
-            {
-              public_id: session.user.id,
-              folder: subFolder,
-            },
-          );
-        else
-          await cloudinary.uploader.unsigned_upload(
-            `data:image/${type};base64,${buffer.toString('base64')}`,
-            'ml_default',
-            {
-              public_id: session.user.id,
-              folder: subFolder,
-            },
-          );
+        let courseId: string | undefined;
+        if (idTp) {
+          const tp = await db.tp.findUnique({
+            where: { id: idTp },
+            select: { idCourse: true },
+          });
+          courseId = tp?.idCourse;
+        } else if (idMidterm) {
+          const midterm = await db.midterm.findUnique({
+            where: { id: idMidterm },
+            select: { idCourse: true },
+          });
+          courseId = midterm?.idCourse;
+        }
+        if (!courseId) throw new Error('No se encontró la materia');
+        const meta = buildUploadMeta({
+          courseId,
+          entityType: 'response',
+          entityId: response.id,
+        });
+        const upload = await uploadFile(file, meta);
+        if (!upload.success) throw new Error(upload.error);
+        await db.response.update({
+          where: { id: response.id },
+          data: { fileUrl: upload.url, fileKey: upload.fileKey },
+        });
       }
 
       updateTag('responses');

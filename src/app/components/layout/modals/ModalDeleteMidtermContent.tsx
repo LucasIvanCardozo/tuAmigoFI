@@ -30,29 +30,11 @@ export const ModalDeleteMidtermContent = ({
     if (session.user.tier !== 2 && session.user.id !== user.id)
       throw new Error('Debes ser administrador o el creador para eliminar un examen');
 
-    const formData = new FormData();
-    formData.set('id', midterm.id.toString());
-    formData.set('subFolder', `parciales/respuestas/${midterm.id}`);
-    const res = await fetch('/api/destroyAll', {
-      method: 'POST',
-      body: formData,
+    const { error } = await deleteMidterm({
+      id: midterm.id,
+      idUser: midterm.idUser,
     });
-
-    formData.set('id', midterm.id.toString());
-    formData.set('subFolder', `parciales/problemas`);
-
-    const res2 = await fetch('/api/destroy', {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (res.ok && res2.ok) {
-      const { error } = await deleteMidterm({
-        id: midterm.id,
-        idUser: midterm.idUser,
-      });
-      if (error) throw new Error(error);
-    }
+    if (error) throw new Error(error);
   };
 
   const { closeModal } = useModal();

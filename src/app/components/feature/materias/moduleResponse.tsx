@@ -1,6 +1,6 @@
 'use client';
+import Image from 'next/image';
 import type { Session } from 'next-auth';
-import { CldImage } from 'next-cloudinary';
 import { useState } from 'react';
 import { BiSolidLeftArrowSquare, BiSolidRightArrowSquare } from 'react-icons/bi';
 import { CgMathMinus, CgMathPlus } from 'react-icons/cg';
@@ -15,7 +15,7 @@ import { CommentsLi } from './commentsLi';
 export default function ModuleResponse({
   problem,
   session,
-  typeModule,
+  typeModule: _typeModule,
 }: {
   problem: DataModuleProblem;
   session: Session | null;
@@ -26,7 +26,6 @@ export default function ModuleResponse({
   const [viewResponses, setViewResponses] = useState(false);
 
   const responses = problem.responses;
-  const isTp = typeModule === 'TP';
 
   const handlePageUser = (add: number) => {
     const suma = indexResponse + add;
@@ -90,28 +89,17 @@ export default function ModuleResponse({
               </div>
             ) : responses[indexResponse].response.type === 'IMAGE' ? (
               <div className="relative flex justify-center w-full max-h-250 pb-7">
-                <CldImage
-                  src={`https://res.cloudinary.com/donzj5rlf/image/upload/f_auto,q_auto/v${Math.floor(
-                    Date.now() / (1000 * 60 * 60 * 24 * 7),
-                  )}/${isTp ? 'tps' : 'parciales'}/respuestas/${isTp ? responses[indexResponse].response.idTp : responses[indexResponse].response.idMidterm}/${responses[indexResponse].response.number}/${
-                    responses[indexResponse].response.idUser
-                  }`}
+                <Image
+                  src={responses[indexResponse].response.fileUrl ?? ''}
                   alt=""
-                  width="500"
-                  height="500"
-                  style={{
-                    objectFit: 'cover',
-                    width: '100%',
-                    height: 'auto',
-                  }}
+                  width={500}
+                  height={500}
+                  style={{ objectFit: 'cover', width: '100%', height: 'auto' }}
                 />
               </div>
             ) : responses[indexResponse].response.type === 'PDF' ? (
               <div className="relative overflow-hidden bg-[#C8E0E4] h-min max-w-full py-1 pb-7 rounded-md sm:p-1">
-                <PdfView
-                  id={responses[indexResponse].response.idUser}
-                  url={`${isTp ? 'tps' : 'parciales'}/respuestas/${isTp ? responses[indexResponse].response.idTp : responses[indexResponse].response.idMidterm}/${responses[indexResponse].response.number}`}
-                />
+                <PdfView url={responses[indexResponse].response.fileUrl ?? ''} />
               </div>
             ) : responses[indexResponse].response.type === 'CODE' ? (
               <div className="bg-gray-900 p-3 text-white rounded-md overflow-x-auto pb-7">
