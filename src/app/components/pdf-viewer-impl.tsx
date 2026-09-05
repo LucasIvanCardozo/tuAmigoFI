@@ -44,6 +44,11 @@ export default function PdfViewerImpl({ url }: { url: string }) {
             defaultScale={SpecialZoomLevel.PageWidth}
             viewMode={ViewMode.SinglePage}
             scrollMode={ScrollMode.Page}
+            transformGetDocumentParams={(options) => ({
+              ...options,
+              isEvalSupported: false,
+              enableScripting: false,
+            })}
           />
         </div>
       </div>
