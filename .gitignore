@@ -8,7 +8,6 @@
 
 .agents
 skills-lock.json
-AGENTS.md
 
 # testing
 /coverage
@@ -46,3 +45,4 @@ next-env.d.ts
 # Local dev artifacts (script outputs)
 /materias.txt
 /result.json
+.atl/
