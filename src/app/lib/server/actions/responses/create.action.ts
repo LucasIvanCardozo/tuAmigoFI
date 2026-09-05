@@ -46,7 +46,7 @@ export const createResponse = createAction(
   async ({ idUser, idTp, idMidterm, number, type, text, file }) => {
     if (idMidterm && idTp) throw new Error('No puedes tener un parcial y un tp');
     const session = await userUseCases.getSession();
-    if (!session) throw new Error('No estas logueado');
+    if (!session) throw new Error('Necesitas iniciar sesion!');
 
     const validation = await db.response.findFirst({
       where: {

@@ -14,7 +14,7 @@ const schema = object({
 
 export const deleteResponse = createAction(schema, async ({ id, idUser }) => {
   const session = await userUseCases.getSession();
-  if (!session) throw new Error('No estas logueado');
+  if (!session) throw new Error('Necesitas iniciar sesion!');
   else if (session.user.id !== idUser && session.user.tier !== 2)
     throw new Error('No tienes permiso para eliminar esta respuesta');
 

@@ -24,7 +24,7 @@ export const CommentsLi = ({ comments, response, session }: Params) => {
     const text = formData.get('comment');
     sileo.promise(
       async () => {
-        if (!session) throw new Error('No hay sesion');
+        if (!session) throw new Error('Necesitas iniciar sesion!');
         const { error } = await createComment({
           idResponse: response.id,
           text,

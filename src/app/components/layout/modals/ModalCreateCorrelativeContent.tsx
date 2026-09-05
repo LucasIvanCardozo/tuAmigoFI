@@ -27,7 +27,7 @@ export const ModalCreateCorrelativeContent = ({
   });
 
   const action: SubmitHandler<AddCorrelativeInput> = async (data) => {
-    if (!session) throw new Error('No hay sesion');
+    if (!session) throw new Error('Necesitas iniciar sesion!');
     if (session.user.tier === 0)
       throw new Error('Debes tener un rango superior para añadir correlativas');
     const { error } = await createCorrelative({

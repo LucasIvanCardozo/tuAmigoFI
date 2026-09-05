@@ -13,7 +13,7 @@ const schema = object({
 
 export const createComment = createAction(schema, async ({ idResponse, text }) => {
   const session = await userUseCases.getSession();
-  if (!session) throw new Error('No estas logueado');
+  if (!session) throw new Error('Necesitas iniciar sesion!');
 
   const lastComments = await commentRepository(db).findLastsByUserId(session.user.id);
 

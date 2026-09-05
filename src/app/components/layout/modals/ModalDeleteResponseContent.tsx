@@ -27,7 +27,7 @@ export const ModalDeleteResponseContent = ({
   const { data: session } = useSession();
 
   const action: SubmitHandler<ConfirmationInput> = async () => {
-    if (!session) throw new Error('No hay sesion');
+    if (!session) throw new Error('Necesitas iniciar sesion!');
     if (session.user.tier !== 2 && session.user.id !== user.id)
       throw new Error('Debes ser administrador o el creador para eliminar una respuesta');
 

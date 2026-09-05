@@ -27,7 +27,7 @@ export const createTp = createAction(
   schema,
   async ({ name, number, year, idUser, idCourse, file }) => {
     const session = await userUseCases.getSession();
-    if (!session) throw new Error('No estas logueado');
+    if (!session) throw new Error('Necesitas iniciar sesion!');
 
     const tp = await db.tp.create({
       data: {

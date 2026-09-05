@@ -19,7 +19,7 @@ export const ModalAddTpContent = ({ course }: { course: Course }) => {
   });
 
   const action: SubmitHandler<AddTpInput> = async (data) => {
-    if (!session) throw new Error('No hay sesion');
+    if (!session) throw new Error('Necesitas iniciar sesion!');
     const { error } = await createTp({
       name: data.name,
       number: data.number,

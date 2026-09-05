@@ -18,7 +18,7 @@ export const ModalAddLinkContent = ({ course }: { course: Course }) => {
   });
 
   const action: SubmitHandler<AddLinkInput> = async (data) => {
-    if (!session) throw new Error('No hay sesion');
+    if (!session) throw new Error('Necesitas iniciar sesion!');
     const { error } = await createLink({
       idCourse: course.id,
       link: data.link,

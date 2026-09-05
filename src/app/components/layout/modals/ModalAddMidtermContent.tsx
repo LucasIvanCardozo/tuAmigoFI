@@ -19,7 +19,7 @@ export const ModalAddMidtermContent = ({ course }: { course: Course }) => {
   });
 
   const action: SubmitHandler<AddMidtermInput> = async (data) => {
-    if (!session) throw new Error('No hay sesion');
+    if (!session) throw new Error('Necesitas iniciar sesion!');
     const { error } = await createMidterm({
       name: data.name,
       date: new Date(data.date).toISOString(),

@@ -17,7 +17,7 @@ const schema = object({
 
 export const createLink = createAction(schema, async ({ idCourse, name, link, official }) => {
   const session = await userUseCases.getSession();
-  if (!session) throw new Error('No estas logueado');
+  if (!session) throw new Error('Necesitas iniciar sesion!');
 
   const newLink = await db.link.create({
     data: {

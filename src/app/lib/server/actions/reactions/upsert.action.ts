@@ -17,7 +17,7 @@ const schema = object({
 
 export const upsertReaction = createAction(schema, async ({ idTarget, typeTarget, reaction }) => {
   const session = await userUseCases.getSession();
-  if (!session) throw new Error('No estas logueado');
+  if (!session) throw new Error('Necesitas iniciar sesion!');
   const { id: idUser } = session.user;
 
   const existing = await db.reaction.findFirst({

@@ -26,7 +26,7 @@ export const createMidterm = createAction(
   schema,
   async ({ name, date, idCourse, idUser, file }) => {
     const session = await userUseCases.getSession();
-    if (!session) throw new Error('No estas logueado');
+    if (!session) throw new Error('Necesitas iniciar sesion!');
 
     const midterm = await db.midterm.create({
       data: {

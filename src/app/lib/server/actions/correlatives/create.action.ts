@@ -12,7 +12,7 @@ const schema = object({
 
 export const createCorrelative = createAction(schema, async ({ idCourse, idCorrelativeCourse }) => {
   const session = await userUseCases.getSession();
-  if (!session) throw new Error('No estas logueado');
+  if (!session) throw new Error('Necesitas iniciar sesion!');
 
   const correlatives = await db.correlative.create({
     data: {
