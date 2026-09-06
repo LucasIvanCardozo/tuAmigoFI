@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { SiGoogledocs } from 'react-icons/si';
 import { TbSquareAsteriskFilled, TbSquareMinusFilled } from 'react-icons/tb';
 import { numberIconsModules } from '@/app/assets/icons';
@@ -17,7 +17,7 @@ interface Props {
   typeModule: 'TP' | 'Practica';
 }
 
-export const AsideModules = ({ modules, course, typeModule }: Props) => {
+const AsideModulesImpl = ({ modules, course, typeModule }: Props) => {
   const [viewAside, setViewAside] = useState(false);
   const { openModal } = useModal();
   const { idModule, setIdModule } = useModuleSelection();
@@ -46,9 +46,9 @@ export const AsideModules = ({ modules, course, typeModule }: Props) => {
         setViewAside(false);
       }
     };
-    mediaQuery.addEventListener('change', (e) => handleMediaChange(e));
+    mediaQuery.addEventListener('change', handleMediaChange);
     return () => {
-      mediaQuery.removeEventListener('change', (e) => handleMediaChange(e));
+      mediaQuery.removeEventListener('change', handleMediaChange);
     };
   }, []);
 
@@ -147,3 +147,5 @@ export const AsideModules = ({ modules, course, typeModule }: Props) => {
     </>
   );
 };
+
+export const AsideModules = memo(AsideModulesImpl);

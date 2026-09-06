@@ -1,5 +1,6 @@
 'use client';
 import { useSession } from 'next-auth/react';
+import { memo } from 'react';
 import { CgMathPlus } from 'react-icons/cg';
 import { MdDelete } from 'react-icons/md';
 import { SiGoogledocs } from 'react-icons/si';
@@ -18,7 +19,7 @@ interface Props {
   typeModule: 'TP' | 'Practica';
 }
 
-export const ModuleContainer = ({ module, typeModule }: Props) => {
+const ModuleContainerImpl = ({ module, typeModule }: Props) => {
   const { data: session } = useSession();
   const { openModal } = useModal();
   const { idModule } = useModuleSelection();
@@ -125,3 +126,5 @@ export const ModuleContainer = ({ module, typeModule }: Props) => {
     </li>
   );
 };
+
+export const ModuleContainer = memo(ModuleContainerImpl);

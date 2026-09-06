@@ -16,7 +16,7 @@ export default function Nav({ callbackSession }: { callbackSession: Promise<Sess
   const session = use(callbackSession);
 
   const handleNavState = () => {
-    if (document.documentElement.scrollWidth < 640) {
+    if (!window.matchMedia('(min-width: 640px)').matches) {
       setNavState(!navState);
     }
   };
@@ -32,9 +32,8 @@ export default function Nav({ callbackSession }: { callbackSession: Promise<Sess
     };
   }, [navState]);
 
-  //no bloquear el scroll en pantallas escritorio
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(min-width: 640px)'); // Tailwind 'sm' breakpoint is 640px
+    const mediaQuery = window.matchMedia('(min-width: 640px)');
 
     const handleMediaChange = (e: MediaQueryListEvent) => {
       if (e.matches) {
@@ -42,12 +41,10 @@ export default function Nav({ callbackSession }: { callbackSession: Promise<Sess
       }
     };
 
-    // Escucha los cambios de la media query
-    mediaQuery.addEventListener('change', (e) => handleMediaChange(e));
+    mediaQuery.addEventListener('change', handleMediaChange);
 
-    // Limpieza para remover el event listener
     return () => {
-      mediaQuery.removeEventListener('change', (e) => handleMediaChange(e));
+      mediaQuery.removeEventListener('change', handleMediaChange);
     };
   }, []);
 

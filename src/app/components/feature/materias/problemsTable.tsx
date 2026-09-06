@@ -1,8 +1,9 @@
 'use client';
+import { memo } from 'react';
 import type { DataModule } from '@/app/types';
 import { ModuleContainer } from './moduleContainer';
 
-export const ProblemsTable = ({
+const ProblemsTableImpl = ({
   modules,
   typeModule,
 }: {
@@ -23,3 +24,5 @@ export const ProblemsTable = ({
     </ul>
   );
 };
+
+export const ProblemsTable = memo(ProblemsTableImpl);
