@@ -99,7 +99,7 @@ const ModuleContainerImpl = ({ module, typeModule }: Props) => {
       </div>
       <div className="bg-(--white) text-base leading-5 drop-shadow-md flex flex-col gap-1">
         <div className="relative overflow-hidden bg-[#96cad3] h-min rounded-b-lg p-1 sm:p-2">
-          <div className="absolute z-10 bg-(--white) rounded-md m-2 opacity-65 top-0 left-0">{`Por ${module.user.name}`}</div>
+          <div className="absolute z-10 bg-(--white) rounded-md m-2 opacity-65 bottom-0 right-0">{`Por ${module.user.name}`}</div>
           <PdfView url={moduleInd.fileUrl ?? ''} />
         </div>
         <ul className="flex flex-col gap-1 pl-1">
