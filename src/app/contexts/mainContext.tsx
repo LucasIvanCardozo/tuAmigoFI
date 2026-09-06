@@ -1,5 +1,5 @@
 'use client';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useCallback, useContext, useMemo, useState } from 'react';
 import type { DataModule } from '@/app/types';
 import type { Course } from '../lib/server/db/prisma/prismaClient/client';
 
@@ -22,22 +22,38 @@ export const MainProvider = ({ children }: { children: React.ReactNode }) => {
   const [course, setCourse] = useState<Course>({} as Course);
   const [typeModule, setTypeModule] = useState<'TP' | 'Practica'>('TP');
 
-  return (
-    <MainContext.Provider
-      value={{
-        viewModule,
-        setViewModule,
-        modules,
-        setModules,
-        course,
-        setCourse,
-        typeModule,
-        setTypeModule,
-      }}
-    >
-      {children}
-    </MainContext.Provider>
+  const handleSetViewModule = useCallback((id: string | null) => setViewModule(id), []);
+  const handleSetModules = useCallback((dataModules: DataModule[]) => setModules(dataModules), []);
+  const handleSetCourse = useCallback((course: Course) => setCourse(course), []);
+  const handleSetTypeModule = useCallback(
+    (typeModule: 'TP' | 'Practica') => setTypeModule(typeModule),
+    [],
   );
+
+  const value = useMemo(
+    () => ({
+      viewModule,
+      setViewModule: handleSetViewModule,
+      modules,
+      setModules: handleSetModules,
+      course,
+      setCourse: handleSetCourse,
+      typeModule,
+      setTypeModule: handleSetTypeModule,
+    }),
+    [
+      viewModule,
+      handleSetViewModule,
+      modules,
+      handleSetModules,
+      course,
+      handleSetCourse,
+      typeModule,
+      handleSetTypeModule,
+    ],
+  );
+
+  return <MainContext.Provider value={value}>{children}</MainContext.Provider>;
 };
 
 export const useMainContext = () => {

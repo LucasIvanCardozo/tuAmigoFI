@@ -1,5 +1,13 @@
 'use client';
-import { createContext, type ReactNode, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  type ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { Modal } from '@/app/components/UI/Modal';
 
 interface ModalContextType {
@@ -12,8 +20,10 @@ const modalContext = createContext<ModalContextType | null>(null);
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const [content, setContent] = useState<ReactNode>(null);
 
-  const openModal = (component: ReactNode) => setContent(component);
-  const closeModal = () => setContent(null);
+  const openModal = useCallback((component: ReactNode) => setContent(component), []);
+  const closeModal = useCallback(() => setContent(null), []);
+
+  const value = useMemo(() => ({ openModal, closeModal }), [openModal, closeModal]);
 
   useEffect(() => {
     if (!content) return;
@@ -25,7 +35,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
   }, [content]);
 
   return (
-    <modalContext.Provider value={{ openModal, closeModal }}>
+    <modalContext.Provider value={value}>
       {children}
       {content && <Modal>{content}</Modal>}
     </modalContext.Provider>
