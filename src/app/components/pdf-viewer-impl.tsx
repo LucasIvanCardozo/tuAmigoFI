@@ -2,6 +2,7 @@
 
 import { ScrollMode, SpecialZoomLevel, Viewer, ViewMode, Worker } from '@react-pdf-viewer/core';
 import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
+import { useState } from 'react';
 
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/toolbar/lib/styles/index.css';
@@ -11,12 +12,13 @@ const WORKER_URL = 'https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.j
 export default function PdfViewerImpl({ url }: { url: string }) {
   const toolbarPluginInstance = toolbarPlugin();
   const { Toolbar } = toolbarPluginInstance;
+  const [aspectRatio, setAspectRatio] = useState<number | null>(null);
 
   return (
     <Worker workerUrl={WORKER_URL}>
       <div
-        className="flex flex-col rounded-md overflow-hidden border border-slate-300 bg-white"
-        style={{ maxHeight: '90vh' }}
+        className="flex flex-col rounded-md overflow-hidden border border-slate-300 bg-white mx-auto"
+        style={aspectRatio ? { aspectRatio, maxHeight: '90vh', width: '100%' } : { height: '85vh' }}
       >
         <Toolbar>
           {(slot) => (
@@ -41,9 +43,15 @@ export default function PdfViewerImpl({ url }: { url: string }) {
           <Viewer
             fileUrl={url}
             plugins={[toolbarPluginInstance]}
-            defaultScale={SpecialZoomLevel.PageFit}
+            defaultScale={SpecialZoomLevel.PageWidth}
             viewMode={ViewMode.SinglePage}
             scrollMode={ScrollMode.Page}
+            onDocumentLoad={({ doc }) => {
+              doc.getPage(1).then((page) => {
+                const viewport = page.getViewport({ scale: 1 });
+                setAspectRatio(viewport.width / viewport.height);
+              });
+            }}
             transformGetDocumentParams={(options) => ({
               ...options,
               isEvalSupported: false,
