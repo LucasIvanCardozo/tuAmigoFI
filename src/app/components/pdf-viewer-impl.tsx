@@ -16,7 +16,7 @@ export default function PdfViewerImpl({ url }: { url: string }) {
     <Worker workerUrl={WORKER_URL}>
       <div
         className="flex flex-col rounded-md overflow-hidden border border-slate-300 bg-white"
-        style={{ height: '750px' }}
+        style={{ maxHeight: '90vh' }}
       >
         <Toolbar>
           {(slot) => (
@@ -41,7 +41,7 @@ export default function PdfViewerImpl({ url }: { url: string }) {
           <Viewer
             fileUrl={url}
             plugins={[toolbarPluginInstance]}
-            defaultScale={SpecialZoomLevel.PageWidth}
+            defaultScale={SpecialZoomLevel.PageFit}
             viewMode={ViewMode.SinglePage}
             scrollMode={ScrollMode.Page}
             transformGetDocumentParams={(options) => ({
