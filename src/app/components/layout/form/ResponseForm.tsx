@@ -1,8 +1,10 @@
 'use client';
 
-import type { Ref } from 'react';
+import type { ChangeEvent, Ref } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { Control, FieldValues, Path } from 'react-hook-form';
 import { Controller, useWatch } from 'react-hook-form';
+import { compressImageForUpload } from '@/app/lib/shared/image-compressor';
 
 type ResponseType = 'TEXT' | 'CODE' | 'IMAGE' | 'PDF';
 
@@ -14,7 +16,86 @@ interface ResponseFormProps<T extends FieldValues> {
   typeLabel?: string;
 }
 
+interface ResponseFileFieldProps {
+  type: 'IMAGE' | 'PDF';
+  value: File | undefined;
+  errorMessage?: string;
+  inputRef: Ref<HTMLInputElement>;
+  onBlur: () => void;
+  onChange: (value: File | undefined) => void;
+}
+
 const TEXT_LIKE: ResponseType[] = ['TEXT', 'CODE'];
+
+const ResponseFileField = ({
+  type,
+  value,
+  errorMessage,
+  inputRef,
+  onBlur,
+  onChange,
+}: ResponseFileFieldProps) => {
+  const [isCompressing, setIsCompressing] = useState(false);
+  const [localError, setLocalError] = useState<string | null>(null);
+  const latestType = useRef(type);
+  const isImage = type === 'IMAGE';
+
+  useEffect(() => {
+    latestType.current = type;
+  }, [type]);
+
+  const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const input = event.target;
+    const file = input.files?.[0];
+    setLocalError(null);
+
+    if (!file) {
+      onChange(undefined);
+      input.value = '';
+      return;
+    }
+
+    if (!isImage) {
+      onChange(file);
+      input.value = '';
+      return;
+    }
+
+    setIsCompressing(true);
+    try {
+      const compressed = await compressImageForUpload(file);
+      if (latestType.current === type) {
+        onChange(compressed);
+      }
+    } catch {
+      setLocalError('No se pudo procesar la imagen. Intenta con otra.');
+      onChange(undefined);
+    } finally {
+      setIsCompressing(false);
+      input.value = '';
+    }
+  };
+
+  return (
+    <div className="flex flex-col gap-1">
+      <input
+        ref={inputRef}
+        onBlur={onBlur}
+        type="file"
+        accept={isImage ? 'image/*' : 'application/pdf'}
+        onChange={handleChange}
+        disabled={isCompressing}
+        className="text-white"
+      />
+      {isCompressing && <span className="text-xs text-slate-300">Procesando imagen...</span>}
+      {!isCompressing && value instanceof File && (
+        <span className="text-xs text-slate-300">{value.name}</span>
+      )}
+      {localError && <p className="text-red-600 text-sm">{localError}</p>}
+      {errorMessage && <p className="text-red-600 text-sm">{errorMessage}</p>}
+    </div>
+  );
+};
 
 export function ResponseForm<T extends FieldValues>({
   control,
@@ -93,25 +174,14 @@ export function ResponseForm<T extends FieldValues>({
               ref: Ref<HTMLInputElement>;
             };
             return (
-              <div className="flex flex-col gap-1">
-                <input
-                  ref={ref}
-                  onBlur={onBlur}
-                  type="file"
-                  accept={currentType === 'IMAGE' ? 'image/*' : 'application/pdf'}
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    onChange(file ?? undefined);
-                  }}
-                  className="text-white"
-                />
-                {value instanceof File && (
-                  <span className="text-xs text-slate-300">{value.name}</span>
-                )}
-                {fieldState.error?.message && (
-                  <p className="text-red-600 text-sm">{fieldState.error.message}</p>
-                )}
-              </div>
+              <ResponseFileField
+                type={currentType}
+                value={value}
+                errorMessage={fieldState.error?.message}
+                inputRef={ref}
+                onBlur={onBlur}
+                onChange={onChange}
+              />
             );
           }}
         />

@@ -14,6 +14,11 @@ const nextConfig = {
     ],
   },
   cacheComponents: true,
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '6mb',
+    },
+  },
   async headers() {
     return [
       {
