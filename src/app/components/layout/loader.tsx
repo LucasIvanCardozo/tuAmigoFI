@@ -1,18 +1,8 @@
-'use client';
-import { usePathname } from 'next/navigation';
-import { useEffect } from 'react';
-import { handleLoader } from '@/app/utils/handleLoader';
 import { Loading } from './loading';
 
 export const Loader = () => {
-  const _pathname = usePathname();
-
-  useEffect(() => {
-    handleLoader(false);
-  }, []);
-
   return (
-    <div id="loader" className="hidden fixed bottom-0 right-0 m-4">
+    <div className="fixed bottom-0 right-0 m-4">
       <Loading mode="black" size={6} />
     </div>
   );

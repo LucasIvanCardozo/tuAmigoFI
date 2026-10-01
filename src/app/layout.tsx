@@ -4,7 +4,6 @@ import { Suspense } from 'react';
 import { cabin } from './assets/fonts';
 import Footer from './components/layout/footer';
 import { IconBackground } from './components/layout/IconBackground';
-import { Loader } from './components/layout/loader';
 import Nav from './components/layout/nav';
 import Providers from './components/layout/providers';
 import { userUseCases } from './lib/server/usecases/user.usecases';
@@ -31,9 +30,6 @@ export default async function RootLayout({
           <IconBackground />
           {children}
           <Footer />
-          <Suspense>
-            <Loader />
-          </Suspense>
         </Providers>
       </body>
     </html>
