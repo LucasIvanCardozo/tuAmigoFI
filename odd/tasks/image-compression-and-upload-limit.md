@@ -1,7 +1,8 @@
 # Client image compression and the Server Action upload limit
 
 Branch: `feat/client-image-compression`
-Status: done, pending commit
+Status: done
+Commit: `ce7acc0` — `fix(upload): raise the body limit and compress images before upload`
 Base: `main` at `3f1df85`
 
 ## Problem
@@ -95,14 +96,15 @@ Edited:
 - [x] T4 Wire compression into `ResponseForm.tsx` for the IMAGE type.
 - [x] T5 Verify: lint, types, the body-limit probe with a negative control, and
   browser checks for the worker, the CSP and the resulting file size.
-- [ ] T6 Commit the work unit.
+- [x] T6 Native review: correct the CRITICAL finding it raised, close the targeted
+  validation, and commit the work unit.
 
 ## Evidence
 
 Baselines: `pnpm lint` 0 errors + 1 pre-existing warning (`globals.css:50`);
 `pnpm exec tsc --noEmit` exit 0.
 
-### Body limit (three rounds, final revision)
+### Body limit
 
 | Attachment | Bytes | HTTP | Result |
 | --- | --- | --- | --- |
@@ -150,6 +152,68 @@ property. Round 3 confirmed the corrected revision: lint exit 0, `tsc --noEmit`
 exit 0, two diff hunks, worker path proven positively and negatively, nothing
 changed by the verifier.
 
+## Native review
+
+Lineage `review-6dcd714cd7441705` (compact-v2, generation 1). Risk tier **medium**,
+one consolidated lens (`review-reliability`), frozen correction budget 182,
+original changed lines 364.
+
+### Finding R3-001 — CRITICAL, corrected
+
+`src/app/components/layout/form/ResponseForm.tsx:42-68`, evidence class inferential,
+`causal_disposition: worsened`:
+
+> The new asynchronous image handler can commit a compressed file after the
+> response type has already changed, because the handler remains tied to the
+> change context captured when compression started while the submitted type can
+> move to another field value. This creates a stale file-and-type submission path
+> that did not exist when file selection committed synchronously.
+
+The finding was correct and about this change: making file selection asynchronous
+created a `{type: 'PDF', file: <JPEG>}` path that could not previously occur. It
+worsens the pre-existing type/file mismatch listed under Out of scope, which is now
+known to have two entry paths rather than one.
+
+Correction, confined to that file: a `latestType` ref kept current by an effect,
+and the compressed result is committed only while the type still matches.
+
+```tsx
+const compressed = await compressImageForUpload(file);
+if (latestType.current === type) {
+  onChange(compressed);
+}
+```
+
+Twelve diff lines (10 added, 2 removed), declared to the provider **before** the
+edit and recorded exactly as `correction_lines: 12`. Order matters: the correction
+plan's binding carries the frozen target and is validated against the current
+tree, so editing first moves the target and the capture is rejected with
+`collectBinding does not carry one non-empty matching provider lineage and target
+token`. The frozen file had to be restored (`md5 8fbe8ea5…`) before the plan could
+be declared.
+
+### Outcome
+
+- Targeted validation of the corrected candidate: passed at the first attempt.
+- Terminal state **approved**; final revision
+  `sha256:ad4389d827027b39c23ced80789163d1d7b8c2a83cafe4f9fa6b904cb7336168`.
+- Authority burned by the exact `acknowledge-approved` continuation, reported from
+  its own returned envelope (`gentle-ai.review-acknowledged/v1`,
+  `mutation_outcome: committed`). No STATUS was issued after the burn.
+- Informational, non-blocking findings that opened no correction: **R3-002**
+  (WARNING, `ResponseForm.tsx:38-81`) and **R3-003** (SUGGESTION,
+  `ResponseForm.tsx:86-87`).
+
+One operational episode is worth recording because the cause is not proven: in the
+first session the targeted-validator `collectBinding` was rejected twice with
+`collectBinding is unknown, expired, or belongs to a different session route`, and
+it was accepted at the first attempt in a new session. Two hypotheses remain
+compatible with the evidence — collect bindings are tied to the session route and
+must be re-emitted by a STATUS in the current session, or the earlier transcription
+differed in how `\n` sequences inside `proof`/`policyContent` were escaped. The
+operating rule that survives both is the same: never retry a binding from another
+session; re-query STATUS and transcribe literally.
+
 ## Accepted limitations
 
 - `window.File` construction still happens once per compression on the main
@@ -163,7 +227,8 @@ changed by the verifier.
 - When editing files in this repo, normalise with
   `pnpm exec biome check --write <file>` afterwards: the harness `edit` tool
   rewrites string delimiters to double quotes, which breaks the Biome
-  single-quote config.
+  single-quote config. JSX attribute quotes are double by config
+  (`jsxQuoteStyle: "double"`) and are correct, not an artifact.
 
 ## Not verified
 
@@ -185,18 +250,31 @@ changed by the verifier.
 
 ## Out of scope
 
-- **Pre-existing type/file mismatch (approved as the next work unit).** Switching
-  the response type does not clear `file`, so `{type: 'IMAGE', file: <PDF>}` can be
-  submitted; `response.schema.ts` accepts `application/pdf` for any `type`. The
-  reader then renders `type: 'IMAGE'` through `next/image` (which cannot optimise a
-  PDF) or `type: 'PDF'` through `pdf.js` (which cannot parse a JPEG), leaving a
-  permanently broken card. Local DB has one `Response` row and it is consistent
-  (`type: PDF`, CDN `content-type: application/pdf`), so no local repair is needed.
-  Agreed scope: the pairing rule in the shared schema and in the action schema,
-  plus clearing `file` on type change.
-- Duplicate error lines: `localError` and `errorMessage` can render as two `<p>`s.
+### Pre-existing type/file mismatch (approved as the next work unit)
+
+Switching the response type does not clear `file`, so `{type: 'IMAGE', file: <PDF>}`
+can be submitted; `response.schema.ts` accepts `application/pdf` for any `type`. The
+reader then renders `type: 'IMAGE'` through `next/image` (which cannot optimise a
+PDF) or `type: 'PDF'` through `pdf.js` (which cannot parse a JPEG), leaving a
+permanently broken card. Local DB has one `Response` row and it is consistent
+(`type: PDF`, CDN `content-type: application/pdf`), so no local repair is needed.
+
+The native review proved this defect has **two** entry paths, not one: the
+asynchronous one opened by this change is now closed by the R3-001 correction, and
+the synchronous type-switch path remains open. Agreed scope for the next work unit:
+the pairing rule in the shared schema and in the action schema, plus clearing
+`file` on type change.
+
+### Native review follow-ups
+
+- **R3-002** (WARNING, `ResponseForm.tsx:38-81`) and **R3-003** (SUGGESTION,
+  `ResponseForm.tsx:86-87`). Neither opened a correction and neither justifies
+  re-running the review of this candidate.
 - The modal's *Aceptar* is not gated while compressing (~200 ms window where submit
-  reports `Debes subir un archivo`).
-- A production audit of existing mismatched rows is feasible: UploadThing returns
-  the real `Content-Type` on `HEAD`, so each `Response` with `type` IMAGE or PDF can
-  be compared against its `fileUrl`.
+  reports `Debes subir un archivo`); `localError` and `errorMessage` can render as
+  two simultaneous `<p>`s.
+
+### Production data audit
+
+Feasible and cheap: UploadThing returns the real `Content-Type` on `HEAD`, so each
+`Response` with `type` IMAGE or PDF can be compared against its `fileUrl`.
