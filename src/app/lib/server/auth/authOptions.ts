@@ -2,7 +2,6 @@ import type { Account, AuthOptions, Session, User } from 'next-auth';
 import type { AdapterUser } from 'next-auth/adapters';
 import type { JWT } from 'next-auth/jwt';
 import GoogleProvider from 'next-auth/providers/google';
-import { createUser } from '../actions/users/create.action';
 import { userUseCases } from '../usecases/user.usecases';
 
 async function refreshAccessToken(token: JWT): Promise<JWT> {
@@ -55,17 +54,12 @@ export const authOptions: AuthOptions = {
       if (!user?.email || !user?.name || !user?.image) {
         throw new Error('Datos del usuario incompletos');
       }
-      let existingUser = await userUseCases.findByEmail(user.email);
-      if (!existingUser) {
-        const { data, error } = await createUser({
-          name: user.name,
-          email: user.email,
-          image: user.image,
-        });
-        if (error) throw new Error(error);
-        if (data) existingUser = data;
-      } else if (existingUser.banned) throw new Error('Estas baneado de esta pagina');
-      if (!existingUser) throw new Error('Error al crear usuario');
+      const existingUser = await userUseCases.ensureByEmail({
+        name: user.name,
+        email: user.email,
+        image: user.image,
+      });
+      if (existingUser.banned) throw new Error('Estas baneado de esta pagina');
       user.idUser = existingUser.id;
       user.tier = existingUser.tier;
       return true;
