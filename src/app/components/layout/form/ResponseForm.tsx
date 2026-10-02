@@ -41,8 +41,11 @@ const ResponseFileField = ({
   const isImage = type === 'IMAGE';
 
   useEffect(() => {
+    if (latestType.current === type) return;
     latestType.current = type;
-  }, [type]);
+    setLocalError(null);
+    onChange(undefined);
+  }, [type, onChange]);
 
   const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const input = event.target;
@@ -166,6 +169,7 @@ export function ResponseForm<T extends FieldValues>({
         <Controller
           name={fileName}
           control={control}
+          shouldUnregister
           render={({ field, fieldState }) => {
             const { value, onChange, onBlur, ref } = field as {
               value: File | undefined;
