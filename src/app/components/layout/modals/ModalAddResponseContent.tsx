@@ -28,7 +28,6 @@ export const ModalAddResponseContent = ({
   const action: SubmitHandler<AddResponseInput> = async (data) => {
     if (!session) throw new Error('Necesitas iniciar sesion!');
     const { error } = await createResponse({
-      idUser: session.user.id,
       idTp: isTp ? module.id : null,
       idMidterm: !isTp ? module.id : null,
       number: data.number,

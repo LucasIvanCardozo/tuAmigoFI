@@ -1,7 +1,13 @@
+import { UTFile } from 'uploadthing/server';
 import db from '@/app/lib/server/db/db';
 import type { UploadMeta } from '@/app/lib/server/uploadthing/meta';
 import { utapi } from '@/app/lib/server/uploadthing/utapi';
+import { userUseCases } from '@/app/lib/server/usecases/user.usecases';
 import { MAX_UPLOAD_SIZE } from '@/app/lib/shared/constants/upload';
+
+const COURSE_SLUG_MAX_LENGTH = 32;
+const ENTITY_TYPE_MAX_LENGTH = 8;
+const UUID_SEGMENT_LENGTH = 8;
 
 export type UploadFileResult =
   | { success: true; url: string; fileKey: string }
@@ -79,9 +85,13 @@ async function withRetry<T>(
   throw lastError;
 }
 
-export async function uploadFile(file: File, meta?: UploadMeta): Promise<UploadFileResult> {
+export async function uploadFile(file: File, meta: UploadMeta): Promise<UploadFileResult> {
   if (!file) {
     return { success: false, error: 'No se recibió ningún archivo' };
+  }
+  const session = await userUseCases.getSession();
+  if (!session) {
+    return { success: false, error: 'Necesitas iniciar sesion!' };
   }
   if (file.size > MAX_UPLOAD_SIZE) {
     return {
@@ -90,17 +100,28 @@ export async function uploadFile(file: File, meta?: UploadMeta): Promise<UploadF
     };
   }
   try {
-    if (meta) {
-      console.info('UploadThing: upload metadata', {
-        entityType: meta.entityType,
-        entityId: meta.entityId,
-        courseId: meta.courseId,
-      });
-    }
-    const result = await withRetry(() => utapi.uploadFiles([file]), {
-      attempts: 3,
-      baseDelayMs: 500,
+    console.info('UploadThing: upload metadata', {
+      courseSlug: meta.courseSlug,
+      entityType: meta.entityType,
     });
+    const result = await withRetry(
+      () => {
+        const customId = [
+          meta.courseSlug.slice(0, COURSE_SLUG_MAX_LENGTH),
+          meta.entityType.slice(0, ENTITY_TYPE_MAX_LENGTH),
+          crypto.randomUUID().slice(0, UUID_SEGMENT_LENGTH),
+        ].join('/');
+        const utFile = new UTFile([file], file.name, {
+          customId,
+          lastModified: file.lastModified,
+        });
+        return utapi.uploadFiles([utFile]);
+      },
+      {
+        attempts: 3,
+        baseDelayMs: 500,
+      },
+    );
     const first = result[0];
     if (first?.data) {
       return {

@@ -1,15 +1,10 @@
 export type EntityType = 'tp' | 'midterm' | 'response';
 
 export type UploadMeta = {
-  courseId: string;
+  courseSlug: string;
   entityType: EntityType;
-  entityId: string;
 };
 
-export function buildUploadMeta(input: {
-  courseId: string;
-  entityType: EntityType;
-  entityId: string;
-}): UploadMeta {
+export function buildUploadMeta(input: { courseSlug: string; entityType: EntityType }): UploadMeta {
   return input;
 }
