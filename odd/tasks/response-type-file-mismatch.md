@@ -1,7 +1,7 @@
 # Response type and file mismatch
 
 Branch: `fix/response-type-file-mismatch`
-Status: done
+Status: done (delivered without a native review, at the user's decision — see Review below)
 Commit: `370b74b` — `fix(response): reject a file that does not match the response type`
 Base: `main` at `27d561a`
 
@@ -205,3 +205,37 @@ rows created in the window (column `created_at`), totals unchanged at 4 / 1 / 0.
   reaches stored `fileUrl`.
 - Informational findings from the same lineage as the upload work unit, **not**
   addressed here: **R3-002** (WARNING) and **R3-003** (SUGGESTION).
+
+## Review
+
+The native review of this candidate was **not performed**. The fresh consent envelope
+returned `declined_this_candidate` (`action: declined`, `lineage_created: false`,
+`mutation_performed: none`), and the user confirmed the decline was deliberate and
+chose to deliver under ordinary repository policy instead.
+
+Stated plainly: this is the only work unit of the session delivered **without** a
+native review. Its independent verification passed all eight checks, and that
+verification — not a review — is the evidence behind it.
+
+Two observations for whoever reads this:
+
+- A previous START attempt had failed with `consent-binding-stale`: a consent
+  binding created by the reminder machinery had expired after 10 minutes without an
+  answer, so the decline arrived on the second, fresh envelope.
+- The provider bases the review candidate on `origin/main`, not local `main`. With
+  local `main` five commits ahead, the declined envelope reported
+  `changed_files: 10, changed_lines: 692` — this work unit's three files plus the
+  seven files of the already-approved and already-merged uploads work unit.
+
+## Integration notes from the merged tree
+
+The merged tree was smoke-tested after both sibling branches landed. Two things
+surfaced that this branch does not address and that no per-branch verification could
+have seen, because the API involved only exists once the branches meet:
+
+- `compressImageForUpload` runs for ~2 s and never reports pending, so the global
+  spinner stays silent during compression even though `useLoaderPending` now exists.
+  Feedback is limited to the inline `Procesando imagen...` span and a disabled input.
+- `Loader` renders as `fixed bottom-0 right-0` with no `z-index`, while modals use a
+  `z-100` backdrop. Whether the loader can paint underneath an open modal is
+  unverified; no path that shows the loader with a modal open was found today.
