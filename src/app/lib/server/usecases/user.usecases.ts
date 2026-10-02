@@ -30,6 +30,9 @@ export const userUseCases = {
     cacheTag('users');
     return userRepository(db).findByEmail(email);
   },
+  async ensureByEmail(data: { name: string; email: string; image: string }) {
+    return userRepository(db).upsertByEmail(data);
+  },
   async findContributorsWithScore() {
     'use cache: remote';
     cacheLife('hours');

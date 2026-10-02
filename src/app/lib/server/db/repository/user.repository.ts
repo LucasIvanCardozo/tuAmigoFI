@@ -13,6 +13,13 @@ export const userRepository = (db: PrismaClient | Prisma.TransactionClient) => (
   findByEmail(email: string) {
     return db.user.findFirst({ where: { email } });
   },
+  upsertByEmail(data: { name: string; email: string; image: string }) {
+    return db.user.upsert({
+      where: { email: data.email },
+      update: { name: data.name, image: data.image },
+      create: { ...data, tier: 0, banned: false },
+    });
+  },
   findContributors() {
     return db.user.findMany({
       include: {
