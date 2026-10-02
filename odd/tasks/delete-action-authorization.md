@@ -181,3 +181,16 @@ With A attacking B's rows: all four returned `success: false` with the permissio
   ignores `typeTarget`, so a reaction lookup can match across target types.
 - `links/delete.action.ts` having no read at all is also why it had no ownership data to
   check; the fix adds one.
+
+## Review
+
+**No native review was performed.** The switch was on and `review.start` was offered for
+this candidate; consent was granted and lineage `review-7a78d5695add96e6` reached the
+`reviewing` state, but the user then instructed that the review not continue, on the ground
+that the executed verification above already covers this change. Concretely: no lens
+artifact was collected, no authority was burned, no correction was opened, and this
+candidate carries **no review verdict**. Report this work as verified, never as reviewed.
+
+The gap is worth naming: the executed check proves the authorization behaviour, but it does
+not give a second pair of eyes on the shape of the fix, which is what the native review
+would have added.
