@@ -24,7 +24,7 @@
     "@react-pdf-viewer/toolbar": "^3.12.0",
     "browser-image-compression": "2.0.2",
     "highlight.js": "^11.12.0",
-    "next": "^16.3.4",
+    "next": "^16.3.6",
     "next-auth": "^4.24.15",
     "pdfjs-dist": "^3.11.174",
     "react": "^19.2.8",
