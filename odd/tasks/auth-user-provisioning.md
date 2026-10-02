@@ -126,6 +126,27 @@ GREEN  segundo login -> idEstable=true name=B image=b tier=3 (esperado 3) banned
 Not verified, and not verifiable locally: the end-to-end Google sign-in. It needs the
 OAuth provider and a deployed environment, so it stays a post-deploy check.
 
+## Review and verification disposition
+
+- **Native review: declined for this candidate.** `review.start` returned
+  `consent-declined-this-candidate` for target
+  `sha256:9ac6d1f9e5f49b8149c960b83e0e3c4230a940a8ff5140bdd80d20019d4ac08b`, with
+  `lineage_created: false` and `mutation_performed: false`. A decline of this kind is
+  candidate-scoped and is not the review kill switch.
+- **The risk-gated plan called for an independent verifier.** With the native review
+  declined, the assessment reported risk `unassessable` — which is verified exactly like
+  `high` — and returned `writerSelfVerification: true` plus `independentVerifier: true`.
+- **The writer self-verification was executed and its results observed**, as recorded in
+  Verification above: the RED and GREEN experiments against the local database, `pnpm
+  lint`, and `pnpm build`.
+- **The independent verifier was waived by the user's explicit decision.** A delegated
+  verifier was launched and then cancelled on the user's instruction. This change is
+  therefore delivered **without a native review and without an independent verification
+  pass**, by user decision, and no such verification should be assumed by any reader.
+
+Delivery (push, pull request, merge, deploy) is a separate user decision under ordinary
+repository policy.
+
 ## Operational note
 
 The harness `edit` tool rewrites touched files to double quotes and changes line splits,
