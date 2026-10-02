@@ -22,7 +22,7 @@ export const ModalDeleteLinkContent = ({ link }: { link: Link }) => {
     if (!session) throw new Error('Necesitas iniciar sesion!');
     if (session.user.tier !== 2 && session.user.id !== link.idUser)
       throw new Error('Debes ser administrador o el creador para eliminar un link');
-    await deleteLink({ id: link.id, idUser: link.idUser });
+    await deleteLink({ id: link.id });
   };
 
   const { closeModal } = useModal();

@@ -9,20 +9,19 @@ import createAction from '../createActions';
 
 const schema = object({
   id: cuid(),
-  idUser: cuid(),
 });
 
-export const deleteResponse = createAction(schema, async ({ id, idUser }) => {
+export const deleteResponse = createAction(schema, async ({ id }) => {
   const session = await userUseCases.getSession();
   if (!session) throw new Error('Necesitas iniciar sesion!');
-  else if (session.user.id !== idUser && session.user.tier !== 2)
-    throw new Error('No tienes permiso para eliminar esta respuesta');
 
   const existing = await db.response.findUnique({
     where: { id },
-    select: { type: true, fileKey: true },
+    select: { idUser: true, type: true, fileKey: true },
   });
   if (!existing) throw new Error('No existe la respuesta');
+  if (existing.idUser !== session.user.id && session.user.tier !== 2)
+    throw new Error('No tienes permiso para eliminar esta respuesta');
   if ((existing.type === 'IMAGE' || existing.type === 'PDF') && existing.fileKey) {
     await deleteUploadThingFile(existing.fileKey);
   }

@@ -8,20 +8,19 @@ import createAction from '../createActions';
 
 const schema = object({
   id: cuid(),
-  idUser: cuid(),
 });
 
-export const deleteMidterm = createAction(schema, async ({ id, idUser }) => {
+export const deleteMidterm = createAction(schema, async ({ id }) => {
   const session = await userUseCases.getSession();
   if (!session) throw new Error('Necesitas iniciar sesion!');
-  if (session.user.id !== idUser && session.user.tier !== 2)
-    throw new Error('No tienes permiso para eliminar este tp');
 
   const midterm = await db.midterm.findUnique({
     where: { id },
-    select: { fileKey: true, responses: { select: { fileKey: true } } },
+    select: { idUser: true, fileKey: true, responses: { select: { fileKey: true } } },
   });
   if (!midterm) throw new Error('No existe el examen');
+  if (midterm.idUser !== session.user.id && session.user.tier !== 2)
+    throw new Error('No tienes permiso para eliminar este tp');
   for (const r of midterm.responses) {
     if (r.fileKey) await deleteUploadThingFile(r.fileKey);
   }
