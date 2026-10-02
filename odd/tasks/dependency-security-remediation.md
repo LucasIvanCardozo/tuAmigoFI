@@ -2,7 +2,7 @@
 
 Branch: `fix/dependency-security-remediation`
 Status: dependency remediation verified, committed, natively reviewed and approved;
-GitHub cleanup done; T4 is a pending user policy decision
+GitHub cleanup done; T4 declined by the user
 Commit: `7c82bdb` — `fix(deps): patch the next/og RCE and two transitive advisories`
 Base: `main` at `ab77e75`
 
@@ -107,12 +107,12 @@ dependency bump that would not reach the nested copies.
   Next.js 16.3.8 (Turbopack), Cache Components enabled, PPR output produced, 9/9
   static pages, TypeScript finished. `pnpm lint`: 0 errors and 1 warning, the accepted
   `src/app/globals.css:50`.
-- **T4 pending, and its original justification was wrong.** `.github/dependabot.yml`
-  does not affect the dependency graph or Dependabot alerts; it configures scheduled
-  version-update pull requests. The stale alerts came from a graph snapshot left
-  behind by the npm -> pnpm refactor, and T5 resolved them by other means. Adding the
-  file is a policy choice about receiving periodic update pull requests, not a fix, so
-  it is left to the user.
+- **T4 declined by the user, and its original justification was wrong.**
+  `.github/dependabot.yml` does not affect the dependency graph or Dependabot alerts;
+  it configures scheduled version-update pull requests. The stale alerts came from a
+  graph snapshot left behind by the npm -> pnpm refactor, and T5 resolved them by other
+  means. Since Dependabot security updates now cover known vulnerabilities, the user
+  decided the file would only add pull-request noise, so it was not created.
 - **T5 done.** See GitHub cleanup below.
 - **T6 done.** This document.
 
@@ -150,8 +150,12 @@ was byte-identical afterwards, and the working tree matched the baseline exactly
   expectation recorded at planning time; the existing `repo` scope sufficed.
 - Dependabot security updates: **enabled** (was disabled).
 - Open Dependabot alerts after cleanup: **0**.
-- Still disabled, each worth its own decision: secret scanning, secret scanning push
-  protection, secret scanning validity checks, and code scanning (no analysis).
+- Secret scanning and secret scanning push protection: **enabled** at the user's
+  decision. Both are free on a public repository and required no repository change.
+  Zero open secret alerts at enablement, so nothing had leaked; push protection now
+  blocks a secret before it can enter the history.
+- Still disabled, each worth its own decision: secret scanning validity checks and
+  code scanning (no analysis).
 
 ## Residual risk
 
