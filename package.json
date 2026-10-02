@@ -24,7 +24,7 @@
     "@react-pdf-viewer/toolbar": "^3.12.0",
     "browser-image-compression": "2.0.2",
     "highlight.js": "^11.12.0",
-    "next": "^16.3.4",
+    "next": "^16.3.8",
     "next-auth": "^4.24.15",
     "pdfjs-dist": "^3.11.174",
     "react": "^19.2.8",
@@ -61,7 +61,9 @@
       "tar": ">=7.5.19",
       "effect": ">=3.20.0",
       "deepmerge-ts": ">=8.0.0",
-      "mysql2": ">=3.23.1"
+      "mysql2": ">=3.23.1",
+      "brace-expansion": "^1.1.21",
+      "fast-uri": "^3.1.8"
     },
     "neverBuiltDependencies": ["canvas"]
   }
