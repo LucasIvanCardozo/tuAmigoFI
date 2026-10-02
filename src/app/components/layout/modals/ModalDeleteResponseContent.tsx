@@ -18,7 +18,7 @@ export const ModalDeleteResponseContent = ({
   response: Response;
   user: User;
 }) => {
-  const { id, idUser } = response;
+  const { id } = response;
   const { control, handleSubmit } = useForm<ConfirmationInput>({
     resolver: zodResolver(confirmationSchema),
     defaultValues: { confirm: false },
@@ -31,7 +31,7 @@ export const ModalDeleteResponseContent = ({
     if (session.user.tier !== 2 && session.user.id !== user.id)
       throw new Error('Debes ser administrador o el creador para eliminar una respuesta');
 
-    const { error } = await deleteResponse({ id, idUser });
+    const { error } = await deleteResponse({ id });
     if (error) throw new Error(`Error: ${error}`);
   };
 

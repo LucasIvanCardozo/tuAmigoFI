@@ -30,7 +30,7 @@ export const ModalDeleteTpContent = ({
     if (session.user.tier !== 2 && session.user.id !== user.id)
       throw new Error('Debes ser administrador o el creador para eliminar un TP');
 
-    const { error } = await deleteTp({ id: tp.id, idUser: tp.idUser });
+    const { error } = await deleteTp({ id: tp.id });
     if (error) throw new Error(error);
   };
 

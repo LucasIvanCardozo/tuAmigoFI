@@ -7,13 +7,18 @@ import createAction from '../createActions';
 
 const schema = object({
   id: cuid(),
-  idUser: cuid(),
 });
 
-export const deleteLink = createAction(schema, async ({ id, idUser }) => {
+export const deleteLink = createAction(schema, async ({ id }) => {
   const session = await userUseCases.getSession();
   if (!session) throw new Error('Necesitas iniciar sesion!');
-  if (session.user.id !== idUser && session.user.tier !== 2)
+
+  const link = await db.link.findUnique({
+    where: { id },
+    select: { idUser: true },
+  });
+  if (!link) throw new Error('No existe el link');
+  if (link.idUser !== session.user.id && session.user.tier !== 2)
     throw new Error('No tienes permiso para eliminar este tp');
 
   const deleted = await db.link.delete({

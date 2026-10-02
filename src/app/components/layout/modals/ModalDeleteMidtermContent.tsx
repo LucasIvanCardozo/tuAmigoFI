@@ -30,10 +30,7 @@ export const ModalDeleteMidtermContent = ({
     if (session.user.tier !== 2 && session.user.id !== user.id)
       throw new Error('Debes ser administrador o el creador para eliminar un examen');
 
-    const { error } = await deleteMidterm({
-      id: midterm.id,
-      idUser: midterm.idUser,
-    });
+    const { error } = await deleteMidterm({ id: midterm.id });
     if (error) throw new Error(error);
   };
 
