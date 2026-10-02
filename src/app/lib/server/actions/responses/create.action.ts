@@ -2,6 +2,7 @@
 
 import { updateTag } from 'next/cache';
 import z, { cuid, file, number, string } from 'zod';
+import { getResponseFileTypeError } from '../../../shared/schemas/response.schema';
 import db from '../../db/db';
 import { TypeResponse } from '../../db/prisma/prismaClient/enums';
 import { buildUploadMeta } from '../../uploadthing/meta';
@@ -37,6 +38,15 @@ const schema = z
       ctx.addIssue({
         code: 'custom',
         message: 'Debe existir idTp o idMidterm, pero no ambos',
+      });
+    }
+
+    const fileTypeError = getResponseFileTypeError(data.type, data.file);
+    if (fileTypeError) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['file'],
+        message: fileTypeError,
       });
     }
   });

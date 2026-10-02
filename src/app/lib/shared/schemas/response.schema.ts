@@ -8,6 +8,19 @@ const responseFileSchema = z
     'Solo se admite PDF, JPEG o PNG',
   );
 
+export const getResponseFileTypeError = (type: string, file?: File | null): string | null => {
+  if (!file) return null;
+  if (type === 'IMAGE') {
+    return file.type === 'image/jpeg' || file.type === 'image/png'
+      ? null
+      : 'Para una imagen selecciona un archivo JPG o PNG';
+  }
+  if (type === 'PDF') {
+    return file.type === 'application/pdf' ? null : 'Para un PDF selecciona un archivo PDF';
+  }
+  return null;
+};
+
 export const addResponseSchema = z
   .object({
     number: z
@@ -34,6 +47,14 @@ export const addResponseSchema = z
         code: 'custom',
         path: ['file'],
         message: 'Debes subir un archivo',
+      });
+    }
+    const fileTypeError = getResponseFileTypeError(data.type, data.file);
+    if (fileTypeError) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['file'],
+        message: fileTypeError,
       });
     }
   });
