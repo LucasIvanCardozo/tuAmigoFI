@@ -6,7 +6,7 @@ import type { Session } from 'next-auth';
 import { signIn, signOut } from 'next-auth/react';
 import { use, useEffect, useState } from 'react';
 import { CgClose, CgMenu } from 'react-icons/cg';
-import { handleLoader } from '@/app/utils/handleLoader';
+import { LinkLoader } from './linkLoader';
 import { Loading } from './loading';
 
 export default function Nav({ callbackSession }: { callbackSession: Promise<Session | null> }) {
@@ -53,15 +53,9 @@ export default function Nav({ callbackSession }: { callbackSession: Promise<Sess
       <Link
         className="text-xl bg-(--dark-cyan) drop-shadow-sm rounded-md m-1 px-1 flex items-center justify-center sm:hidden"
         href="/"
-        onClick={
-          pathname !== '/'
-            ? () => {
-                handleLoader(true);
-                setNavState(false);
-              }
-            : undefined
-        }
+        onClick={pathname !== '/' ? () => setNavState(false) : undefined}
       >
+        <LinkLoader />
         <b className="">Tu Amigo FI</b>
       </Link>
       <button
@@ -105,15 +99,9 @@ export default function Nav({ callbackSession }: { callbackSession: Promise<Sess
             <Link
               href={href}
               className="inline-block text-center w-40 py-2 font-bold px-3 sm:w-28 sm:font-normal"
-              onClick={
-                pathname !== href
-                  ? () => {
-                      handleLoader(true);
-                      handleNavState();
-                    }
-                  : undefined
-              }
+              onClick={pathname !== href ? handleNavState : undefined}
             >
+              <LinkLoader />
               {name}
             </Link>
           </li>

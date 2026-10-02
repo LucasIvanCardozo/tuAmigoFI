@@ -1,8 +1,8 @@
 'use client';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useTransition } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
-import { handleLoader } from '@/app/utils/handleLoader';
+import { useLoaderPending } from '@/app/contexts/LoaderContext';
 
 const normalize = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
@@ -10,10 +10,13 @@ export default function SearchCourses() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   const urlSearch = searchParams.get('search')?.toString() || '';
   const [search, setSearch] = useState<string>(urlSearch);
   const lastUrlSearch = useRef(urlSearch);
+
+  useLoaderPending(isPending);
 
   useEffect(() => {
     if (urlSearch !== lastUrlSearch.current) {
@@ -32,7 +35,9 @@ export default function SearchCourses() {
       params.delete('search');
     }
     params.set('page', '1');
-    replace(`${pathname}?${params.toString()}`);
+    startTransition(() => {
+      replace(`${pathname}?${params.toString()}`);
+    });
   }, 300);
 
   return (
@@ -46,7 +51,6 @@ export default function SearchCourses() {
       value={search}
       onChange={(e) => {
         setSearch(e.target.value);
-        handleLoader(true);
         handleSearch(e.target.value);
       }}
     />
