@@ -1,8 +1,8 @@
 # Dependency security remediation
 
 Branch: `fix/dependency-security-remediation`
-Status: dependency remediation verified and committed; GitHub cleanup done; T4 is a
-pending user policy decision
+Status: dependency remediation verified, committed, natively reviewed and approved;
+GitHub cleanup done; T4 is a pending user policy decision
 Commit: `7c82bdb` — `fix(deps): patch the next/og RCE and two transitive advisories`
 Base: `main` at `ab77e75`
 
@@ -174,4 +174,28 @@ this risk requires replacing the viewer library, which is its own work unit.
 
 ## Review
 
-Pending. Native review runs only under the user-owned RDD switch.
+Native review **approved**, authority burned. Lineage `review-02b16f57474898ee`, target
+`sha256:8db51adc31eb76effd17e01fac7f89ccf04f3618aaa4e1ea2928665802b25a96`, risk tier
+high, four lenses (`review-risk`, `review-resilience`, `review-readability`,
+`review-reliability`), 4/4 reviewers admitted, consumed revision
+`sha256:9ddb71d1bbbaea8366f968273f1c15aee1b343e3e4e37402a271e968073de159`, burn
+evidence `gentle-ai.review-acknowledged/v1`, delivery `ordinary-repository-policy`. No
+correction was opened; the correction budget of 148 lines was never used.
+
+Six advisory findings, all informational and non-blocking, kept as later work:
+
+| ID | Lens | Location | Severity |
+| --- | --- | --- | --- |
+| `R1-residual-pdfjs` | risk | `package.json:29` | WARNING |
+| `R4-override-scope` | resilience | `package.json:65` | WARNING |
+| `R3-001` | reliability | `odd/tasks/dependency-security-remediation.md:4-5` | WARNING |
+| `R2-001` | readability | `odd/tasks/dependency-security-remediation.md:84` | SUGGESTION |
+| `R2-002` | readability | `package.json:65-66` | SUGGESTION |
+| `R3-002` | reliability | `package.json:65-66` | SUGGESTION |
+
+The two `package.json:65-66` findings concern the new `pnpm.overrides` entries, and the
+two document findings concern this file's own accuracy. None required a change to the
+approved revision.
+
+Delivery (push, pull request, merge) remains a separate user decision under ordinary
+repository policy.
