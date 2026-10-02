@@ -1,9 +1,12 @@
 # Dependency security remediation
 
 Branch: `fix/dependency-security-remediation`
-Status: dependency remediation verified, committed, natively reviewed and approved;
-GitHub cleanup done; T4 declined by the user
-Commit: `7c82bdb` — `fix(deps): patch the next/og RCE and two transitive advisories`
+Status: dependency remediation verified, committed, natively reviewed and approved, and
+merged to `main`; GitHub cleanup done; T4 declined by the user; the pdfjs-dist residual
+risk was analysed and the decision is to stay, documented below
+Commits: `7c82bdb` — `fix(deps): patch the next/og RCE and two transitive advisories`;
+`fd6c28d`, `db9fc39`, `acd61df` — evidence, review result and the T4 decision; merged to
+`main` as `dd3033e` and pushed
 Base: `main` at `ab77e75`
 
 ## Problem
@@ -157,14 +160,85 @@ was byte-identical afterwards, and the working tree matched the baseline exactly
 - Still disabled, each worth its own decision: secret scanning validity checks and
   code scanning (no analysis).
 
-## Residual risk
+## Residual risk: `pdfjs-dist` 3.11.174
 
-`pdfjs-dist` 3.11.174 stays vulnerable to `GHSA-wgrm-67xf-hhpq` and cannot be bumped
-inside this work unit: `@react-pdf-viewer/core@3.12.0` declares the peer
-`pdfjs-dist: "^2.16.105 || ^3.0.279"`, so 4.x or 6.x breaks the PDF viewer. The
-runtime mitigations already in place (`isEvalSupported: false`,
-`enableScripting: false` on the pinned 3.11.174 worker) remain the control. Removing
-this risk requires replacing the viewer library, which is its own work unit.
+**Decision, taken by the user after the analysis below: stay as is, documented, and
+revisit only when an advisory appears that no configuration flag can mitigate.**
+
+### Exposure, and why it is controlled
+
+Two advisories affect the pinned `3.11.174`. Both require an insecure default that this
+project already overrides in `src/app/components/pdf-viewer-impl.tsx`:
+
+| Advisory | Requires | Our value |
+| --- | --- | --- |
+| `CVE-2024-4367` (`GHSA-wgrm-67xf-hhpq`, CVSS 8.8) | `isEvalSupported: true` | `false`, line 68 |
+| `CVE-2026-16633` (`GHSA-hq66-cqwq-w95j`) | `enableScripting: true` and a `script-src` CSP that does not restrict | `false`, line 69 |
+
+The second row is the fragile one. The CSP in `next.config.mjs:38` allows
+`script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com`, so it does **not**
+restrict `script-src`. `enableScripting: false` is therefore the sole control for that
+advisory, and removing or renaming that option silently reopens the vulnerability. That
+is the one line worth protecting.
+
+Exposure is real but bounded: the attack requires opening a malicious PDF, and responses
+are user-uploaded public content, so a hostile file could in principle be uploaded for
+others to open. The flags, not the library version, are what close that path today.
+
+### Why the dependency cannot simply be bumped
+
+Three independent barriers, any one of which is enough to break the viewer:
+
+1. `@react-pdf-viewer/core@3.12.0` is the **latest published version and has been frozen
+   since 2023-03-21**; its peer range is `pdfjs-dist: "^2.16.105 || ^3.0.279"`, which
+   excludes 4.x.
+2. `core` loads pdfjs through CommonJS — `core/lib/cjs/core.js:4` is
+   `require('pdfjs-dist')` — while pdfjs 4.x and later are ESM-only.
+3. `pdf-viewer-impl.tsx:17` hardcodes the worker to
+   `pdfjs-dist@3.11.174/build/pdf.worker.min.js`, so any API-to-worker mismatch breaks
+   rendering outright.
+
+Upstream confirms there is no path. The react-pdf-viewer issue #1767 ("Pdfjs-dist
+Library Upgrade to V4") has been **open since 2024-06-03**, has 17 comments, has been
+closed by no pull request, and users who tried v4 reported errors when closing documents.
+Separately, the pdf.js maintainers stated that security fixes will **not** be backported
+to the 3.x branch, which they describe as unsupported for a long time. Forcing an
+override is therefore not a fix.
+
+### Blast radius, for whenever migration is reconsidered
+
+Much smaller than it looks:
+
+- The entire viewer coupling is **one file**: `src/app/components/pdf-viewer-impl.tsx`
+  (76 lines).
+- **No** file imports `pdfjs-dist` directly; its only consumer is
+  `@react-pdf-viewer/core`.
+- Two render sites: `moduleResponse.tsx:102` and `moduleContainer.tsx:103`.
+- The API surface is `Worker` plus `Viewer` with six props, seven toolbar slots
+  (`GoToPreviousPage`, `GoToNextPage`, `CurrentPageLabel`, `NumberOfPages`, `ZoomOut`,
+  `CurrentScale`, `ZoomIn`), and one direct pdfjs call —
+  `doc.getPage(1).getViewport({ scale: 1 })`, used to compute the aspect ratio.
+
+### Alternatives measured, not guessed
+
+| Option | pdfjs brought | React peer | Weekly downloads | Status |
+| --- | --- | --- | --- | --- |
+| `react-pdf` 11.0.0 | 6.3.289 (dependency) | `^19.0.0` | 8,131,865 | published 2026-09-10, maintained |
+| `@react-pdf-kit/viewer` 2.10.0 | 5.4.530 | `^18.2` or `^19.0` | 9,068 | published 2026-10-01 |
+| `@react-pdf-viewer/core` (current) | 3.11.174 | `>=16.8.0` | 454,640 | frozen since 2023 |
+
+`react-pdf` leads by three orders of magnitude in adoption, but it exposes only
+`<Document>` and `<Page>`, so migrating would mean rebuilding the seven-control toolbar.
+Since this repository has no test framework, such a migration could only be verified
+manually in a browser — and that, not the dependency itself, is the real risk.
+
+### Consequence for the repository's safety net
+
+`pnpm audit --prod` reports this finding and **Dependabot reports nothing**, because
+GitHub's dependency graph still does not reflect `pnpm-lock.yaml`:
+`dependency-graph/sbom` returns 404, and the open-alert list is empty while the local
+audit finds a high-severity issue. Local `pnpm audit` is therefore the only working
+check on this dependency, and the finding must stay visible rather than be dismissed.
 
 ## Operational notes
 
