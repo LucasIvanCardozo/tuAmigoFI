@@ -24,7 +24,6 @@ export const ModalAddTpContent = ({ course }: { course: Course }) => {
       name: data.name,
       number: data.number,
       year: data.year,
-      idUser: session.user.id,
       idCourse: course.id,
       file: data.file,
     });

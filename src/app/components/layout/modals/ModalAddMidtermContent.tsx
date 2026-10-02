@@ -24,7 +24,6 @@ export const ModalAddMidtermContent = ({ course }: { course: Course }) => {
       name: data.name,
       date: new Date(data.date).toISOString(),
       idCourse: course.id,
-      idUser: session.user.id,
       file: data.file,
     });
     if (error) throw new Error(`Error: ${error}`);

@@ -2,6 +2,7 @@
 
 import { updateTag } from 'next/cache';
 import z, { cuid, file, number, string } from 'zod';
+import { slugify } from '../../../../utils/slugify';
 import { getResponseFileTypeError } from '../../../shared/schemas/response.schema';
 import db from '../../db/db';
 import { TypeResponse } from '../../db/prisma/prismaClient/enums';
@@ -12,7 +13,6 @@ import createAction from '../createActions';
 
 const schema = z
   .object({
-    idUser: cuid(),
     idTp: cuid().nullable().optional(),
     idMidterm: cuid().nullable().optional(),
     number: number().min(1),
@@ -53,10 +53,11 @@ const schema = z
 
 export const createResponse = createAction(
   schema,
-  async ({ idUser, idTp, idMidterm, number, type, text, file }) => {
+  async ({ idTp, idMidterm, number, type, text, file }) => {
     if (idMidterm && idTp) throw new Error('No puedes tener un parcial y un tp');
     const session = await userUseCases.getSession();
     if (!session) throw new Error('Necesitas iniciar sesion!');
+    const idUser = session.user.id;
 
     const validation = await db.response.findFirst({
       where: {
@@ -68,25 +69,25 @@ export const createResponse = createAction(
     });
     if (!validation) {
       if ((type === 'IMAGE' || type === 'PDF') && file) {
-        let courseId: string | undefined;
+        let courseSlug: string | undefined;
         if (idTp) {
           const tp = await db.tp.findUnique({
             where: { id: idTp },
-            select: { idCourse: true },
+            select: { idCourse: true, courses: { select: { name: true } } },
           });
-          courseId = tp?.idCourse;
+          courseSlug = tp ? slugify(tp.courses.name) || tp.idCourse : undefined;
         } else if (idMidterm) {
           const midterm = await db.midterm.findUnique({
             where: { id: idMidterm },
-            select: { idCourse: true },
+            select: { idCourse: true, courses: { select: { name: true } } },
           });
-          courseId = midterm?.idCourse;
+          courseSlug = midterm ? slugify(midterm.courses.name) || midterm.idCourse : undefined;
         }
-        if (!courseId) throw new Error('No se encontró la materia');
+        if (!courseSlug) throw new Error('No se encontró la materia');
 
         const response = await withUploadRollback(
           file,
-          buildUploadMeta({ courseId, entityType: 'response', entityId: '__pending__' }),
+          buildUploadMeta({ courseSlug, entityType: 'response' }),
           async (url, key) => {
             const created = await db.response.create({
               data: {
