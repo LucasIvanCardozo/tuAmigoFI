@@ -92,9 +92,11 @@ export default function CalendarSection({ callbackYear }: { callbackYear: Promis
     `${yearCurrent}/04/03`,
     `${yearCurrent}/05/01`,
     `${yearCurrent}/05/25`,
+    `${yearCurrent}/06/15`,
     `${yearCurrent}/06/20`,
     `${yearCurrent}/07/09`,
     `${yearCurrent}/08/17`,
+    `${yearCurrent}/09/21`,
     `${yearCurrent}/10/12`,
     `${yearCurrent}/11/20`,
     `${yearCurrent}/12/08`,
@@ -132,6 +134,7 @@ export default function CalendarSection({ callbackYear }: { callbackYear: Promis
     `${yearCurrent}/08/13`,
     `${yearCurrent}/08/14`,
     `${yearCurrent}/08/15`,
+    `${yearCurrent}/12/14`,
     `${yearCurrent}/12/15`,
     `${yearCurrent}/12/16`,
     `${yearCurrent}/12/17`,
@@ -143,6 +146,7 @@ export default function CalendarSection({ callbackYear }: { callbackYear: Promis
     `${yearCurrent}/03/09`,
     `${yearCurrent}/06/26`,
     `${yearCurrent}/08/18`,
+    `${yearCurrent}/12/07`,
   ]);
 
   useEffect(() => {
