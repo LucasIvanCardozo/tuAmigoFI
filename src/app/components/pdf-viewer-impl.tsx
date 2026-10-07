@@ -32,10 +32,7 @@ export default function PdfViewerImpl({ url }: { url: string }) {
 
   return (
     <Worker workerUrl={WORKER_URL}>
-      <div
-        className="flex flex-col rounded-md overflow-hidden border border-slate-300 bg-white mx-auto"
-        style={aspectRatio ? { aspectRatio, maxHeight: '90vh', width: '100%' } : { height: '75vh' }}
-      >
+      <div className="flex flex-col w-full rounded-md overflow-hidden border border-slate-300 bg-white mx-auto">
         <Toolbar>
           {(slot: ToolbarSlot) => (
             <div className="flex items-center justify-center gap-3 border-b border-slate-300 bg-[#C8E0E4] px-3 py-2">
@@ -55,7 +52,10 @@ export default function PdfViewerImpl({ url }: { url: string }) {
             </div>
           )}
         </Toolbar>
-        <div className="flex-1 min-h-0">
+        <div
+          className="w-full flex-none"
+          style={aspectRatio ? { aspectRatio } : { height: '75vh' }}
+        >
           <Viewer
             fileUrl={url}
             plugins={plugins}
