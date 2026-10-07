@@ -231,6 +231,21 @@ In `useFormSubmit`, the `action` is expected to throw `Error` on failure (read t
 - Server actions re-validate with zod. Do not rely on client-side validation alone.
 - Cloudinary credentials are server-only and must stay in `process.env`.
 
+### Authorization (tiers)
+
+`User.tier` is server-derived and never client-writable, so `session.user.tier` is trusted. It is set to `0` at provisioning and changed only directly in the database.
+
+| Tier   | Meaning                                                      |
+| ------ | ------------------------------------------------------------ |
+| `0`    | Default. Authors content and deletes only what it authored.  |
+| `>= 1` | Superior rank. Required to create correlatives and links.     |
+| `2`    | Moderator. Bypasses the ownership check on deletes.           |
+
+- **Authorize in the Server Action, not in the modal.** A Server Action is an HTTP endpoint: a hidden button or a modal guard is UX only and is bypassable.
+- **Gate placement:** immediately after the session check and before the first database write, as `if (session.user.tier < 1) throw new Error(...)`.
+- **Gate the UI with the same threshold** so a `tier: 0` user never sees a control they cannot use.
+- `tier` travels in the JWT, so a rank change does not apply until the user signs in again.
+
 ## Git
 
 Conventional commits:

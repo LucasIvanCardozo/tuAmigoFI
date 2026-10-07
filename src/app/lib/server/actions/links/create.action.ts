@@ -18,6 +18,7 @@ const schema = object({
 export const createLink = createAction(schema, async ({ idCourse, name, link, official }) => {
   const session = await userUseCases.getSession();
   if (!session) throw new Error('Necesitas iniciar sesion!');
+  if (session.user.tier < 1) throw new Error('Debes tener un rango superior para añadir links');
 
   const newLink = await db.link.create({
     data: {

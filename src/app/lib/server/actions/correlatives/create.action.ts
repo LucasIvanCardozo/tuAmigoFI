@@ -13,6 +13,8 @@ const schema = object({
 export const createCorrelative = createAction(schema, async ({ idCourse, idCorrelativeCourse }) => {
   const session = await userUseCases.getSession();
   if (!session) throw new Error('Necesitas iniciar sesion!');
+  if (session.user.tier < 1)
+    throw new Error('Debes tener un rango superior para añadir correlativas');
 
   const correlatives = await db.correlative.create({
     data: {
