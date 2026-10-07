@@ -22,7 +22,7 @@ export default async function Course({
 }) {
   const { id, name, cg, hs, optional } = course;
   const session = await userUseCases.getSession();
-  const callbackLinks = linkUseCases.findByCourseId(id);
+  const hasSuperiorRank = (session?.user.tier ?? 0) >= 1;
   const callbackCourses = courseUseCases.findAll();
 
   return (
@@ -40,9 +40,11 @@ export default async function Course({
       <Suspense fallback={CorrelativeTableSkeleton()}>
         <CorrelativeTable idCourse={id} idDegree={idDegree} />
       </Suspense>
-      <Suspense fallback={<CourseLinksSkeleton />}>
-        <CourseLinks callbackLinks={callbackLinks} />
-      </Suspense>
+      {hasSuperiorRank && (
+        <Suspense fallback={<CourseLinksSkeleton />}>
+          <CourseLinks callbackLinks={linkUseCases.findByCourseId(id)} />
+        </Suspense>
+      )}
       <div className="text-sm h-8 items-center w-full flex overflow-y-hidden overflow-x-auto gap-x-1 opacity-75 leading-4 sm:pt-2 sm:flex-wrap sm:overflow-visible sm:h-auto">
         <b className="whitespace-nowrap">Está en:</b>
         <Suspense fallback={<DegreesListSkeleton />}>
@@ -50,7 +52,7 @@ export default async function Course({
         </Suspense>
       </div>
       <div className="flex justify-end gap-1 pt-1 text-(--white) items-center text-sm sm:text-base">
-        {session?.user && (
+        {hasSuperiorRank && (
           <>
             <ModalCreateCorrelativeOpener course={course} callback={callbackCourses} />
             <ModalAddLinkOpener course={course} />
