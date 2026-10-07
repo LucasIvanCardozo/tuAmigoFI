@@ -1,8 +1,8 @@
 # Creation authorization and the link section
 
 Branch: `fix/creation-authorization`
-Status: implemented and independently verified; delivery decided by the user (merge `--no-ff`, push,
-delete branch)
+Status: delivered and independently verified, with **no native review** (the user explicitly
+left this candidate unreviewed)
 Base: `main` at `acbb26b`
 
 ## Problem
@@ -232,3 +232,27 @@ byte-identical before and after, and nothing was fixed, edited or committed by i
   at `:45`.
 - Hiding `CourseLinks` also hides the only UI path to delete a link, so a tier-0 author can
   no longer remove links they created before this change. Accepted above.
+
+## Delivery
+
+- Work-unit commit `5f59cb9` — `fix(auth): gate correlative and link creation behind a
+  superior rank` — on `fix/creation-authorization`, branched from `main` at `acbb26b`.
+- Merged `--no-ff` as `5a88642` and pushed to `origin/main` (`acbb26b..5a88642`); the branch
+  was deleted and the tree is clean.
+
+## RDD disposition
+
+RDD reads `on` (`gentle-ai review mode status`: global on, clone-local unset). The
+entry-rule preflight, `gentle_review {"operation":"inspect"}`, returned **blocked** with
+reason `empty_candidate_base_ref_required`: the workspace projection was empty because the
+work was already committed and the tree clean, and it asked for a candidate base ref. It
+offered no executable START route and returned an empty `collectBindings`, so nothing was
+collected and **no lineage was created and no authority was burned**.
+
+Reviewing the delivered range would have required an explicit START with
+`{baseRef: "acbb26b", committedOnly: true}`. That decision was put to the user, who
+**explicitly chose to leave this candidate unreviewed**, consistent with their earlier
+disposition once independent verification is in hand.
+
+So this work unit carries **no native review verdict** and must never be reported as
+reviewed. It is *verified*: lint, build and the readback recorded above.
