@@ -47,10 +47,13 @@ pnpm settings live in `pnpm-workspace.yaml`, not in `package.json#pnpm`: pnpm 11
 
 - `overrides:` — security pins for transitive dependencies (tar, effect, deepmerge-ts, mysql2, brace-expansion, fast-uri, source-map-js). pnpm mirrors this block into the top of `pnpm-lock.yaml`. Editing one without the other breaks `pnpm install --frozen-lockfile` with `ERR_PNPM_LOCKFILE_CONFIG_MISMATCH`.
 - `allowBuilds:` — explicit allow-list of dependency build scripts. Packages left out are not built and fail the install with `ERR_PNPM_IGNORED_BUILDS`. `canvas` stays denied.
+- `minimumReleaseAge:` — minutes a package must have been published before it can enter the lockfile. Vercel enforces 24h (1440) by default and rejects the install with `ERR_PNPM_MINIMUM_RELEASE_AGE_VIOLATION`; keeping it here makes that failure surface locally instead of in the deploy.
 
 Never regenerate `pnpm-lock.yaml` with pnpm 10 or earlier: those versions ignore `pnpm-workspace.yaml#overrides` and silently drop the security pins.
 
 Vercel must have `ENABLE_EXPERIMENTAL_COREPACK=1` set as a project environment variable. Without it, Vercel ignores `packageManager`, installs pnpm 9 or 10, and cannot read these settings.
+
+`vercel.json` disables automatic preview deployments for every branch except `main`, so pushes to feature branches no longer build a preview that fails on the missing Preview `DATABASE_URL`. The dashboard no longer exposes this toggle; `git.deploymentEnabled` is the supported mechanism.
 
 ## Project Structure
 
