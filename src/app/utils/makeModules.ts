@@ -105,7 +105,9 @@ export const makeModules = ({ moduleList, reactions, type }: Props): DataModule[
       module: module,
       user: module.users,
       problems: dataModuleProblems,
-      reactions: isTp ? reactions.tpReactions : reactions.midtermReactions,
+      reactions: (isTp ? reactions.tpReactions : reactions.midtermReactions).filter(
+        (reaction) => reaction.idTarget === module.id,
+      ),
     });
   }
 

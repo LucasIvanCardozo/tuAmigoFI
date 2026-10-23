@@ -1,5 +1,7 @@
 import { courseUseCases } from '@/app/lib/server/usecases/course.usecases';
 import { tpUseCases } from '@/app/lib/server/usecases/tp.usecases';
+import { userUseCases } from '@/app/lib/server/usecases/user.usecases';
+import { visibleModules } from '@/app/utils/reportedModules';
 import { MainModule } from '../../../../components/feature/materias/mainModule';
 
 interface Props {
@@ -14,8 +16,14 @@ export default async function Practica({ params, searchParams }: Props) {
     courseUseCases.getById(id),
     tpUseCases.findByCourseIdWithAllData(id),
   ]);
+  const session = await userUseCases.getSession();
 
   return (
-    <MainModule modules={modules} course={course} typeModule="TP" initialIdModule={idModule} />
+    <MainModule
+      modules={visibleModules(modules, session?.user.tier === 2)}
+      course={course}
+      typeModule="TP"
+      initialIdModule={idModule}
+    />
   );
 }
