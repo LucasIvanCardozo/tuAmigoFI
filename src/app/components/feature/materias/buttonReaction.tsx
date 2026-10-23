@@ -1,9 +1,10 @@
 'use client';
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AiFillLike } from 'react-icons/ai';
 import { TbAlertHexagon } from 'react-icons/tb';
 import { sileo } from 'sileo';
+import { useReload } from '@/app/hooks/useReload';
 import { upsertReaction } from '@/app/lib/server/actions/reactions/upsert.action';
 import type { DataModuleResponse } from '@/app/types';
 
@@ -23,38 +24,47 @@ export default function ButtonReaction({
     dislikes: 0,
   });
   const { data: session } = useSession();
+  const { startReload } = useReload();
+  const [pending, setPending] = useState(false);
+  const inFlight = useRef(false);
 
   async function handleLike(reaction: boolean) {
-    if (!session?.user.id)
+    if (!session?.user.id) {
       sileo.error({
         title: 'Debes iniciar sesion para reaccionar a la respuesta.',
       });
-    else {
-      const response = responses[indexResponse];
-      setStateReaction(reaction === stateReaction ? null : reaction);
-      setAmountReaction(
-        reaction === stateReaction
-          ? {
-              likes: reaction ? amountReaction.likes - 1 : amountReaction.likes,
-              dislikes: reaction ? amountReaction.dislikes : amountReaction.dislikes - 1,
-            }
-          : stateReaction == null
-            ? {
-                likes: reaction ? amountReaction.likes + 1 : amountReaction.likes,
-                dislikes: reaction ? amountReaction.dislikes : amountReaction.dislikes + 1,
-              }
-            : {
-                likes: reaction ? amountReaction.likes + 1 : amountReaction.likes - 1,
-                dislikes: reaction ? amountReaction.dislikes - 1 : amountReaction.dislikes + 1,
-              },
-      );
-      const { error } = await upsertReaction({
-        idTarget: response.response.id,
-        typeTarget: 'RESPONSE',
-        reaction: reaction,
-      });
-      if (error) sileo.error({ title: error });
+      return;
     }
+    if (inFlight.current) return;
+    inFlight.current = true;
+    setPending(true);
+    const response = responses[indexResponse];
+    setStateReaction(reaction === stateReaction ? null : reaction);
+    setAmountReaction(
+      reaction === stateReaction
+        ? {
+            likes: reaction ? amountReaction.likes - 1 : amountReaction.likes,
+            dislikes: reaction ? amountReaction.dislikes : amountReaction.dislikes - 1,
+          }
+        : stateReaction == null
+          ? {
+              likes: reaction ? amountReaction.likes + 1 : amountReaction.likes,
+              dislikes: reaction ? amountReaction.dislikes : amountReaction.dislikes + 1,
+            }
+          : {
+              likes: reaction ? amountReaction.likes + 1 : amountReaction.likes - 1,
+              dislikes: reaction ? amountReaction.dislikes - 1 : amountReaction.dislikes + 1,
+            },
+    );
+    const { error } = await upsertReaction({
+      idTarget: response.response.id,
+      typeTarget: 'RESPONSE',
+      reaction: reaction,
+    });
+    if (error) sileo.error({ title: error });
+    startReload();
+    inFlight.current = false;
+    setPending(false);
   }
 
   useEffect(() => {
@@ -70,20 +80,22 @@ export default function ButtonReaction({
     <>
       <button
         type="button"
-        className="flex"
+        className="flex disabled:opacity-50 disabled:cursor-not-allowed"
         aria-label="Dar me gusta"
         title="Me gusta"
         onClick={() => handleLike(true)}
+        disabled={pending}
       >
         <AiFillLike className={`${stateReaction === true ? 'text-green-500' : ''} text-xl`} />
         {amountReaction.likes}
       </button>
       <button
         type="button"
-        className="flex"
+        className="flex disabled:opacity-50 disabled:cursor-not-allowed"
         aria-label="Reportar"
         title="Reportar"
         onClick={() => handleLike(false)}
+        disabled={pending}
       >
         <TbAlertHexagon className={`${stateReaction === false ? 'text-red-500' : ''} text-xl`} />
         {amountReaction.dislikes}

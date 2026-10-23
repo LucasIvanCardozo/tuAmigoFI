@@ -12,6 +12,7 @@ import { numberIconsModules } from '../../../assets/icons';
 import { ModalAddResponseContent } from '../../layout/modals/ModalAddResponseContent';
 import { ModalDeleteMidtermContent } from '../../layout/modals/ModalDeleteMidtermContent';
 import { ModalDeleteTpContent } from '../../layout/modals/ModalDeleteTpContent';
+import ButtonReport from './buttonReport';
 import ModuleResponse from './moduleResponse';
 
 interface Props {
@@ -82,6 +83,12 @@ const ModuleContainerImpl = ({ module, typeModule }: Props) => {
                 <MdDelete />
               </button>
             ))}
+
+          <ButtonReport
+            idTarget={moduleInd.id}
+            typeTarget={isTp ? 'TP' : 'MIDTERM'}
+            reactions={module.reactions}
+          />
 
           <button
             type="button"

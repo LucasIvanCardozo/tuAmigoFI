@@ -24,6 +24,7 @@ export const upsertReaction = createAction(schema, async ({ idTarget, typeTarget
     where: {
       idUser,
       idTarget,
+      typeTarget,
     },
   });
 
