@@ -1,4 +1,5 @@
 import { FaStar } from 'react-icons/fa';
+import { ContributorName } from '@/app/components/contributorName';
 import { userUseCases } from '../lib/server/usecases/user.usecases';
 
 export default async function Contributors() {
@@ -27,7 +28,7 @@ export default async function Contributors() {
             ) : index === 2 ? (
               <FaStar className="text-amber-600" />
             ) : null}
-            <span className="truncate">{name}</span>
+            <ContributorName idUser={id} name={name} />
           </div>
           <span className="whitespace-nowrap">{`con ${score}Pts.`}</span>
         </li>
