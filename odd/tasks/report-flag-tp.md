@@ -111,6 +111,31 @@ signed-in browser session, because sign-in is Google OAuth and no session can be
 locally. The hexagon's active state, the moderator counter and the toast were not exercised
 in a browser either.
 
+## Review disposition
+
+This candidate carries a **native review verdict: approved**, on lineage
+`review-1f59b508b1fc2811` for target
+`sha256:9e22af27219a86fdd22d6131f3b31eefa870249671fb4622f5ac849da3522125`, over the
+committed range `d60c710..9557cc0` (11 files, 263 authored changed lines).
+
+- Tier **medium**, one consolidated lens `review-reliability`, correction budget 132.
+- The lens selection offered by the facade (`risk`, `reliability`, `readability`) was
+  rejected by the provider with `lenses-invalid`, so the provider kept its own tier
+  default. No lineage was created by the rejected attempts.
+- The approval was acknowledged with the provider's exact continuation and the authority
+  is burned (`gentle-ai.review-acknowledged/v1`). The candidate is consumed.
+
+Two advisory findings, both **WARNING and informational**, neither opened a correction:
+
+| Id | Location | What it points at |
+| --- | --- | --- |
+| R3-report-active-state-desync | `src/app/components/feature/materias/buttonReport.tsx:38-41` | The optimistic toggle and the counter both read a snapshot of `reactions`; two fast clicks can interleave and the local state can diverge from the server until the page refreshes. The existing like button has the same shape. |
+| R3-report-ui-coverage | `odd/tasks/report-flag-tp.md:109-111` | The UI states (hexagon active, moderator counter, toast) were never exercised in a browser, which the verification section already states. |
+
+Per the review's own statement, these are separate later work and never a reason to re-run
+review on this candidate. Any change to the reviewed range is a new candidate and needs its
+own disposition.
+
 ## Tasks
 
 | ID | Spec | Work | Route |
