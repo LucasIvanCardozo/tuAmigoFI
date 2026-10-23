@@ -114,27 +114,38 @@ in a browser either.
 ## Review disposition
 
 This candidate carries a **native review verdict: approved**, on lineage
-`review-1f59b508b1fc2811` for target
-`sha256:9e22af27219a86fdd22d6131f3b31eefa870249671fb4622f5ac849da3522125`, over the
-committed range `d60c710..9557cc0` (11 files, 263 authored changed lines).
+`review-167ea98bb28e9c27` for target
+`sha256:e5e47ff50e9b248523167d85cd5f533469c1675cafe550ebbc998f07529bc971`, over the
+committed range `d60c710..f973fc7` (12 files, 367 authored changed lines). The approval
+was acknowledged with the provider's exact continuation and the authority is burned
+(`gentle-ai.review-acknowledged/v1`). The candidate is consumed.
 
-- Tier **medium**, one consolidated lens `review-reliability`, correction budget 132.
-- The lens selection offered by the facade (`risk`, `reliability`, `readability`) was
-  rejected by the provider with `lenses-invalid`, so the provider kept its own tier
-  default. No lineage was created by the rejected attempts.
-- The approval was acknowledged with the provider's exact continuation and the authority
-  is burned (`gentle-ai.review-acknowledged/v1`). The candidate is consumed.
+- Tier **medium**, one consolidated lens `review-reliability`, correction budget 184.
+- The lens selection offered by the facade (`risk`, `reliability`, `readability`) is
+  rejected by this provider with `lenses-invalid`, so the provider keeps its own tier
+  default. No lineage is created by the rejected attempts.
+- The single-slot capture only accepts the binding serialized as a string, and the
+  acknowledged resubmit of that slot is refused as stale; the group capture with the
+  serialized binding is the route that completes the run.
 
 Two advisory findings, both **WARNING and informational**, neither opened a correction:
 
 | Id | Location | What it points at |
 | --- | --- | --- |
-| R3-report-active-state-desync | `src/app/components/feature/materias/buttonReport.tsx:38-41` | The optimistic toggle and the counter both read a snapshot of `reactions`; two fast clicks can interleave and the local state can diverge from the server until the page refreshes. The existing like button has the same shape. |
+| R3-report-toggle-not-persisted | `src/app/components/feature/materias/buttonReport.tsx:43-46` | The report state is still optimistic and local until the refresh lands, and the rollback on error assumes the server wrote nothing, so a failure after the write would leave the local state disagreeing with the server. |
 | R3-report-ui-coverage | `odd/tasks/report-flag-tp.md:109-111` | The UI states (hexagon active, moderator counter, toast) were never exercised in a browser, which the verification section already states. |
 
-Per the review's own statement, these are separate later work and never a reason to re-run
-review on this candidate. Any change to the reviewed range is a new candidate and needs its
-own disposition.
+The earlier candidate, before the two desync fixes, was also approved on lineage
+`review-1f59b508b1fc2811` for target
+`sha256:9e22af27219a86fdd22d6131f3b31eefa870249671fb4622f5ac849da3522125`, with the
+finding `R3-report-active-state-desync` at the same lines. The two fixes answer that
+finding: an in-flight ref plus a disabled button close the interleaving of two clicks, and
+the `useReload` refresh the comment component already uses brings the counts and the state
+back from the server.
+
+Per the review's own statement, these findings are separate later work and never a reason
+to re-run review on this candidate. Any change to the reviewed range is a new candidate and
+needs its own disposition.
 
 ## Tasks
 
@@ -150,8 +161,9 @@ own disposition.
 | T8 | S2 | Document the rule in `AGENTS.md` | inline |
 | T9 | — | Verify and deliver | inline |
 
-All tasks are delivered in the work-unit commit `8fa1612` on `feat/report-flag-tp`
-(260 authored changed lines, 9 source files plus this document).
+All tasks are delivered in the work-unit commits `8fa1612` (feature), `3375501` (report
+desync fix), `f973fc7` (response reaction desync fix), plus the documentation commits
+`9557cc0` and `a933956` on `feat/report-flag-tp`.
 
 ## Log
 
