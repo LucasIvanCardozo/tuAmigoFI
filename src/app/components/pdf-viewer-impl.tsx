@@ -17,7 +17,7 @@ import '@react-pdf-viewer/toolbar/lib/styles/index.css';
 const WORKER_URL = 'https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
 
 export default function PdfViewerImpl({ url }: { url: string }) {
-  const toolbarPluginInstance = useMemo(() => toolbarPlugin(), []);
+  const toolbarPluginInstance = toolbarPlugin();
   const { Toolbar } = toolbarPluginInstance;
   const [aspectRatio, setAspectRatio] = useState<number | null>(null);
 
