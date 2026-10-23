@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'react';
 import { AiFillLike } from 'react-icons/ai';
 import { TbAlertHexagon } from 'react-icons/tb';
 import { sileo } from 'sileo';
-import { useReload } from '@/app/hooks/useReload';
 import { upsertReaction } from '@/app/lib/server/actions/reactions/upsert.action';
 import type { DataModuleResponse } from '@/app/types';
 
@@ -24,7 +23,6 @@ export default function ButtonReaction({
     dislikes: 0,
   });
   const { data: session } = useSession();
-  const { startReload } = useReload();
   const [pending, setPending] = useState(false);
   const inFlight = useRef(false);
 
@@ -62,7 +60,6 @@ export default function ButtonReaction({
       reaction: reaction,
     });
     if (error) sileo.error({ title: error });
-    startReload();
     inFlight.current = false;
     setPending(false);
   }

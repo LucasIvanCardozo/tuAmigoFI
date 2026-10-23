@@ -5,7 +5,6 @@ import type { Session } from 'next-auth';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useModal } from '@/app/contexts/ModalContext';
 import { useFormSubmit } from '@/app/hooks/useFormSubmit';
-import { useReload } from '@/app/hooks/useReload';
 import { deleteMidterm } from '@/app/lib/server/actions/midterms/delete.action';
 import type { Midterm, User } from '@/app/lib/server/db/prisma/prismaClient/client';
 import { type ConfirmationInput, confirmationSchema } from '@/app/lib/shared/schemas';
@@ -35,12 +34,10 @@ export const ModalDeleteMidtermContent = ({
   };
 
   const { closeModal } = useModal();
-  const { startReload } = useReload();
   const { submit, isLoading } = useFormSubmit({
     action,
     successMessage: 'Examen eliminado.',
     onSuccess: async () => {
-      startReload();
       closeModal();
     },
   });

@@ -3,7 +3,6 @@ import type { Session } from 'next-auth';
 import { useEffect, useState } from 'react';
 import { AiFillLike } from 'react-icons/ai';
 import { sileo } from 'sileo';
-import { useReload } from '@/app/hooks/useReload';
 import { upsertReaction } from '@/app/lib/server/actions/reactions/upsert.action';
 import type { DataModuleComment } from '@/app/types';
 
@@ -15,7 +14,6 @@ interface Params {
 export const Comment = ({ comment, session }: Params) => {
   const [numberLike, setNumberLike] = useState(comment.reactions.length);
   const [stateLike, setStateLike] = useState(false);
-  const { startReload } = useReload();
 
   useEffect(() => {
     if (
@@ -35,7 +33,6 @@ export const Comment = ({ comment, session }: Params) => {
       reaction: !stateLike,
     });
     if (error) sileo.error({ title: error });
-    startReload();
   };
 
   return (

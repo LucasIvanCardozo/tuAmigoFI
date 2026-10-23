@@ -2,7 +2,6 @@
 import type { Session } from 'next-auth';
 import { useState } from 'react';
 import { sileo } from 'sileo';
-import { useReload } from '@/app/hooks/useReload';
 import { createComment } from '@/app/lib/server/actions/comments/create.action';
 import type { Response } from '@/app/lib/server/db/prisma/prismaClient/client';
 import type { DataModuleComment } from '@/app/types';
@@ -15,7 +14,6 @@ interface Params {
 }
 
 export const CommentsLi = ({ comments, response, session }: Params) => {
-  const { startReload } = useReload();
   const [inputText, setInputText] = useState<string>('');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -31,7 +29,6 @@ export const CommentsLi = ({ comments, response, session }: Params) => {
         });
         if (error) throw new Error(error);
         setInputText('');
-        startReload();
       },
       {
         loading: { title: 'Publicando comentario...' },

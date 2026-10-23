@@ -3,7 +3,6 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useRef, useState } from 'react';
 import { TbAlertHexagon } from 'react-icons/tb';
 import { sileo } from 'sileo';
-import { useReload } from '@/app/hooks/useReload';
 import { upsertReaction } from '@/app/lib/server/actions/reactions/upsert.action';
 import type { Reaction } from '@/app/lib/server/db/prisma/prismaClient/client';
 
@@ -17,7 +16,6 @@ export default function ButtonReport({
   reactions: Reaction[];
 }) {
   const { data: session } = useSession();
-  const { startReload } = useReload();
   const [reported, setReported] = useState(false);
   const [pending, setPending] = useState(false);
   const inFlight = useRef(false);
@@ -46,7 +44,6 @@ export default function ButtonReport({
       setReported(reported);
       sileo.error({ title: error });
     }
-    startReload();
     inFlight.current = false;
     setPending(false);
   }

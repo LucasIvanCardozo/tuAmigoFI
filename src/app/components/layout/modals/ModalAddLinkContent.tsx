@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useFormSubmit } from '@/app/hooks/useFormSubmit';
-import { useReload } from '@/app/hooks/useReload';
 import { createLink } from '@/app/lib/server/actions/links/create.action';
 import type { Course } from '@/app/lib/server/db/prisma/prismaClient/client';
 import { type AddLinkInput, addLinkSchema } from '@/app/lib/shared/schemas';
@@ -28,13 +27,10 @@ export const ModalAddLinkContent = ({ course }: { course: Course }) => {
     if (error) throw new Error(error);
   };
 
-  const { startReload } = useReload();
   const { submit, isLoading } = useFormSubmit({
     action,
     successMessage: 'Muchas gracias por tu aporte! ❤️',
-    onSuccess: async () => {
-      startReload();
-    },
+    onSuccess: async () => {},
   });
 
   return (
