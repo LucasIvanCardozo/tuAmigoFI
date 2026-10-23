@@ -45,7 +45,7 @@ pnpm is pinned in `package.json#packageManager` (`pnpm@11.28.6`). pnpm 11 requir
 
 pnpm settings live in `pnpm-workspace.yaml`, not in `package.json#pnpm`: pnpm 11 no longer reads that field, and a `pnpm` block left behind is ignored silently.
 
-- `overrides:` — security pins for transitive dependencies (tar, effect, deepmerge-ts, mysql2, brace-expansion, fast-uri). pnpm mirrors this block into the top of `pnpm-lock.yaml`. Editing one without the other breaks `pnpm install --frozen-lockfile` with `ERR_PNPM_LOCKFILE_CONFIG_MISMATCH`.
+- `overrides:` — security pins for transitive dependencies (tar, effect, deepmerge-ts, mysql2, brace-expansion, fast-uri, source-map-js). pnpm mirrors this block into the top of `pnpm-lock.yaml`. Editing one without the other breaks `pnpm install --frozen-lockfile` with `ERR_PNPM_LOCKFILE_CONFIG_MISMATCH`.
 - `allowBuilds:` — explicit allow-list of dependency build scripts. Packages left out are not built and fail the install with `ERR_PNPM_IGNORED_BUILDS`. `canvas` stays denied.
 
 Never regenerate `pnpm-lock.yaml` with pnpm 10 or earlier: those versions ignore `pnpm-workspace.yaml#overrides` and silently drop the security pins.
