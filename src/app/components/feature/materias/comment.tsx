@@ -12,16 +12,17 @@ interface Params {
 }
 
 export const Comment = ({ comment, session }: Params) => {
-  const [numberLike, setNumberLike] = useState(comment.reactions.length);
+  const [numberLike, setNumberLike] = useState(
+    comment.reactions.filter((reaction) => reaction.reaction).length,
+  );
   const [stateLike, setStateLike] = useState(false);
 
   useEffect(() => {
-    if (
-      comment.reactions.find(
+    setStateLike(
+      comment.reactions.some(
         (reaction) => reaction.reaction && reaction.idUser === session?.user?.id,
-      )
-    )
-      setStateLike(true);
+      ),
+    );
   }, [comment, session?.user?.id]);
 
   const handleLike = async () => {
@@ -30,7 +31,7 @@ export const Comment = ({ comment, session }: Params) => {
     const { error } = await upsertReaction({
       idTarget: comment.comment.id,
       typeTarget: 'COMMENT',
-      reaction: !stateLike,
+      reaction: true,
     });
     if (error) sileo.error({ title: error });
   };
