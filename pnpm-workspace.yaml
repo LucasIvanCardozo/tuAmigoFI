@@ -6,7 +6,7 @@ overrides:
   deepmerge-ts: '>=8.0.0'
   mysql2: '>=3.23.1'
   brace-expansion: ^1.1.21
-  fast-uri: ^3.1.8
+  fast-uri: ^3.1.9
   source-map-js: '>=1.2.2'
 
 allowBuilds:
