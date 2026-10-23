@@ -125,6 +125,9 @@ in a browser either.
 | T8 | S2 | Document the rule in `AGENTS.md` | inline |
 | T9 | — | Verify and deliver | inline |
 
+All tasks are delivered in the work-unit commit `8fa1612` on `feat/report-flag-tp`
+(260 authored changed lines, 9 source files plus this document).
+
 ## Log
 
 ### L1
