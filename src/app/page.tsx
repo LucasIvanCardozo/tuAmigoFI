@@ -96,10 +96,10 @@ export default async function Home() {
       </section>
       <CalendarSection callbackYear={callbackYear()} />
       <section className="text-(--black) relative max-w-(--breakpoint-md) m-auto w-11/12 my-4">
-        <h2 className="font-bold text-3xl my-2 flex gap-1 items-center justify-center">
-          Colaboradores
+        <h2 className="font-bold text-3xl my-2 text-center">Colaboradores</h2>
+        <div className="flex justify-center mb-2">
           <ButtonInfoScore />
-        </h2>
+        </div>
         <p className="text-balance pb-2 text-center">
           Gracias a quienes suman su esfuerzo compartiendo recursos y soluciones, ayudando a
           construir una comunidad más fuerte para todos los estudiantes. ¡Tu aporte marca la
