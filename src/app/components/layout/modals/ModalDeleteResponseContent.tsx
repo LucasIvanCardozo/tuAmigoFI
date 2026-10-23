@@ -5,7 +5,6 @@ import { useSession } from 'next-auth/react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useModal } from '@/app/contexts/ModalContext';
 import { useFormSubmit } from '@/app/hooks/useFormSubmit';
-import { useReload } from '@/app/hooks/useReload';
 import { deleteResponse } from '@/app/lib/server/actions/responses/delete.action';
 import type { Response, User } from '@/app/lib/server/db/prisma/prismaClient/client';
 import { type ConfirmationInput, confirmationSchema } from '@/app/lib/shared/schemas';
@@ -36,12 +35,10 @@ export const ModalDeleteResponseContent = ({
   };
 
   const { closeModal } = useModal();
-  const { startReload } = useReload();
   const { submit, isLoading } = useFormSubmit({
     action,
     successMessage: 'Respuesta eliminada.',
     onSuccess: async () => {
-      startReload();
       closeModal();
     },
   });

@@ -5,7 +5,6 @@ import { useSession } from 'next-auth/react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useModal } from '@/app/contexts/ModalContext';
 import { useFormSubmit } from '@/app/hooks/useFormSubmit';
-import { useReload } from '@/app/hooks/useReload';
 import { createTp } from '@/app/lib/server/actions/tps/create.action';
 import type { Course } from '@/app/lib/server/db/prisma/prismaClient/client';
 import { type AddTpInput, addTpSchema } from '@/app/lib/shared/schemas';
@@ -31,12 +30,10 @@ export const ModalAddTpContent = ({ course }: { course: Course }) => {
   };
 
   const { closeModal } = useModal();
-  const { startReload } = useReload();
   const { submit, isLoading } = useFormSubmit({
     action,
     successMessage: 'Muchas gracias por tu aporte! ❤️',
     onSuccess: async () => {
-      startReload();
       closeModal();
     },
   });

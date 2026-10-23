@@ -5,7 +5,6 @@ import type { Session } from 'next-auth';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useModal } from '@/app/contexts/ModalContext';
 import { useFormSubmit } from '@/app/hooks/useFormSubmit';
-import { useReload } from '@/app/hooks/useReload';
 import { createResponse } from '@/app/lib/server/actions/responses/create.action';
 import { type AddResponseInput, addResponseSchema } from '@/app/lib/shared/schemas';
 import type { Module } from '@/app/types';
@@ -39,12 +38,10 @@ export const ModalAddResponseContent = ({
   };
 
   const { closeModal } = useModal();
-  const { startReload } = useReload();
   const { submit, isLoading } = useFormSubmit({
     action,
     successMessage: 'Muchas gracias por tu aporte! ❤️',
     onSuccess: async () => {
-      startReload();
       closeModal();
     },
   });

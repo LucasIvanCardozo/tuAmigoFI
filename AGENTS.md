@@ -69,7 +69,7 @@ src/app/
 │   ├── feature/            # Feature-specific components
 │   └── skeletons/          # Loading skeletons
 ├── contexts/               # React Context providers (ModalContext, ModuleSelectionContext, mainContext)
-├── hooks/                  # Custom React hooks (useReload, useFormSubmit, useDialogA11y)
+├── hooks/                  # Custom React hooks (useFormSubmit, useDialogA11y)
 ├── lib/
 │   ├── server/
 │   │   ├── actions/        # Server Actions (zod-validated)
@@ -101,9 +101,11 @@ The split of responsibilities mirrors carta-qr:
 
 - **`Form`** is a thin wrapper around `<form>`. It owns no logic — no `useForm`, no `useTransition`, no toasts.
 - **Each consumer** sets up `useForm` + `zodResolver` locally and wires the submit through `useFormSubmit`, which owns `useTransition` and `sileo` feedback.
-- **`useFormSubmit`** runs the `action`, then fires `onSuccess` (e.g. `startReload()` + `closeModal()`), then shows a success toast. On throw, it shows an error toast.
+- **`useFormSubmit`** runs the `action`, then fires `onSuccess` (e.g. `closeModal()`), then shows a success toast. On throw, it shows an error toast.
 
-This split is deliberate: it lets the modal decide **when** to refresh and close, keeps `Form` styling-only, and ensures a validation failure never shows a misleading success toast.
+This split is deliberate: it lets the modal decide **when** to close, keeps `Form` styling-only, and ensures a validation failure never shows a misleading success toast.
+
+**Do not add a manual refresh after a mutation.** Every mutating action calls `updateTag(...)`, and Next.js re-renders the current route server-side and ships the new RSC payload inside the action's response, so the page already reflects the change in the same roundtrip. A `router.refresh()` on top of that is a second full render of the heaviest read in the app for no visible gain.
 
 ```tsx
 "use client";
@@ -116,7 +118,6 @@ import {
   FileForm,
 } from "@/app/components/layout/form";
 import { useFormSubmit } from "@/app/hooks/useFormSubmit";
-import { useReload } from "@/app/hooks/useReload";
 import { useModal } from "@/app/contexts/ModalContext";
 import { addTpSchema, type AddTpInput } from "@/app/lib/shared/schemas";
 
@@ -132,12 +133,10 @@ export const MyModal = ({ course }: { course: Course }) => {
   };
 
   const { closeModal } = useModal();
-  const { startReload } = useReload();
   const { submit, isLoading } = useFormSubmit({
     action,
     successMessage: "Muchas gracias por tu aporte! ❤️",
     onSuccess: async () => {
-      startReload();
       closeModal();
     },
   });
@@ -203,7 +202,7 @@ Available primitives (all under `@/app/components/layout/form`):
 | Option           | Required | Notes                                                                                               |
 | ---------------- | -------- | --------------------------------------------------------------------------------------------------- |
 | `action`         | yes      | `SubmitHandler<TInput>`. Throw `Error` on failure.                                                  |
-| `onSuccess`      | no       | Runs **after** `action`, **before** the success toast. Use it for `startReload()` + `closeModal()`. |
+| `onSuccess`      | no       | Runs **after** `action`, **before** the success toast. Use it for `closeModal()`. |
 | `successMessage` | no       | If set, shown via `sileo.success` after `onSuccess`.                                                |
 
 Returns `{ submit, isLoading }`. Bind `submit` to `handleSubmit` and pass `isLoading` to your submit button's `disabled`.
