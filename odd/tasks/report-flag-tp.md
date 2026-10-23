@@ -1,7 +1,8 @@
 # Report flag for TPs and midterms
 
 Branch: `feat/report-flag-tp`
-Status: in progress
+Status: delivered to `main` by a `--no-ff` merge, with the native review verdict recorded
+below
 Base: `main` at `d60c710`
 
 ## Specs
