@@ -33,7 +33,7 @@ export const ModalUserContributions = ({ idUser, name }: { idUser: string; name:
         </h2>
         {contributions && (
           <span className="text-(--dark-cyan) font-bold whitespace-nowrap">
-            {contributions.score} pts
+            {contributions.score} {contributions.score === 1 ? 'pt' : 'pts'}
           </span>
         )}
       </div>
@@ -58,7 +58,9 @@ export const ModalUserContributions = ({ idUser, name }: { idUser: string; name:
                 </span>
                 <span className="w-16 text-right tabular-nums">
                   {row.points > 0 ? (
-                    <b className="text-(--dark-cyan)">{row.points} pts</b>
+                    <b className="text-(--dark-cyan)">
+                      {row.points} {row.points === 1 ? 'pt' : 'pts'}
+                    </b>
                   ) : (
                     <span className="text-slate-500">0 pts</span>
                   )}
