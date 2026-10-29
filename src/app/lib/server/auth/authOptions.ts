@@ -59,7 +59,7 @@ export const authOptions: AuthOptions = {
         email: user.email,
         image: user.image,
       });
-      if (existingUser.banned) throw new Error('Estas baneado de esta pagina');
+      if (existingUser.banned) return '/acceso-baneado';
       user.idUser = existingUser.id;
       user.tier = existingUser.tier;
       return true;
@@ -91,7 +91,8 @@ export const authOptions: AuthOptions = {
       return token;
     },
     async session({ session, token }: { session: Session; token: JWT }) {
-      const existingUser = await userUseCases.getById(session.user.id);
+      if (!token.idUser) return null as unknown as Session;
+      const existingUser = await userUseCases.getById(token.idUser);
       if (existingUser.banned) {
         console.warn(`Usuario baneado detectado: ${session.user.email}`);
         return null as unknown as Session;
