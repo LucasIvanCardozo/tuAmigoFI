@@ -113,8 +113,9 @@ id, so **right after a deploy the read went to the database**. Any failure of th
 a cold pooler connection, a dropped connection, a missing row — threw, and the cookie was
 deleted. That is the "after every push I have to log out and log in again" symptom.
 
-Removing the cache from that read (required by S1/S2) would have made the exposure worse:
-a database hiccup would then wipe the cookie on *any* request, not only after a deploy.
+Removing the cache from that read (required by S1/S2) makes the exposure permanent
+rather than deploy-shaped: from then on a database hiccup would wipe the cookie on *any*
+request, not only after a deploy.
 
 ## Design
 
@@ -180,7 +181,7 @@ error message are untouched, and the reaction count still comes from the same
   restores the previous state when the write fails. (`17d18d7`)
 - **T5 done.** The ban enforcement is documented in `AGENTS.md`. (`843068a`)
 - **T6 done.** The `session` callback no longer throws, so a failed lookup cannot wipe
-  the session cookie. (`eafd3b1`)
+  the session cookie. (`bcbf50c`)
 - **T7** Verify (executed ban check, executed cookie check, two native reviews, two
   independent verification rounds, lint, build) and close this document.
 
@@ -287,7 +288,33 @@ is now on the path of every session read; the banned user's cookie is never clea
 `findContributorsWithScore` is still cached and can show a just-banned user on the public
 leaderboard; `tier` still travels in the JWT.
 
-**Round 2 — the session callback fix (`eafd3b1`): pending.**
+**Round 2 — the session callback fix (`bcbf50c`): no defect introduced.**
+
+| Point | Verdict | Evidence |
+| --- | --- | --- |
+| The `try/catch` cannot let a banned user through | VERIFIED | every exit of the callback returns `null` or a session built from a row read successfully with `banned === false`; executed against the live database through the real session route for a banned user, a missing row, a token without `idUser`, a normal user, and a database that is genuinely unreachable (`ECONNREFUSED`) |
+| A database outage does not weaken the ban | VERIFIED | during an outage the session is `null`, so all 11 write paths and the UploadThing seam refuse; the cookie survives and the check runs again on the next request, with nothing cached about the ban |
+| NextAuth deletes the cookie when the callback throws | VERIFIED | `core/routes/session.js:88-89` and `core/lib/cookie.js` `_clean()` (value `""`, `maxAge: 0`); A/B executed against the reconstructed pre-fix callback with a signed JWT whose user does not exist, and with the database down |
+| Remaining throw paths that can wipe the cookie | VERIFIED | nothing in the app's `session` or `jwt` callback can throw any more; the one remaining wipe path is inside NextAuth (a corrupt or undecryptable cookie, or a rotated `NEXTAUTH_SECRET`), which no callback can influence |
+| The `jwt` callback cannot throw | VERIFIED | `refreshAccessToken` has its own `try/catch`; executed with an expired token and a bogus refresh token: no throw, `idUser` preserved, the cookie survives |
+| Advisory A3 (database availability on every session read) | **reduced, not eliminated** | the damaging part is gone (a blip no longer means a mass forced re-login); what remains is temporary degradation: logged-in users appear logged out, writes are refused, and it self-heals when the database recovers, with no user-facing error and one log line per session read |
+
+**A correction this unit's own rationale needed.** The independent verifier pointed out
+that the "cold cached user read right after a deploy" trigger no longer exists in the
+current code: `8fb0b72` removed the cache directives from `getById`, so the session read
+has been a live database query since that commit. The deploy correlation describes the
+*original* code, and the fix addresses a standing risk (any database error), not a
+deploy-specific one. The commit message of `bcbf50c` was rewritten to say exactly that
+after the correction.
+
+Two further advisories from round 2, neither blocking:
+
+- **A failed token refresh is retried on every session read.** The token keeps its old
+  `expires` in the past, so each session read re-attempts the Google token call (one
+  network round-trip per request) until a refresh succeeds. Pre-existing, unchanged here.
+- **The remaining cookie-wipe path is inside NextAuth**: a corrupt or undecryptable
+  session cookie, or a rotated `NEXTAUTH_SECRET`, makes `jwt.decode` throw and NextAuth
+  deletes the cookie. Not reachable from the application code.
 
 ### Residual, recorded honestly
 
@@ -318,6 +345,8 @@ leaderboard; `tier` still travels in the JWT.
 - **The end-to-end Google sign-in is not verifiable locally.** The callback behaviour is
   verified; the browser round-trip to `/acceso-baneado` is not, and it remains a
   post-deploy check.
+- **A failed token refresh costs a network round-trip per session read** until a refresh
+  succeeds. Pre-existing, and a performance note rather than a correctness one.
 
 ## Review
 
