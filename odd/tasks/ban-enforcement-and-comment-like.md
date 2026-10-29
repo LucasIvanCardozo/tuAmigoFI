@@ -345,6 +345,15 @@ Two further advisories from round 2, neither blocking:
 - **The end-to-end Google sign-in is not verifiable locally.** The callback behaviour is
   verified; the browser round-trip to `/acceso-baneado` is not, and it remains a
   post-deploy check.
+- **The comment like rollback can restore a stale value.** The rollback writes back the
+  values captured before the click. If the state moved in between — a second click, or
+  the `useEffect` that resyncs the counters from the server — the rollback can overwrite
+  a fresher value. The component also has no in-flight guard, so two rapid clicks can
+  interleave. Three advisories of the third native review point at exactly this
+  (`R3-002`, `R2-StaleReactionRollback`, `R4-comment-stale-rollback`); the fix is to
+  roll back only when the current value still is the optimistic one, and to reuse the
+  in-flight guard `buttonReaction.tsx` already has. Follow-up work, deliberately not
+  applied on an approved candidate.
 - **A failed token refresh costs a network round-trip per session read** until a refresh
   succeeds. Pre-existing, and a performance note rather than a correctness one.
 
@@ -374,7 +383,35 @@ target `sha256:b3fe2e7fe25ecea6f4d7ba5ea15a91b773844764ddbf484feb270e00c3ac1489`
 `R4-001` (resilience) at `src/app/lib/server/auth/authOptions.ts:101-105`, which is the
 new `catch` block.
 
-Delivery stays under ordinary repository policy in both rounds: a review outcome is
+**Native review, round 3 — approved and burned.** Lineage `review-ef7e3ba12ed32d02`,
+target `sha256:143a13516f3a272a95cb5f9bb764892f560030e26b66ee084aabd403ec284458`, tier
+`high`, lenses `review-risk`, `review-resilience`, `review-readability` and
+`review-reliability`, four model runs through the Pi host relay. This round covered what
+the first two did not: the comment like, the `AGENTS.md` section and the feature document
+itself (the candidate is the branch after `8fb0b72`, four changed paths, 427 changed
+lines).
+
+Five advisories, all non-blocking and informational, none opening a correction:
+
+| Id | Lens | Location | What it points at |
+| --- | --- | --- | --- |
+| `R3-001` | reliability | `comment.tsx:29-32` | the session guard reads the client session, which is null while `useSession()` is still loading |
+| `R3-002` | reliability | `comment.tsx:40-43` | the rollback restores the values captured before the click |
+| `R2-StaleReactionRollback` | readability | `comment.tsx:41-42` | the same rollback, seen as clarity of intent |
+| `R4-comment-stale-rollback` | resilience | `comment.tsx:41-42` | the same rollback, seen as behaviour under concurrent interaction |
+| `R3-003` | reliability | `authOptions.ts:100-103` | the `catch` block: the log line and the fail-closed behaviour during a database outage |
+
+Three of the five point at the same thing, and it is a real limitation of this change, not
+a false positive: **the rollback restores the state captured in the closure**. If the
+state moved between the click and the failure — a second click, or the `useEffect` that
+resyncs the counters from the server — the rollback can write a stale value over a fresher
+one. The component has no in-flight guard, so two rapid clicks can also interleave. The
+fix is to roll back only when the current value still is the optimistic one, and to add
+the in-flight guard `buttonReaction.tsx` already has. It is recorded here as follow-up
+work rather than applied: the review was approved on this candidate and no correction
+route is open for it.
+
+Delivery stays under ordinary repository policy in every round: a review outcome is
 informational and authorises nothing.
 
 ## Log
