@@ -118,6 +118,14 @@ document always displayed.
   and fail on another. That is the likely reason the reporter saw it in one browser and
   not in another.
 
+## Review
+
+**No native review was performed for this candidate.** The assessment returned risk
+`medium` with `reviewDue: false` (`under_budget`), so the native review was not started:
+no lineage, no lens artifacts, no authority burned. This candidate is **verified, not
+reviewed**, and the record must not claim otherwise. The verification above is the writer's
+own: the live measurement on production plus lint and build.
+
 ## Log
 
 - **L1** — "un bug raro que encontro un usuario en produccion es que subio un .pdf
