@@ -292,7 +292,7 @@ A like is a `Reaction` row with `reaction: true`. `upsertReaction` toggles **by 
 - **TPs and midterms can be liked** (`buttonLike.tsx`), next to the report button, over the PDF of the module card.
 - **The report IS a dislike.** The hexagon on a TP or midterm is the `reaction: false` state of the same `Reaction` row the like uses (`reaction: true`); only the icon and the name differ. The row is unique per `(idUser, idTarget, typeTarget)`, so a module has ONE state per user: like or report, never both.
 - **Liking replaces your report, and it says so.** Giving a like to a module you reported switches that row to the like (the report goes away), exactly like switching like/dislike on a response. The like writes it and warns with a toast, so the report is never dropped silently.
-- **One state machine for every reaction.** `useReactions.ts` owns the counts, the user's own state and the write (same value deletes the row, a different value switches it). `buttonReaction.tsx` (responses), `buttonLike.tsx` and `buttonReport.tsx` (modules) are only the markup on top of it.
+- **One state machine for the module reactions.** `useReactions.ts` owns the counts, the user's own state and the write (same value deletes the row, a different value switches it); `buttonLike.tsx` and `buttonReport.tsx` are only the markup on top of it. `buttonReaction.tsx` (responses) still keeps its own copy of that logic: the arithmetic is the same, but it does NOT roll the optimistic state back when the write fails.
 - **The like and report buttons live over the PDF**, in the place where the uploader name used to be; the name moved to the bottom-left of the PDF.
 
 ### Score

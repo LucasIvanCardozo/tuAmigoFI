@@ -220,14 +220,57 @@ reacciones en `useReactions.ts` —la misma máquina de estados que usaba
 `buttonReaction.tsx` en las respuestas— y avisa con un toast cuando el like reemplaza al
 reporte, para que nunca se caiga en silencio.
 
+### Verificación independiente (subagente `gentle-ai-verify`)
+
+Un verificador independiente (read-only) ejecutó los seis bloques pedidos contra la base
+local y un Chromium real: **A–F cumplen, sin bloqueantes**.
+
+- **A (semántica del toggle)**: las seis transiciones medidas con volcado de BD en cada
+  paso (like sobre like, like nuevo, reporte sobre reporte sin modal, reporte vía modal,
+  like sobre reporte con toast, reporte sobre like): el contador optimista y la fila en la
+  base coinciden en todas. El hook revierte el estado ante error.
+- **B (coherencia con `buttonReaction.tsx`)**: la aritmética es idéntica; la única
+  diferencia es que `buttonReaction.tsx` (intocado por la rama) NO revierte el estado
+  optimista ante error. Es preexistente y tolerable.
+- **C (conteo de puntos)**: links y reportes excluidos; un like propio rinde 4 pts (3 como
+  recibido + 1 como reacción emitida), coherente con la regla publicada pero explotable
+  (advisory); ranking == desglose (41 == 41 en BD; 38 == 24+5+9 en la UI real); el total
+  es la suma de las filas; un like invalida ranking y desglose por caché.
+- **D (flujo de reporte)**: el modal es el único escritor de `reaction: false`; el
+  auto-ocultamiento a los 3 reportes quedó **intacto y comprobado empíricamente** (el
+  módulo con 3 reportes no aparece para tier 0) — lo que la verificación de abajo daba por
+  no verificado.
+- **E (layout)**: medido en la misma card (PDF `x=372..1196`, like `x=1131`, reporte
+  `x=1168`, nombre `x=372`, todos en `y=2534`): iconos arriba a la derecha sobre el PDF y
+  el nombre abajo a la izquierda. El visor conserva `min-h-0`.
+- **F (regresiones)**: ninguna; los consumidores de `score.ts`, `findContributions`,
+  `findContributorsWithScore`, `upsertReaction`, `makeModules` y `reportedModules` no
+  cambiaron de firma.
+
+Hallazgos menores (ninguno bloqueante), con su estado:
+
+| # | Hallazgo | Estado |
+| --- | --- | --- |
+| 1 | `AGENTS.md` afirmaba que `buttonReaction.tsx` usaba `useReactions.ts` (falso) | **corregido** en este commit |
+| 2 | Like y reporte son dos instancias independientes del hook: tras "like sobre reporte" los contadores convergen recién cuando llegan las props (~0,5–1 s) | conocido, menor |
+| 3 | El aviso de reemplazo depende del estado cacheado del cliente: con la lista de módulos desactualizada el reporte se reemplaza sin aviso (misma clase que R4) | conocido, menor |
+| 4 | El modal manda siempre `false`: con estado stale el servidor borra el reporte y el usuario igual ve "Gracias por tu reporte!" (el toggle-por-valor es preexistente) | conocido, menor |
+| 5 | El like propio rinde 4 pts (3+1) | advisory, coherente con la regla publicada |
+
+Los hallazgos 3 y 4 nacen del toggle-por-valor del servidor (compartido con las
+respuestas): cambiarlos es un cambio de contrato, no un arreglo local, y no se cambió sin
+decisión del usuario.
+
 ### No verificado
 
 - El recorrido de Google OAuth real (la sesión se forjó con una cookie firmada).
-- El auto-ocultamiento a los 3 reportes con el contador ahora público: la regla no cambió
-  (`visibleModules` sigue filtrando por `REPORTS_TO_HIDE`), pero no se ejercitó con 3
-  reportes reales en el navegador.
+- El rollback ante error de escritura: verificado por lectura (el hook revierte,
+  `buttonReaction.tsx` no), pero no ejercitado en navegador porque no hay forma de forzar
+  un fallo de la acción sin parchear código.
 - El like sobre un módulo en la vista de **parciales**: la card es el mismo componente
   (`moduleContainer.tsx`), pero la prueba de navegador se hizo sobre la vista de TPs.
+- El visor con un PDF real: los TP de prueba no tienen `fileUrl`, así que se vio el
+  placeholder. El visor no fue modificado en esta rama (conserva `min-h-0`).
 
 ## Tasks
 
