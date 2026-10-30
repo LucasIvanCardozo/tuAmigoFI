@@ -69,7 +69,7 @@ export function useReactions({
     return {
       ok: error === null,
       previous: data ? data.previous : previous,
-      current: data ? (data.reaction ? data.reaction.reaction : null) : next,
+      current: data ? data.reaction : next,
       error: error ?? undefined,
     };
   }

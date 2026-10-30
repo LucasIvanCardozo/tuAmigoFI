@@ -2,7 +2,6 @@
 import { updateTag } from 'next/cache';
 import z, { boolean, cuid, object } from 'zod';
 import db from '../../db/db';
-import type { Reaction } from '../../db/prisma/prismaClient/client';
 import { ReactionTo } from '../../db/prisma/prismaClient/enums';
 import { userUseCases } from '../../usecases/user.usecases';
 import createAction from '../createActions';
@@ -22,7 +21,7 @@ export const upsertReaction = createAction(
     typeTarget,
     reaction,
   }): Promise<{
-    reaction: Reaction | null;
+    reaction: boolean | null;
     previous: boolean | null;
   }> => {
     const session = await userUseCases.getSession();
@@ -52,6 +51,8 @@ export const upsertReaction = createAction(
       });
       if (deleted.count === 0)
         throw new Error('El contenido cambio mientras lo guardabas, intenta de nuevo.');
+      updateTag('reactions');
+      return { reaction: null, previous: existing.reaction };
     } else {
       const updated = await db.reaction.updateMany({
         where: { id: existing.id, reaction: existing.reaction },
@@ -61,14 +62,7 @@ export const upsertReaction = createAction(
         throw new Error('El contenido cambio mientras lo guardabas, intenta de nuevo.');
     }
 
-    const current = await db.reaction.findFirst({
-      where: {
-        idUser,
-        idTarget,
-        typeTarget,
-      },
-    });
     updateTag('reactions');
-    return { reaction: current, previous: existing?.reaction ?? null };
+    return { reaction, previous: existing?.reaction ?? null };
   },
 );

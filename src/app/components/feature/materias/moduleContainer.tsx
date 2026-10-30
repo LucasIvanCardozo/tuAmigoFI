@@ -40,9 +40,16 @@ const ModuleContainerImpl = ({ module, typeModule }: Props) => {
 
   async function handleLike() {
     const outcome = await react(true);
-    if (outcome.ok && outcome.previous === false && outcome.current === true) {
+    if (!outcome.ok) return;
+    if (outcome.previous === false && outcome.current === true) {
       sileo.warning({
         title: 'Tu like reemplazó el reporte que hiciste de este archivo.',
+      });
+      return;
+    }
+    if (state !== true && outcome.previous === true && outcome.current === null) {
+      sileo.warning({
+        title: 'Ese archivo ya tenía tu like, por eso se quitó.',
       });
     }
   }
@@ -53,7 +60,19 @@ const ModuleContainerImpl = ({ module, typeModule }: Props) => {
 
   async function handleDislike() {
     if (state === false) {
-      await react(false);
+      const outcome = await react(false);
+      if (!outcome.ok) return;
+      if (outcome.previous === true && outcome.current === false) {
+        sileo.warning({
+          title: 'Tu reporte reemplazó el like que hiciste de este archivo.',
+        });
+        return;
+      }
+      if (outcome.previous === null && outcome.current === false) {
+        sileo.warning({
+          title: 'Ese archivo ya no tenía tu reporte, así que se volvió a registrar.',
+        });
+      }
       return;
     }
     openModal(
