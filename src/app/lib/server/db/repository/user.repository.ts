@@ -1,12 +1,4 @@
 import type { Prisma, PrismaClient } from '../prisma/prismaClient/client';
-import { ReactionTo } from '../prisma/prismaClient/enums';
-
-const LIKE_TARGETS = [
-  ReactionTo.RESPONSE,
-  ReactionTo.COMMENT,
-  ReactionTo.TP,
-  ReactionTo.MIDTERM,
-] as const;
 
 export const userRepository = (db: PrismaClient | Prisma.TransactionClient) => ({
   getById(id: string) {
@@ -45,53 +37,36 @@ export const userRepository = (db: PrismaClient | Prisma.TransactionClient) => (
     });
   },
   async findLikesReceivedCounts() {
-    const likes = await db.reaction.findMany({
-      where: { reaction: true, typeTarget: { in: [...LIKE_TARGETS] } },
-      select: { idUser: true, idTarget: true, typeTarget: true },
-    });
-
-    const targetsByType = new Map<string, string[]>();
-    for (const like of likes) {
-      const targets = targetsByType.get(like.typeTarget);
-      if (targets) targets.push(like.idTarget);
-      else targetsByType.set(like.typeTarget, [like.idTarget]);
-    }
-
-    const [responses, comments, tps, midterms] = await Promise.all([
-      db.response.findMany({
-        where: { id: { in: targetsByType.get(ReactionTo.RESPONSE) ?? [] } },
-        select: { id: true, idUser: true },
-      }),
-      db.comment.findMany({
-        where: { id: { in: targetsByType.get(ReactionTo.COMMENT) ?? [] } },
-        select: { id: true, idUser: true },
-      }),
-      db.tp.findMany({
-        where: { id: { in: targetsByType.get(ReactionTo.TP) ?? [] } },
-        select: { id: true, idUser: true },
-      }),
-      db.midterm.findMany({
-        where: { id: { in: targetsByType.get(ReactionTo.MIDTERM) ?? [] } },
-        select: { id: true, idUser: true },
-      }),
-    ]);
-
-    const authorByTarget = new Map<string, string>();
-    const register = (items: { id: string; idUser: string }[], typeTarget: string) => {
-      for (const item of items) authorByTarget.set(`${typeTarget}:${item.id}`, item.idUser);
-    };
-    register(responses, ReactionTo.RESPONSE);
-    register(comments, ReactionTo.COMMENT);
-    register(tps, ReactionTo.TP);
-    register(midterms, ReactionTo.MIDTERM);
+    const rows = await db.$queryRaw<{ id: string; total: number }[]>`
+      WITH likes AS (
+        SELECT target.id_user AS author, reaction.id_user AS reactor
+        FROM "Reaction" reaction
+        JOIN "Response" target ON target.id = reaction.id_target
+        WHERE reaction."typeTarget"::text = 'RESPONSE' AND reaction.reaction = true
+        UNION ALL
+        SELECT target.id_user, reaction.id_user
+        FROM "Reaction" reaction
+        JOIN "Comment" target ON target.id = reaction.id_target
+        WHERE reaction."typeTarget"::text = 'COMMENT' AND reaction.reaction = true
+        UNION ALL
+        SELECT target.id_user, reaction.id_user
+        FROM "Reaction" reaction
+        JOIN "Tp" target ON target.id = reaction.id_target
+        WHERE reaction."typeTarget"::text = 'TP' AND reaction.reaction = true
+        UNION ALL
+        SELECT target.id_user, reaction.id_user
+        FROM "Reaction" reaction
+        JOIN "Midterm" target ON target.id = reaction.id_target
+        WHERE reaction."typeTarget"::text = 'MIDTERM' AND reaction.reaction = true
+      )
+      SELECT author AS id, COUNT(*)::int AS total
+      FROM likes
+      WHERE author <> reactor
+      GROUP BY author
+    `;
 
     const counts: Record<string, number> = {};
-    for (const like of likes) {
-      const author = authorByTarget.get(`${like.typeTarget}:${like.idTarget}`);
-      if (!author) continue;
-      if (author === like.idUser) continue;
-      counts[author] = (counts[author] ?? 0) + 1;
-    }
+    for (const row of rows) counts[row.id] = row.total;
     return counts;
   },
 });
