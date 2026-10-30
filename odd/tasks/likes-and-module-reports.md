@@ -372,6 +372,36 @@ Verificación de esta ronda:
   con like **reemplaza el like y avisa**; el hexágono sobre un módulo ya reportado **deshace
   el reporte sin volver a pedir confirmación**.
 
+### Sexta revisión nativa: escalada (dos correcciones acotadas)
+
+La ronda 6 (lineage `review-e89a50893edb2c85`, target `sha256:477338fb…`) corrió los cuatro
+lentes y el refuter, y cerró en estado **escalated**: el refuter corroboró tres hallazgos
+severos y dos quedaron con causalidad inconclusa. La acción del maintainer es informativa.
+
+- `R1-STALE-LIKE-DELETION`, `R2-STALE-REPORT-CONFIRMATION` y `R4-stale-report-confirmation`
+  (corroborados): describen el comportamiento del toggle por valor cuando el cliente tiene
+  estado viejo. Es **la semántica que el usuario eligió explícitamente** (la misma de las
+  respuestas), pero el cliente no siempre le decía qué había pasado de verdad.
+- `R3-REACTION-COMMIT-READ` y `R4-nonretryable-postcommit-read` (causalidad inconclusa): la
+  action releía la fila **después** de escribir para devolver el resultado, así que una
+  lectura fallida convertía un cambio ya confirmado en un error.
+
+Correcciones (commit `fix(reactions): the server reports the row it wrote and every
+replacement is announced`):
+
+1. La action **no vuelve a leer la fila**: la escritura ya conoce su resultado, así que
+   devuelve el valor que quedó (`null` si la fila ya no está) y una lectura fallida ya no
+   puede convertir un cambio confirmado en un error.
+2. La card **compara el resultado del servidor con lo que el usuario pidió** y avisa cuando
+   difieren: un like que quitó un like que ya estaba, un reporte que reemplazó un like y un
+   reporte que volvió a registrarse. Nada se reemplaza en silencio.
+
+Verificado con 9/9 checks contra la base (el toggle por valor: mismo valor borra, valor
+distinto cambia; el self-like no suma; la query agregada coincide con la referencia fila por
+fila) y con los checks de navegador del flujo completo (like, reporte con confirmación,
+reemplazo del reporte por un like con aviso, reemplazo del like por un reporte con aviso y
+deshacer el reporte sin confirmación).
+
 ### No verificado
 
 - El recorrido de Google OAuth real (la sesión se forjó con una cookie firmada).
