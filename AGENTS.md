@@ -270,6 +270,10 @@ In `useFormSubmit`, the `action` is expected to throw `Error` on failure (read t
 
 The flag is read **uncached** (`userUseCases.getById` has no `'use cache'` directive), so a ban applied in the database applies on the next request. Bans are applied directly in the database; there is no moderation UI yet.
 
+### User provisioning
+
+A user row is created only by the `signIn` callback (`ensureByEmail` → `upsertByEmail`, keyed on the unique `email`). There is **no** action that creates a user: a `'use server'` export that inserts rows without a session check is a reachable endpoint, and a signed-out caller could mint an account with any email and walk straight past the ban.
+
 ### Content reports
 
 A report means "this was uploaded wrong", not a dislike. It reuses the `Reaction` table: `reaction: false` with `typeTarget: 'TP' | 'MIDTERM'`.
