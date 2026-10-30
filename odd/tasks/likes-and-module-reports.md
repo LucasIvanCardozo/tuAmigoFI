@@ -262,10 +262,17 @@ Los runs de reviewer restantes (las otras tres lentes y el refuter del lineage s
 pudieron iniciarse: el binding de captura tiene que coincidir **byte a byte** con el que
 emite el proveedor, y el harness re-tipa los valores de string que parecen literales JSON
 dentro de un argumento JSON. Con el flag `reviewerRunAcknowledged` presente, el valor
-`"order": "1"` (y `"materialize": "true"`) llegan como `1` y `true`, el binding deja de
+`"order": "0"` (y `"materialize": "true"`) llegan como `0` y `true`, el binding deja de
 coincidir y el facade responde `collectBinding is missing or stale for current STATUS`
 (sin mutación). Los pronósticos (sin el flag) sí salen, lo que confirma que el problema
 está en la serialización del argumento, no en la autoridad.
+
+Se intentó el mismo recorrido sobre el candidato final (con el commit de documentación
+incluido), que abrió un tercer lineage (`review-8efe551d3db5f10a`, mismo tree `86ca5f38…`,
+mismas 4 lentes): el mismo bloqueo, con las mismas dos formas de Binding re-tipado
+comprobadas (objeto y string), y el mismo resultado inocuo. Quedaron abiertos tres
+lineages de review: el predecessor en `correction_required`, el sucesor en `reviewing` y
+este último en `reviewing`.
 
 El mismo phenomenon bloquea la ruta `recover` del facade: esa operación exige el `input`
 como **string** (lo parsea con `JSON.parse`), y el esquema del tool acepta
