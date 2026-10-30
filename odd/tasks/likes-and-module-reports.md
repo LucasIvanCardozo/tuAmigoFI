@@ -395,6 +395,50 @@ tool que llegan como strings JSON y la coerción en `validateToolArguments`). El
 del lado del facade sería no re-tipar los argumentos JSON: aceptar el binding ya
 serializado y compararlo como string crudo.
 
+## Estado al compactar (punto de control)
+
+**Hecho y verificado**: los 3 cambios pedidos (S1, S2/S4, S3/S5) + las correcciones de las
+rondas 1–4 de la revisión nativa (semántica explícita de la action, condicionales,
+self-like sin puntos, toggle que **cambia** en vez de borrar). 15 commits, lint y `tsc`
+limpios, 13+11+9 checks de base y 6 checks de navegador, `gentle-ai-verify` con A–F
+conformes sin bloqueantes.
+
+**Pendiente (ronda 5 de la revisión nativa, hallazgos del refuter, AÚN NO CORREGIDOS)**:
+- `R3-STALE-UNSET-NOOP` (CRITICAL): el botón de like decide su intención desde el estado
+  cacheado del cliente → con estado viejo no aplica nada pero la UI **anuncia falsamente**
+  "tu like reemplazó el reporte".
+- `R4-global-like-scan` (CRITICAL): `findLikesReceivedCounts` escanea todos los likes del
+  mundo y arma cuatro listas `id IN (...)` sin cota.
+
+**Plan acordado con el usuario** (a ejecutar apenas se compacte):
+1. **R3 → usar literalmente la misma lógica que las reacciones de las respuestas**:
+   extraer un componente compartido `ReactionButtons` desde `buttonReaction.tsx` y usarlo en
+   respuestas y módulos; lo único que cambia es el **icono y el title** del estado dislike
+   (que acá se llama "reporte"). **Sacar el parámetro `intent`** de la action (vuelve al
+   toggle por valor original, el mismo operador de las respuestas) → el módulo no introduce
+   semántica nueva y el riesgo de estado viejo queda como comportamiento de línea base.
+   Mantener el aviso "tu like reemplazó tu reporte" armado con el estado **real del
+   servidor** (sólo en módulos) y que el modal de reporte sea honesto (si el servidor quitó
+   una fila en vez de crearla, decirlo).
+2. **R4 → una sola consulta agregada** (`GROUP BY` con joins por autor) en vez del escaneo
+   global + listas sin cota.
+3. Checks propios de ambos, una ronda final de review y **parar el bucle** (la review es
+   informativa, no un gate de entrega).
+
+**Servidor de demo para pruebas** (base local): `http://localhost:3100`
+(`NEXTAUTH_URL=http://localhost:3100`; el 3000 lo tiene el dev server de JulsGYM).
+Datos sembrados: curso "Demo Tutorías 1793386356778" `cmvvbxl7v00017o28uhbby9fg`, TP
+`cmvvbxl8100027o28pz1l2zxp` (1 like de "Estudiante de prueba"), examen
+`cmvvbxl8600037o28qv5oyhaj` (1 reporte), usuario `demo-lector-1793386356778@test.local`.
+Rutas: `/materias/practica/cmvvbxl7v00017o28uhbby9fg` y
+`/materias/parciales/cmvvbxl7v00017o28uhbby9fg`. PDF de prueba temporal en
+`public/__verify.pdf` (untracked → **borrarlo al cerrar**). Si Google rechaza el
+`redirect_uri` de :3100, hay que correr en el 3000 o forjar una cookie de sesión.
+
+**Entrega (decisión del usuario, PENDIENTE)**: la branch `feat/likes-and-module-reports` tiene
+15 commits y **NO** está pusheada ni mergeada. Recomendación: **merge `--no-ff` a `main` +
+push**, sin PR (el repo no usa PRs: `vercel.json` desactiva los previews salvo `main`).
+
 ## Log
 
 ### L1
