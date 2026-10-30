@@ -53,7 +53,7 @@ export default function PdfViewerImpl({ url }: { url: string }) {
           )}
         </Toolbar>
         <div
-          className="w-full flex-none"
+          className="w-full flex-none min-h-0"
           style={aspectRatio ? { aspectRatio } : { height: '75vh' }}
         >
           <Viewer
