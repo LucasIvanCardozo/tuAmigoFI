@@ -287,14 +287,14 @@ A report means "this was uploaded wrong", not a dislike. It reuses the `Reaction
 
 ### Likes
 
-A like is a `Reaction` row with `reaction: true`. `upsertReaction` toggles **by value**: sending the value the row already has deletes it. So a single-button like always sends `true` and lets the server decide between create and delete (`comment.tsx`, `buttonLike.tsx`).
+A like is a `Reaction` row with `reaction: true`. `upsertReaction` toggles **by value**: sending the value the row already has deletes it. So a single-button like always sends `true` and lets the server decide between create and delete (`comment.tsx`, `buttonReaction.tsx`).
 
-- **TPs and midterms can be liked** (`buttonLike.tsx`), next to the report button, over the PDF of the module card.
+- **TPs and midterms can be liked** (`reactionButtons.tsx`), next to the report button, over the PDF of the module card.
 - **The report IS a dislike.** The hexagon on a TP or midterm is the `reaction: false` state of the same `Reaction` row the like uses (`reaction: true`); only the icon and the name differ. The row is unique per `(idUser, idTarget, typeTarget)`, so a module has ONE state per user: like or report, never both.
-- **Liking replaces your report, and it says so.** Giving a like to a module you reported switches that row to the like (the report goes away), exactly like switching like/dislike on a response. The like writes it and warns with a toast, so the report is never dropped silently. The warning uses the state the **server** reports back (`upsertReaction` returns the previous value), so it stays correct even when the client's module list is stale.
-- **Reporting never deletes a report, and undoing only removes one.** `upsertReaction` takes an `intent`: `toggle` (default, same value deletes the row), `set` (the row ends with the given value) and `unset` (the row is removed only if it already holds that value). The report modal writes with `set` and the report button undoes with `unset`, so a stale client can no longer delete a report while showing "Gracias por tu reporte!", nor turn a like into a report by undoing a report it never had.
-- **The writes are conditional.** `set`, `unset` and `toggle` write with `updateMany`/`deleteMany` filtered by the value they read, so a reaction changed concurrently is never clobbered nor deleted.
-- **One state machine for the module reactions.** `useReactions.ts` owns the counts, the user's own state and the write (same value deletes the row, a different value switches it); `buttonLike.tsx` and `buttonReport.tsx` are only the markup on top of it. `buttonReaction.tsx` (responses) still keeps its own copy of that logic: the arithmetic is the same, but it does NOT roll the optimistic state back when the write fails.
+- **One logic for every reaction.** `useReactions.ts` owns the counts, the user's own state and the write; `reactionButtons.tsx` is the markup (like + hexagon + counters). The responses (`buttonReaction.tsx`) and the modules (`moduleContainer.tsx`) use the same hook and the same buttons, so a module never drifts from a response. The client never decides the intent: it sends the value of the button and the server reads the row, applies the change and returns what really happened (`previous` and the current row).
+- **Liking replaces your report, and it says so.** Giving a like to a module you reported switches that row to the like (the report goes away), exactly like switching like/dislike on a response. The like writes it and warns with a toast, so the report is never dropped silently. The warning fires only when the server confirms it (`previous === false` and the current row is a like), so it stays correct even when the client's module list is stale.
+- **Reporting a module asks for confirmation** (`ModalReportModuleContent.tsx`) and the modal owns the message: "Gracias por tu reporte!", "Tu reporte reemplazó el like que hiciste de este archivo." or "Tu reporte fue quitado: el archivo ya no tiene ese reporte.". Undoing a report does NOT ask for confirmation: clicking the hexagon again on an already reported module removes the report.
+- **The writes are conditional.** The write goes with `updateMany`/`deleteMany` filtered by the value it read, so a reaction changed concurrently is never clobbered nor deleted.
 - **The like and report buttons live over the PDF**, in the place where the uploader name used to be; the name moved to the bottom-left of the PDF.
 
 ### Score
@@ -313,7 +313,7 @@ All the points live in `src/app/lib/shared/score.ts` (`SCORE_CONCEPTS`), shared 
 
 - **A self-like never counts.** The `likes` count skips a reaction whose author is also its reactor, so nobody can award points to themselves. The `reactions` row still counts the reaction the user emitted.
 
-- **Likes received are not a `_count` of the user.** `Reaction.idTarget` is a plain id with no relation to `Response`, `Comment`, `Tp` or `Midterm`, so the count is an explicit cross in `user.repository.ts`: read the likes, group the `idTarget` by type, fetch the author of each target and count per author. The lookup key is `` `${typeTarget}:${idTarget}` ``, never the bare id.
+- **Likes received are not a `_count` of the user.** `Reaction.idTarget` is a plain id with no relation to `Response`, `Comment`, `Tp` or `Midterm`, so the count is an explicit cross in `user.repository.ts`: ONE grouped query joins every like with the author of its target (a join per target type) and counts per author. It never scans the whole table and never builds an unbounded list of ids. A like whose author is also its reactor is skipped, so nobody awards points to themselves.
 - **`reactions` and `likes` are different numbers.** `reactions` counts the rows the user *emitted*; `likes` counts the likes the user *received*. A like that a user receives is also a reaction that somebody else emitted.
 
 ## Git

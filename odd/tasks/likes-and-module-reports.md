@@ -328,12 +328,57 @@ se aplicó, en vez de reportar un éxito falso. Verificado con 9/9 checks: el to
 like→dislike y dislike→like **cambian** la fila, like→like y dislike→dislike la borran,
 `set` nunca borra, `unset` borra sólo si coincide y no toca una fila cambiada.
 
+### Quinta revisión nativa: la lógica del módulo se unifica con la de las respuestas
+
+La ronda 5 (lineage `review-4025f985c90e0543`, target `sha256:dca71e16…`) cerró con
+`correction_required` y dos hallazgos CRITICAL del refuter:
+
+- `R3-STALE-UNSET-NOOP`: el botón de like decidía su intención (`set` vs `unset`) desde el
+  estado cacheado del cliente. Con estado viejo la escritura no aplicaba nada pero la UI
+  **anunciaba falsamente** "tu like reemplazó el reporte".
+- `R4-global-like-scan`: `findLikesReceivedCounts` escaneaba **todos** los likes del mundo y
+  armaba cuatro listas `id IN (...)` sin cota, con riesgo de saturar la base.
+
+Correcciones (commits `839009e` y `caec977`):
+
+- **R3 → una sola lógica para todas las reacciones.** `useReactions.ts` (el hook) y
+  `reactionButtons.tsx` (el markup) los usan **tanto** las respuestas (`buttonReaction.tsx`)
+  como los módulos (`moduleContainer.tsx`): lo único que cambia es el ícono y el title del
+  estado dislike. La action vuelve al **toggle por valor** original (el mismo operador de
+  las respuestas) y saca el parámetro `intent`: el cliente nunca decide la intención,
+  manda el valor del botón y el servidor lee la fila, aplica el cambio y **devuelve lo que
+  realmente pasó** (`previous` + la fila actual). El aviso de reemplazo se dispara sólo
+  cuando el servidor lo confirma (`previous === false` y la fila actual es un like), así
+  que ya no puede anunciarse un reemplazo que no ocurrió. El modal de reporte es el dueño
+  de los tres mensajes posibles ("Gracias por tu reporte!", "Tu reporte reemplazó el like
+  que hiciste de este archivo.", "Tu reporte fue quitado: el archivo ya no tiene ese
+  reporte.").
+- **R4 → una sola consulta agregada.** `findLikesReceivedCounts` hace un `GROUP BY` con un
+  join por tipo de target: mismo resultado, sin escaneo global y sin listas de ids sin cota.
+
+Consecuencia colateral: el botón de like y el de reporte del módulo comparten **una** instancia
+del hook (antes eran dos), así que los contadores ya no divergen.
+
+Verificación de esta ronda:
+
+- **9/9 checks contra la base local**: sin reacción + like ⇒ crea; like + like ⇒ borra;
+  reporte + like ⇒ cambia a like (`previous=false`, `current=true`); like + reporte ⇒ cambia
+  a reporte (`previous=true`, `current=false`); reporte + reporte ⇒ borra; sin reacción +
+  reporte ⇒ crea; el self-like no cuenta como like recibido; la query agregada coincide con
+  la referencia calculada fila por fila; el like de otro usuario suma 1.
+- **6 checks en navegador** (servidor real, sesión real): el like quita y pone el like; el
+  hexágono abre el modal; el modal con la casilla marcada registra el reporte; el like
+  sobre un módulo reportado **reemplaza el reporte y avisa**; el reporte sobre un módulo
+  con like **reemplaza el like y avisa**; el hexágono sobre un módulo ya reportado **deshace
+  el reporte sin volver a pedir confirmación**.
+
 ### No verificado
 
 - El recorrido de Google OAuth real (la sesión se forjó con una cookie firmada).
-- El rollback ante error de escritura: verificado por lectura (el hook revierte,
-  `buttonReaction.tsx` no), pero no ejercitado en navegador porque no hay forma de forzar
-  un fallo de la acción sin parchear código.
+- El rollback ante error de escritura: verificado por lectura (el hook revierte el estado
+  optimista cuando la acción falla) y ahora **aplica igual a las respuestas** (antes sólo a
+  los módulos), pero no se ejercitó en navegador porque no hay forma de forzar un fallo de
+  la acción sin parchear código.
 - El like sobre un módulo en la vista de **parciales**: la card es el mismo componente
   (`moduleContainer.tsx`), pero la prueba de navegador se hizo sobre la vista de TPs.
 - El visor con un PDF real: los TP de prueba no tienen `fileUrl`, así que se vio el
@@ -349,6 +394,8 @@ like→dislike y dislike→like **cambian** la fila, like→like y dislike→dis
 | T4 | S3, S4, S5 | Reglas nuevas en `AGENTS.md` | inline | `fd9f094`, `fe9d2a7` |
 | T5 | — | Verificar contra la DB local, lint y build | inline | — |
 | T6 | — | Cerrar el documento y entregar | inline | — |
+| T7 | S3, S5 | Unificar la lógica de reacciones: `useReactions.ts` + `reactionButtons.tsx` para respuestas y módulos, action sin `intent`, avisos según el estado real del servidor | inline | `839009e` |
+| T8 | S2, S4 | Conteo de likes recibidos con una query agregada | inline | `caec977` |
 
 ## Review disposition
 
@@ -398,45 +445,25 @@ serializado y compararlo como string crudo.
 ## Estado al compactar (punto de control)
 
 **Hecho y verificado**: los 3 cambios pedidos (S1, S2/S4, S3/S5) + las correcciones de las
-rondas 1–4 de la revisión nativa (semántica explícita de la action, condicionales,
-self-like sin puntos, toggle que **cambia** en vez de borrar). 15 commits, lint y `tsc`
-limpios, 13+11+9 checks de base y 6 checks de navegador, `gentle-ai-verify` con A–F
-conformes sin bloqueantes.
+rondas 1–5 de la revisión nativa. 18 commits, lint y `tsc` limpios, 13+11+9+9 checks de
+base y 12 checks de navegador, `gentle-ai-verify` con A–F conformes sin bloqueantes.
 
-**Pendiente (ronda 5 de la revisión nativa, hallazgos del refuter, AÚN NO CORREGIDOS)**:
-- `R3-STALE-UNSET-NOOP` (CRITICAL): el botón de like decide su intención desde el estado
-  cacheado del cliente → con estado viejo no aplica nada pero la UI **anuncia falsamente**
-  "tu like reemplazó el reporte".
-- `R4-global-like-scan` (CRITICAL): `findLikesReceivedCounts` escanea todos los likes del
-  mundo y arma cuatro listas `id IN (...)` sin cota.
+**Ronda 5 (hallazgos del refuter) → CORREGIDA** (ver "Quinta revisión nativa" arriba):
+- `R3-STALE-UNSET-NOOP`: el módulo usa **literalmente la misma lógica que las respuestas**
+  (mismo hook, mismos botones, misma action con toggle por valor) y los avisos se arman
+  con lo que el servidor devuelve.
+- `R4-global-like-scan`: el conteo de likes recibidos es **una query agregada** con joins.
 
-**Plan acordado con el usuario** (a ejecutar apenas se compacte):
-1. **R3 → usar literalmente la misma lógica que las reacciones de las respuestas**:
-   extraer un componente compartido `ReactionButtons` desde `buttonReaction.tsx` y usarlo en
-   respuestas y módulos; lo único que cambia es el **icono y el title** del estado dislike
-   (que acá se llama "reporte"). **Sacar el parámetro `intent`** de la action (vuelve al
-   toggle por valor original, el mismo operador de las respuestas) → el módulo no introduce
-   semántica nueva y el riesgo de estado viejo queda como comportamiento de línea base.
-   Mantener el aviso "tu like reemplazó tu reporte" armado con el estado **real del
-   servidor** (sólo en módulos) y que el modal de reporte sea honesto (si el servidor quitó
-   una fila en vez de crearla, decirlo).
-2. **R4 → una sola consulta agregada** (`GROUP BY` con joins por autor) en vez del escaneo
-   global + listas sin cota.
-3. Checks propios de ambos, una ronda final de review y **parar el bucle** (la review es
-   informativa, no un gate de entrega).
-
-**Servidor de demo para pruebas** (base local): `http://localhost:3100`
-(`NEXTAUTH_URL=http://localhost:3100`; el 3000 lo tiene el dev server de JulsGYM).
-Datos sembrados: curso "Demo Tutorías 1793386356778" `cmvvbxl7v00017o28uhbby9fg`, TP
-`cmvvbxl8100027o28pz1l2zxp` (1 like de "Estudiante de prueba"), examen
-`cmvvbxl8600037o28qv5oyhaj` (1 reporte), usuario `demo-lector-1793386356778@test.local`.
-Rutas: `/materias/practica/cmvvbxl7v00017o28uhbby9fg` y
-`/materias/parciales/cmvvbxl7v00017o28uhbby9fg`. PDF de prueba temporal en
-`public/__verify.pdf` (untracked → **borrarlo al cerrar**). Si Google rechaza el
-`redirect_uri` de :3100, hay que correr en el 3000 o forjar una cookie de sesión.
+**Servidor de demo para pruebas** (base local): `http://localhost:3000` (`pnpm dev`, el
+dev server de carta-qr que ocupaba el 3000 fue detenido a pedido del usuario). Datos
+sembrados: curso "Demo Tutorías 1793386356778" `cmvvbxl7v00017o28uhbby9fg`, TP
+`cmvvbxl8100027o28pz1l2zxp`, examen `cmvvbxl8600037o28qv5oyhaj`, usuario
+`demo-lector-1793386356778@test.local`. Rutas: `/materias/practica/cmvvbxl7v00017o28uhbby9fg`
+y `/materias/parciales/cmvvbxl7v00017o28uhbby9fg`. PDF de prueba temporal en
+`public/__verify.pdf` (untracked → **borrarlo al cerrar**).
 
 **Entrega (decisión del usuario, PENDIENTE)**: la branch `feat/likes-and-module-reports` tiene
-15 commits y **NO** está pusheada ni mergeada. Recomendación: **merge `--no-ff` a `main` +
+18 commits y **NO** está pusheada ni mergeada. Recomendación: **merge `--no-ff` a `main` +
 push**, sin PR (el repo no usa PRs: `vercel.json` desactiva los previews salvo `main`).
 
 ## Log
@@ -461,3 +488,30 @@ push**, sin PR (el repo no usa PRs: `vercel.json` desactiva los previews salvo `
 > 'likes y reportes sean visibles': ¿para todos o sólo moderadores?
 
 → **Visible para todos.**
+
+### L4
+
+> el R3 tenes que usar literal la misma logica que usan las reacciones de las respuestas,
+> literalmente lo unico que cambia es que el "reporte" que seria el dislike de las respuestas,
+> se ve con otro title y con otro icono, no te parece? el R4 creo que es un buen fix no?
+
+→ **Sí a los dos.** El módulo usa la misma lógica que las respuestas (mismo hook, mismos
+botones, misma action con toggle por valor): lo único que cambia es el ícono y el title del
+estado dislike. El R4 (una query agregada en vez del escaneo global) se aplica como fue
+propuesto.
+
+### L5
+
+> guardaste el progreso en engram para cuando termine de compactar te avise y sepas en que
+> quedamos?
+
+→ Sí: Engram (observación de proyecto, `odd/likes-and-module-reports/result`) y este
+documento.
+
+### L6
+
+> podes iniciar el server nuevamente en el puerto 300 esta vez? y si esta ocupado matalo
+
+→ Servidor de desarrollo en `http://localhost:3000` con la base local (el dev server de
+carta-qr fue detenido). Datos de prueba sembrados para que el usuario pueda probar los
+likes y los reportes.
