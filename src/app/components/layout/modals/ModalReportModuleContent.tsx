@@ -25,7 +25,12 @@ export const ModalReportModuleContent = ({
   });
 
   const action: SubmitHandler<ConfirmationInput> = async () => {
-    const { error } = await upsertReaction({ idTarget, typeTarget, reaction: false });
+    const { error } = await upsertReaction({
+      idTarget,
+      typeTarget,
+      reaction: false,
+      intent: 'set',
+    });
     if (error) throw new Error(error);
   };
 

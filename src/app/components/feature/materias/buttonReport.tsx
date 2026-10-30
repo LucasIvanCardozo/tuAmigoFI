@@ -29,7 +29,7 @@ export default function ButtonReport({
   async function handleReport() {
     if (!requireSession()) return;
     if (state === false) {
-      await react(false);
+      await react(false, 'unset');
       return;
     }
     openModal(

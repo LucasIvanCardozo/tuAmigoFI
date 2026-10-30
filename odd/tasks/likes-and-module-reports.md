@@ -261,6 +261,36 @@ Los hallazgos 3 y 4 nacen del toggle-por-valor del servidor (compartido con las
 respuestas): cambiarlos es un cambio de contrato, no un arreglo local, y no se cambió sin
 decisión del usuario.
 
+### Segunda revisión nativa (target final): escalada y corregida
+
+La revisión del target final (`sha256:547c6223…`, lineage `review-f0da02e0f0a1af85`, 4
+lentes + refuter) cerró con `state: escalated`:
+
+- `R4-report-toggle-false-success` (**corroborado**): reportar con el estado del cliente
+  desactualizado **borraba** el reporte existente (el toggle-por-valor del servidor) y el
+  usuario igual veía "Gracias por tu reporte!".
+- `R2-split-reaction-state` (causalidad desconocida): el like y el reporte son dos
+  instancias independientes del hook, así que tras "like sobre reporte" los contadores
+  divergen ~0,5–1 s hasta que llegan las props.
+
+Corrección aplicada (commit `fix(reactions): reportar nunca borra un reporte`):
+
+- `upsertReaction` acepta un `intent`: `toggle` (default, la semántica actual),
+  `set` (la fila termina con el valor dado, nunca borra) y `unset` (la fila se borra sólo
+  si ya tenía ese valor). El default conserva el comportamiento de las respuestas.
+- El modal de reporte escribe con `intent: 'set'` → reportar ya no puede borrar un
+  reporte; el botón de reporte deshace con `intent: 'unset'` → deshacer sólo quita un
+  reporte y nunca convierte un like en reporte.
+- La action devuelve el valor previo **real del servidor** (`previous`), así que el aviso
+  del like ("tu like reemplazó el reporte") es exacto aunque la lista de módulos del
+  cliente esté desactualizada. Eso cierra también el hallazgo 3 de la verificación.
+
+Verificado con 10 checks contra la base local: reportar sin fila crea el reporte; reportar
+de nuevo **no** lo borra; el like sobre un módulo reportado pasa a like con
+`previous: false`; deshacer un reporte no toca un like existente; reportar convierte un like
+en reporte; deshacer un reporte borra la fila; el toggle clásico (like sobre like) sigue
+borrando; `unset` sin fila no crea nada; sin filas residuales.
+
 ### No verificado
 
 - El recorrido de Google OAuth real (la sesión se forjó con una cookie firmada).

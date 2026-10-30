@@ -13,41 +13,72 @@ const schema = object({
   idTarget: cuid(),
   typeTarget: z.enum(Object.values(ReactionTo) as [ReactionToType, ...ReactionToType[]]),
   reaction: boolean(),
+  intent: z.enum(['toggle', 'set', 'unset']).optional(),
 });
 
-export const upsertReaction = createAction(schema, async ({ idTarget, typeTarget, reaction }) => {
-  const session = await userUseCases.getSession();
-  if (!session) throw new Error('Necesitas iniciar sesion!');
-  const { id: idUser } = session.user;
+export const upsertReaction = createAction(
+  schema,
+  async ({
+    idTarget,
+    typeTarget,
+    reaction,
+    intent = 'toggle',
+  }): Promise<{
+    reaction: Reaction | null;
+    previous: boolean | null;
+  }> => {
+    const session = await userUseCases.getSession();
+    if (!session) throw new Error('Necesitas iniciar sesion!');
+    const { id: idUser } = session.user;
 
-  const existing = await db.reaction.findFirst({
-    where: {
-      idUser,
-      idTarget,
-      typeTarget,
-    },
-  });
-
-  let reactionAux: Reaction;
-  if (!existing) {
-    reactionAux = await db.reaction.create({
-      data: {
+    const existing = await db.reaction.findFirst({
+      where: {
         idUser,
         idTarget,
-        reaction,
         typeTarget,
       },
     });
-  } else if (existing.reaction === reaction) {
-    reactionAux = await db.reaction.delete({
-      where: { id: existing.id },
-    });
-  } else {
-    reactionAux = await db.reaction.update({
-      where: { id: existing.id },
-      data: { reaction },
-    });
-  }
-  updateTag('reactions');
-  return reactionAux;
-});
+
+    let reactionAux: Reaction | null;
+    if (!existing) {
+      reactionAux =
+        intent === 'unset'
+          ? null
+          : await db.reaction.create({
+              data: {
+                idUser,
+                idTarget,
+                reaction,
+                typeTarget,
+              },
+            });
+    } else if (intent === 'set') {
+      reactionAux =
+        existing.reaction === reaction
+          ? existing
+          : await db.reaction.update({
+              where: { id: existing.id },
+              data: { reaction },
+            });
+    } else if (intent === 'unset') {
+      reactionAux =
+        existing.reaction === reaction
+          ? await db.reaction.delete({
+              where: { id: existing.id },
+            })
+          : existing;
+    } else {
+      reactionAux =
+        existing.reaction === reaction
+          ? await db.reaction.delete({
+              where: { id: existing.id },
+            })
+          : await db.reaction.update({
+              where: { id: existing.id },
+              data: { reaction },
+            });
+    }
+    updateTag('reactions');
+    return { reaction: reactionAux, previous: existing?.reaction ?? null };
+  },
+);

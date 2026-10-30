@@ -37,7 +37,7 @@ export function useReactions({
     return false;
   }
 
-  async function react(value: boolean) {
+  async function react(value: boolean, intent: 'toggle' | 'set' | 'unset' = 'toggle') {
     if (!requireSession()) return { ok: false, previous: null as boolean | null };
     if (inFlight.current) return { ok: false, previous: state };
     inFlight.current = true;
@@ -45,13 +45,20 @@ export function useReactions({
     const previous = state;
     const wasLikes = amount.likes;
     const wasDislikes = amount.dislikes;
-    const next = value === previous ? null : value;
+    const next =
+      intent === 'unset'
+        ? previous === false
+          ? null
+          : previous
+        : value === previous
+          ? null
+          : value;
     setState(next);
     setAmount({
       likes: wasLikes + (next === true ? 1 : 0) - (previous === true ? 1 : 0),
       dislikes: wasDislikes + (next === false ? 1 : 0) - (previous === false ? 1 : 0),
     });
-    const { error } = await upsertReaction({ idTarget, typeTarget, reaction: value });
+    const { error, data } = await upsertReaction({ idTarget, typeTarget, reaction: value, intent });
     if (error) {
       setState(previous);
       setAmount({ likes: wasLikes, dislikes: wasDislikes });
@@ -59,7 +66,7 @@ export function useReactions({
     }
     inFlight.current = false;
     setPending(false);
-    return { ok: error === null, previous };
+    return { ok: error === null, previous: data ? data.previous : previous };
   }
 
   return { state, amount, pending, react, requireSession };
