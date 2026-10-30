@@ -4,6 +4,7 @@ import { memo } from 'react';
 import { CgMathPlus } from 'react-icons/cg';
 import { MdDelete } from 'react-icons/md';
 import { SiGoogledocs } from 'react-icons/si';
+import { sileo } from 'sileo';
 import PdfView from '@/app/components/pdfView';
 import { useModal } from '@/app/contexts/ModalContext';
 import { useModuleSelection } from '@/app/contexts/ModuleSelectionContext';
@@ -12,9 +13,10 @@ import { numberIconsModules } from '../../../assets/icons';
 import { ModalAddResponseContent } from '../../layout/modals/ModalAddResponseContent';
 import { ModalDeleteMidtermContent } from '../../layout/modals/ModalDeleteMidtermContent';
 import { ModalDeleteTpContent } from '../../layout/modals/ModalDeleteTpContent';
-import ButtonLike from './buttonLike';
-import ButtonReport from './buttonReport';
+import { ModalReportModuleContent } from '../../layout/modals/ModalReportModuleContent';
 import ModuleResponse from './moduleResponse';
+import { ReactionButtons } from './reactionButtons';
+import { useReactions } from './useReactions';
 
 interface Props {
   module: DataModule;
@@ -28,6 +30,41 @@ const ModuleContainerImpl = ({ module, typeModule }: Props) => {
   const moduleInd = module.module;
   const problems = module.problems;
   const isTp = 'number' in moduleInd;
+  const typeTarget = isTp ? 'TP' : 'MIDTERM';
+  const { state, amount, pending, react } = useReactions({
+    idTarget: moduleInd.id,
+    typeTarget,
+    reactions: module.reactions,
+    unauthorizedMessage: 'Debes iniciar sesion para reaccionar.',
+  });
+
+  async function handleLike() {
+    const outcome = await react(true);
+    if (outcome.ok && outcome.previous === false && outcome.current === true) {
+      sileo.warning({
+        title: 'Tu like reemplazó el reporte que hiciste de este archivo.',
+      });
+    }
+  }
+
+  async function confirmReport() {
+    return react(false);
+  }
+
+  async function handleDislike() {
+    if (state === false) {
+      await react(false);
+      return;
+    }
+    openModal(
+      <ModalReportModuleContent
+        typeTarget={typeTarget}
+        title={moduleInd.name}
+        author={module.user.name}
+        onConfirm={confirmReport}
+      />,
+    );
+  }
 
   return (
     <li className={`relative ${idModule != null && idModule !== moduleInd.id && 'hidden'}`}>
@@ -102,17 +139,13 @@ const ModuleContainerImpl = ({ module, typeModule }: Props) => {
       <div className="bg-(--white) text-base leading-5 drop-shadow-md flex flex-col gap-1">
         <div className="relative overflow-hidden bg-[#96cad3] h-min rounded-b-lg p-1 sm:p-2">
           <div className="absolute z-10 bg-(--white) rounded-md m-2 opacity-90 bottom-0 right-0 flex items-center gap-2 px-1">
-            <ButtonLike
-              idTarget={moduleInd.id}
-              typeTarget={isTp ? 'TP' : 'MIDTERM'}
-              reactions={module.reactions}
-            />
-            <ButtonReport
-              idTarget={moduleInd.id}
-              typeTarget={isTp ? 'TP' : 'MIDTERM'}
-              reactions={module.reactions}
-              title={moduleInd.name}
-              author={module.user.name}
+            <ReactionButtons
+              state={state}
+              amount={amount}
+              pending={pending}
+              onLike={handleLike}
+              onDislike={handleDislike}
+              countClassName="text-xs tabular-nums"
             />
           </div>
           <div className="absolute z-10 bg-(--white) rounded-md m-2 opacity-65 bottom-0 left-0">{`Por ${module.user.name}`}</div>

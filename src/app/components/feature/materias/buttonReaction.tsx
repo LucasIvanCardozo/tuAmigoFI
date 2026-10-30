@@ -1,11 +1,7 @@
 'use client';
-import { useSession } from 'next-auth/react';
-import { useEffect, useRef, useState } from 'react';
-import { AiFillLike } from 'react-icons/ai';
-import { TbAlertHexagon } from 'react-icons/tb';
-import { sileo } from 'sileo';
-import { upsertReaction } from '@/app/lib/server/actions/reactions/upsert.action';
 import type { DataModuleResponse } from '@/app/types';
+import { ReactionButtons } from './reactionButtons';
+import { useReactions } from './useReactions';
 
 export default function ButtonReaction({
   indexResponse,
@@ -14,89 +10,21 @@ export default function ButtonReaction({
   indexResponse: number;
   responses: DataModuleResponse[];
 }) {
-  const [stateReaction, setStateReaction] = useState<boolean | null>(null);
-  const [amountReaction, setAmountReaction] = useState<{
-    likes: number;
-    dislikes: number;
-  }>({
-    likes: 0,
-    dislikes: 0,
+  const response = responses[indexResponse];
+  const { state, amount, pending, react } = useReactions({
+    idTarget: response.response.id,
+    typeTarget: 'RESPONSE',
+    reactions: response.reactions,
+    unauthorizedMessage: 'Debes iniciar sesion para reaccionar a la respuesta.',
   });
-  const { data: session } = useSession();
-  const [pending, setPending] = useState(false);
-  const inFlight = useRef(false);
-
-  async function handleLike(reaction: boolean) {
-    if (!session?.user.id) {
-      sileo.error({
-        title: 'Debes iniciar sesion para reaccionar a la respuesta.',
-      });
-      return;
-    }
-    if (inFlight.current) return;
-    inFlight.current = true;
-    setPending(true);
-    const response = responses[indexResponse];
-    setStateReaction(reaction === stateReaction ? null : reaction);
-    setAmountReaction(
-      reaction === stateReaction
-        ? {
-            likes: reaction ? amountReaction.likes - 1 : amountReaction.likes,
-            dislikes: reaction ? amountReaction.dislikes : amountReaction.dislikes - 1,
-          }
-        : stateReaction == null
-          ? {
-              likes: reaction ? amountReaction.likes + 1 : amountReaction.likes,
-              dislikes: reaction ? amountReaction.dislikes : amountReaction.dislikes + 1,
-            }
-          : {
-              likes: reaction ? amountReaction.likes + 1 : amountReaction.likes - 1,
-              dislikes: reaction ? amountReaction.dislikes - 1 : amountReaction.dislikes + 1,
-            },
-    );
-    const { error } = await upsertReaction({
-      idTarget: response.response.id,
-      typeTarget: 'RESPONSE',
-      reaction: reaction,
-    });
-    if (error) sileo.error({ title: error });
-    inFlight.current = false;
-    setPending(false);
-  }
-
-  useEffect(() => {
-    const reactions = responses[indexResponse].reactions;
-    const likes = reactions.filter((reaction) => reaction.reaction).length;
-    const dislikes = reactions.length - likes;
-    setAmountReaction({ likes, dislikes });
-    const reaction = reactions.find((reaction) => reaction.idUser === session?.user.id);
-    setStateReaction(reaction ? reaction.reaction : null);
-  }, [session, responses, indexResponse]);
 
   return (
-    <>
-      <button
-        type="button"
-        className="flex disabled:opacity-50 disabled:cursor-not-allowed"
-        aria-label="Dar me gusta"
-        title="Me gusta"
-        onClick={() => handleLike(true)}
-        disabled={pending}
-      >
-        <AiFillLike className={`${stateReaction === true ? 'text-green-500' : ''} text-xl`} />
-        {amountReaction.likes}
-      </button>
-      <button
-        type="button"
-        className="flex disabled:opacity-50 disabled:cursor-not-allowed"
-        aria-label="Reportar"
-        title="Reportar"
-        onClick={() => handleLike(false)}
-        disabled={pending}
-      >
-        <TbAlertHexagon className={`${stateReaction === false ? 'text-red-500' : ''} text-xl`} />
-        {amountReaction.dislikes}
-      </button>
-    </>
+    <ReactionButtons
+      state={state}
+      amount={amount}
+      pending={pending}
+      onLike={() => react(true)}
+      onDislike={() => react(false)}
+    />
   );
 }

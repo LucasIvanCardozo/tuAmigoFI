@@ -5,7 +5,14 @@ import { sileo } from 'sileo';
 import { upsertReaction } from '@/app/lib/server/actions/reactions/upsert.action';
 import type { Reaction } from '@/app/lib/server/db/prisma/prismaClient/client';
 
-type ReactionTarget = 'RESPONSE' | 'COMMENT' | 'TP' | 'MIDTERM';
+export type ReactionTarget = 'RESPONSE' | 'COMMENT' | 'TP' | 'MIDTERM';
+
+export type ReactionOutcome = {
+  ok: boolean;
+  previous: boolean | null;
+  current: boolean | null;
+  error?: string;
+};
 
 export function useReactions({
   idTarget,
@@ -37,30 +44,21 @@ export function useReactions({
     return false;
   }
 
-  async function react(value: boolean, intent: 'toggle' | 'set' | 'unset' = 'toggle') {
-    if (!requireSession()) return { ok: false, previous: null as boolean | null };
-    if (inFlight.current) return { ok: false, previous: state };
+  async function react(value: boolean): Promise<ReactionOutcome> {
+    if (!requireSession()) return { ok: false, previous: null, current: null };
+    if (inFlight.current) return { ok: false, previous: state, current: state };
     inFlight.current = true;
     setPending(true);
     const previous = state;
+    const next = value === previous ? null : value;
     const wasLikes = amount.likes;
     const wasDislikes = amount.dislikes;
-    const next =
-      intent === 'set'
-        ? value
-        : intent === 'unset'
-          ? previous === value
-            ? null
-            : previous
-          : value === previous
-            ? null
-            : value;
     setState(next);
     setAmount({
       likes: wasLikes + (next === true ? 1 : 0) - (previous === true ? 1 : 0),
       dislikes: wasDislikes + (next === false ? 1 : 0) - (previous === false ? 1 : 0),
     });
-    const { error, data } = await upsertReaction({ idTarget, typeTarget, reaction: value, intent });
+    const { error, data } = await upsertReaction({ idTarget, typeTarget, reaction: value });
     if (error) {
       setState(previous);
       setAmount({ likes: wasLikes, dislikes: wasDislikes });
@@ -68,7 +66,12 @@ export function useReactions({
     }
     inFlight.current = false;
     setPending(false);
-    return { ok: error === null, previous: data ? data.previous : previous };
+    return {
+      ok: error === null,
+      previous: data ? data.previous : previous,
+      current: data ? (data.reaction ? data.reaction.reaction : null) : next,
+      error: error ?? undefined,
+    };
   }
 
   return { state, amount, pending, react, requireSession };

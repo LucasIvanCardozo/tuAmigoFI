@@ -13,7 +13,6 @@ const schema = object({
   idTarget: cuid(),
   typeTarget: z.enum(Object.values(ReactionTo) as [ReactionToType, ...ReactionToType[]]),
   reaction: boolean(),
-  intent: z.enum(['toggle', 'set', 'unset']).optional(),
 });
 
 export const upsertReaction = createAction(
@@ -22,7 +21,6 @@ export const upsertReaction = createAction(
     idTarget,
     typeTarget,
     reaction,
-    intent = 'toggle',
   }): Promise<{
     reaction: Reaction | null;
     previous: boolean | null;
@@ -40,33 +38,14 @@ export const upsertReaction = createAction(
     });
 
     if (!existing) {
-      if (intent !== 'unset') {
-        await db.reaction.create({
-          data: {
-            idUser,
-            idTarget,
-            reaction,
-            typeTarget,
-          },
-        });
-      }
-    } else if (intent === 'set') {
-      if (existing.reaction !== reaction) {
-        const updated = await db.reaction.updateMany({
-          where: { id: existing.id, reaction: existing.reaction },
-          data: { reaction },
-        });
-        if (updated.count === 0)
-          throw new Error('El contenido cambio mientras lo guardabas, intenta de nuevo.');
-      }
-    } else if (intent === 'unset') {
-      if (existing.reaction === reaction) {
-        const deleted = await db.reaction.deleteMany({
-          where: { id: existing.id, reaction },
-        });
-        if (deleted.count === 0)
-          throw new Error('El contenido cambio mientras lo guardabas, intenta de nuevo.');
-      }
+      await db.reaction.create({
+        data: {
+          idUser,
+          idTarget,
+          reaction,
+          typeTarget,
+        },
+      });
     } else if (existing.reaction === reaction) {
       const deleted = await db.reaction.deleteMany({
         where: { id: existing.id, reaction: existing.reaction },

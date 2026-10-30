@@ -2,22 +2,23 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { type SubmitHandler, useForm } from 'react-hook-form';
+import { sileo } from 'sileo';
 import { useModal } from '@/app/contexts/ModalContext';
 import { useFormSubmit } from '@/app/hooks/useFormSubmit';
-import { upsertReaction } from '@/app/lib/server/actions/reactions/upsert.action';
 import { type ConfirmationInput, confirmationSchema } from '@/app/lib/shared/schemas';
+import type { ReactionOutcome } from '../../feature/materias/useReactions';
 import { CheckboxForm, Form } from '../form';
 
 export const ModalReportModuleContent = ({
-  idTarget,
   typeTarget,
   title,
   author,
+  onConfirm,
 }: {
-  idTarget: string;
   typeTarget: 'TP' | 'MIDTERM';
   title: string;
   author: string;
+  onConfirm: () => Promise<ReactionOutcome>;
 }) => {
   const { control, handleSubmit } = useForm<ConfirmationInput>({
     resolver: zodResolver(confirmationSchema),
@@ -25,19 +26,27 @@ export const ModalReportModuleContent = ({
   });
 
   const action: SubmitHandler<ConfirmationInput> = async () => {
-    const { error } = await upsertReaction({
-      idTarget,
-      typeTarget,
-      reaction: false,
-      intent: 'set',
-    });
-    if (error) throw new Error(error);
+    const outcome = await onConfirm();
+    if (!outcome.ok) throw new Error(outcome.error ?? 'No se pudo guardar el reporte.');
+    if (outcome.current !== false) {
+      sileo.warning({
+        title: 'Tu reporte fue quitado: el archivo ya no tiene ese reporte.',
+      });
+      return;
+    }
+    if (outcome.previous === true) {
+      sileo.warning({
+        title: 'Tu reporte reemplazó el like que hiciste de este archivo.',
+      });
+      return;
+    }
+    sileo.success({ title: 'Gracias por tu reporte!' });
   };
 
   const { closeModal } = useModal();
   const { submit, isLoading } = useFormSubmit({
     action,
-    successMessage: 'Gracias por tu reporte!',
+    successMessage: '',
     onSuccess: async () => {
       closeModal();
     },
