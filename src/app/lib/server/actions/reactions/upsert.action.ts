@@ -51,24 +51,35 @@ export const upsertReaction = createAction(
         });
       }
     } else if (intent === 'set') {
-      await db.reaction.updateMany({
-        where: { id: existing.id, reaction: existing.reaction },
-        data: { reaction },
-      });
-    } else if (intent === 'unset') {
-      await db.reaction.deleteMany({
-        where: { id: existing.id, reaction },
-      });
-    } else {
-      await db.reaction.deleteMany({
-        where: { id: existing.id, reaction: existing.reaction },
-      });
       if (existing.reaction !== reaction) {
-        await db.reaction.updateMany({
+        const updated = await db.reaction.updateMany({
           where: { id: existing.id, reaction: existing.reaction },
           data: { reaction },
         });
+        if (updated.count === 0)
+          throw new Error('El contenido cambio mientras lo guardabas, intenta de nuevo.');
       }
+    } else if (intent === 'unset') {
+      if (existing.reaction === reaction) {
+        const deleted = await db.reaction.deleteMany({
+          where: { id: existing.id, reaction },
+        });
+        if (deleted.count === 0)
+          throw new Error('El contenido cambio mientras lo guardabas, intenta de nuevo.');
+      }
+    } else if (existing.reaction === reaction) {
+      const deleted = await db.reaction.deleteMany({
+        where: { id: existing.id, reaction: existing.reaction },
+      });
+      if (deleted.count === 0)
+        throw new Error('El contenido cambio mientras lo guardabas, intenta de nuevo.');
+    } else {
+      const updated = await db.reaction.updateMany({
+        where: { id: existing.id, reaction: existing.reaction },
+        data: { reaction },
+      });
+      if (updated.count === 0)
+        throw new Error('El contenido cambio mientras lo guardabas, intenta de nuevo.');
     }
 
     const current = await db.reaction.findFirst({
