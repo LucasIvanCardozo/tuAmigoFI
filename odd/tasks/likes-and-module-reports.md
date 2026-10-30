@@ -1,11 +1,11 @@
-# Likes recibidas con puntos y likes/reportes en TPs y exámenes
+# Likes recibidos con puntos y likes/reportes en TPs y exámenes
 
 Branch: `feat/likes-and-module-reports`
 Status: in progress
 Base: `main` at `834d678`
 
 Tres cambios pedidos en una sola tanda: menos texto en los modales de carga, puntos por
-likes recibidas, y likes + reporte con confirmación en las cards de TP y examen.
+likes recibidos, y likes + reporte con confirmación en las cards de TP y examen.
 
 ## Specs
 
@@ -58,7 +58,7 @@ para `tier: 2`. El auto-ocultamiento a los 3 reportes no cambia.
 
 ## Design
 
-### Puntos por likes recibidas
+### Puntos por likes recibidos
 
 El puntaje vive en un solo módulo, `src/app/lib/shared/score.ts`, compartido por el ranking
 del home (`findContributorsWithScore`) y por el desglose del modal de aportes
@@ -123,7 +123,7 @@ estaba el nombre. El nombre se mueve al borde inferior izquierdo del PDF.
 | --- | --- |
 | Texto de los modales de carga | `src/app/components/layout/modals/ModalAddTpContent.tsx`, `ModalAddMidtermContent.tsx` |
 | Concepto de puntaje | `src/app/lib/shared/score.ts` |
-| Conteo de likes recibidas | `src/app/lib/server/db/repository/user.repository.ts` |
+| Conteo de likes recibidos | `src/app/lib/server/db/repository/user.repository.ts` |
 | Score del ranking y del desglose | `src/app/lib/server/usecases/user.usecases.ts` |
 | Reglas del modal de puntos | `src/app/components/buttonInfoScore.tsx` |
 | Like del módulo | `src/app/components/feature/materias/buttonLike.tsx` (nuevo) |
@@ -135,7 +135,7 @@ estaba el nombre. El nombre se mueve al borde inferior izquierdo del PDF.
 ### Decisiones
 
 - **Un solo módulo de cálculo.** El ranking y el desglose comparten `score.ts` y ahora
-  también el conteo de likes recibidas: no pueden divergir.
+  también el conteo de likes recibidos: no pueden divergir.
 - **El contador de reportes visible para todos** (S5) es una decisión explícita del
   usuario, y va en contra de la regla anterior de `AGENTS.md` (contador sólo para
   `tier: 2`). Se actualiza la documentación.
@@ -158,11 +158,11 @@ link, con likes y reportes reales, y después borró todo. Resultado: **13/13 ch
 pasaron**.
 
 ```
-PASS | likes recibidas del autor: 4 (respuesta, comentario, TP, parcial) | obtenido: 4
-PASS | el link no suma likes recibidas | obtenido: 4
+PASS | likes recibidos del autor: 4 (respuesta, comentario, TP, parcial) | obtenido: 4
+PASS | el link no suma likes recibidos | obtenido: 4
 PASS | el reporte no cuenta como like recibido | obtenido: 4
-PASS | likes recibidas del liker: 1 (el like que recibió en su respuesta) | obtenido: 1
-PASS | el desglose expone la fila de likes recibidas con 3 puntos | {"key":"likes","label":"Likes recibidas","quantity":4,"unitPoints":3,"points":12}
+PASS | likes recibidos del liker: 1 (el like que recibió en su respuesta) | obtenido: 1
+PASS | el desglose expone la fila de likes recibidos con 3 puntos | {"key":"likes","label":"Likes recibidos","quantity":4,"unitPoints":3,"points":12}
 PASS | el total del desglose es la suma de sus filas | score: 41, suma: 41
 PASS | el ranking del home usa el mismo score que el desglose | ranking: 41, desglose: 41
 PASS | la card del módulo recibe sus propias reacciones | reacciones del módulo: 1
@@ -193,7 +193,7 @@ crear/borrar porque `upsertReaction` borra cuando el valor coincide.
   botón "Reportar". Al confirmar, el contador pasó de `0` a `1` y la fila en la base quedó
   con `reaction: false`.
 - **El like del módulo** pasó el contador de `1` a `2` y creó la fila `TP / reaction true`.
-- **El desglose del home** muestra la fila nueva: "Likes recibidas — 2 × 3 — 6 pts", y el
+- **El desglose del home** muestra la fila nueva: "Likes recibidos — 2 × 3 — 6 pts", y el
   total del colaborador coincide con la suma de las filas (18 pts).
 - **El modal "¿Cómo obtener puntos?"** muestra la línea nueva: "Cada like que recibas en
   tus respuestas, comentarios, TPs o exámenes suma 3 puntos."
