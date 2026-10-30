@@ -203,13 +203,22 @@ crear/borrar porque `upsertReaction` borra cuando el valor coincide.
 `pnpm lint` sale con 0 errores (queda el warning preexistente de `globals.css:50`) y
 `pnpm build` compila las 10 páginas.
 
-### Hallazgo de la prueba en el navegador
+### Hallazgo de la revisión nativa: el like no puede borrar un reporte en silencio
 
 Dar like a un módulo que el usuario ya había reportado **convierte el reporte en like**:
 la fila `Reaction` es única por `(idUser, idTarget, typeTarget)`, así que la segunda
 escritura actualiza el `reaction: false` a `true` y el reporte desaparece. Es el mismo
 comportamiento que ya tenían las reacciones de respuestas, pero ahora es visible porque
 el contador de reportes es público. Queda anotado en `AGENTS.md`.
+
+El refuter de la revisión nativa lo marcó como `R4-report-overwrite` (CRITICAL,
+`introduced`): el reporte no puede caerse **en silencio**. El usuario revisó el hallazgo y
+corrigió el planteo: **el hexágono es un dislike llamado "reporte"**, o sea que reporte y
+like son los dos estados de la misma fila y el like **sí** puede reemplazar al reporte.
+La corrección acotada (presupuesto de 200 líneas de diff) unifica la lógica de las
+reacciones en `useReactions.ts` —la misma máquina de estados que usaba
+`buttonReaction.tsx` en las respuestas— y avisa con un toast cuando el like reemplaza al
+reporte, para que nunca se caiga en silencio.
 
 ### No verificado
 
@@ -233,12 +242,13 @@ el contador de reportes es público. Queda anotado en `AGENTS.md`.
 
 ## Review disposition
 
-`gentle-ai review mode status` dice **RDD on** (global), pero el `assess` del candidato
-(`baseRef: origin/main`, `committedOnly: true`) devuelve `risk: medium`, `reviewDue: false`
-(`reviewDueReason: under_budget`) y un plan de `writerSelfVerification: true`,
-`independentVerifier: false`. No se abrió ninguna revisión nativa: el plan deja la
-verificación en manos del escritor, que es lo que ejecutó la sección de verificación de
-este documento.
+`gentle-ai review mode status` dice **RDD on** (global). El `assess` del candidato
+(`baseRef: origin/main`, `committedOnly: true`) devolvió `risk: medium`, `reviewDue: false`
+(`reviewDueReason: under_budget`), pero la revisión nativa se abrió igual sobre el
+candidato `sha256:530b5c78…` (lineage `review-cbeaca4c6dc70795`, tier medio, 4 lentes).
+Los cuatro reviewers se capturaron y el refuter cerró con `state: correction_required` y
+un único hallazgo: `R4-report-overwrite` (CRITICAL, `introduced`), corregido como se
+describe arriba.
 
 ## Log
 

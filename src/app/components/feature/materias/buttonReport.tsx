@@ -1,12 +1,9 @@
 'use client';
-import { useSession } from 'next-auth/react';
-import { useEffect, useRef, useState } from 'react';
 import { TbAlertHexagon } from 'react-icons/tb';
-import { sileo } from 'sileo';
 import { useModal } from '@/app/contexts/ModalContext';
-import { upsertReaction } from '@/app/lib/server/actions/reactions/upsert.action';
 import type { Reaction } from '@/app/lib/server/db/prisma/prismaClient/client';
 import { ModalReportModuleContent } from '../../layout/modals/ModalReportModuleContent';
+import { useReactions } from './useReactions';
 
 export default function ButtonReport({
   idTarget,
@@ -21,43 +18,18 @@ export default function ButtonReport({
   title: string;
   author: string;
 }) {
-  const { data: session } = useSession();
   const { openModal } = useModal();
-  const [reported, setReported] = useState(false);
-  const [pending, setPending] = useState(false);
-  const inFlight = useRef(false);
+  const { state, amount, pending, react, requireSession } = useReactions({
+    idTarget,
+    typeTarget,
+    reactions,
+    unauthorizedMessage: 'Debes iniciar sesion para reportar.',
+  });
 
-  const reports = reactions.filter((reaction) => !reaction.reaction).length;
-
-  useEffect(() => {
-    setReported(
-      reactions.some((reaction) => reaction.idUser === session?.user.id && !reaction.reaction),
-    );
-  }, [reactions, session]);
-
-  async function handleUndoReport() {
-    if (inFlight.current) return;
-    inFlight.current = true;
-    setPending(true);
-    setReported(false);
-    const { error } = await upsertReaction({ idTarget, typeTarget, reaction: false });
-    if (error) {
-      setReported(true);
-      sileo.error({ title: error });
-    }
-    inFlight.current = false;
-    setPending(false);
-  }
-
-  function handleReport() {
-    if (!session?.user.id) {
-      sileo.error({
-        title: 'Debes iniciar sesion para reportar.',
-      });
-      return;
-    }
-    if (reported) {
-      handleUndoReport();
+  async function handleReport() {
+    if (!requireSession()) return;
+    if (state === false) {
+      await react(false);
       return;
     }
     openModal(
@@ -79,8 +51,8 @@ export default function ButtonReport({
       onClick={handleReport}
       disabled={pending}
     >
-      <TbAlertHexagon className={`${reported ? 'text-red-500' : ''} text-xl`} />
-      <span className="text-xs tabular-nums">{reports}</span>
+      <TbAlertHexagon className={`${state === false ? 'text-red-500' : ''} text-xl`} />
+      <span className="text-xs tabular-nums">{amount.dislikes}</span>
     </button>
   );
 }
