@@ -102,11 +102,30 @@ document always displayed.
 
 ### Not verified locally
 
-- The fix has not been deployed, so the "after" measurement above is the live page with
-  the class toggled at runtime, not the shipped build. A post-deploy check on the same
-  URL closes it.
+- **The fix has now been deployed and verified** (see below). The "before" measurement was
+  taken on the live page with the class toggled at runtime; the "after" measurement below
+  is the shipped build.
 - No other PDF in production was audited for the same divergence. The bug is
   document-dependent, so other uploads may be affected without anyone having noticed.
+
+### Post-deploy verification
+
+Deployment `tu-amigo-ay3wpiogx` (production, Ready, 1m build) with `main` at `0ef2ede`,
+measured with headless Chromium on the same failing URL:
+
+```
+wrapperH      = 1,159px      (antes: 33,554,428px)
+min-height    = 0px          (la regla del fix, desplegada)
+canvasY       = 211          (antes: 16,776,845)
+canvasH       = 1,134
+pixel centro  = 190,192,189,255
+pixel superior= 212,214,209,255
+enPantalla    = true
+```
+
+1,159px is `819 / 0.706948`, the width the aspect ratio asks for, and the sampled pixels
+are the scanned page's content. A screenshot of the deployed page shows the "Segundo
+parcial" sheet rendered inside the viewer.
 
 ## Residual, recorded honestly
 
