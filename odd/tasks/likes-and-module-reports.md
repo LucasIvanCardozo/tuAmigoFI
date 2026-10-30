@@ -250,6 +250,34 @@ Los cuatro reviewers se capturaron y el refuter cerró con `state: correction_re
 un único hallazgo: `R4-report-overwrite` (CRITICAL, `introduced`), corregido como se
 describe arriba.
 
+La corrección se comiteó (`6136b3c`, 196 líneas de diff, dentro del presupuesto de 200) y
+el plan de corrección fue aceptado (`correction_lines: 196`). El proveedor autorizó una
+recuperación a un lineage sucesor (`scope_changed`) y ese sucesor
+(`review-c05faba79d646fad`, árbol `dae23127…`, 13 archivos, 685 líneas) quedó creado
+revisando el candidato ya corregido, con el pronóstico de su primera lente emitido.
+
+### Lo que quedó pendiente y por qué
+
+Los runs de reviewer restantes (las otras tres lentes y el refuter del lineage sucesor) no
+pudieron iniciarse: el binding de captura tiene que coincidir **byte a byte** con el que
+emite el proveedor, y el harness re-tipa los valores de string que parecen literales JSON
+dentro de un argumento JSON. Con el flag `reviewerRunAcknowledged` presente, el valor
+`"order": "1"` (y `"materialize": "true"`) llegan como `1` y `true`, el binding deja de
+coincidir y el facade responde `collectBinding is missing or stale for current STATUS`
+(sin mutación). Los pronósticos (sin el flag) sí salen, lo que confirma que el problema
+está en la serialización del argumento, no en la autoridad.
+
+El mismo phenomenon bloquea la ruta `recover` del facade: esa operación exige el `input`
+como **string** (lo parsea con `JSON.parse`), y el esquema del tool acepta
+`anyOf[{type:"string",pattern:"^\s*\{"},{type:"object"}]`, así que Pi lo coerciona a
+objeto y el facade responde `Review controller input must be a string`. La recuperación se
+evitó por la vía del lineage sucesor ya reservado por el proveedor.
+
+Familia upstream del mismo defecto de coerción: `earendil-works/pi#9931` (argumentos de
+tool que llegan como strings JSON y la coerción en `validateToolArguments`). El arreglo
+del lado del facade sería no re-tipar los argumentos JSON: aceptar el binding ya
+serializado y compararlo como string crudo.
+
 ## Log
 
 ### L1
