@@ -39,46 +39,46 @@ export const upsertReaction = createAction(
       },
     });
 
-    let reactionAux: Reaction | null;
     if (!existing) {
-      reactionAux =
-        intent === 'unset'
-          ? null
-          : await db.reaction.create({
-              data: {
-                idUser,
-                idTarget,
-                reaction,
-                typeTarget,
-              },
-            });
+      if (intent !== 'unset') {
+        await db.reaction.create({
+          data: {
+            idUser,
+            idTarget,
+            reaction,
+            typeTarget,
+          },
+        });
+      }
     } else if (intent === 'set') {
-      reactionAux =
-        existing.reaction === reaction
-          ? existing
-          : await db.reaction.update({
-              where: { id: existing.id },
-              data: { reaction },
-            });
+      await db.reaction.updateMany({
+        where: { id: existing.id, reaction: existing.reaction },
+        data: { reaction },
+      });
     } else if (intent === 'unset') {
-      reactionAux =
-        existing.reaction === reaction
-          ? await db.reaction.delete({
-              where: { id: existing.id },
-            })
-          : existing;
+      await db.reaction.deleteMany({
+        where: { id: existing.id, reaction },
+      });
     } else {
-      reactionAux =
-        existing.reaction === reaction
-          ? await db.reaction.delete({
-              where: { id: existing.id },
-            })
-          : await db.reaction.update({
-              where: { id: existing.id },
-              data: { reaction },
-            });
+      await db.reaction.deleteMany({
+        where: { id: existing.id, reaction: existing.reaction },
+      });
+      if (existing.reaction !== reaction) {
+        await db.reaction.updateMany({
+          where: { id: existing.id, reaction: existing.reaction },
+          data: { reaction },
+        });
+      }
     }
+
+    const current = await db.reaction.findFirst({
+      where: {
+        idUser,
+        idTarget,
+        typeTarget,
+      },
+    });
     updateTag('reactions');
-    return { reaction: reactionAux, previous: existing?.reaction ?? null };
+    return { reaction: current, previous: existing?.reaction ?? null };
   },
 );

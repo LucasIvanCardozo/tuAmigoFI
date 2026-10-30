@@ -293,6 +293,7 @@ A like is a `Reaction` row with `reaction: true`. `upsertReaction` toggles **by 
 - **The report IS a dislike.** The hexagon on a TP or midterm is the `reaction: false` state of the same `Reaction` row the like uses (`reaction: true`); only the icon and the name differ. The row is unique per `(idUser, idTarget, typeTarget)`, so a module has ONE state per user: like or report, never both.
 - **Liking replaces your report, and it says so.** Giving a like to a module you reported switches that row to the like (the report goes away), exactly like switching like/dislike on a response. The like writes it and warns with a toast, so the report is never dropped silently. The warning uses the state the **server** reports back (`upsertReaction` returns the previous value), so it stays correct even when the client's module list is stale.
 - **Reporting never deletes a report, and undoing only removes one.** `upsertReaction` takes an `intent`: `toggle` (default, same value deletes the row), `set` (the row ends with the given value) and `unset` (the row is removed only if it already holds that value). The report modal writes with `set` and the report button undoes with `unset`, so a stale client can no longer delete a report while showing "Gracias por tu reporte!", nor turn a like into a report by undoing a report it never had.
+- **The writes are conditional.** `set`, `unset` and `toggle` write with `updateMany`/`deleteMany` filtered by the value they read, so a reaction changed concurrently is never clobbered nor deleted.
 - **One state machine for the module reactions.** `useReactions.ts` owns the counts, the user's own state and the write (same value deletes the row, a different value switches it); `buttonLike.tsx` and `buttonReport.tsx` are only the markup on top of it. `buttonReaction.tsx` (responses) still keeps its own copy of that logic: the arithmetic is the same, but it does NOT roll the optimistic state back when the write fails.
 - **The like and report buttons live over the PDF**, in the place where the uploader name used to be; the name moved to the bottom-left of the PDF.
 
@@ -309,6 +310,8 @@ All the points live in `src/app/lib/shared/score.ts` (`SCORE_CONCEPTS`), shared 
 | `links` | Links shared | 1 |
 | `reactions` | Reactions **sent** | 1 |
 | `likes` | Likes **received** on responses, comments, TPs and midterms | 3 |
+
+- **A self-like never counts.** The `likes` count skips a reaction whose author is also its reactor, so nobody can award points to themselves. The `reactions` row still counts the reaction the user emitted.
 
 - **Likes received are not a `_count` of the user.** `Reaction.idTarget` is a plain id with no relation to `Response`, `Comment`, `Tp` or `Midterm`, so the count is an explicit cross in `user.repository.ts`: read the likes, group the `idTarget` by type, fetch the author of each target and count per author. The lookup key is `` `${typeTarget}:${idTarget}` ``, never the bare id.
 - **`reactions` and `likes` are different numbers.** `reactions` counts the rows the user *emitted*; `likes` counts the likes the user *received*. A like that a user receives is also a reaction that somebody else emitted.

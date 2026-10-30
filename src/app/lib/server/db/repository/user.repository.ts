@@ -47,7 +47,7 @@ export const userRepository = (db: PrismaClient | Prisma.TransactionClient) => (
   async findLikesReceivedCounts() {
     const likes = await db.reaction.findMany({
       where: { reaction: true, typeTarget: { in: [...LIKE_TARGETS] } },
-      select: { idTarget: true, typeTarget: true },
+      select: { idUser: true, idTarget: true, typeTarget: true },
     });
 
     const targetsByType = new Map<string, string[]>();
@@ -89,6 +89,7 @@ export const userRepository = (db: PrismaClient | Prisma.TransactionClient) => (
     for (const like of likes) {
       const author = authorByTarget.get(`${like.typeTarget}:${like.idTarget}`);
       if (!author) continue;
+      if (author === like.idUser) continue;
       counts[author] = (counts[author] ?? 0) + 1;
     }
     return counts;
