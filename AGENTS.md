@@ -284,6 +284,23 @@ A report means "this was uploaded wrong", not a dislike. It reuses the `Reaction
 - **The module list must keep the `reactions` cache tag.** It embeds the reaction arrays, so `updateTag('reactions')` only reaches it when the tag is declared.
 - `upsertReaction` must match on `typeTarget` as well as `idUser` and `idTarget`, otherwise a lookup can match a reaction of another type.
 
+### Score
+
+All the points live in `src/app/lib/shared/score.ts` (`SCORE_CONCEPTS`), shared by the home ranking (`findContributorsWithScore`) and the contributions breakdown (`findContributions`), so the two can never diverge.
+
+| Concept | Counts | Points |
+| --- | --- | --- |
+| `tps` | TPs uploaded | 6 |
+| `midterms` | Midterms uploaded | 5 |
+| `responses` | Responses uploaded | 3 |
+| `comments` | Comments written | 1 |
+| `links` | Links shared | 1 |
+| `reactions` | Reactions **sent** | 1 |
+| `likes` | Likes **received** on responses, comments, TPs and midterms | 3 |
+
+- **Likes received are not a `_count` of the user.** `Reaction.idTarget` is a plain id with no relation to `Response`, `Comment`, `Tp` or `Midterm`, so the count is an explicit cross in `user.repository.ts`: read the likes, group the `idTarget` by type, fetch the author of each target and count per author. The lookup key is `` `${typeTarget}:${idTarget}` ``, never the bare id.
+- **`reactions` and `likes` are different numbers.** `reactions` counts the rows the user *emitted*; `likes` counts the likes the user *received*. A like that a user receives is also a reaction that somebody else emitted.
+
 ## Git
 
 Conventional commits:

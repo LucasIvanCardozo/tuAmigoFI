@@ -38,6 +38,10 @@ export default function ButtonInfoScore() {
                   <li>
                     Cada reacción que dejes en la plataforma suma <b>1 punto</b>.
                   </li>
+                  <li>
+                    Cada like que recibas en tus respuestas, comentarios, TPs o exámenes suma{' '}
+                    <b>3 puntos</b>.
+                  </li>
                 </ul>
                 <span>¡Colabora y construyamos juntos una comunidad más fuerte!</span>
                 <span>
