@@ -2,7 +2,6 @@
 import { updateTag } from 'next/cache';
 import z, { boolean, cuid, object } from 'zod';
 import db from '../../db/db';
-import type { Reaction } from '../../db/prisma/prismaClient/client';
 import { ReactionTo } from '../../db/prisma/prismaClient/enums';
 import { userUseCases } from '../../usecases/user.usecases';
 import createAction from '../createActions';
@@ -15,39 +14,55 @@ const schema = object({
   reaction: boolean(),
 });
 
-export const upsertReaction = createAction(schema, async ({ idTarget, typeTarget, reaction }) => {
-  const session = await userUseCases.getSession();
-  if (!session) throw new Error('Necesitas iniciar sesion!');
-  const { id: idUser } = session.user;
+export const upsertReaction = createAction(
+  schema,
+  async ({
+    idTarget,
+    typeTarget,
+    reaction,
+  }): Promise<{
+    reaction: boolean | null;
+    previous: boolean | null;
+  }> => {
+    const session = await userUseCases.getSession();
+    if (!session) throw new Error('Necesitas iniciar sesion!');
+    const { id: idUser } = session.user;
 
-  const existing = await db.reaction.findFirst({
-    where: {
-      idUser,
-      idTarget,
-      typeTarget,
-    },
-  });
-
-  let reactionAux: Reaction;
-  if (!existing) {
-    reactionAux = await db.reaction.create({
-      data: {
+    const existing = await db.reaction.findFirst({
+      where: {
         idUser,
         idTarget,
-        reaction,
         typeTarget,
       },
     });
-  } else if (existing.reaction === reaction) {
-    reactionAux = await db.reaction.delete({
-      where: { id: existing.id },
-    });
-  } else {
-    reactionAux = await db.reaction.update({
-      where: { id: existing.id },
-      data: { reaction },
-    });
-  }
-  updateTag('reactions');
-  return reactionAux;
-});
+
+    if (!existing) {
+      await db.reaction.create({
+        data: {
+          idUser,
+          idTarget,
+          reaction,
+          typeTarget,
+        },
+      });
+    } else if (existing.reaction === reaction) {
+      const deleted = await db.reaction.deleteMany({
+        where: { id: existing.id, reaction: existing.reaction },
+      });
+      if (deleted.count === 0)
+        throw new Error('El contenido cambio mientras lo guardabas, intenta de nuevo.');
+      updateTag('reactions');
+      return { reaction: null, previous: existing.reaction };
+    } else {
+      const updated = await db.reaction.updateMany({
+        where: { id: existing.id, reaction: existing.reaction },
+        data: { reaction },
+      });
+      if (updated.count === 0)
+        throw new Error('El contenido cambio mientras lo guardabas, intenta de nuevo.');
+    }
+
+    updateTag('reactions');
+    return { reaction, previous: existing?.reaction ?? null };
+  },
+);

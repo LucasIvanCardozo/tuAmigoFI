@@ -93,9 +93,8 @@ export const ModalAddMidtermContent = ({ course }: { course: Course }) => {
         <div>
           <h3 className="text-sm">Recuerda!</h3>
           <p className="text-xs">
-            Solo se admite formato PDF y solo con los problemas (sin las respuestas). Por favor
-            asegurate de que el modulo que quieres agregar no se encuentre ya disponible en la
-            lista. En caso de cualquier problema podes contactarme:{' '}
+            Solo se admite formato PDF. Por favor asegurate de que el modulo que quieres agregar no
+            se encuentre ya disponible en la lista. En caso de cualquier problema podes contactarme:{' '}
             <a
               className="underline"
               target="_blank"

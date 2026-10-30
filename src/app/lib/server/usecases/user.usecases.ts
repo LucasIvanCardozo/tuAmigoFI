@@ -35,10 +35,21 @@ export const userUseCases = {
     'use cache: remote';
     cacheLife('hours');
     cacheTag('users', 'tps', 'midterms', 'responses', 'comments', 'links', 'reactions');
-    const contributors = await userRepository(db).findContributors();
+    const [contributors, likesReceived] = await Promise.all([
+      userRepository(db).findContributors(),
+      userRepository(db).findLikesReceivedCounts(),
+    ]);
     const data = contributors.flatMap((user) => {
       const { comments, links, midterms, reactions, responses, tps } = user._count;
-      const score = computeScore({ comments, links, midterms, reactions, responses, tps });
+      const score = computeScore({
+        comments,
+        links,
+        midterms,
+        reactions,
+        responses,
+        tps,
+        likes: likesReceived[user.id] ?? 0,
+      });
       return score
         ? ({
             user,
@@ -68,6 +79,7 @@ export const userUseCases = {
       },
     });
     if (!user) return null;
+    const likesReceived = await userRepository(db).findLikesReceivedCounts();
     const counts: ScoreCounts = {
       comments: user._count.comments,
       links: user._count.links,
@@ -75,6 +87,7 @@ export const userUseCases = {
       reactions: user._count.reactions,
       responses: user._count.responses,
       tps: user._count.tps,
+      likes: likesReceived[user.id] ?? 0,
     };
     return {
       name: user.name,

@@ -36,4 +36,37 @@ export const userRepository = (db: PrismaClient | Prisma.TransactionClient) => (
       },
     });
   },
+  async findLikesReceivedCounts() {
+    const rows = await db.$queryRaw<{ id: string; total: number }[]>`
+      WITH likes AS (
+        SELECT target.id_user AS author, reaction.id_user AS reactor
+        FROM "Reaction" reaction
+        JOIN "Response" target ON target.id = reaction.id_target
+        WHERE reaction."typeTarget"::text = 'RESPONSE' AND reaction.reaction = true
+        UNION ALL
+        SELECT target.id_user, reaction.id_user
+        FROM "Reaction" reaction
+        JOIN "Comment" target ON target.id = reaction.id_target
+        WHERE reaction."typeTarget"::text = 'COMMENT' AND reaction.reaction = true
+        UNION ALL
+        SELECT target.id_user, reaction.id_user
+        FROM "Reaction" reaction
+        JOIN "Tp" target ON target.id = reaction.id_target
+        WHERE reaction."typeTarget"::text = 'TP' AND reaction.reaction = true
+        UNION ALL
+        SELECT target.id_user, reaction.id_user
+        FROM "Reaction" reaction
+        JOIN "Midterm" target ON target.id = reaction.id_target
+        WHERE reaction."typeTarget"::text = 'MIDTERM' AND reaction.reaction = true
+      )
+      SELECT author AS id, COUNT(*)::int AS total
+      FROM likes
+      WHERE author <> reactor
+      GROUP BY author
+    `;
+
+    const counts: Record<string, number> = {};
+    for (const row of rows) counts[row.id] = row.total;
+    return counts;
+  },
 });

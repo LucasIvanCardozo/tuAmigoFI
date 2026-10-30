@@ -5,6 +5,7 @@ export const SCORE_CONCEPTS = [
   { key: 'comments', label: 'Comentarios', points: 1 },
   { key: 'links', label: 'Links', points: 1 },
   { key: 'reactions', label: 'Reacciones', points: 1 },
+  { key: 'likes', label: 'Likes recibidas', points: 3 },
 ] as const;
 
 export type ScoreConceptKey = (typeof SCORE_CONCEPTS)[number]['key'];
