@@ -21,7 +21,7 @@ export default function ButtonLike({
   });
 
   async function handleLike() {
-    const { ok, previous } = await react(true);
+    const { ok, previous } = await react(true, state === true ? 'unset' : 'set');
     if (ok && previous === false) {
       sileo.warning({
         title: 'Tu like reemplazó el reporte que hiciste de este archivo.',

@@ -46,13 +46,15 @@ export function useReactions({
     const wasLikes = amount.likes;
     const wasDislikes = amount.dislikes;
     const next =
-      intent === 'unset'
-        ? previous === false
-          ? null
-          : previous
-        : value === previous
-          ? null
-          : value;
+      intent === 'set'
+        ? value
+        : intent === 'unset'
+          ? previous === value
+            ? null
+            : previous
+          : value === previous
+            ? null
+            : value;
     setState(next);
     setAmount({
       likes: wasLikes + (next === true ? 1 : 0) - (previous === true ? 1 : 0),
