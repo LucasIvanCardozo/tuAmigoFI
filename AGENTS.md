@@ -278,11 +278,19 @@ A user row is created only by the `signIn` callback (`ensureByEmail` → `upsert
 
 A report means "this was uploaded wrong", not a dislike. It reuses the `Reaction` table: `reaction: false` with `typeTarget: 'TP' | 'MIDTERM'`.
 
-- **The report button** (`buttonReport.tsx`) shows the alert hexagon with no counter; the hexagon turns red when the current user already reported. The report count is only rendered for `tier: 2`.
+- **The report button** (`buttonReport.tsx`) shows the alert hexagon with the report count next to it, visible to everyone; the hexagon turns red when the current user already reported.
+- **Reporting asks for confirmation.** The button opens `ModalReportModuleContent` (`confirmationSchema` + `CheckboxForm`), which is the only place that writes the report. Clicking a module the user already reported undoes the report, and undoing does not ask for confirmation.
 - **Auto-hide:** a module with `REPORTS_TO_HIDE` (3) reports or more is filtered out server-side, so it never reaches the client. `tier: 2` bypasses the filter, otherwise reported content would disappear with nobody able to act on it.
 - **The filter runs per request**, outside `findByCourseIdWithAllData`: that usecase is `'use cache: remote'` and shared by every visitor, so a tier-dependent decision inside it would leak one user's view to all.
 - **The module list must keep the `reactions` cache tag.** It embeds the reaction arrays, so `updateTag('reactions')` only reaches it when the tag is declared.
 - `upsertReaction` must match on `typeTarget` as well as `idUser` and `idTarget`, otherwise a lookup can match a reaction of another type.
+
+### Likes
+
+A like is a `Reaction` row with `reaction: true`. `upsertReaction` toggles **by value**: sending the value the row already has deletes it. So a single-button like always sends `true` and lets the server decide between create and delete (`comment.tsx`, `buttonLike.tsx`).
+
+- **TPs and midterms can be liked** (`buttonLike.tsx`), next to the report button, over the PDF of the module card.
+- **The like and report buttons live over the PDF**, in the place where the uploader name used to be; the name moved to the bottom-left of the PDF.
 
 ### Score
 

@@ -12,6 +12,7 @@ import { numberIconsModules } from '../../../assets/icons';
 import { ModalAddResponseContent } from '../../layout/modals/ModalAddResponseContent';
 import { ModalDeleteMidtermContent } from '../../layout/modals/ModalDeleteMidtermContent';
 import { ModalDeleteTpContent } from '../../layout/modals/ModalDeleteTpContent';
+import ButtonLike from './buttonLike';
 import ButtonReport from './buttonReport';
 import ModuleResponse from './moduleResponse';
 
@@ -84,12 +85,6 @@ const ModuleContainerImpl = ({ module, typeModule }: Props) => {
               </button>
             ))}
 
-          <ButtonReport
-            idTarget={moduleInd.id}
-            typeTarget={isTp ? 'TP' : 'MIDTERM'}
-            reactions={module.reactions}
-          />
-
           <button
             type="button"
             className="flex text-base h-6 pr-1 items-center border-2 border-gray-600 rounded-md hover:bg-[#92C1C9] transition-colors hover:border-[#92C1C9]"
@@ -106,7 +101,21 @@ const ModuleContainerImpl = ({ module, typeModule }: Props) => {
       </div>
       <div className="bg-(--white) text-base leading-5 drop-shadow-md flex flex-col gap-1">
         <div className="relative overflow-hidden bg-[#96cad3] h-min rounded-b-lg p-1 sm:p-2">
-          <div className="absolute z-10 bg-(--white) rounded-md m-2 opacity-65 bottom-0 right-0">{`Por ${module.user.name}`}</div>
+          <div className="absolute z-10 bg-(--white) rounded-md m-2 opacity-90 bottom-0 right-0 flex items-center gap-2 px-1">
+            <ButtonLike
+              idTarget={moduleInd.id}
+              typeTarget={isTp ? 'TP' : 'MIDTERM'}
+              reactions={module.reactions}
+            />
+            <ButtonReport
+              idTarget={moduleInd.id}
+              typeTarget={isTp ? 'TP' : 'MIDTERM'}
+              reactions={module.reactions}
+              title={moduleInd.name}
+              author={module.user.name}
+            />
+          </div>
+          <div className="absolute z-10 bg-(--white) rounded-md m-2 opacity-65 bottom-0 left-0">{`Por ${module.user.name}`}</div>
           <PdfView url={moduleInd.fileUrl ?? ''} />
         </div>
         <ul className="flex flex-col gap-1 pl-1">
