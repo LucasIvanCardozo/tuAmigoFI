@@ -231,6 +231,15 @@ el contador de reportes es público. Queda anotado en `AGENTS.md`.
 | T5 | — | Verificar contra la DB local, lint y build | inline | — |
 | T6 | — | Cerrar el documento y entregar | inline | — |
 
+## Review disposition
+
+`gentle-ai review mode status` dice **RDD on** (global), pero el `assess` del candidato
+(`baseRef: origin/main`, `committedOnly: true`) devuelve `risk: medium`, `reviewDue: false`
+(`reviewDueReason: under_budget`) y un plan de `writerSelfVerification: true`,
+`independentVerifier: false`. No se abrió ninguna revisión nativa: el plan deja la
+verificación en manos del escritor, que es lo que ejecutó la sección de verificación de
+este documento.
+
 ## Log
 
 ### L1
