@@ -8,9 +8,6 @@ import { userRepository } from '../db/repository/user.repository';
 
 export const userUseCases = {
   async getById(id: string) {
-    'use cache: remote';
-    cacheLife('hours');
-    cacheTag('users');
     return userRepository(db).getById(id);
   },
   async getByEmail(email: string) {

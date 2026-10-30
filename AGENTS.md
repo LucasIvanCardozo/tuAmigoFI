@@ -261,6 +261,15 @@ In `useFormSubmit`, the `action` is expected to throw `Error` on failure (read t
 - **Gate the UI with the same threshold** so a `tier: 0` user never sees a control they cannot use.
 - `tier` travels in the JWT, so a rank change does not apply until the user signs in again.
 
+### Banned users
+
+`User.banned` is the moderation switch. It is enforced in two places, both server-side:
+
+- **Sign-in** (`authOptions.ts`): the `signIn` callback returns `/acceso-baneado` instead of creating a session.
+- **Live sessions** (`authOptions.ts`): the `session` callback resolves the session's own user through `token.idUser` — never `session.user.id`, which does not exist under the JWT strategy — and returns no session for a banned user, so every write path refuses.
+
+The flag is read **uncached** (`userUseCases.getById` has no `'use cache'` directive), so a ban applied in the database applies on the next request. Bans are applied directly in the database; there is no moderation UI yet.
+
 ### Content reports
 
 A report means "this was uploaded wrong", not a dislike. It reuses the `Reaction` table: `reaction: false` with `typeTarget: 'TP' | 'MIDTERM'`.

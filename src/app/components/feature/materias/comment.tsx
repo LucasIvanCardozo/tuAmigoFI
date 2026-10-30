@@ -26,6 +26,10 @@ export const Comment = ({ comment, session }: Params) => {
   }, [comment, session?.user?.id]);
 
   const handleLike = async () => {
+    if (!session?.user?.id) {
+      sileo.error({ title: 'Debes iniciar sesion para reaccionar al comentario.' });
+      return;
+    }
     setStateLike(!stateLike);
     setNumberLike(stateLike ? numberLike - 1 : numberLike + 1);
     const { error } = await upsertReaction({
@@ -33,7 +37,11 @@ export const Comment = ({ comment, session }: Params) => {
       typeTarget: 'COMMENT',
       reaction: true,
     });
-    if (error) sileo.error({ title: error });
+    if (error) {
+      setStateLike(stateLike);
+      setNumberLike(numberLike);
+      sileo.error({ title: error });
+    }
   };
 
   return (

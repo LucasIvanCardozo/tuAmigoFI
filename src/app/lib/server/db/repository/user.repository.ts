@@ -2,7 +2,7 @@ import type { Prisma, PrismaClient } from '../prisma/prismaClient/client';
 
 export const userRepository = (db: PrismaClient | Prisma.TransactionClient) => ({
   getById(id: string) {
-    return db.user.findFirstOrThrow({ where: { id } });
+    return db.user.findUniqueOrThrow({ where: { id } });
   },
   getByEmail(email: string) {
     return db.user.findFirstOrThrow({ where: { email } });
