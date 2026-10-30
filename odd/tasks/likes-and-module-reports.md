@@ -312,6 +312,22 @@ reportar sobre un like lo convierte en reporte; reportar sobre un reporte **no**
 deshacer un reporte borra la fila; el toggle clásico crea y borra como antes; sin filas
 residuales.
 
+### Cuarta revisión nativa: el toggle regresionó (corregido)
+
+La ronda 4 (lineage `review-c4c48704db6e7564`) encontró **cuatro** hallazgos CRITICAL
+sobre el `toggle` condicional: la rama de borrado se ejecutaba **antes** del `update`, así
+que cambiar like↔dislike borraba la fila y el `update` posterior no encontraba nada →
+la reacción desaparecía (regresión del comportamiento base de las respuestas). Además,
+el conteo de filas afectadas de las escrituras condicionales se ignoraba, así que un
+cambio concurrente se reportaba como éxito.
+
+Corrección (commit `fix(reactions): the toggle switches the reaction instead of deleting
+it`): el toggle es un `if/else` (mismo valor → borra; valor distinto → cambia) y cada
+escritura condicional verifica el conteo de filas afectadas y **falla con error** si no
+se aplicó, en vez de reportar un éxito falso. Verificado con 9/9 checks: el toggle
+like→dislike y dislike→like **cambian** la fila, like→like y dislike→dislike la borran,
+`set` nunca borra, `unset` borra sólo si coincide y no toca una fila cambiada.
+
 ### No verificado
 
 - El recorrido de Google OAuth real (la sesión se forjó con una cookie firmada).
