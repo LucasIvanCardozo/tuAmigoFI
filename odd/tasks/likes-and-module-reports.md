@@ -291,6 +291,27 @@ de nuevo **no** lo borra; el like sobre un módulo reportado pasa a like con
 en reporte; deshacer un reporte borra la fila; el toggle clásico (like sobre like) sigue
 borrando; `unset` sin fila no crea nada; sin filas residuales.
 
+### Tercera revisión nativa (target final): escalada y corregida
+
+La revisión del target final (`sha256:dd93f3a7…`, lineage `review-fe63d0a811a7fcc0`, 4
+lentes + refuter) cerró con `state: correction_required` y un hallazgo corroborado:
+`R3-STALE-LIKE` (CRITICAL, `introduced`): con el estado del cliente desactualizado, un like
+podía **borrar** el like que ya existía en el servidor, dejando la UI mostrando "like" y el
+contador en más.
+
+Corrección aplicada (commit `fix(reactions): a stale like can no longer delete an existing
+like`, 18 líneas de diff): el botón de like escribe con `intent: 'set'` (la fila termina
+como like, nunca borra uno existente) y el "quitar like" usa `intent: 'unset'` (borra sólo
+un like, y un reporte sobrevive). Con esto los dos lados —like y reporte— son a prueba de
+estado desactualizado, y la semántica clásica de toggle de las respuestas queda intacta.
+
+Verificado con 11 checks contra la base local: un like sobre un like existente **no** lo
+borra; el unlike borra el like; el unlike sobre un reporte no lo toca; el like sobre un
+reporte pasa a like con `previous: false` (el aviso sale del estado real del servidor);
+reportar sobre un like lo convierte en reporte; reportar sobre un reporte **no** lo borra;
+deshacer un reporte borra la fila; el toggle clásico crea y borra como antes; sin filas
+residuales.
+
 ### No verificado
 
 - El recorrido de Google OAuth real (la sesión se forjó con una cookie firmada).
