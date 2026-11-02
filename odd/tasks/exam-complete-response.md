@@ -345,7 +345,6 @@ El verificador no encontró nada en: la separación de `makeModules`, el forzado
 usuario, la invalidación de caché, la ruta de upload, el modal de borrado y el score.
 
 ### Tercera verificación independiente: la unificación de la regla del número
-
 Sobre `805956c` (la unificación de la regla del número) se corrió una tercera
 verificación independiente. **Sin hallazgos bloqueantes**: las seis preguntas verificadas
 dieron "cumple". En concreto, los dos schemas coinciden mensaje a mensaje en los siete
@@ -371,6 +370,28 @@ Quedaron dos **MINOR** y cuatro **advisory**, todos aceptados:
   true; no son alcanzables desde el form (`InputForm` convierte `''` en `undefined`).
 - advisory — `Response.number` no tiene CHECK en la base: la regla vive en la capa de
   app, y `create.action.ts` es la única ruta de creación de la tabla.
+
+### Cuarta verificación independiente: la confirmación del examen
+
+Sobre `b3e632d` (la confirmación obligatoria del examen sin respuestas y el link de
+eliminar páginas en el modal de respuestas) se corrió una cuarta verificación
+independiente, con probes propios en una copia scratch. **Sin hallazgos CRITICAL ni
+MAJOR**: las seis preguntas verificadas dieron "cumple" (la confirmación es obligatoria e
+inesquivable, cliente y servidor coinciden, el check está sólo en el modal de examen, el
+link sale sólo con el check activo y nunca en un TP, y nada se rompió).
+
+Encontró dos **MINOR**, ambos corregidos en `bec5ade`:
+
+- **el mensaje cuando el campo viene ausente salía en inglés de zod** ("Invalid input:
+  expected boolean, received undefined") en vez del de dominio. Ahora los dos schemas usan
+  la misma pieza, `withoutAnswersSchema` en `lib/shared/schemas/midterm.schema.ts`, que
+  lleva el mensaje también en el error de tipo.
+- **la regla y el mensaje estaban duplicados** en el schema compartido y en el de la
+  action, contra la regla de "no duplicar validación" del repo (y contra el precedente de
+  `getResponseNumberError`). Con el schema compartido, los dos no pueden divergir.
+
+Quedaron tres **advisory**, aceptados: el error de validación tapa al de sesión cuando no
+se manda el campo (mismo masking ya aceptado en la ronda anterior), y dos de estilo.
 
 ### Evidencia de campo del bug corregido
 
@@ -481,33 +502,40 @@ PASS | el helper rechaza un número mayor a 100
 Los dos schemas (el del form y el de la action) usan **el mismo helper**, así que no
 pueden divergir: la regla del número está escrita una sola vez.
 
-### 5 checks de la confirmación del examen
+### 6 checks de la confirmación del examen
 
 Un arnés contra la base local (`tsx` con `next/cache`, `next-auth` y el cliente de
-UploadThing stubbeados) más el schema compartido: **5/5 checks pasaron**.
+UploadThing stubbeados) más el schema compartido: **6/6 checks pasaron**.
 
 ```
-PASS | el schema compartido rechaza la confirmación sin tildar | Tenés que confirmar que el parcial no tiene las respuestas
+PASS | el schema compartido rechaza sin tildar, en español | Tenés que confirmar que el parcial no tiene las respuestas
+PASS | el schema compartido rechaza el campo ausente, en español | Tenés que confirmar que el parcial no tiene las respuestas
 PASS | el schema compartido acepta la confirmación tildada
-PASS | el schema compartido exige el campo de confirmación
-PASS | el servidor rechaza un parcial sin la confirmación |  🡆 Tenés que confirmar que el parcial no tiene las respuestas
-PASS | el servidor acepta el parcial con la confirmación tildada
+PASS | el servidor rechaza sin tildar, en español |  🡆 Tenés que confirmar que el parcial no tiene las respuestas
+PASS | el servidor rechaza el campo ausente, en español |  🡆 Tenés que confirmar que el parcial no tiene las respuestas
+PASS | el servidor acepta la confirmación tildada
 ```
 
 Lo que prueba: la confirmación no se puede esquivar desde el cliente (el servidor la
-exige) y un parcial con la confirmación tildada se sube como antes, con su `fileUrl`.
+exige, y el mensaje es el mismo en cliente y servidor), y un parcial con la confirmación
+tildada se sube como antes, con su `fileUrl`.
 
-### 5 checks de render del modal de respuestas
+### 9 checks de render de los modales
 
-El modal real (`ModalAddResponseContent`) renderizado con `renderToString` y el estado del
-check forzado con un stub de `useWatch`: **5/5 checks pasaron**.
+Los modales reales (`ModalAddResponseContent` y `ModalAddMidtermContent`) renderizados con
+`renderToString`, con el estado del check forzado con un stub de `useWatch`:
+**9/9 checks pasaron**.
 
 ```
-PASS | con el check apagado no sale el link de eliminar páginas
+PASS | con el check apagado no sale el link
 PASS | con el check apagado sigue el input Número
-PASS | con el check activo sale el link de eliminar páginas
+PASS | con el check activo sale el link
 PASS | con el check activo no está el input Número
-PASS | con el check activo avisa que responde todos los puntos
+PASS | en un TP no sale el link de respuestas
+PASS | en un TP sigue el input Número
+PASS | el modal de examen tiene el check obligatorio
+PASS | el modal de examen avisa dónde subir las respuestas
+PASS | el modal de examen menciona el link de páginas
 ```
 
 ### 4 checks de render del modal
