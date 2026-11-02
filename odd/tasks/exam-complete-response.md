@@ -1,0 +1,272 @@
+# Respuesta completa de un examen (una sola archivo para todos los puntos)
+
+Branch: `feat/exam-complete-response`
+Status: in progress
+Base: `main` at `451a056`
+
+Subir **un solo archivo** (un PDF con todas las respuestas adentro, o una foto) como
+respuesta que cubre **todos** los puntos de un examen, en lugar de subir una respuesta por
+punto.
+
+## Specs
+
+### S1
+
+> Quisiera agregar una feature a lo que serian los examenes (no tps) de las materias solo a la
+> aprte de respuestas: - quiero que haya una opcion en el modal de suba de respuestas que sea
+> para responder todos los puntos de una, es decir, actualmente se responde un problema por
+> problema a la vez, quiero que haya una opcion para subir todas las respuestas de una.
+> (porque generalmente los examenes se le saca foto a todas las hojas y lo suben asi, no se
+> sube respuesta por respuesta).
+
+El alcance es **sólo exámenes (parciales)** y **sólo la parte de respuestas**: los TPs
+siguen contestándose de a una.
+
+### S2
+
+> Espera, creo que no entendiste a que me refiero, yo me refiero a que haya un check por
+> ejemplo que diga "Todas las respuestas" o algo asi, y por ende se quite el input para
+> colocar el numero de respuesta a subir. Pero luego que sea todo lo mismo, solo que la
+> respuesta que suba entienda que va a responder a todas las respuestas del tp. Esto sin poner
+> numero ni nada. Por ejemplo pueed subir un pdf que tenga dentro laas respuestas a todos los
+> problemas, entendes? (y todo esos bugs o cosas faltantes que encontraste si hay que
+> resolverlas claramente)
+
+No es "subir N archivos": es **un check** en el modal de subir respuesta. Con el check
+activo se **quita el input "Número"** y el archivo que se sube se entiende como respuesta
+de **todos** los puntos. Todo lo demás del modal queda igual (tipo, texto, archivo).
+
+El bug que faltaba (las respuestas de un examen no se guardaban) se resuelve en el mismo
+trabajo, y en un commit aparte.
+
+### S3
+
+> quiero que utilice literal la misma logica de las respuestas individuales y que se trate
+> como una mas de ellas, que aparezca primero pero en vez de decir Ejercicio x que diga
+> todas las respeustas y listo, si literal es lo unico que cambia no te parece? decime que
+> pensas
+
+La respuesta completa se renderiza con **el mismo componente** (`ModuleResponse`) que las
+respuestas individuales: misma navegación entre usuarios, mismos likes, mismos comentarios,
+mismo visor de PDF. Lo único que cambia es el **título**: en vez de `Ejercicio N` dice
+`Todas las respuestas`. Aparece **primero**, antes de la lista de problemas.
+
+## Design
+
+### El modelo
+
+`Response` es "la respuesta de un usuario a un módulo". El único campo que ata la respuesta
+a un punto es `number`. Una respuesta que cubre todos los puntos no pertenece a ningún
+punto, así que el modelo gana un flag:
+
+```prisma
+model Response {
+  ...
+  number      Int
+  allProblems Boolean @default(false) @map("all_problems")
+}
+```
+
+Migración aditiva, con el mismo patrón que la de las columnas de UploadThing:
+
+```sql
+-- AlterTable
+ALTER TABLE "Response" ADD COLUMN     "all_problems" BOOLEAN NOT NULL DEFAULT false;
+```
+
+Cero datos tocados y reversible (borrar la columna). La fila de una respuesta completa
+guarda `number = 0`: `0` no es un punto válido (el input va de 1 a 100 y la action valida
+`min(1)`), así que un error de filtrado se vería como "Ejercicio 0" en vez de pisar un
+punto real.
+
+Se descartó la alternativa de hacer `number` nullable: `Response.number` es `number` en
+`makeModules`, en `moduleResponse` y en el modal de borrado, y volverlo opcional ensucia
+el tipado de todos esos consumidores para ganar una columna menos.
+
+### El flag no es un número: es un modo
+
+La regla de duplicados actual es *una respuesta por (módulo, usuario, punto)*. La respuesta
+completa tiene su propia regla: *una respuesta completa por (módulo, usuario)*. Son
+distintos usuarios los que pueden subir su propia respuesta completa del mismo examen.
+
+Una respuesta puntual del punto 1 y una respuesta completa **conviven**: son archivos
+distintos y la UI las muestra en bloques distintos.
+
+### El modal
+
+`ModalAddResponseContent` gana un `CheckboxForm` (el que ya existe, reusado) que sólo se
+muestra en exámenes (`!isTp`, que es como `ModalAddResponseContent` ya distingue TP de
+parcial). Con el check activo, el `InputForm` de "Número" no se renderiza: se usa
+`useWatch` sobre el valor del check, el mismo patrón que ya usa `ResponseForm` para el
+tipo.
+
+El tipo de respuesta (PDF, imagen, texto, código) **no cambia**: la respuesta completa
+puede ser un PDF con todas las respuestas adentro, que es el caso de uso pedido.
+
+### El servidor
+
+`createResponse` (la action que ya existe) acepta `allProblems`. El flujo de upload no se
+toca: `courseSlug`, `withUploadRollback`, `updateTag('responses')` y el borrado de archivos
+siguen siendo los mismos. Sólo cambia:
+
+- el `number` que se guarda (`0` para una respuesta completa, el que venga del cliente para
+  una puntual — el cliente no puede inyectar un número de punto en una respuesta completa);
+- el chequeo de duplicados (por flag en vez de por número);
+- el mensaje de error del duplicado.
+
+No hay action nueva, no hay endpoint nuevo, no cambia ningún repositorio de archivos.
+
+### La lectura
+
+`makeModules` separa las respuestas completas **antes** de agrupar por `number`, así que no
+genera un grupo "Ejercicio 0" ni problemas fantasma. `DataModule` gana `fullResponses`.
+
+`moduleContainer` las renderiza **primero** dentro del mismo `<ul>` (para que el `<li>` de
+`ModuleResponse` siga siendo válido) y les pasa `label="Todas las respuestas"`.
+
+`ModuleResponse` gana un prop `label` opcional: si no viene, el título sigue siendo
+`Ejercicio ${problem.number}`. Es la **única** diferencia con una respuesta individual.
+
+El modal de borrado deja de mostrar "Número del problema: 0" para una respuesta completa.
+
+### Archivos
+
+| Pieza | Archivo |
+| --- | --- |
+| Flag del modelo + migración | `src/app/lib/server/db/prisma/schema.prisma`, `src/app/lib/server/db/prisma/migrations/…_add_response_all_problems/migration.sql` |
+| Schema compartido | `src/app/lib/shared/schemas/response.schema.ts` |
+| Escritura | `src/app/lib/server/actions/responses/create.action.ts` |
+| Check del modal | `src/app/components/layout/modals/ModalAddResponseContent.tsx` |
+| Lectura | `src/app/utils/makeModules.ts`, `src/app/types/modules.ts` |
+| Render | `src/app/components/feature/materias/moduleContainer.tsx`, `moduleResponse.tsx` |
+| Borrado | `src/app/components/layout/modals/ModalDeleteResponseContent.tsx` |
+| Reglas documentadas | `AGENTS.md` |
+
+### Decisiones
+
+- **El bug de `idMidterm` va en su propio commit.** Es un fix de una línea (dos) que
+  arregla un behavior roto desde la era de Cloudinary, y que se puede leer y probar
+  separado de la feature.
+- **La respuesta completa cuenta 3 puntos en el score**, no 3 por punto: `SCORE_CONCEPTS`
+  cuenta respuestas subidas y no se toca.
+- **No se toca `makeModules` en su agrupación**: sólo se le sacan las respuestas completas
+  antes de agrupar. Los problemas de un parcial siguen siendo los que existen por respuestas
+  puntuales.
+
+## Tasks
+
+| ID | Spec | Work | Route | Commit |
+| --- | --- | --- | --- | --- |
+| T1 | S2 | Fix: `createResponse` persiste `idMidterm` | inline | `b1ec5dc` |
+| T2 | S1, S2 | Flag `allProblems`: schema, migración, client regenerado | inline | `facc450` |
+| T3 | S2 | Schema compartido y action con `allProblems` | inline | `b936883` |
+| T4 | S2 | Check "Todas las respuestas" en el modal | inline | `b936883` |
+| T5 | S3 | `fullResponses` en `makeModules` + render primero + `label` | delegated (`gentle-ai-worker`) | `b936883` |
+| T6 | S2, S3 | Modal de borrado y regla en `AGENTS.md` | delegated (`gentle-ai-worker`) | `b936883` |
+| T7 | — | Verificar: migración en la base local, lint, build, checks | inline | — |
+| T8 | — | Cerrar el documento y entregar | inline | — |
+
+### Corte de slice
+
+La rama quedó en **402 líneas de diff** al cierre de `b936883`, apenas sobre el corte de
+~400 líneas por work unit. Como el trabajo pendiente era sólo este documento (sin código),
+el doc va en su propio commit `docs(odd)`. Si mañana sigue la feature, la estrategia de
+entrega es **un commit por work unit**: el fix del bug ya está separado de la feature, así
+que un PR con esta rama es revisable por partes.
+
+## Verification
+
+Sin framework de tests en el repo (`AGENTS.md` lo prohíbe explícitamente), la verificación
+es ejecutada contra la base local, no leída del diff.
+
+### 13 checks contra la base local
+
+Un arnés con filas reales (`tsx`, `next/cache`, `next-auth` y el cliente de UploadThing
+stubbeados en un loader de Node) creó dos usuarios, un curso, un parcial, un TP y sus
+respuestas, y después borró todo. Resultado: **13/13 checks pasaron**.
+
+```
+PASS | respuesta puntual a un examen se crea
+PASS | la respuesta del examen guarda id_midterm (bug corregido) | id_midterm=cmvzbpsuf0003ts28xe2ynnh7
+PASS | dos respuestas del mismo punto del mismo usuario se rechazan | No puedes tener mas de una respueste a un problema!
+PASS | la respuesta completa con archivo sube y guarda fileUrl y fileKey
+PASS | la respuesta completa se guarda con allProblems y sin número de punto | allProblems=true number=0
+PASS | dos respuestas completas del mismo usuario se rechazan | Ya subiste la respuesta completa de este examen!
+PASS | otro usuario puede subir su propia respuesta completa del mismo examen
+PASS | makeModules separa las respuestas completas | fullResponses=2
+PASS | las respuestas puntuales siguen agrupadas por punto | problems=1
+PASS | el grupo de un punto no incluye la respuesta completa | responses=1
+PASS | ninguna respuesta completa aparece como un problema | problems=1
+PASS | la respuesta de un tp sigue guardando id_tp | id_tp=cmvzbpsvx0007ts280wqt7bzb id_midterm=null
+PASS | una respuesta puntual sin número se rechaza |  🡆 El número debe ser mayor o igual a 1
+```
+
+Lo que prueba: el bug de `idMidterm` está corregido (la respuesta de un examen cuelga del
+examen), la respuesta completa se guarda con `allProblems` y `number = 0` **ignorando** el
+número que manda el cliente, la regla de duplicados es una por (módulo, usuario) para la
+completa y una por (módulo, usuario, punto) para la puntual, otro usuario puede subir su
+propia respuesta completa del mismo examen, `makeModules` separa las completas antes de
+agrupar (y no genera ni un "Ejercicio 0" ni problemas fantasma), y la respuesta de un TP
+sigue guardando `id_tp`.
+
+### 4 checks de render del modal
+
+El modal real (`ModalAddResponseContent`) renderizado con `renderToString` dentro del
+`ModalProvider`: **4/4 checks pasaron**.
+
+```
+PASS | en un examen aparece el check "Todas las respuestas"
+PASS | en un TP no aparece el check
+PASS | el input Número aparece mientras el check está apagado
+PASS | el modal de un TP también pide el número
+```
+
+### Build y lint
+
+`pnpm lint` sale con 0 errores (queda el warning preexistente de `globals.css:50`),
+`pnpm exec tsc --noEmit` sale con 0 errores y `pnpm build` compila las 11 páginas.
+`prisma migrate status` dice `Database schema is up to date!`.
+
+### No verificado
+
+- **La interacción del check en el navegador**: no hay `jsdom` ni navegador en este
+  entorno, así que el ocultamiento del input "Número" al marcar el check se verificó por
+  código (render condicional sobre `useWatch`) y con el render inicial por SSR, no con un
+  click real.
+- El visor de PDF con un PDF real de varias páginas (los PDFs de prueba del repo no tienen
+  `fileUrl`).
+- El flujo real con la cámara de un teléfono.
+- El upload real a UploadThing: el arnés stubbea el cliente, así que se verificó el
+  recorrido del `withUploadRollback` (subida → create → update con `fileUrl`/`fileKey`) y
+  no la transferencia de bytes.
+
+
+## Log
+
+### L1
+
+> Hola! Quisiera agregar una feature a lo que serian los examenes (no tps) de las materias
+> solo a la aprte de respuestas: - quiero que haya una opcion en el modal de suba de
+> respuestas que sea para responder todos los puntos de una, es decir, actualmente se
+> responde un problema por problema a la vez, quiero que haya una opcion para subir todas las
+> respuestas de una. (porque generalmente los examenes se le saca foto a todas las hojas y lo
+> suben asi, no se sube respuesta por respuesta). analiza todo lo que necesites y que tan
+> viable y facil es añadir esta fgeature, siempre pensando en reutilizacion de lo existente
+> mientras sea posible. Usa codegraph, te puede ser de utilidad.
+
+### L2
+
+> Espera, creo que no entendiste a que me refiero, yo me refiero a que haya un check por
+> ejemplo que diga "Todas las respuestas" o algo asi, y por ende se quite el input para
+> colocar el numero de respuesta a subir. Pero luego que sea todo lo mismo, solo que la
+> respuesta que suba entienda que va a responder a todas las respuestas del tp. Esto sin poner
+> numero ni nada. Por ejemplo pueed subir un pdf que tenga dentro laas respuestas a todos los
+> problemas, entendes? (y todo esos bugs o cosas faltantes que encontraste si hay que
+> resolverlas claramente)
+
+### L3
+
+> quiero que utilice literal la misma logica de las respuestas individuales y que se trate
+> como una mas de ellas, que aparezca primero pero en vez de decir Ejercicio x que diga
+> todas las respeustas y listo, si literal es lo unico que cambia no te parece? decime que
+> pensas
