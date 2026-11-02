@@ -178,13 +178,15 @@ corrección 160) y el STATUS ofrecio el grupo de collect con las tres lentes.
 
 ### El collect no se puede emitir desde este host
 
-Los tres intentos de captura fallaron sin mutar la autoridad:
+Los intentos de captura fallaron sin mutar la autoridad, en los dos lineages:
 
-| Intento | Resultado |
-| --- | --- |
-| grupo, con los tres bindings como string | `collectBindings must be the complete distinct current reviewer group in exact provider order` |
-| un slot, con el binding como string | `collectBinding is missing or stale for current STATUS` |
-| un slot, con el binding como objeto | `collectBinding is missing or stale for current STATUS` |
+| Lineage | Intento | Resultado |
+| --- | --- | --- |
+| `review-903433045706af48` (la feature) | grupo, con los tres bindings como string | `collectBindings must be the complete distinct current reviewer group in exact provider order` |
+| `review-903433045706af48` | un slot, con el binding como string | `collectBinding is missing or stale for current STATUS` |
+| `review-903433045706af48` | un slot, con el binding como objeto | `collectBinding is missing or stale for current STATUS` |
+| `review-a7340cf2248a151f` (las correcciones) | grupo, con los tres bindings como objeto | `collectBindings must be the complete distinct current reviewer group in exact provider order` |
+| `review-a7340cf2248a151f` | un slot, con el binding como objeto | `collectBinding is missing or stale for current STATUS` |
 
 Es el defecto de serialización de argumentos JSON del harness (familia de
 `earendil-works/pi#9931`): los valores string con forma de literal JSON (`"order": "0"`,
@@ -192,10 +194,12 @@ Es el defecto de serialización de argumentos JSON del harness (familia de
 binding nunca coincide byte a byte con el que emite el provider. El STATUS sigue
 reofreciendo el mismo slot, así que **no es un problema de la autoridad sino del host**:
 es el mismo bloqueo que ya se documentó en `odd/tasks/likes-and-module-reports.md` para
-la feature anterior, con la misma familia upstream.
+la feature anterior, con la misma familia upstream. Ocurre con dos lineages distintos y
+con dos serializaciones distintas, así que no es del candidato.
 
-Queda abierto el lineage `review-903433045706af48` en estado `reviewing`, y también
-`review-d49a60c12740914f` (el START que murió en el preflight por presupuesto).
+Quedan abiertos los lineages `review-903433045706af48` y `review-a7340cf2248a151f` (los
+dos en `reviewing`), y `review-d49a60c12740914f` (el START que murió en el preflight por
+presupuesto).
 
 ### Verificación independiente en su lugar (`gentle-ai-verify`)
 
@@ -215,12 +219,31 @@ Encontró dos defectos reales, ambos corregidos en `1b5de51`:
   action; las puntuales siguen limitadas a 1..100.
 
 Los dos fixes tienen checks propios en el arnés (los dos últimos de los 15) y en el probe
-del schema compartido (6/6).
+del schema compartido.
 
-El verificador no encontró nada en: la lectura de `makeModules` (separación, duplicación,
-agrupación), el forzado de `number = 0`, las dos reglas de duplicados, la convivencia
-puntual + completa, el aislamiento por usuario, la invalidación de caché, la ruta de
-upload con archivo, el modal de borrado y el score.
+### Segunda verificación independiente: el primer fix abrió un agujero
+
+Sobre el commit de las correcciones (`1b5de51`) se corrió una segunda verificación
+independiente. Encontró una regresión **introducida por el fix anterior**:
+
+- **MAJOR — el servidor ya no exigía el mínimo del número.** Al sacar `number().min(0)`
+  del campo del servidor para que un número obsoleto no bloqueara una respuesta
+  completa, quedó sin mínimo: `number: -1` pasaba y se guardaba, y `makeModules`
+  armaba un grupo fantasma "Ejercicio -1". Además, los dos schemas quedaban en
+  contradicción (el compartido rechazaba el negativo, el de la action lo aceptaba) y el
+  mensaje para un número no entero ("El número debe ser mayor o igual a 1" para 1.5) era
+  engañoso. **Corregido** en `805956c`: la regla del número vive una sola vez, en
+  `getResponseNumberError` (schema compartido), y la usan tanto el form como la action;
+  una puntual es de 1 a 100 y una completa acepta cualquier número (que se guarda como
+  0).
+
+Los dos schemas ahora comparten el helper, así que no pueden volver a divergir, y el
+arnés cubre el hueco: los números -1, 0, 1.5 y 101 se rechazan y no queda ninguna fila
+con número negativo.
+
+El verificador no encontró nada en: la separación de `makeModules`, el forzado de
+`number = 0`, la regla de duplicados, la convivencia puntual + completa, el aislamiento por
+usuario, la invalidación de caché, la ruta de upload, el modal de borrado y el score.
 
 Quedaron como **advisory** sin corregir, por ser preexistentes o por no cambiar el
 contrato: el servidor no acota `number` a 100 (lo acota el cliente), la regla de duplicados
@@ -242,31 +265,32 @@ error de un número inválido cambió de texto (antes "Too small: expected numbe
 | T7 | — | Verificar: migración en la base local, lint, build, checks | inline | — |
 | T8 | — | Cerrar el documento y entregar | inline | — |
 | T9 | S1, S2 | Correcciones de la verificación independiente: la regla "sólo exámenes" en el servidor y el número condicional | inline | `1b5de51` |
+| T10 | S1, S2 | La regla del número unificada en `getResponseNumberError` (cierra el mínimo que el fix anterior había dejado abierto) | inline | `805956c` |
 
 ### Corte de slice
 
-La rama quedó en **715 líneas de diff** al cierre de `1b5de51`, sobre el corte de ~400
+La rama quedó en **805 líneas de diff** al cierre de `805956c`, sobre el corte de ~400
 líneas por work unit. El trabajo se entregó en commits chicos justamente para que la
 revisión sea posible: el fix del bug va separado de la feature, la feature va separada de
 sus correcciones, y el doc va aparte. La estrategia de entrega es **un commit por work
 unit** (el mismo criterio que usa el skill de chained PRs del repo), así que un PR con
 esta rama es revisable por partes: `b1ec5dc` (2 líneas), `facc450` (schema), `b936883`
-(la feature), `1b5de51` (las correcciones) y `177c4a3` (el doc).
+(la feature), `1b5de51` y `805956c` (las correcciones) y los dos commits de doc.
 
 ## Verification
 
 Sin framework de tests en el repo (`AGENTS.md` lo prohíbe explícitamente), la verificación
 es ejecutada contra la base local, no leída del diff.
 
-### 15 checks contra la base local
+### 20 checks contra la base local
 
 Un arnés con filas reales (`tsx`, `next/cache`, `next-auth` y el cliente de UploadThing
 stubbeados en un loader de Node) creó tres usuarios, un curso, un parcial, un TP y sus
-respuestas, y después borró todo. Resultado: **15/15 checks pasaron**.
+respuestas, y después borró todo. Resultado: **20/20 checks pasaron**.
 
 ```
 PASS | respuesta puntual a un examen se crea
-PASS | la respuesta del examen guarda id_midterm (bug corregido) | id_midterm=cmvzcyjyg0004is28qmpa0z57
+PASS | la respuesta del examen guarda id_midterm (bug corregido)
 PASS | dos respuestas del mismo punto del mismo usuario se rechazan | No puedes tener mas de una respueste a un problema!
 PASS | la respuesta completa con archivo sube y guarda fileUrl y fileKey
 PASS | la respuesta completa se guarda con allProblems y sin número de punto | allProblems=true number=0
@@ -276,10 +300,15 @@ PASS | makeModules separa las respuestas completas | fullResponses=2
 PASS | las respuestas puntuales siguen agrupadas por punto | problems=1
 PASS | el grupo de un punto no incluye la respuesta completa | responses=1
 PASS | ninguna respuesta completa aparece como un problema | problems=1
-PASS | la respuesta de un tp sigue guardando id_tp | id_tp=cmvzcyk070008is2811x6c97f db=null
-PASS | una respuesta puntual sin número se rechaza |  🡆 El número debe ser mayor o igual a 1
+PASS | la respuesta de un tp sigue guardando id_tp
+PASS | una respuesta puntual sin número se rechaza |  🡆 Debe ser un número
 PASS | una respuesta completa de un TP se rechaza en el servidor | Las respuestas completas son solo para exámenes
 PASS | una respuesta completa con un número obsoleto se acepta y lo ignora | number=0
+PASS | una respuesta puntual con número -1 se rechaza |  🡆 El número debe ser mayor o igual a 1
+PASS | una respuesta puntual con número 0 se rechaza |  🡆 El número debe ser mayor o igual a 1
+PASS | una respuesta puntual con número 1.5 se rechaza |  🡆 Debe ser un número
+PASS | una respuesta puntual con número 101 se rechaza |  🡆 Número fuera de rango
+PASS | no queda ninguna respuesta con número negativo
 ```
 
 Lo que prueba: el bug de `idMidterm` está corregido (la respuesta de un examen cuelga del
@@ -287,23 +316,32 @@ examen), la respuesta completa se guarda con `allProblems` y `number = 0` **igno
 número que manda el cliente, la regla de duplicados es una por (módulo, usuario) para la
 completa y una por (módulo, usuario, punto) para la puntual, otro usuario puede subir su
 propia respuesta completa del mismo examen, una respuesta completa de un TP se rechaza en
-el servidor, un número obsoleto no bloquea ni invalida una respuesta completa,
-`makeModules` separa las completas antes de agrupar (y no genera ni un "Ejercicio 0" ni
-problemas fantasma), y la respuesta de un TP sigue guardando `id_tp`.
+el servidor, un número obsoleto no bloquea ni invalida una respuesta completa, una puntual
+con número fuera de 1..100 (negativo, 0, 1.5, 101) se rechaza, `makeModules` separa las
+completas antes de agrupar (y no genera ni un "Ejercicio 0" ni problemas fantasma), y la
+respuesta de un TP sigue guardando `id_tp`.
 
-### 6 checks del schema compartido
+### 11 checks del schema compartido
 
-`addResponseSchema` (el schema que usan el form y la action) con `safeParse`:
-**6/6 checks pasaron**.
+`addResponseSchema` y el helper `getResponseNumberError` con `safeParse`: **11/11 checks
+pasaron**.
 
 ```
-PASS | una respuesta completa sin número valida
-PASS | una respuesta completa con número obsoleto valida
-PASS | una respuesta completa sin el campo number valida
-PASS | una respuesta puntual sin número no valida | Debe ser un número
-PASS | una respuesta puntual fuera de rango no valida | Número fuera de rango
-PASS | una respuesta puntual con número válido valida
+PASS | el schema compartido rechaza el número -1 | El número debe ser mayor o igual a 1
+PASS | el schema compartido rechaza el número 0 | El número debe ser mayor o igual a 1
+PASS | el schema compartido rechaza el número 1.5 | Debe ser un número
+PASS | el schema compartido rechaza el número 101 | Número fuera de rango
+PASS | el schema compartido acepta cualquier número en una completa
+PASS | el schema compartido rechaza una puntual sin número | Debe ser un número
+PASS | el schema compartido rechaza un número no numérico con el mensaje en español | Debe ser un número
+PASS | el helper no exige número para una completa
+PASS | el helper rechaza un negativo
+PASS | el helper rechaza un no entero
+PASS | el helper rechaza un número mayor a 100
 ```
+
+Los dos schemas (el del form y el de la action) usan **el mismo helper**, así que no
+pueden divergir: la regla del número está escrita una sola vez.
 
 ### 4 checks de render del modal
 
