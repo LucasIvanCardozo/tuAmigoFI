@@ -8,13 +8,13 @@ import { useFormSubmit } from '@/app/hooks/useFormSubmit';
 import { createMidterm } from '@/app/lib/server/actions/midterms/create.action';
 import type { Course } from '@/app/lib/server/db/prisma/prismaClient/client';
 import { type AddMidtermInput, addMidtermSchema } from '@/app/lib/shared/schemas';
-import { FileForm, Form, InputForm, SectionForm, SelectForm } from '../form';
+import { CheckboxForm, FileForm, Form, InputForm, SectionForm, SelectForm } from '../form';
 
 export const ModalAddMidtermContent = ({ course }: { course: Course }) => {
   const { data: session } = useSession();
   const { control, handleSubmit } = useForm<AddMidtermInput>({
     resolver: zodResolver(addMidtermSchema),
-    defaultValues: { name: '', date: '' },
+    defaultValues: { name: '', date: '', withoutAnswers: false },
   });
 
   const action: SubmitHandler<AddMidtermInput> = async (data) => {
@@ -24,6 +24,7 @@ export const ModalAddMidtermContent = ({ course }: { course: Course }) => {
       date: new Date(data.date).toISOString(),
       idCourse: course.id,
       file: data.file,
+      withoutAnswers: data.withoutAnswers,
     });
     if (error) throw new Error(`Error: ${error}`);
   };
@@ -70,6 +71,16 @@ export const ModalAddMidtermContent = ({ course }: { course: Course }) => {
           accept="application/pdf"
           required
         />
+        <CheckboxForm<AddMidtermInput>
+          name="withoutAnswers"
+          control={control}
+          label="Mi parcial no tiene las respuestas"
+          required
+        />
+        <p className="text-xs">
+          Si tu PDF tiene las respuestas unidas, podés subirlas después en la sección de respuestas
+          del parcial. Y si querés sacarle páginas, usá el link de más abajo.
+        </p>
         <div>
           <a
             href="https://www.ilovepdf.com/es/eliminar-paginas"

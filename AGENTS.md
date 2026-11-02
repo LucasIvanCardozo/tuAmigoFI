@@ -298,6 +298,12 @@ A like is a `Reaction` row with `reaction: true`. `upsertReaction` toggles **by 
 - **The writes are conditional.** The write goes with `updateMany`/`deleteMany` filtered by the value it read, so a reaction changed concurrently is never clobbered nor deleted.
 - **The like and report buttons live over the PDF**, in the place where the uploader name used to be; the name moved to the bottom-left of the PDF.
 
+### Exams without answers
+
+The exam PDF is **the exam only**: no answers, no solutions. `ModalAddMidtermContent` asks for it with a mandatory checkbox ("Mi parcial no tiene las respuestas") and explains right below it that the answers can be uploaded later in the exam's responses section, and that the link to remove pages is there. The rule is enforced by the **server**, not by the modal: `createMidterm` rejects a midterm whose `withoutAnswers` is not true.
+
+- **The confirmation is a field, not a UI trick.** `withoutAnswers` is a required boolean in `addMidtermSchema` and in the `createMidterm` action schema, so the checkbox cannot be bypassed from the client.
+
 ### Complete responses
 
 A **complete response** is a `Response` row with `allProblems: true`: one single file (a PDF with every answer inside, or a photo) that covers **all** the points of an exam. It belongs to no point, so its internal `number` is `0`, which is not a valid point (the input goes from 1 to 100).
@@ -308,6 +314,7 @@ A **complete response** is a `Response` row with `allProblems: true`: one single
 - **Its title is "Todas las respuestas".** `ModuleResponse` takes an optional `label` and uses it as the title in both the expanded and the collapsed view; without a `label` it keeps saying `Ejercicio ${problem.number}`. That is the only difference with an individual response: same user navigation, same likes, same comments, same PDF viewer.
 - **Its duplicate rule is one per (module, user).** A point response is one per (module, user, number); a complete response is one per (module, user). A point response for point 1 and a complete response coexist.
 - **The delete modal does not show a problem number for it.** `ModalDeleteResponseContent` says that it is the response with all the answers of the exam instead of "Numero del problema: 0".
+- **Its upload shows the link to remove pages.** While the "Todas las respuestas" checkbox is on, `ModalAddResponseContent` shows the same "Click aquí para eliminar páginas de tu PDF" link that the exam upload modal has, because a complete answer is usually one PDF with every answer inside.
 
 ### Score
 

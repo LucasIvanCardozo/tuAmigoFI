@@ -1,7 +1,7 @@
 'use server';
 
 import { updateTag } from 'next/cache';
-import { cuid, file, object, string } from 'zod';
+import { boolean, cuid, file, object, string } from 'zod';
 import { slugify } from '../../../../utils/slugify';
 import db from '../../db/db';
 import { buildUploadMeta } from '../../uploadthing/meta';
@@ -21,6 +21,10 @@ const schema = object({
         file.type === 'application/pdf' || file.type === 'image/jpeg' || file.type === 'image/png',
       'Solo PDF, JPEG o PNG',
     ),
+  withoutAnswers: boolean().refine(
+    (value) => value,
+    'Tenés que confirmar que el parcial no tiene las respuestas',
+  ),
 });
 
 export const createMidterm = createAction(schema, async ({ name, date, idCourse, file }) => {
