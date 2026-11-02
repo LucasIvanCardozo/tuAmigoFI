@@ -51,6 +51,23 @@ respuestas individuales: misma navegación entre usuarios, mismos likes, mismos 
 mismo visor de PDF. Lo único que cambia es el **título**: en vez de `Ejercicio N` dice
 `Todas las respuestas`. Aparece **primero**, antes de la lista de problemas.
 
+### S4
+
+> Genial! ahora quiero solo agregar una cosita mas al modal de suba de parciales, un check para que diga "Aseguro que mi parcial no tiene las respuestas" o algo asi mas corto para que el usuario le tenga que dar obligadamente al check para que sepa que el aprcial que suba no debe tener las respeustas y debe ser solo del examen. Aclarandole abajo de que si tiene el pdf unido con las respuestas podra subirlas luego en la seccion de respuestas al parcial y ademas tiene el link que ya esta para eliminar las paginas del pdf que quiera
+
+El modal de subir un examen pide una **confirmación obligatoria**: el PDF del examen es sólo
+el examen, sin respuestas. El check tiene que estar tildado para poder enviar, y debajo se
+aclara que las respuestas se pueden subir después en la sección de respuestas del parcial,
+y que el link para quitar páginas del PDF ya está a mano.
+
+### S5
+
+> ademas en el modal de suba de respuestas para parciales debe salir el link para eliminar pdf igual al que sale en el modal de suba de parcial, solo si el chech de toddas las respeustas esta actiuvado
+
+En el modal de subir una respuesta de examen, mientras el check "Todas las respuestas" esté
+activo, aparece el mismo link de eliminar páginas del PDF que en el modal de subir el
+examen.
+
 ## Design
 
 ### El modelo
@@ -128,6 +145,24 @@ genera un grupo "Ejercicio 0" ni problemas fantasma. `DataModule` gana `fullResp
 `Ejercicio ${problem.number}`. Es la **única** diferencia con una respuesta individual.
 
 El modal de borrado deja de mostrar "Número del problema: 0" para una respuesta completa.
+
+### La confirmación del examen y el link de páginas
+
+`withoutAnswers` es un **campo del schema**, no una regla de la UI: es un boolean
+obligatorio en `addMidtermSchema` (el que usa el form) y en el schema de la action
+`createMidterm`. Con eso el check no se puede esquivar desde el cliente, y la regla
+"el PDF del examen no tiene respuestas" queda en el servidor, como manda la regla del
+repo de validar en la Server Action y no en el modal.
+
+El modal (`ModalAddMidtermContent`) usa `CheckboxForm` — el mismo componente que usan las
+confirmaciones de borrado — y pone el texto aclaratorio debajo, que es donde el link para
+quitar páginas queda a un clic.
+
+El link del modal de respuestas (S5) es el mismo que el del modal de examen
+(`https://www.ilovepdf.com/es/eliminar-paginas`) y se renderiza sólo cuando el check
+"Todas las respuestas" está activo: una respuesta completa suele ser un PDF con todas las
+respuestas adentro, así que ahí es donde el usuario lo va a necesitar. El check sólo existe
+en exámenes, así que el link tampoco aparece nunca en los TPs.
 
 ### Archivos
 
@@ -367,6 +402,8 @@ error de un número inválido cambió de texto (antes "Too small: expected numbe
 | T8 | — | Cerrar el documento y entregar | inline | — |
 | T9 | S1, S2 | Correcciones de la verificación independiente: la regla "sólo exámenes" en el servidor y el número condicional | inline | `1b5de51` |
 | T10 | S1, S2 | La regla del número unificada en `getResponseNumberError` (cierra el mínimo que el fix anterior había dejado abierto) | inline | `805956c` |
+| T11 | S4 | Confirmación obligatoria del examen sin respuestas (schema compartido + action + modal + `AGENTS.md`) | inline | — |
+| T12 | S5 | Link de eliminar páginas en el modal de respuestas cuando el check está activo | inline | — |
 
 ### Corte de slice
 
@@ -444,6 +481,35 @@ PASS | el helper rechaza un número mayor a 100
 Los dos schemas (el del form y el de la action) usan **el mismo helper**, así que no
 pueden divergir: la regla del número está escrita una sola vez.
 
+### 5 checks de la confirmación del examen
+
+Un arnés contra la base local (`tsx` con `next/cache`, `next-auth` y el cliente de
+UploadThing stubbeados) más el schema compartido: **5/5 checks pasaron**.
+
+```
+PASS | el schema compartido rechaza la confirmación sin tildar | Tenés que confirmar que el parcial no tiene las respuestas
+PASS | el schema compartido acepta la confirmación tildada
+PASS | el schema compartido exige el campo de confirmación
+PASS | el servidor rechaza un parcial sin la confirmación |  🡆 Tenés que confirmar que el parcial no tiene las respuestas
+PASS | el servidor acepta el parcial con la confirmación tildada
+```
+
+Lo que prueba: la confirmación no se puede esquivar desde el cliente (el servidor la
+exige) y un parcial con la confirmación tildada se sube como antes, con su `fileUrl`.
+
+### 5 checks de render del modal de respuestas
+
+El modal real (`ModalAddResponseContent`) renderizado con `renderToString` y el estado del
+check forzado con un stub de `useWatch`: **5/5 checks pasaron**.
+
+```
+PASS | con el check apagado no sale el link de eliminar páginas
+PASS | con el check apagado sigue el input Número
+PASS | con el check activo sale el link de eliminar páginas
+PASS | con el check activo no está el input Número
+PASS | con el check activo avisa que responde todos los puntos
+```
+
 ### 4 checks de render del modal
 
 El modal real (`ModalAddResponseContent`) renderizado con `renderToString` dentro del
@@ -505,3 +571,11 @@ PASS | el modal de un TP también pide el número
 > como una mas de ellas, que aparezca primero pero en vez de decir Ejercicio x que diga
 > todas las respeustas y listo, si literal es lo unico que cambia no te parece? decime que
 > pensas
+
+### L4
+
+> Genial! ahora quiero solo agregar una cosita mas al modal de suba de parciales, un check para que diga "Aseguro que mi parcial no tiene las respuestas" o algo asi mas corto para que el usuario le tenga que dar obligadamente al check para que sepa que el aprcial que suba no debe tener las respeustas y debe ser solo del examen. Aclarandole abajo de que si tiene el pdf unido con las respuestas podra subirlas luego en la seccion de respuestas al parcial y ademas tiene el link que ya esta para eliminar las paginas del pdf que quiera
+
+### L5
+
+> ademas en el modal de suba de respuestas para parciales debe salir el link para eliminar pdf igual al que sale en el modal de suba de parcial, solo si el chech de toddas las respeustas esta actiuvado
