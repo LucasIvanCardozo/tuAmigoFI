@@ -231,6 +231,17 @@ ACK    → status: closed, authority: burned
 | `review-5db2b74d3aff4694` | `3b128bf` + `fa2447a` + `db2ecdc` (tramo de docs) | ✅ aprobado y quemado |
 | `review-d49a60c12740914f` | `177c4a3` (doc) | ✅ aprobado y quemado |
 | `review-194342ea6787c88b` | `73210c2` (doc) | ✅ aprobado y quemado |
+| `review-26bc9907097816f0` | `56cf170` (doc) | ✅ aprobado y quemado |
+
+**La regla general para el resto de la rama**: todo commit que sólo toque documentación
+es un work-unit no ejecutable y cierra nativo sin collect, con esta secuencia:
+
+1. `git checkout --detach <commit>` (o dejar HEAD en el commit) y `baseRef` = el padre
+   (sha completo de 40 caracteres, dentro de `input`, con `committedOnly: true`).
+2. `START` **sin `lenses` ni `lensesReason`** (el tier `low` rechaza la selección de
+   lentes) → `state: approved`, `risk_reasons: non_executable_only`.
+3. `STATUS` → `next_transition: execute / review.acknowledge-approved`.
+4. `acknowledge-approved` → `status: closed`, `authority: burned`.
 
 Con eso, **todos los commits de documentación de la rama están revisados nativamente**.
 
