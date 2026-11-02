@@ -40,6 +40,7 @@ export type ResponseMinAggregateOutputType = {
   idTp: string | null
   idMidterm: string | null
   number: number | null
+  allProblems: boolean | null
   type: $Enums.TypeResponse | null
   text: string | null
   fileUrl: string | null
@@ -54,6 +55,7 @@ export type ResponseMaxAggregateOutputType = {
   idTp: string | null
   idMidterm: string | null
   number: number | null
+  allProblems: boolean | null
   type: $Enums.TypeResponse | null
   text: string | null
   fileUrl: string | null
@@ -68,6 +70,7 @@ export type ResponseCountAggregateOutputType = {
   idTp: number
   idMidterm: number
   number: number
+  allProblems: number
   type: number
   text: number
   fileUrl: number
@@ -92,6 +95,7 @@ export type ResponseMinAggregateInputType = {
   idTp?: true
   idMidterm?: true
   number?: true
+  allProblems?: true
   type?: true
   text?: true
   fileUrl?: true
@@ -106,6 +110,7 @@ export type ResponseMaxAggregateInputType = {
   idTp?: true
   idMidterm?: true
   number?: true
+  allProblems?: true
   type?: true
   text?: true
   fileUrl?: true
@@ -120,6 +125,7 @@ export type ResponseCountAggregateInputType = {
   idTp?: true
   idMidterm?: true
   number?: true
+  allProblems?: true
   type?: true
   text?: true
   fileUrl?: true
@@ -221,6 +227,7 @@ export type ResponseGroupByOutputType = {
   idTp: string | null
   idMidterm: string | null
   number: number
+  allProblems: boolean
   type: $Enums.TypeResponse
   text: string | null
   fileUrl: string | null
@@ -258,6 +265,7 @@ export type ResponseWhereInput = {
   idTp?: Prisma.StringNullableFilter<"Response"> | string | null
   idMidterm?: Prisma.StringNullableFilter<"Response"> | string | null
   number?: Prisma.IntFilter<"Response"> | number
+  allProblems?: Prisma.BoolFilter<"Response"> | boolean
   type?: Prisma.EnumTypeResponseFilter<"Response"> | $Enums.TypeResponse
   text?: Prisma.StringNullableFilter<"Response"> | string | null
   fileUrl?: Prisma.StringNullableFilter<"Response"> | string | null
@@ -276,6 +284,7 @@ export type ResponseOrderByWithRelationInput = {
   idTp?: Prisma.SortOrderInput | Prisma.SortOrder
   idMidterm?: Prisma.SortOrderInput | Prisma.SortOrder
   number?: Prisma.SortOrder
+  allProblems?: Prisma.SortOrder
   type?: Prisma.SortOrder
   text?: Prisma.SortOrderInput | Prisma.SortOrder
   fileUrl?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -297,6 +306,7 @@ export type ResponseWhereUniqueInput = Prisma.AtLeast<{
   idTp?: Prisma.StringNullableFilter<"Response"> | string | null
   idMidterm?: Prisma.StringNullableFilter<"Response"> | string | null
   number?: Prisma.IntFilter<"Response"> | number
+  allProblems?: Prisma.BoolFilter<"Response"> | boolean
   type?: Prisma.EnumTypeResponseFilter<"Response"> | $Enums.TypeResponse
   text?: Prisma.StringNullableFilter<"Response"> | string | null
   fileUrl?: Prisma.StringNullableFilter<"Response"> | string | null
@@ -315,6 +325,7 @@ export type ResponseOrderByWithAggregationInput = {
   idTp?: Prisma.SortOrderInput | Prisma.SortOrder
   idMidterm?: Prisma.SortOrderInput | Prisma.SortOrder
   number?: Prisma.SortOrder
+  allProblems?: Prisma.SortOrder
   type?: Prisma.SortOrder
   text?: Prisma.SortOrderInput | Prisma.SortOrder
   fileUrl?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -337,6 +348,7 @@ export type ResponseScalarWhereWithAggregatesInput = {
   idTp?: Prisma.StringNullableWithAggregatesFilter<"Response"> | string | null
   idMidterm?: Prisma.StringNullableWithAggregatesFilter<"Response"> | string | null
   number?: Prisma.IntWithAggregatesFilter<"Response"> | number
+  allProblems?: Prisma.BoolWithAggregatesFilter<"Response"> | boolean
   type?: Prisma.EnumTypeResponseWithAggregatesFilter<"Response"> | $Enums.TypeResponse
   text?: Prisma.StringNullableWithAggregatesFilter<"Response"> | string | null
   fileUrl?: Prisma.StringNullableWithAggregatesFilter<"Response"> | string | null
@@ -348,6 +360,7 @@ export type ResponseScalarWhereWithAggregatesInput = {
 export type ResponseCreateInput = {
   id?: string
   number: number
+  allProblems?: boolean
   type: $Enums.TypeResponse
   text?: string | null
   fileUrl?: string | null
@@ -366,6 +379,7 @@ export type ResponseUncheckedCreateInput = {
   idTp?: string | null
   idMidterm?: string | null
   number: number
+  allProblems?: boolean
   type: $Enums.TypeResponse
   text?: string | null
   fileUrl?: string | null
@@ -378,6 +392,7 @@ export type ResponseUncheckedCreateInput = {
 export type ResponseUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.IntFieldUpdateOperationsInput | number
+  allProblems?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -396,6 +411,7 @@ export type ResponseUncheckedUpdateInput = {
   idTp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idMidterm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.IntFieldUpdateOperationsInput | number
+  allProblems?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -411,6 +427,7 @@ export type ResponseCreateManyInput = {
   idTp?: string | null
   idMidterm?: string | null
   number: number
+  allProblems?: boolean
   type: $Enums.TypeResponse
   text?: string | null
   fileUrl?: string | null
@@ -422,6 +439,7 @@ export type ResponseCreateManyInput = {
 export type ResponseUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.IntFieldUpdateOperationsInput | number
+  allProblems?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -436,6 +454,7 @@ export type ResponseUncheckedUpdateManyInput = {
   idTp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idMidterm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.IntFieldUpdateOperationsInput | number
+  allProblems?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -465,6 +484,7 @@ export type ResponseCountOrderByAggregateInput = {
   idTp?: Prisma.SortOrder
   idMidterm?: Prisma.SortOrder
   number?: Prisma.SortOrder
+  allProblems?: Prisma.SortOrder
   type?: Prisma.SortOrder
   text?: Prisma.SortOrder
   fileUrl?: Prisma.SortOrder
@@ -483,6 +503,7 @@ export type ResponseMaxOrderByAggregateInput = {
   idTp?: Prisma.SortOrder
   idMidterm?: Prisma.SortOrder
   number?: Prisma.SortOrder
+  allProblems?: Prisma.SortOrder
   type?: Prisma.SortOrder
   text?: Prisma.SortOrder
   fileUrl?: Prisma.SortOrder
@@ -497,6 +518,7 @@ export type ResponseMinOrderByAggregateInput = {
   idTp?: Prisma.SortOrder
   idMidterm?: Prisma.SortOrder
   number?: Prisma.SortOrder
+  allProblems?: Prisma.SortOrder
   type?: Prisma.SortOrder
   text?: Prisma.SortOrder
   fileUrl?: Prisma.SortOrder
@@ -664,6 +686,7 @@ export type ResponseUncheckedUpdateManyWithoutUserNestedInput = {
 export type ResponseCreateWithoutMidtermInput = {
   id?: string
   number: number
+  allProblems?: boolean
   type: $Enums.TypeResponse
   text?: string | null
   fileUrl?: string | null
@@ -680,6 +703,7 @@ export type ResponseUncheckedCreateWithoutMidtermInput = {
   idUser: string
   idTp?: string | null
   number: number
+  allProblems?: boolean
   type: $Enums.TypeResponse
   text?: string | null
   fileUrl?: string | null
@@ -724,6 +748,7 @@ export type ResponseScalarWhereInput = {
   idTp?: Prisma.StringNullableFilter<"Response"> | string | null
   idMidterm?: Prisma.StringNullableFilter<"Response"> | string | null
   number?: Prisma.IntFilter<"Response"> | number
+  allProblems?: Prisma.BoolFilter<"Response"> | boolean
   type?: Prisma.EnumTypeResponseFilter<"Response"> | $Enums.TypeResponse
   text?: Prisma.StringNullableFilter<"Response"> | string | null
   fileUrl?: Prisma.StringNullableFilter<"Response"> | string | null
@@ -735,6 +760,7 @@ export type ResponseScalarWhereInput = {
 export type ResponseCreateWithoutCommentsInput = {
   id?: string
   number: number
+  allProblems?: boolean
   type: $Enums.TypeResponse
   text?: string | null
   fileUrl?: string | null
@@ -752,6 +778,7 @@ export type ResponseUncheckedCreateWithoutCommentsInput = {
   idTp?: string | null
   idMidterm?: string | null
   number: number
+  allProblems?: boolean
   type: $Enums.TypeResponse
   text?: string | null
   fileUrl?: string | null
@@ -779,6 +806,7 @@ export type ResponseUpdateToOneWithWhereWithoutCommentsInput = {
 export type ResponseUpdateWithoutCommentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.IntFieldUpdateOperationsInput | number
+  allProblems?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -796,6 +824,7 @@ export type ResponseUncheckedUpdateWithoutCommentsInput = {
   idTp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idMidterm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.IntFieldUpdateOperationsInput | number
+  allProblems?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -807,6 +836,7 @@ export type ResponseUncheckedUpdateWithoutCommentsInput = {
 export type ResponseCreateWithoutTpInput = {
   id?: string
   number: number
+  allProblems?: boolean
   type: $Enums.TypeResponse
   text?: string | null
   fileUrl?: string | null
@@ -823,6 +853,7 @@ export type ResponseUncheckedCreateWithoutTpInput = {
   idUser: string
   idMidterm?: string | null
   number: number
+  allProblems?: boolean
   type: $Enums.TypeResponse
   text?: string | null
   fileUrl?: string | null
@@ -861,6 +892,7 @@ export type ResponseUpdateManyWithWhereWithoutTpInput = {
 export type ResponseCreateWithoutUserInput = {
   id?: string
   number: number
+  allProblems?: boolean
   type: $Enums.TypeResponse
   text?: string | null
   fileUrl?: string | null
@@ -877,6 +909,7 @@ export type ResponseUncheckedCreateWithoutUserInput = {
   idTp?: string | null
   idMidterm?: string | null
   number: number
+  allProblems?: boolean
   type: $Enums.TypeResponse
   text?: string | null
   fileUrl?: string | null
@@ -917,6 +950,7 @@ export type ResponseCreateManyMidtermInput = {
   idUser: string
   idTp?: string | null
   number: number
+  allProblems?: boolean
   type: $Enums.TypeResponse
   text?: string | null
   fileUrl?: string | null
@@ -928,6 +962,7 @@ export type ResponseCreateManyMidtermInput = {
 export type ResponseUpdateWithoutMidtermInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.IntFieldUpdateOperationsInput | number
+  allProblems?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -944,6 +979,7 @@ export type ResponseUncheckedUpdateWithoutMidtermInput = {
   idUser?: Prisma.StringFieldUpdateOperationsInput | string
   idTp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.IntFieldUpdateOperationsInput | number
+  allProblems?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -958,6 +994,7 @@ export type ResponseUncheckedUpdateManyWithoutMidtermInput = {
   idUser?: Prisma.StringFieldUpdateOperationsInput | string
   idTp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.IntFieldUpdateOperationsInput | number
+  allProblems?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -971,6 +1008,7 @@ export type ResponseCreateManyTpInput = {
   idUser: string
   idMidterm?: string | null
   number: number
+  allProblems?: boolean
   type: $Enums.TypeResponse
   text?: string | null
   fileUrl?: string | null
@@ -982,6 +1020,7 @@ export type ResponseCreateManyTpInput = {
 export type ResponseUpdateWithoutTpInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.IntFieldUpdateOperationsInput | number
+  allProblems?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -998,6 +1037,7 @@ export type ResponseUncheckedUpdateWithoutTpInput = {
   idUser?: Prisma.StringFieldUpdateOperationsInput | string
   idMidterm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.IntFieldUpdateOperationsInput | number
+  allProblems?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1012,6 +1052,7 @@ export type ResponseUncheckedUpdateManyWithoutTpInput = {
   idUser?: Prisma.StringFieldUpdateOperationsInput | string
   idMidterm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.IntFieldUpdateOperationsInput | number
+  allProblems?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1025,6 +1066,7 @@ export type ResponseCreateManyUserInput = {
   idTp?: string | null
   idMidterm?: string | null
   number: number
+  allProblems?: boolean
   type: $Enums.TypeResponse
   text?: string | null
   fileUrl?: string | null
@@ -1036,6 +1078,7 @@ export type ResponseCreateManyUserInput = {
 export type ResponseUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.IntFieldUpdateOperationsInput | number
+  allProblems?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1052,6 +1095,7 @@ export type ResponseUncheckedUpdateWithoutUserInput = {
   idTp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idMidterm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.IntFieldUpdateOperationsInput | number
+  allProblems?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1066,6 +1110,7 @@ export type ResponseUncheckedUpdateManyWithoutUserInput = {
   idTp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idMidterm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.IntFieldUpdateOperationsInput | number
+  allProblems?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumTypeResponseFieldUpdateOperationsInput | $Enums.TypeResponse
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1111,6 +1156,7 @@ export type ResponseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   idTp?: boolean
   idMidterm?: boolean
   number?: boolean
+  allProblems?: boolean
   type?: boolean
   text?: boolean
   fileUrl?: boolean
@@ -1130,6 +1176,7 @@ export type ResponseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   idTp?: boolean
   idMidterm?: boolean
   number?: boolean
+  allProblems?: boolean
   type?: boolean
   text?: boolean
   fileUrl?: boolean
@@ -1147,6 +1194,7 @@ export type ResponseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   idTp?: boolean
   idMidterm?: boolean
   number?: boolean
+  allProblems?: boolean
   type?: boolean
   text?: boolean
   fileUrl?: boolean
@@ -1164,6 +1212,7 @@ export type ResponseSelectScalar = {
   idTp?: boolean
   idMidterm?: boolean
   number?: boolean
+  allProblems?: boolean
   type?: boolean
   text?: boolean
   fileUrl?: boolean
@@ -1172,7 +1221,7 @@ export type ResponseSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ResponseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "idUser" | "idTp" | "idMidterm" | "number" | "type" | "text" | "fileUrl" | "fileKey" | "createdAt" | "updatedAt", ExtArgs["result"]["response"]>
+export type ResponseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "idUser" | "idTp" | "idMidterm" | "number" | "allProblems" | "type" | "text" | "fileUrl" | "fileKey" | "createdAt" | "updatedAt", ExtArgs["result"]["response"]>
 export type ResponseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   comments?: boolean | Prisma.Response$commentsArgs<ExtArgs>
   midterm?: boolean | Prisma.Response$midtermArgs<ExtArgs>
@@ -1205,6 +1254,7 @@ export type $ResponsePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     idTp: string | null
     idMidterm: string | null
     number: number
+    allProblems: boolean
     type: $Enums.TypeResponse
     text: string | null
     fileUrl: string | null
@@ -1643,6 +1693,7 @@ export interface ResponseFieldRefs {
   readonly idTp: Prisma.FieldRef<"Response", 'String'>
   readonly idMidterm: Prisma.FieldRef<"Response", 'String'>
   readonly number: Prisma.FieldRef<"Response", 'Int'>
+  readonly allProblems: Prisma.FieldRef<"Response", 'Boolean'>
   readonly type: Prisma.FieldRef<"Response", 'TypeResponse'>
   readonly text: Prisma.FieldRef<"Response", 'String'>
   readonly fileUrl: Prisma.FieldRef<"Response", 'String'>

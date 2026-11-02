@@ -147,15 +147,16 @@ enum TypeResponse {
 }
 
 model Response {
-  id        String       @id @default(cuid())
-  idUser    String       @map("id_user")
-  idTp      String?      @map("id_tp")
-  idMidterm String?      @map("id_midterm")
-  number    Int
-  type      TypeResponse
-  text      String?
-  fileUrl   String?      @map("file_url")
-  fileKey   String?      @map("file_key")
+  id          String       @id @default(cuid())
+  idUser      String       @map("id_user")
+  idTp        String?      @map("id_tp")
+  idMidterm   String?      @map("id_midterm")
+  number      Int
+  allProblems Boolean      @default(false) @map("all_problems")
+  type        TypeResponse
+  text        String?
+  fileUrl     String?      @map("file_url")
+  fileKey     String?      @map("file_key")
 
   comments Comment[]
 
