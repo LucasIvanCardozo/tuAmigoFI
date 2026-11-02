@@ -178,17 +178,23 @@ corrección 160) y el STATUS ofrecio el grupo de collect con las tres lentes.
 
 ### El collect no se puede emitir desde este host
 
-Los intentos de captura fallaron sin mutar la autoridad, en tres lineages y con tres
+Los intentos de captura fallaron sin mutar la autoridad, en tres lineages y con cuatro
 serializaciones distintas:
 
-| Lineage | Intento | Resultado |
-| --- | --- | --- |
-| `review-903433045706af48` (la feature) | grupo, con los tres bindings como string | `collectBindings must be the complete distinct current reviewer group in exact provider order` |
-| `review-903433045706af48` | un slot, con el binding como string | `collectBinding is missing or stale for current STATUS` |
-| `review-903433045706af48` | un slot, con el binding como objeto | `collectBinding is missing or stale for current STATUS` |
-| `review-a7340cf2248a151f` (las correcciones) | grupo, con los tres bindings como objeto | `collectBindings must be the complete distinct current reviewer group in exact provider order` |
-| `review-a7340cf2248a151f` | un slot, con el binding como objeto | `collectBinding is missing or stale for current STATUS` |
-| `review-a7340cf2248a151f` | un slot, con los **bytes canónicos del provider** (el slot tal cual lo emite el CLI, en snake_case) | `collectBinding is missing or stale for current STATUS` |
+| Lineage | Candidato | Intento | Resultado |
+| --- | --- | --- | --- |
+| `review-903433045706af48` | la feature (9 archivos, 320 líneas) | grupo, bindings como string | `collectBindings must be the complete distinct current reviewer group in exact provider order` |
+| `review-903433045706af48` | la feature | un slot, binding como string | `collectBinding is missing or stale for current STATUS` |
+| `review-903433045706af48` | la feature | un slot, binding como objeto | `collectBinding is missing or stale for current STATUS` |
+| `review-a7340cf2248a151f` | las correcciones (4 archivos, 425 líneas) | grupo, bindings como objeto | `collectBindings must be the complete distinct current reviewer group in exact provider order` |
+| `review-a7340cf2248a151f` | las correcciones | un slot, binding como objeto | `collectBinding is missing or stale for current STATUS` |
+| `review-a7340cf2248a151f` | las correcciones | un slot, con los **bytes canónicos del provider** (el slot tal cual lo emite el CLI, en snake_case) | `collectBinding is missing or stale for current STATUS` |
+| `review-216a37a0514aff9c` | el fix de 2 líneas (`b1ec5dc`) | grupo, bindings como string (formato de la facade) | `collectBindings must be the complete distinct current reviewer group in exact provider order` |
+| `review-216a37a0514aff9c` | el fix de 2 líneas | un slot, binding como string | `collectBinding is missing or stale for current STATUS` |
+
+El patrón no depende del tamaño del candidato: **todo lo que necesita selección de lentes
+falla en el collect**, y el preflight además rechaza los candidatos grandes por
+presupuesto.
 
 **Causa raíz.** No es el re-tipado de argumentos del harness (esa hipótesis queda
 descartada: el provider guarda `"order": "0"` y `"materialize": "true"` como strings, y
@@ -204,9 +210,28 @@ en el contrato entre las dos capas, no en el candidato ni en la autoridad.
 Es el mismo síntoma que ya se documentó en `odd/tasks/likes-and-module-reports.md` para
 la feature anterior, con la misma familia upstream (`earendil-works/pi#9931`).
 
-Quedan abiertos los lineages `review-903433045706af48` y `review-a7340cf2248a151f` (los
-dos en `reviewing`), y `review-d49a60c12740914f` (el START que murió en el preflight por
-presupuesto).
+### Lo que sí cierra: el candidato no ejecutable
+
+Un candidato **no ejecutable** (sólo documentación) se cierra nativo de punta a punta,
+sin collect: el provider lo clasifica `low`, no pide lentes y aprueba solo.
+
+```
+START   → state: approved, risk_tier: low, selected_lenses: [], action: closed
+            risk_reasons: non_executable_only
+STATUS   → next_transition: execute / review.acknowledge-approved
+ACK      → status: closed, authority: burned
+            burn_evidence: gentle-ai.review-acknowledged/v1
+            delivery: ordinary-repository-policy
+```
+
+Es el lineage `review-2a535fc1ed3ff807` (el work-unit de doc `fa2447a`), y es la única
+revisión nativa que pudo completarse en esta rama. Para el código, el tier siempre es
+`medium` (`executable_change`), y ahí la selección de lentes es obligatoria: el collect es
+imprescindible y es justamente lo que no se puede emitir.
+
+Quedan abiertos los lineages `review-903433045706af48`, `review-a7340cf2248a151f` y
+`review-216a37a0514aff9c` (los tres en `reviewing`), y `review-d49a60c12740914f` (el
+START que murió en el preflight por presupuesto).
 
 ### Verificación independiente en su lugar (`gentle-ai-verify`)
 
