@@ -160,9 +160,13 @@ quitar páginas queda a un clic.
 
 El link del modal de respuestas (S5) es el mismo que el del modal de examen
 (`https://www.ilovepdf.com/es/eliminar-paginas`) y se renderiza sólo cuando el check
-"Todas las respuestas" está activo: una respuesta completa suele ser un PDF con todas las
-respuestas adentro, así que ahí es donde el usuario lo va a necesitar. El check sólo existe
-en exámenes, así que el link tampoco aparece nunca en los TPs.
+"Todas las respuestas" está activo, **justo debajo del check**: una respuesta completa
+suele ser un PDF con todas las respuestas adentro, así que ahí es donde el usuario lo va a
+necesitar. El check sólo existe en exámenes, así que el link tampoco aparece nunca en los
+TPs. La frase "Va a responder todos los puntos del examen" no está: el check ya lo dice.
+
+El check del modal de examen se renderiza con su asterisco de obligatorio (`required`), y la
+explicación de abajo arranca con `*` para que se lean juntos.
 
 ### Archivos
 
@@ -523,23 +527,30 @@ Lo que prueba: la confirmación no se puede esquivar desde el cliente (el servid
 exige, y el mensaje es el mismo en cliente y servidor), y un parcial con la confirmación
 tildada se sube como antes, con su `fileUrl`.
 
-### 9 checks de render de los modales
+### 11 checks de render de los modales
 
 Los modales reales (`ModalAddResponseContent` y `ModalAddMidtermContent`) renderizados con
 `renderToString`, con el estado del check forzado con un stub de `useWatch`:
-**9/9 checks pasaron**.
+**11/11 checks pasaron**.
 
 ```
 PASS | con el check apagado no sale el link
 PASS | con el check apagado sigue el input Número
 PASS | con el check activo sale el link
 PASS | con el check activo no está el input Número
+PASS | ya no dice "Va a responder todos los puntos del examen"
+PASS | el link está abajo del check | link=441 check=387
 PASS | en un TP no sale el link de respuestas
-PASS | en un TP sigue el input Número
-PASS | el modal de examen tiene el check obligatorio
-PASS | el modal de examen avisa dónde subir las respuestas
+PASS | el check del examen se marca como obligatorio
+PASS | la explicación arranca con asterisco
+PASS | la explicación del examen sigue al check
 PASS | el modal de examen menciona el link de páginas
 ```
+
+Lo que prueba: el link de eliminar páginas del modal de respuestas sale sólo con el check
+activo y queda **debajo del check**, la frase "Va a responder todos los puntos del examen"
+ya no está (el check ya lo dice), y en el modal de examen el check se renderiza con su
+asterisco de obligatorio y la explicación arranca con `*`, para que se lean juntos.
 
 ### 4 checks de render del modal
 
