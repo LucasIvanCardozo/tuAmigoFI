@@ -78,7 +78,7 @@ export const ModalAddMidtermContent = ({ course }: { course: Course }) => {
           required
         />
         <p className="text-xs">
-          Si tu PDF tiene las respuestas unidas, podés subirlas después en la sección de respuestas
+          *Si tu PDF tiene las respuestas unidas, podés subirlas después en la sección de respuestas
           del parcial. Y si querés sacarle páginas, usá el link de más abajo.
         </p>
         <div>
