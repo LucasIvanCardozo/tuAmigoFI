@@ -153,6 +153,82 @@ El modal de borrado deja de mostrar "Número del problema: 0" para una respuesta
   antes de agrupar. Los problemas de un parcial siguen siendo los que existen por respuestas
   puntuales.
 
+## Review disposition
+
+`gentle-ai review mode status` dice **RDD on** (global). El `assess` del candidato
+(`baseRef: origin/main`, `committedOnly: true`) devolvió `risk: medium`, `reviewDue: false`
+(`reviewDueReason: under_budget`) y un plan de `writerSelfVerification` sin verificador
+independiente.
+
+### La revisión nativa no pudo arrancar: el candidato no entra en el presupuesto
+
+El primer START, con el rango completo de la rama (16 paths, 674 líneas), murió en el
+preflight nativo:
+
+```
+code: lens_context_budget_exceeded
+"The candidate's complete reviewer evidence exceeds the native context budget, so no review
+authority was created; review this change as smaller candidates that each fit under it."
+```
+
+El facade pide explícitamente dividir el trabajo. Se revisó entonces **por work unit**,
+con el work-unit de la feature como candidato (9 archivos, 320 líneas, base
+`facc450`): el START entró bien (`state: reviewing`, tier medio, 3 lentes, presupuesto de
+corrección 160) y el STATUS ofrecio el grupo de collect con las tres lentes.
+
+### El collect no se puede emitir desde este host
+
+Los tres intentos de captura fallaron sin mutar la autoridad:
+
+| Intento | Resultado |
+| --- | --- |
+| grupo, con los tres bindings como string | `collectBindings must be the complete distinct current reviewer group in exact provider order` |
+| un slot, con el binding como string | `collectBinding is missing or stale for current STATUS` |
+| un slot, con el binding como objeto | `collectBinding is missing or stale for current STATUS` |
+
+Es el defecto de serialización de argumentos JSON del harness (familia de
+`earendil-works/pi#9931`): los valores string con forma de literal JSON (`"order": "0"`,
+`"materialize": "true"`) se re-tipan al pasar por el argumento de la tool, así que el
+binding nunca coincide byte a byte con el que emite el provider. El STATUS sigue
+reofreciendo el mismo slot, así que **no es un problema de la autoridad sino del host**:
+es el mismo bloqueo que ya se documentó en `odd/tasks/likes-and-module-reports.md` para
+la feature anterior, con la misma familia upstream.
+
+Queda abierto el lineage `review-903433045706af48` en estado `reviewing`, y también
+`review-d49a60c12740914f` (el START que murió en el preflight por presupuesto).
+
+### Verificación independiente en su lugar (`gentle-ai-verify`)
+
+Como la vista externa nativa quedóUnavailable, se corrió un verificador read-only
+(`gentle-ai-verify`) sobre el mismo work-unit, con probes propios en una copia aislada.
+Encontró dos defectos reales, ambos corregidos en `1b5de51`:
+
+- **MAJOR — la regla "sólo exámenes" no estaba en el servidor.** `createResponse` aceptaba
+  `allProblems: true` junto con `idTp`, así que una respuesta completa podía colgar de un
+  TP (y `makeModules`/`moduleContainer` la renderizaban igual). La regla vivía sólo en el
+  modal, contra la regla del propio repo de validar en la Server Action. **Corregido**:
+  `createResponse` rechaza una respuesta completa con `idTp`.
+- **MINOR — el input "Número" oculto seguía validándose.** RHF conserva el valor del campo
+  desmontado, así que si el usuario lo vaciaba o escribía fuera de rango antes de tildar
+  el check, el submit moría con un error invisible y sin toast. **Corregido**: el número
+  dejó de exigirse cuando la respuesta es completa, en el schema compartido y en el de la
+  action; las puntuales siguen limitadas a 1..100.
+
+Los dos fixes tienen checks propios en el arnés (los dos últimos de los 15) y en el probe
+del schema compartido (6/6).
+
+El verificador no encontró nada en: la lectura de `makeModules` (separación, duplicación,
+agrupación), el forzado de `number = 0`, las dos reglas de duplicados, la convivencia
+puntual + completa, el aislamiento por usuario, la invalidación de caché, la ruta de
+upload con archivo, el modal de borrado y el score.
+
+Quedaron como **advisory** sin corregir, por ser preexistentes o por no cambiar el
+contrato: el servidor no acota `number` a 100 (lo acota el cliente), la regla de duplicados
+es read-then-write (dos submits simultáneos pueden crear dos completas), el mismo concepto
+se llama `allProblems` en la escritura y `fullResponses` en la lectura, y el mensaje de
+error de un número inválido cambió de texto (antes "Too small: expected number to be
+>=1", ahora "El número debe ser mayor o igual a 1").
+
 ## Tasks
 
 | ID | Spec | Work | Route | Commit |
@@ -165,29 +241,32 @@ El modal de borrado deja de mostrar "Número del problema: 0" para una respuesta
 | T6 | S2, S3 | Modal de borrado y regla en `AGENTS.md` | delegated (`gentle-ai-worker`) | `b936883` |
 | T7 | — | Verificar: migración en la base local, lint, build, checks | inline | — |
 | T8 | — | Cerrar el documento y entregar | inline | — |
+| T9 | S1, S2 | Correcciones de la verificación independiente: la regla "sólo exámenes" en el servidor y el número condicional | inline | `1b5de51` |
 
 ### Corte de slice
 
-La rama quedó en **402 líneas de diff** al cierre de `b936883`, apenas sobre el corte de
-~400 líneas por work unit. Como el trabajo pendiente era sólo este documento (sin código),
-el doc va en su propio commit `docs(odd)`. Si mañana sigue la feature, la estrategia de
-entrega es **un commit por work unit**: el fix del bug ya está separado de la feature, así
-que un PR con esta rama es revisable por partes.
+La rama quedó en **715 líneas de diff** al cierre de `1b5de51`, sobre el corte de ~400
+líneas por work unit. El trabajo se entregó en commits chicos justamente para que la
+revisión sea posible: el fix del bug va separado de la feature, la feature va separada de
+sus correcciones, y el doc va aparte. La estrategia de entrega es **un commit por work
+unit** (el mismo criterio que usa el skill de chained PRs del repo), así que un PR con
+esta rama es revisable por partes: `b1ec5dc` (2 líneas), `facc450` (schema), `b936883`
+(la feature), `1b5de51` (las correcciones) y `177c4a3` (el doc).
 
 ## Verification
 
 Sin framework de tests en el repo (`AGENTS.md` lo prohíbe explícitamente), la verificación
 es ejecutada contra la base local, no leída del diff.
 
-### 13 checks contra la base local
+### 15 checks contra la base local
 
 Un arnés con filas reales (`tsx`, `next/cache`, `next-auth` y el cliente de UploadThing
-stubbeados en un loader de Node) creó dos usuarios, un curso, un parcial, un TP y sus
-respuestas, y después borró todo. Resultado: **13/13 checks pasaron**.
+stubbeados en un loader de Node) creó tres usuarios, un curso, un parcial, un TP y sus
+respuestas, y después borró todo. Resultado: **15/15 checks pasaron**.
 
 ```
 PASS | respuesta puntual a un examen se crea
-PASS | la respuesta del examen guarda id_midterm (bug corregido) | id_midterm=cmvzbpsuf0003ts28xe2ynnh7
+PASS | la respuesta del examen guarda id_midterm (bug corregido) | id_midterm=cmvzcyjyg0004is28qmpa0z57
 PASS | dos respuestas del mismo punto del mismo usuario se rechazan | No puedes tener mas de una respueste a un problema!
 PASS | la respuesta completa con archivo sube y guarda fileUrl y fileKey
 PASS | la respuesta completa se guarda con allProblems y sin número de punto | allProblems=true number=0
@@ -197,17 +276,34 @@ PASS | makeModules separa las respuestas completas | fullResponses=2
 PASS | las respuestas puntuales siguen agrupadas por punto | problems=1
 PASS | el grupo de un punto no incluye la respuesta completa | responses=1
 PASS | ninguna respuesta completa aparece como un problema | problems=1
-PASS | la respuesta de un tp sigue guardando id_tp | id_tp=cmvzbpsvx0007ts280wqt7bzb id_midterm=null
+PASS | la respuesta de un tp sigue guardando id_tp | id_tp=cmvzcyk070008is2811x6c97f db=null
 PASS | una respuesta puntual sin número se rechaza |  🡆 El número debe ser mayor o igual a 1
+PASS | una respuesta completa de un TP se rechaza en el servidor | Las respuestas completas son solo para exámenes
+PASS | una respuesta completa con un número obsoleto se acepta y lo ignora | number=0
 ```
 
 Lo que prueba: el bug de `idMidterm` está corregido (la respuesta de un examen cuelga del
 examen), la respuesta completa se guarda con `allProblems` y `number = 0` **ignorando** el
 número que manda el cliente, la regla de duplicados es una por (módulo, usuario) para la
 completa y una por (módulo, usuario, punto) para la puntual, otro usuario puede subir su
-propia respuesta completa del mismo examen, `makeModules` separa las completas antes de
-agrupar (y no genera ni un "Ejercicio 0" ni problemas fantasma), y la respuesta de un TP
-sigue guardando `id_tp`.
+propia respuesta completa del mismo examen, una respuesta completa de un TP se rechaza en
+el servidor, un número obsoleto no bloquea ni invalida una respuesta completa,
+`makeModules` separa las completas antes de agrupar (y no genera ni un "Ejercicio 0" ni
+problemas fantasma), y la respuesta de un TP sigue guardando `id_tp`.
+
+### 6 checks del schema compartido
+
+`addResponseSchema` (el schema que usan el form y la action) con `safeParse`:
+**6/6 checks pasaron**.
+
+```
+PASS | una respuesta completa sin número valida
+PASS | una respuesta completa con número obsoleto valida
+PASS | una respuesta completa sin el campo number valida
+PASS | una respuesta puntual sin número no valida | Debe ser un número
+PASS | una respuesta puntual fuera de rango no valida | Número fuera de rango
+PASS | una respuesta puntual con número válido valida
+```
 
 ### 4 checks de render del modal
 
