@@ -178,7 +178,8 @@ corrección 160) y el STATUS ofrecio el grupo de collect con las tres lentes.
 
 ### El collect no se puede emitir desde este host
 
-Los intentos de captura fallaron sin mutar la autoridad, en los dos lineages:
+Los intentos de captura fallaron sin mutar la autoridad, en tres lineages y con tres
+serializaciones distintas:
 
 | Lineage | Intento | Resultado |
 | --- | --- | --- |
@@ -187,15 +188,21 @@ Los intentos de captura fallaron sin mutar la autoridad, en los dos lineages:
 | `review-903433045706af48` | un slot, con el binding como objeto | `collectBinding is missing or stale for current STATUS` |
 | `review-a7340cf2248a151f` (las correcciones) | grupo, con los tres bindings como objeto | `collectBindings must be the complete distinct current reviewer group in exact provider order` |
 | `review-a7340cf2248a151f` | un slot, con el binding como objeto | `collectBinding is missing or stale for current STATUS` |
+| `review-a7340cf2248a151f` | un slot, con los **bytes canónicos del provider** (el slot tal cual lo emite el CLI, en snake_case) | `collectBinding is missing or stale for current STATUS` |
 
-Es el defecto de serialización de argumentos JSON del harness (familia de
-`earendil-works/pi#9931`): los valores string con forma de literal JSON (`"order": "0"`,
-`"materialize": "true"`) se re-tipan al pasar por el argumento de la tool, así que el
-binding nunca coincide byte a byte con el que emite el provider. El STATUS sigue
-reofreciendo el mismo slot, así que **no es un problema de la autoridad sino del host**:
-es el mismo bloqueo que ya se documentó en `odd/tasks/likes-and-module-reports.md` para
-la feature anterior, con la misma familia upstream. Ocurre con dos lineages distintos y
-con dos serializaciones distintas, así que no es del candidato.
+**Causa raíz.** No es el re-tipado de argumentos del harness (esa hipótesis queda
+descartada: el provider guarda `"order": "0"` y `"materialize": "true"` como strings, y
+mi copia los tenía igual). La diferencia real está en el **shape**: el CLI nativo emite el
+slot en snake_case (`capture_operation`, `artifact_subject`, `base_tree`,
+`submission.argument_tokens`, `submission.value`) y la facade de Pi lo reescribe en
+camelCase (`captureOperation`, `artifactSubject`, `baseTree`,
+`submission.argumentTokens`, `submission.values` como array). El facade de Go valida el
+binding contra su forma canónica, así que la forma que la facade de Pi pide no puede
+coincidir, y tampoco coincide la forma canónica que se le pasa directo. El bloqueo está
+en el contrato entre las dos capas, no en el candidato ni en la autoridad.
+
+Es el mismo síntoma que ya se documentó en `odd/tasks/likes-and-module-reports.md` para
+la feature anterior, con la misma familia upstream (`earendil-works/pi#9931`).
 
 Quedan abiertos los lineages `review-903433045706af48` y `review-a7340cf2248a151f` (los
 dos en `reviewing`), y `review-d49a60c12740914f` (el START que murió en el preflight por
@@ -244,6 +251,43 @@ con número negativo.
 El verificador no encontró nada en: la separación de `makeModules`, el forzado de
 `number = 0`, la regla de duplicados, la convivencia puntual + completa, el aislamiento por
 usuario, la invalidación de caché, la ruta de upload, el modal de borrado y el score.
+
+### Tercera verificación independiente: la unificación de la regla del número
+
+Sobre `805956c` (la unificación de la regla del número) se corrió una tercera
+verificación independiente. **Sin hallazgos bloqueantes**: las seis preguntas verificadas
+dieron "cumple". En concreto, los dos schemas coinciden mensaje a mensaje en los siete
+casos de número (ausente, -1, 0, 1.5, 1, 100, 101) y en los dos modos (`allProblems`
+true y false), los rechazos no escriben fila, y en la base completa hay 0 respuestas con
+número negativo.
+
+Quedaron dos **MINOR** y cuatro **advisory**, todos aceptados:
+
+- **MINOR** — la precedencia de errores: una petición **sin sesión** y con número inválido
+  devuelve ahora el error de validación en lugar de "Necesitas iniciar sesion!". Es la
+  misma clase de masking que ya existía en el baseline para 0, 101 y 1.5 (ahora también
+  para -1): no escribe datos ni filtra información, y en las peticiones válidas el mensaje
+  de sesión no cambió.
+- **MINOR** — `idTp` + `idMidterm` con número inválido devuelve dos líneas de error; la
+  primera, la que ve el usuario, no cambió.
+- advisory — el mensaje para 1.5 es "Debe ser un número" aunque 1.5 sea un número (no
+  entero): redacción heredada del schema del baseline, conservada a propósito para
+  mantener la paridad entre los dos schemas.
+- advisory — el segundo `getResponseNumberError` dentro del handler es código muerto (el
+  schema ya validó): defensa en profundidad inofensiva.
+- advisory — `NaN` y `null` los rechaza el tipo base de zod aunque `allProblems` sea
+  true; no son alcanzables desde el form (`InputForm` convierte `''` en `undefined`).
+- advisory — `Response.number` no tiene CHECK en la base: la regla vive en la capa de
+  app, y `create.action.ts` es la única ruta de creación de la tabla.
+
+### Evidencia de campo del bug corregido
+
+La base local tiene **una fila `Response` huérfana** (`id_tp` NULL, `id_midterm` NULL,
+`text = "sdfsf"`, creada hoy): la firma exacta del bug de `idMidterm`. No la creó el arnés
+ni los probes (textos y claves foráneas distintos), así que viene de una subida manual
+desde la app corriendo sobre `main`, que es donde el fix todavía no está. Es la prueba
+de que el bug era real y de que la respuesta se perdía en silencio. La fila no se toca:
+borrar datos no está autorizado y de paso es la evidencia.
 
 Quedaron como **advisory** sin corregir, por ser preexistentes o por no cambiar el
 contrato: el servidor no acota `number` a 100 (lo acota el cliente), la regla de duplicados
