@@ -21,9 +21,20 @@ export const getResponseFileTypeError = (type: string, file?: File | null): stri
   return null;
 };
 
+export const getResponseNumberError = (
+  value: number | undefined,
+  allProblems: boolean,
+): string | null => {
+  if (allProblems) return null;
+  if (value === undefined || !Number.isInteger(value)) return 'Debe ser un número';
+  if (value < 1) return 'El número debe ser mayor o igual a 1';
+  if (value > 100) return 'Número fuera de rango';
+  return null;
+};
+
 export const addResponseSchema = z
   .object({
-    number: z.number().optional(),
+    number: z.number({ message: 'Debe ser un número' }).optional(),
     type: z.enum(['TEXT', 'CODE', 'IMAGE', 'PDF'], {
       message: 'Selecciona el tipo de respuesta',
     }),
@@ -32,29 +43,13 @@ export const addResponseSchema = z
     allProblems: z.boolean(),
   })
   .superRefine((data, ctx) => {
-    if (!data.allProblems) {
-      if (data.number === undefined || !Number.isInteger(data.number)) {
-        ctx.addIssue({
-          code: 'custom',
-          path: ['number'],
-          message: 'Debe ser un número',
-        });
-      } else {
-        if (data.number < 1) {
-          ctx.addIssue({
-            code: 'custom',
-            path: ['number'],
-            message: 'El número debe ser mayor o igual a 1',
-          });
-        }
-        if (data.number > 100) {
-          ctx.addIssue({
-            code: 'custom',
-            path: ['number'],
-            message: 'Número fuera de rango',
-          });
-        }
-      }
+    const numberError = getResponseNumberError(data.number, data.allProblems);
+    if (numberError) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['number'],
+        message: numberError,
+      });
     }
 
     if ((data.type === 'TEXT' || data.type === 'CODE') && !data.text) {
