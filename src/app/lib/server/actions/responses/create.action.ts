@@ -92,6 +92,7 @@ export const createResponse = createAction(
             const created = await db.response.create({
               data: {
                 idTp,
+                idMidterm,
                 number,
                 type: type as TypeResponse,
                 idUser,
@@ -112,6 +113,7 @@ export const createResponse = createAction(
       const response = await db.response.create({
         data: {
           idTp,
+          idMidterm,
           number,
           type: type as TypeResponse,
           idUser,
