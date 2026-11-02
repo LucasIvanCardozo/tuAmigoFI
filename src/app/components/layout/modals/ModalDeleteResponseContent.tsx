@@ -49,10 +49,17 @@ export const ModalDeleteResponseContent = ({
       <Form onSubmit={handleSubmit(submit)} noValidate>
         <div>
           <div className="flex flex-col *:flex *:gap-1">
-            <p>
-              <b>Numero del problema:</b>
-              {response.number}
-            </p>
+            {response.allProblems ? (
+              <p>
+                <b>Respuesta:</b>
+                Todas las respuestas del examen
+              </p>
+            ) : (
+              <p>
+                <b>Numero del problema:</b>
+                {response.number}
+              </p>
+            )}
             <p>
               <b>Subida por:</b>
               {user.name}

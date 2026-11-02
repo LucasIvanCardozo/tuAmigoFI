@@ -16,16 +16,19 @@ export default function ModuleResponse({
   problem,
   session,
   typeModule: _typeModule,
+  label,
 }: {
   problem: DataModuleProblem;
   session: Session | null;
   typeModule: 'TP' | 'Practica';
+  label?: string;
 }) {
   const [indexResponse, setIndexResponse] = useState<number>(0);
   const [stateComment, setStateComment] = useState(false);
   const [viewResponses, setViewResponses] = useState(false);
 
   const responses = problem.responses;
+  const title = label ?? `Ejercicio ${problem.number}`;
 
   const handlePageUser = (add: number) => {
     const suma = indexResponse + add;
@@ -44,7 +47,7 @@ export default function ModuleResponse({
         <>
           <div className="relative bg-(--white) text-base leading-5 shadow-[0px_0px_5px_0px_rgba(0,0,0,0.5)] flex flex-col min-h-32">
             <span className="bg-[#C8E0E4] flex justify-between items-center">
-              <b className="bg-[#9fc8cf] p-1">{`Ejercicio ${problem.number}:`}</b>
+              <b className="bg-[#9fc8cf] p-1">{`${title}:`}</b>
               <span className="opacity-75 p-1 flex gap-1">
                 Por {`${responses[indexResponse].user.name}`}
                 <button type="button" onClick={() => setViewResponses(!viewResponses)}>
@@ -125,7 +128,7 @@ export default function ModuleResponse({
       ) : (
         <div className="relative bg-(--white) text-base leading-5 shadow-[0px_0px_5px_0px_rgba(0,0,0,0.5)] flex flex-col">
           <span className="bg-[#C8E0E4] flex justify-between items-center">
-            <b className=" p-1">{`Ejercicio ${problem.number}`}</b>
+            <b className=" p-1">{title}</b>
             <span className="opacity-75 p-1 flex gap-1">
               {`Hay ${responses.length} respuesta disponible`}
               <button type="button" onClick={() => setViewResponses(!viewResponses)}>

@@ -33,6 +33,7 @@ export const addResponseSchema = z
     }),
     text: z.string().optional(),
     file: responseFileSchema.optional(),
+    allProblems: z.boolean(),
   })
   .superRefine((data, ctx) => {
     if ((data.type === 'TEXT' || data.type === 'CODE') && !data.text) {
