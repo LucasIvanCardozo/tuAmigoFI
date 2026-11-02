@@ -195,6 +195,7 @@ export const ResponseScalarFieldEnum = {
   idTp: 'idTp',
   idMidterm: 'idMidterm',
   number: 'number',
+  allProblems: 'allProblems',
   type: 'type',
   text: 'text',
   fileUrl: 'fileUrl',

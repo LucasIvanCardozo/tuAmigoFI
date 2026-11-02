@@ -29,6 +29,7 @@ const ModuleContainerImpl = ({ module, typeModule }: Props) => {
   const { idModule } = useModuleSelection();
   const moduleInd = module.module;
   const problems = module.problems;
+  const fullResponses = module.fullResponses;
   const isTp = 'number' in moduleInd;
   const typeTarget = isTp ? 'TP' : 'MIDTERM';
   const { state, amount, pending, react } = useReactions({
@@ -171,7 +172,16 @@ const ModuleContainerImpl = ({ module, typeModule }: Props) => {
           <PdfView url={moduleInd.fileUrl ?? ''} />
         </div>
         <ul className="flex flex-col gap-1 pl-1">
-          {problems.length === 0 ? (
+          {fullResponses.length > 0 && (
+            <ModuleResponse
+              key="fullResponses"
+              problem={{ number: 0, responses: fullResponses }}
+              typeModule={typeModule}
+              session={session}
+              label="Todas las respuestas"
+            />
+          )}
+          {problems.length === 0 && fullResponses.length === 0 ? (
             <li className="pl-3">
               <p>Sin respuestas :c</p>
             </li>

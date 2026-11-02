@@ -1,4 +1,11 @@
-import { file, object, string } from 'zod';
+import { boolean, file, object, string } from 'zod';
+
+export const WITHOUT_ANSWERS_ERROR = 'Tenés que confirmar que el parcial no tiene las respuestas';
+
+export const withoutAnswersSchema = boolean({ message: WITHOUT_ANSWERS_ERROR }).refine(
+  (value) => value,
+  WITHOUT_ANSWERS_ERROR,
+);
 
 export const addMidtermSchema = object({
   name: string().min(1, 'El título es obligatorio'),
@@ -6,10 +13,12 @@ export const addMidtermSchema = object({
   file: file()
     .refine((f) => f.size < 5_000_000, 'El archivo debe pesar menos de 5 MB')
     .refine((f) => f.type === 'application/pdf', 'Solo se admite formato PDF'),
+  withoutAnswers: withoutAnswersSchema,
 });
 
 export type AddMidtermInput = {
   name: string;
   date: string;
   file: File;
+  withoutAnswers: boolean;
 };

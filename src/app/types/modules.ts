@@ -28,6 +28,7 @@ export interface DataModuleProblem {
 export interface DataModule {
   module: Tp | Midterm;
   problems: DataModuleProblem[];
+  fullResponses: DataModuleResponse[];
   reactions: Reaction[];
   user: User;
 }

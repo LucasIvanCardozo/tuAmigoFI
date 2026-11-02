@@ -2,13 +2,13 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { Session } from 'next-auth';
-import { type SubmitHandler, useForm } from 'react-hook-form';
+import { type SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { useModal } from '@/app/contexts/ModalContext';
 import { useFormSubmit } from '@/app/hooks/useFormSubmit';
 import { createResponse } from '@/app/lib/server/actions/responses/create.action';
 import { type AddResponseInput, addResponseSchema } from '@/app/lib/shared/schemas';
 import type { Module } from '@/app/types';
-import { Form, InputForm, ResponseForm, SectionForm } from '../form';
+import { CheckboxForm, Form, InputForm, ResponseForm, SectionForm } from '../form';
 
 export const ModalAddResponseContent = ({
   module,
@@ -19,10 +19,11 @@ export const ModalAddResponseContent = ({
 }) => {
   const { control, handleSubmit } = useForm<AddResponseInput>({
     resolver: zodResolver(addResponseSchema),
-    defaultValues: { number: 1, type: 'TEXT' },
+    defaultValues: { number: 1, type: 'TEXT', allProblems: false },
   });
 
   const isTp = 'number' in module;
+  const allProblems = Boolean(useWatch({ control, name: 'allProblems' }));
 
   const action: SubmitHandler<AddResponseInput> = async (data) => {
     if (!session) throw new Error('Necesitas iniciar sesion!');
@@ -33,6 +34,7 @@ export const ModalAddResponseContent = ({
       type: data.type,
       text: data.type === 'TEXT' || data.type === 'CODE' ? (data.text ?? null) : null,
       file: data.type === 'IMAGE' || data.type === 'PDF' ? (data.file ?? null) : null,
+      allProblems: data.allProblems,
     });
     if (error) throw new Error(error);
   };
@@ -51,15 +53,36 @@ export const ModalAddResponseContent = ({
       <h2 className="text-lg">Añadir una respuesta</h2>
       <Form onSubmit={handleSubmit(submit)} noValidate>
         <SectionForm title="Datos de la respuesta">
-          <InputForm<AddResponseInput>
-            name="number"
-            type="number"
-            control={control}
-            label="Número"
-            min={1}
-            max={100}
-            required
-          />
+          {!isTp && (
+            <CheckboxForm<AddResponseInput>
+              name="allProblems"
+              control={control}
+              label="Todas las respuestas"
+            />
+          )}
+          {allProblems && !isTp && (
+            <div>
+              <a
+                href="https://www.ilovepdf.com/es/eliminar-paginas"
+                target="_blank"
+                className="underline"
+                rel="noopener"
+              >
+                <h3 className="text-sm">Click aquí para eliminar páginas de tu PDF</h3>
+              </a>
+            </div>
+          )}
+          {!allProblems && (
+            <InputForm<AddResponseInput>
+              name="number"
+              type="number"
+              control={control}
+              label="Número"
+              min={1}
+              max={100}
+              required
+            />
+          )}
           <ResponseForm<AddResponseInput> control={control} />
         </SectionForm>
         <div>
