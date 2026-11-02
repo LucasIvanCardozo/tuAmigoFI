@@ -23,11 +23,7 @@ export const getResponseFileTypeError = (type: string, file?: File | null): stri
 
 export const addResponseSchema = z
   .object({
-    number: z
-      .number({ message: 'Debe ser un número' })
-      .int()
-      .min(1, 'El número debe ser mayor o igual a 1')
-      .max(100, 'Número fuera de rango'),
+    number: z.number().optional(),
     type: z.enum(['TEXT', 'CODE', 'IMAGE', 'PDF'], {
       message: 'Selecciona el tipo de respuesta',
     }),
@@ -36,6 +32,31 @@ export const addResponseSchema = z
     allProblems: z.boolean(),
   })
   .superRefine((data, ctx) => {
+    if (!data.allProblems) {
+      if (data.number === undefined || !Number.isInteger(data.number)) {
+        ctx.addIssue({
+          code: 'custom',
+          path: ['number'],
+          message: 'Debe ser un número',
+        });
+      } else {
+        if (data.number < 1) {
+          ctx.addIssue({
+            code: 'custom',
+            path: ['number'],
+            message: 'El número debe ser mayor o igual a 1',
+          });
+        }
+        if (data.number > 100) {
+          ctx.addIssue({
+            code: 'custom',
+            path: ['number'],
+            message: 'Número fuera de rango',
+          });
+        }
+      }
+    }
+
     if ((data.type === 'TEXT' || data.type === 'CODE') && !data.text) {
       ctx.addIssue({
         code: 'custom',

@@ -15,7 +15,7 @@ const schema = z
   .object({
     idTp: cuid().nullable().optional(),
     idMidterm: cuid().nullable().optional(),
-    number: number().min(0).optional(),
+    number: number().optional(),
     allProblems: z.boolean().optional(),
     type: z.enum(Object.values(TypeResponse) as [string, ...string[]]),
     text: string().min(1).nullable().optional(),
@@ -42,12 +42,20 @@ const schema = z
       });
     }
 
-    if (!data.allProblems && !data.number) {
-      ctx.addIssue({
-        code: 'custom',
-        path: ['number'],
-        message: 'El número debe ser mayor o igual a 1',
-      });
+    if (!data.allProblems) {
+      if (!data.number || !Number.isInteger(data.number)) {
+        ctx.addIssue({
+          code: 'custom',
+          path: ['number'],
+          message: 'El número debe ser mayor o igual a 1',
+        });
+      } else if (data.number > 100) {
+        ctx.addIssue({
+          code: 'custom',
+          path: ['number'],
+          message: 'Número fuera de rango',
+        });
+      }
     }
 
     const fileTypeError = getResponseFileTypeError(data.type, data.file);
@@ -69,6 +77,7 @@ export const createResponse = createAction(
     const idUser = session.user.id;
 
     const isAllProblems = allProblems === true;
+    if (isAllProblems && idTp) throw new Error('Las respuestas completas son solo para exámenes');
     if (!isAllProblems && !number) throw new Error('El número debe ser mayor o igual a 1');
     const responseNumber = isAllProblems ? 0 : (number ?? 0);
 

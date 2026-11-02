@@ -302,7 +302,8 @@ A like is a `Reaction` row with `reaction: true`. `upsertReaction` toggles **by 
 
 A **complete response** is a `Response` row with `allProblems: true`: one single file (a PDF with every answer inside, or a photo) that covers **all** the points of an exam. It belongs to no point, so its internal `number` is `0`, which is not a valid point (the input goes from 1 to 100).
 
-- **It only exists in exams.** The "Todas las respuestas" checkbox (`ModalAddResponseContent`) shows up in midterms only; TPs are still answered one point at a time.
+- **It only exists in exams.** The "Todas las respuestas" checkbox (`ModalAddResponseContent`) shows up in midterms only; TPs are still answered one point at a time. The rule is enforced by the **server**, not by the modal: `createResponse` rejects a complete response that carries an `idTp`.
+- **The number is not required for it.** `number` is 1 to 100 for a point response, and irrelevant for a complete one (it is stored as `0`). Both schemas only demand the number when `allProblems` is false, so a stale number left in the hidden field can never block the submit.
 - **It shows first.** `makeModules` splits the complete responses **before** grouping by `number`, so they never create an "Ejercicio 0" group nor phantom problems: they live in `DataModule.fullResponses` and `moduleContainer` renders them first, inside the same `<ul>` as the problems.
 - **Its title is "Todas las respuestas".** `ModuleResponse` takes an optional `label` and uses it as the title in both the expanded and the collapsed view; without a `label` it keeps saying `Ejercicio ${problem.number}`. That is the only difference with an individual response: same user navigation, same likes, same comments, same PDF viewer.
 - **Its duplicate rule is one per (module, user).** A point response is one per (module, user, number); a complete response is one per (module, user). A point response for point 1 and a complete response coexist.
