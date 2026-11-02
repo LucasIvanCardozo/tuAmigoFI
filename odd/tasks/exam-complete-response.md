@@ -225,13 +225,11 @@ ACK    → status: closed, authority: burned
           delivery: ordinary-repository-policy
 ```
 
-| Lineage | Candidato | Cierra |
-| --- | --- | --- |
-| `review-2a535fc1ed3ff807` | `fa2447a` (doc) | ✅ aprobado y quemado |
-| `review-5db2b74d3aff4694` | `3b128bf` + `fa2447a` + `db2ecdc` (tramo de docs) | ✅ aprobado y quemado |
-| `review-d49a60c12740914f` | `177c4a3` (doc) | ✅ aprobado y quemado |
-| `review-194342ea6787c88b` | `73210c2` (doc) | ✅ aprobado y quemado |
-| `review-26bc9907097816f0` | `56cf170` (doc) | ✅ aprobado y quemado |
+Se cerraron **seis** revisiones nativas, una por work-unit de documentación: `177c4a3`
+(`review-d49a60c12740914f`), `fa2447a` (`review-2a535fc1ed3ff807`), el tramo
+`3b128bf`+`fa2447a`+`db2ecdc` (`review-5db2b74d3aff4694`), `73210c2`
+(`review-194342ea6787c88b`), `56cf170` (`review-26bc9907097816f0`) y `a4c81e1`
+(`review-7e700fa1d2ebd5fc`). Todas con `state: approved` → `authority: burned`.
 
 **La regla general para el resto de la rama**: todo commit que sólo toque documentación
 es un work-unit no ejecutable y cierra nativo sin collect, con esta secuencia:
