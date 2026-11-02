@@ -76,7 +76,7 @@ export const ModalAddResponseContent = ({
         <div>
           <p>Esta respuesta se añadirá al módulo &quot;{module.name}&quot;</p>
           {allProblems && <p>Va a responder todos los puntos del examen.</p>}
-          {allProblems && (
+          {allProblems && !isTp && (
             <div>
               <a
                 href="https://www.ilovepdf.com/es/eliminar-paginas"

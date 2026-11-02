@@ -302,7 +302,7 @@ A like is a `Reaction` row with `reaction: true`. `upsertReaction` toggles **by 
 
 The exam PDF is **the exam only**: no answers, no solutions. `ModalAddMidtermContent` asks for it with a mandatory checkbox ("Mi parcial no tiene las respuestas") and explains right below it that the answers can be uploaded later in the exam's responses section, and that the link to remove pages is there. The rule is enforced by the **server**, not by the modal: `createMidterm` rejects a midterm whose `withoutAnswers` is not true.
 
-- **The confirmation is a field, not a UI trick.** `withoutAnswers` is a required boolean in `addMidtermSchema` and in the `createMidterm` action schema, so the checkbox cannot be bypassed from the client.
+- **The confirmation is a field, not a UI trick.** `withoutAnswers` is a required boolean in `addMidtermSchema` and in the `createMidterm` action schema, so the checkbox cannot be bypassed from the client. Both schemas use the **same** piece, `withoutAnswersSchema` in `lib/shared/schemas/midterm.schema.ts`, so the rule and its message cannot drift apart.
 
 ### Complete responses
 
