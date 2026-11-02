@@ -213,25 +213,37 @@ la feature anterior, con la misma familia upstream (`earendil-works/pi#9931`).
 ### Lo que sí cierra: el candidato no ejecutable
 
 Un candidato **no ejecutable** (sólo documentación) se cierra nativo de punta a punta,
-sin collect: el provider lo clasifica `low`, no pide lentes y aprueba solo.
+sin collect: el provider lo clasifica `low`, no pide lentes y aprueba solo. Se cerraron
+**tres** revisiones así, una por work-unit de documentación:
 
 ```
-START   → state: approved, risk_tier: low, selected_lenses: [], action: closed
-            risk_reasons: non_executable_only
-STATUS   → next_transition: execute / review.acknowledge-approved
-ACK      → status: closed, authority: burned
-            burn_evidence: gentle-ai.review-acknowledged/v1
-            delivery: ordinary-repository-policy
+START → state: approved, risk_tier: low, selected_lenses: [], action: closed
+          risk_reasons: non_executable_only
+STATUS → next_transition: execute / review.acknowledge-approved
+ACK    → status: closed, authority: burned
+          burn_evidence: gentle-ai.review-acknowledged/v1
+          delivery: ordinary-repository-policy
 ```
 
-Es el lineage `review-2a535fc1ed3ff807` (el work-unit de doc `fa2447a`), y es la única
-revisión nativa que pudo completarse en esta rama. Para el código, el tier siempre es
-`medium` (`executable_change`), y ahí la selección de lentes es obligatoria: el collect es
-imprescindible y es justamente lo que no se puede emitir.
+| Lineage | Candidato | Cierra |
+| --- | --- | --- |
+| `review-2a535fc1ed3ff807` | `fa2447a` (doc) | ✅ aprobado y quemado |
+| `review-5db2b74d3aff4694` | `3b128bf` + `fa2447a` + `db2ecdc` (tramo de docs) | ✅ aprobado y quemado |
+| `review-d49a60c12740914f` | `177c4a3` (doc) | ✅ aprobado y quemado |
+
+Con eso, **todos los commits de documentación de la rama están revisados nativamente**.
+
+El código no puede seguir ese camino: el tier siempre es `medium`
+(`executable_change`), la selección de lentes es obligatoria y el collect es
+imprescindible. Además, el work-unit del schema (`facc450`) ni siquiera arranca: el
+preflight lo rechaza por presupuesto de contexto, porque el client de Prisma generado
+(`prismaNamespace.ts` y `prismaNamespaceBrowser.ts`) pesa demasiado en la evidencia del
+reviewer.
 
 Quedan abiertos los lineages `review-903433045706af48`, `review-a7340cf2248a151f` y
-`review-216a37a0514aff9c` (los tres en `reviewing`), y `review-d49a60c12740914f` (el
-START que murió en el preflight por presupuesto).
+`review-216a37a0514aff9c` (los tres en `reviewing`, con el collect bloqueado), y
+`review-7942b2fbcff1dfdc` (el START del schema que murió en el preflight por
+presupuesto).
 
 ### Verificación independiente en su lugar (`gentle-ai-verify`)
 
