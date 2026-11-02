@@ -225,11 +225,10 @@ ACK    → status: closed, authority: burned
           delivery: ordinary-repository-policy
 ```
 
-Se cerraron **seis** revisiones nativas, una por work-unit de documentación: `177c4a3`
-(`review-d49a60c12740914f`), `fa2447a` (`review-2a535fc1ed3ff807`), el tramo
-`3b128bf`+`fa2447a`+`db2ecdc` (`review-5db2b74d3aff4694`), `73210c2`
-(`review-194342ea6787c88b`), `56cf170` (`review-26bc9907097816f0`) y `a4c81e1`
-(`review-7e700fa1d2ebd5fc`). Todas con `state: approved` → `authority: burned`.
+Cada commit de documentación de la rama se cerró con su propia revisión nativa
+(`state: approved` → `authority: burned`, `burn_evidence: gentle-ai.review-acknowledged/v1`).
+Los lineages concretos quedan en el store del provider (`.git/gentle-ai/review-transactions/`);
+este documento no los enumera porque cada commit nuevo agregaría otro.
 
 **La regla general para el resto de la rama**: todo commit que sólo toque documentación
 es un work-unit no ejecutable y cierra nativo sin collect, con esta secuencia:
