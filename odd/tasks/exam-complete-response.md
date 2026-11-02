@@ -213,8 +213,11 @@ corrección 160) y el STATUS ofrecio el grupo de collect con las tres lentes.
 
 ### El collect no se puede emitir desde este host
 
-Los intentos de captura fallaron sin mutar la autoridad, en tres lineages y con cuatro
-serializaciones distintas:
+Los intentos de captura fallaron sin mutar la autoridad, en **todos** los lineages donde se
+llegó al collect (5 al momento de escribir esto: `review-903433045706af48`,
+`review-a7340cf2248a151f`, `review-216a37a0514aff9c`, `review-6e13c5be4e4d1866` y
+`review-34e7238822802bd9`, con candidatos de 2, 24, 47, 320 y 425 líneas de diff) y con
+cuatro serializaciones distintas:
 
 | Lineage | Candidato | Intento | Resultado |
 | --- | --- | --- | --- |
