@@ -230,6 +230,7 @@ ACK    → status: closed, authority: burned
 | `review-2a535fc1ed3ff807` | `fa2447a` (doc) | ✅ aprobado y quemado |
 | `review-5db2b74d3aff4694` | `3b128bf` + `fa2447a` + `db2ecdc` (tramo de docs) | ✅ aprobado y quemado |
 | `review-d49a60c12740914f` | `177c4a3` (doc) | ✅ aprobado y quemado |
+| `review-194342ea6787c88b` | `73210c2` (doc) | ✅ aprobado y quemado |
 
 Con eso, **todos los commits de documentación de la rama están revisados nativamente**.
 
@@ -239,6 +240,17 @@ imprescindible. Además, el work-unit del schema (`facc450`) ni siquiera arranca
 preflight lo rechaza por presupuesto de contexto, porque el client de Prisma generado
 (`prismaNamespace.ts` y `prismaNamespaceBrowser.ts`) pesa demasiado en la evidencia del
 reviewer.
+
+### Cobertura final de la rama
+
+| Work-unit | Revisión nativa | Verificación independiente |
+| --- | --- | --- |
+| `b1ec5dc` (fix de `idMidterm`) | ❌ collect bloqueado | ✅ |
+| `facc450` (schema + migración) | ❌ presupuesto bloqueado | ✅ migración aplicada y verificada |
+| `b936883` (la feature) | ❌ collect bloqueado | ✅ (encontró 1 MAJOR) |
+| `1b5de51` (reglas en el servidor) | ❌ collect bloqueado | ✅ (encontró 1 MAJOR) |
+| `805956c` (regla del número) | ❌ collect bloqueado | ✅ (sin bloqueantes) |
+| 4 commits de documentación | ✅ **4 revisados y quemados** | — |
 
 Quedan abiertos los lineages `review-903433045706af48`, `review-a7340cf2248a151f` y
 `review-216a37a0514aff9c` (los tres en `reviewing`, con el collect bloqueado), y
