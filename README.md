@@ -188,7 +188,15 @@ El esquema Prisma vive en `src/app/lib/server/db/prisma/schema.prisma`. Comandos
 pnpm exec prisma studio          # Inspeccionar la base en el navegador
 pnpm exec prisma migrate dev     # Crear/actualizar migraciones en desarrollo
 pnpm exec prisma db seed         # Ejecutar seeds (carreras, materias, años, planes, correlativas)
+pnpm db:migrate:pr               # Aplicar las migraciones pendientes en la base de producción
 ```
+
+> ⚠️ La base de producción **nunca se resetea**: tiene subidas reales de los usuarios.
+> Las migraciones pendientes se aplican con `pnpm db:migrate:pr`, que sólo corre las
+> migraciones que faltan y no borra datos. El deploy no aplica migraciones, así que hay
+> que aplicar la migración **antes** de desplegar el código que la necesita. El comando
+> migra por la conexión directa de Neon (sin `-pooler`) porque pgbouncer deja locks
+> huérfanos que cuelgan la siguiente corrida.
 
 ---
 
