@@ -34,10 +34,23 @@ pnpm lint          # Biome check (no fixes)
 pnpm lint:fix      # Biome check + format
 pnpm seed          # Run Prisma seed using .env
 pnpm db:reset      # Drop, migrate, generate and seed local DB
-pnpm db:pr:reset   # Drop, migrate and seed production DB
+pnpm db:migrate:pr # Apply the pending migrations to the production DB
 ```
 
 > No test framework configured. Do not add tests unless explicitly requested.
+
+> **Production database**: apply pending migrations with `pnpm db:migrate:pr` (it only runs
+> the pending migrations, it never drops data). The destructive `db:pr:reset` script was
+> removed: production holds real uploads and must never be reset. **The deploy does not
+> run migrations**, so a new migration has to be applied to production *before* the code
+> that needs it goes live — otherwise every route that reads the affected table fails with
+> a Prisma `P2022` (missing column).
+>
+> The script migrates over the **direct** connection (the Neon endpoint without
+> `-pooler`): pgbouncer does not release the session-level advisory lock that Prisma's
+> migrate takes, so a migration over the pooled URL can leave an orphaned lock that hangs
+> the next run. `scripts/migrate-production.sh` derives the direct URL from
+> `DATABASE_URL` and explains how to clear a stuck lock if one is left over.
 
 ## Package Manager
 

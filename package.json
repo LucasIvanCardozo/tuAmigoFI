@@ -15,7 +15,7 @@
     "lint:fix": "biome check --write .",
     "seed": "dotenv -e .env -- prisma db seed",
     "db:reset": "dotenv -e .env -- sh -c 'prisma migrate reset --force && prisma generate && prisma db seed'",
-    "db:pr:reset": "dotenv -e .env.production -- prisma migrate reset --force && dotenv -e .env.production -- prisma db seed"
+    "db:migrate:pr": "bash scripts/migrate-production.sh"
   },
   "prisma": {
     "seed": "pnpm seed"
