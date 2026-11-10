@@ -275,7 +275,67 @@ Observación: hay **dos `MAX_UPLOAD_SIZE`** con valores distintos (`5_000_000` e
 `schemas/upload.schema.ts` y `5*1024*1024` en `shared/constants/upload.ts`). Hoy no colisionan
 —ningún módulo importa ambos— pero el mismo nombre significa dos cosas. Anotado, sin tocar.
 
-### L11 — La revisión nativa no es completable en este host (2026-11-06)
+### L11 — La revisión nativa: se completa, con un orden estricto (2026-11-06)
+
+**Corrección**: la primera versión de esta entrada decía que la revisión nativa "no es
+completable en este host". **Era falso**, y también lo era la memoria que lo afirmaba
+(observación 1200, corregida a revisión 7). La causa real no era un defecto del host: era
+**el orden de las llamadas**.
+
+**Receta que funciona** (verificada de punta a punta el 2026-11-10):
+
+1. `inspect` — con `untrackedScope: "exclude"` si hay archivos sin trackear.
+2. `start` con `baseRef` = **sha de commit** (el `inspect` imprime el *árbol* que va a
+   diferenciar, y hay que pasarle el commit cuyo árbol es ese) y `committedOnly: true`.
+   **Sin `lenses` ni `lensesReason`**: este host rechaza la selección de lentes del agente en
+   cualquier tier; el native elige la suya.
+3. `status` → `action: "collect"`.
+4. `capture` **sin** `reviewerRunAcknowledged` → devuelve el forecast.
+5. **`status` de nuevo** → reofrece el slot.
+6. `capture` **con** `reviewerRunAcknowledged: true` → corre el reviewer.
+7. `acknowledge-approved` → `authority: burned`.
+
+**Evidencia**: lineage `review-cbf7f16f0669f86b`, 8 archivos / 387 líneas de autor,
+`state: approved` y después `outcome: native-approved-acknowledgement-completed`,
+`authority: burned`, `burn_evidence: gentle-ai.review-acknowledged/v1`,
+`delivery: ordinary-repository-policy`. Reviewer `minimax/MiniMax-M3.1-Flash`, 22,7 s,
+13.663 tokens, USD 0,0037.
+
+**Dos misleading diagnostics que en realidad son otra cosa**:
+- `lenses-invalid` en START: no es un rechazo de la lente, es que este host no acepta
+  selección de lentes del agente.
+- `collectBinding is missing or stale for current STATUS`: el binding es válido (el mismo
+  payload pasó el forecast); lo que falla es reusarlo sin un STATUS fresco en medio.
+
+**El presupuesto de contexto sí es real**: el candidato de la feature entera (5.244 líneas,
+~3.000 de HTML de artboards) no entra y el preflight lo corta con
+`lens_context_budget_exceeded`, que es terminal. La solución es reducir el alcance: un
+worktree con una rama que contiene **sólo el código** (los artefactos de diseño fuera) da un
+candidato de ~390 líneas que pasa el preflight.
+
+**Lo que la revisión nativa NO detectó**: el MAJOR que encontró el verificador independiente
+(el schema de la action de respuestas sin la regla "IMAGE/PDF exige archivo"). El native
+aprobó el candidato. Las dos vistas se complementan.
+
+### L14 — Estado de la revisión nativa por unidad (2026-11-10)
+
+| Unidad | Candidato | Lineage | Resultado |
+| --- | --- | --- | --- |
+| Validación (8 archivos) | 387 líneas | `review-cbf7f16f0669f86b` | **approved**, autoridad quemada |
+| T4 shell + primitives (9 archivos) | 598 líneas | `review-b6c6755e39ff7658` | **atascado en el collect** |
+
+El lineage de T4 rechaza el binding con `collectBinding is missing or stale for current
+STATUS` en **siete intentos**, con dos herramientas distintas (`capture` y `capture_group`),
+con y sin `reviewerRunAcknowledged`, y con un STATUS fresco entre medio. El forecast se
+obtuvo (intento 3), así que el binding **es** válido: lo que no cierra es el camino del
+acuse en esta lineage. El lineage queda **abierto**; abandonarlo requiere autorización
+explícita del usuario.
+
+La evidencia de T4 es, entonces, el verificador independiente
+(`gentle-ai-verify` sobre `005b96a..83780e6`), que es el sustituto que ya encontró el
+defecto real antes.
+
+### L10 — Correcciones del canvas aplicadas (2026-11-06)
 
 Dos intentos, dos bloqueos distintos, ambos con diagnóstico del provider.
 
