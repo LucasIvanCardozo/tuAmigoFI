@@ -36,6 +36,21 @@ export const getResponseFileTypeError = (type: string, file?: File | null): stri
   return null;
 };
 
+const RESPONSE_CONTENT_PATHS: Record<string, ['text'] | ['file']> = {
+  [RESPONSE_TEXT_ERROR]: ['text'],
+  [FILE_REQUIRED_ERROR]: ['file'],
+};
+
+export const getResponseContentError = (
+  type: string,
+  text?: string | null,
+  file?: File | null,
+): string | null => {
+  if (type === 'TEXT' || type === 'CODE') return text ? null : RESPONSE_TEXT_ERROR;
+  if (type === 'IMAGE' || type === 'PDF') return file ? null : FILE_REQUIRED_ERROR;
+  return null;
+};
+
 export const getResponseNumberError = (
   value: number | undefined,
   allProblems: boolean,
@@ -65,18 +80,12 @@ export const addResponseSchema = z
       });
     }
 
-    if ((data.type === 'TEXT' || data.type === 'CODE') && !data.text) {
+    const contentError = getResponseContentError(data.type, data.text, data.file);
+    if (contentError) {
       ctx.addIssue({
         code: 'custom',
-        path: ['text'],
-        message: RESPONSE_TEXT_ERROR,
-      });
-    }
-    if ((data.type === 'IMAGE' || data.type === 'PDF') && !data.file) {
-      ctx.addIssue({
-        code: 'custom',
-        path: ['file'],
-        message: FILE_REQUIRED_ERROR,
+        path: RESPONSE_CONTENT_PATHS[contentError],
+        message: contentError,
       });
     }
     const fileTypeError = getResponseFileTypeError(data.type, data.file);
@@ -96,11 +105,7 @@ export const addResponseActionSchema = z
     number: z.number({ message: NUMBER_ERROR }).optional(),
     allProblems: z.boolean({ message: RESPONSE_BOOLEAN_ERROR }).optional(),
     type: z.enum(['TEXT', 'CODE', 'IMAGE', 'PDF'], { message: RESPONSE_TYPE_ERROR }),
-    text: z
-      .string({ message: RESPONSE_TEXT_ERROR })
-      .min(1, RESPONSE_TEXT_ERROR)
-      .nullable()
-      .optional(),
+    text: z.string({ message: RESPONSE_TEXT_ERROR }).nullable().optional(),
     file: responseFileSchema.nullable().optional(),
   })
   .superRefine((data, ctx) => {
@@ -120,6 +125,15 @@ export const addResponseActionSchema = z
         code: 'custom',
         path: ['number'],
         message: numberError,
+      });
+    }
+
+    const contentError = getResponseContentError(data.type, data.text, data.file);
+    if (contentError) {
+      ctx.addIssue({
+        code: 'custom',
+        path: RESPONSE_CONTENT_PATHS[contentError],
+        message: contentError,
       });
     }
 
