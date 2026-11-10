@@ -317,6 +317,58 @@ candidato de ~390 líneas que pasa el preflight.
 (el schema de la action de respuestas sin la regla "IMAGE/PDF exige archivo"). El native
 aprobó el candidato. Las dos vistas se complementan.
 
+### L15 — Las 12 lineages viejas de la revisión nativa (2026-11-10)
+
+En el store de la revisión nativa quedaban **doce lineages de sesiones anteriores** (del 23/10 al02/11), todas en estado `reviewing`, `correction_required` o `escalated`, ninguna cerrada. Seis de ellas tenían **hallazgos del reviewer nativo admitidos y nunca aplicados**: su `fix_delta_hash` era el hash de la string vacía, o sea que no se había registrado ninguna corrección.
+
+**Registro de los hallazgos (volcado antes de moverlas, para que no se pierda):**
+
+| Lineage | Estado | Líneas | Hallazgos |
+| --- | --- | --- | --- |
+| `review-4025f985c90e0543` | correction_required | 949 | `R3-STALE-UNSET-NOOP`, `R4-global-like-scan` |
+| `review-4c7e9086518d776b` | correction_required | 920 | `R1-SELF-LIKE-SCORE`, `R4-RACING-UNSET` |
+| `review-c4c48704db6e7564` | correction_required | 922 | `R1-toggle-deletes-opposite-reaction`, `R3-toggle-opposite-value-deletes`, `R4-set-noop-reported-success`, `R4-toggle-opposite-value-deleted` |
+| `review-e89a50893edb2c85` | escalated | 1155 | `R1-STALE-LIKE-DELETION`, `R2-STALE-REPORT-CONFIRMATION`, `R4-stale-report-confirmation` |
+| `review-f0da02e0f0a1af85` | escalated | 763 | `R4-report-toggle-false-success` |
+| `review-fe63d0a811a7fcc0` | correction_required | 897 | `R3-STALE-LIKE` |
+| `review-216a37a0514aff9c` | reviewing | 2 | — |
+| `review-34e7238822802bd9` | reviewing | 24 | — |
+| `review-6e13c5be4e4d1866` | reviewing | 47 | — |
+| `review-903433045706af48` | reviewing | 320 | — |
+| `review-92e668fa5afe5584` | reviewing | 69 | — |
+| `review-a7340cf2248a151f` | reviewing | 425 | — |
+
+**Spot-check contra el código actual**, antes de decidir: la lógica de reacciones que esos hallazgos
+apuntan fue reescrita después. `src/app/lib/server/actions/reactions/upsert.action.ts` borra con
+`deleteMany({ where: { id: existing.id, reaction: existing.reaction } })` y actualiza con
+`updateMany({ where: { id: existing.id, reaction: existing.reaction } })` — la escritura
+condicional por el valor leído, que es exactamente lo que `R1-toggle-deletes-opposite-reaction`,
+`R3-toggle-opposite-value-deletes` y `R4-set-noop-reported-success` pedían. El conteo de likes
+usa una query agrupada con `reaction.id_user AS reactor`, que es lo que responde a
+`R4-global-like-scan` y a `R1-SELF-LIKE-SCORE`. O sea: los hallazgos **parecen** estar ya
+resueltos por el código posterior, no abiertos.
+
+**Decisión del usuario**: abandonar las doce como obsoletas. Se hace con
+`reason: operator_disposition` y `actor: user`, y el native las mueve a cuarentena — los
+`review-state.json` quedan ahí (`residue: ["review-state.json"]`), así que el registro de los
+hallazgos **no se destruye**, sólo sale del store activo.
+
+**Resultado**: **diez de las doce** quedaron abandonadas con `reason: operator_disposition` y
+`actor: user`, y movidas a cuarentena con su `review-state.json` intacto. Las dos que tienen
+hallazgos admitidos registran `findings_present: true` en su registro de reclamo — o sea que
+el native **sí las tenía** y el abandono las movió al store de cuarentena en vez de
+destruirlas.
+
+**Las dos que no se pudieron abandonar**: `review-e89a50893edb2c85` y `review-f0da02e0f0a1af85`,
+ambas en estado `escalated`. El native responde `native-abandon-ineligible` y su ruta es
+`recover`, cuyo motivo es `recovery_target_unrepresentable`: su objetivo estaba anclado a un
+estado del workspace que ya no existe (el árbol base era el commit anterior a esta feature).
+La operación `recover` exige el input como string serializado y la facade de este host no lo
+admite, así que quedan **abiertas y sin tocar** — un estado no destructivo. Sus hallazgos
+`R1-STALE-LIKE-DELETION`, `R2-STALE-REPORT-CONFIRMATION`, `R4-stale-report-confirmation`,
+`R4-report-toggle-false-success`, `R3-REACTION-COMMIT-READ` y `R4-nonretryable-postcommit-read`
+quedan en el registro de arriba y en sus `review-state.json`.
+
 ### L14 — Estado de la revisión nativa por unidad (2026-11-10)
 
 | Unidad | Candidato | Lineage | Resultado |
