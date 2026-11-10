@@ -317,6 +317,49 @@ candidato de ~390 líneas que pasa el preflight.
 (el schema de la action de respuestas sin la regla "IMAGE/PDF exige archivo"). El native
 aprobó el candidato. Las dos vistas se complementan.
 
+### L17 — Verificación independiente de T4 y los fixes que salieron (2026-11-10)
+
+`gentle-ai-verify` sobre `005b96a..83780e6`: **PASS, sin bloqueantes**. Probó con Chromium
+real (Playwright) contra un `next dev`, contra un control del commit base. Lo verificado:
+
+| | antes | después |
+| --- | --- | --- |
+| Foco inicial del diálogo | botón **Cerrar** | primer campo real |
+| Jerarquía de encabezados | `H2 → H4` (salto) | `H2 → H3` |
+| Contraste del texto de error | 2,97:1 (falla AA) | 5,09:1 |
+| Nombre accesible del `<dialog>` | `""` (vacío) | el que se le pase |
+
+También verificó que todo `aria-describedby` resuelve, el focus trap, el Escape, que el botón
+"Elegir archivo" **abre el file chooser de verdad**, y que `ResponseForm` sigue tirando el
+archivo al cambiar de tipo (IMAGE→TEXT lo borra). El build le falló por `DATABASE_URL` ausente
+en el scratch copiado, **igual que en el control del commit base**: es ambiental, no del cambio.
+
+**El MAJOR que encontró** (latente en ese commit): el `<h2>` del shell duplicaba el `<h2>` que
+los propios modales pintaban. No era alcanzable —nadie pasaba título todavía— y **quedó
+resuelto por T5**, que borró los `<h2>` de los tres modales.
+
+**Los seis defectos menores que sí quedaron**, y su fix en `4fd83d6`:
+
+1. El input de archivo tenía **dos labels**, así que su nombre accesible salía "Archivo del TP
+   (obligatorio) Elegir archivo". Ahora el input lleva `aria-labelledby` apuntando al label
+   del propósito: el algoritmo de accname resuelve `aria-labelledby` antes que cualquier
+   label del lenguaje natural, así que el nombre es uno solo, mientras el `<label htmlFor>`
+   nativo que abre el picker sigue intacto y el anillo de foco sigue cayendo en él.
+2. El id de error se derivaba del objeto de error y no del mensaje: con un error sin mensaje,
+   el `aria-describedby` apuntaba a un id inexistente. Ahora el id sale del mensaje.
+3. El helper se renderizaba dentro de un `<p>` y acepta un `ReactNode`: un helper de bloque
+   producía el warning de React. Ahora va en un `<div>`.
+4. Las partes de la línea de contexto se keyeaban por su texto: dos partes con el mismo texto
+   colisionaban. Ahora se keyean por posición.
+5. `formatFileSize` redondeaba mal: 1048575 bytes salía "1024,0 KB", y 4,99 MB salía idéntico
+   al límite de 5 MB — justo el límite que impone el schema. Ahora promociona la unidad antes
+   de que el redondeo la pase, y clava un tamaño negativo en cero.
+6. El módulo compartido se renombró a `modal-parts.tsx` (kebab-case, como pide `AGENTS.md`).
+
+Queda un detalle menor en el DOM: siguen existiendo dos `<label for>` sobre el input de
+archivo, pero **sólo uno contribute al nombre accesible**. El criterio de WCAG es el nombre
+accesible, que ahora es una sola cadena.
+
 ### L16 — T5: los tres modales de alta con la dirección 02 (2026-11-10)
 
 Implementado sobre `design/add-modals/02-ayuda-contextual.html`. Cada modal: la cabecera la

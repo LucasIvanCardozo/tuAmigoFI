@@ -48,7 +48,7 @@ export function CheckboxForm<T extends FieldValues>({
                 aria-invalid={fieldState.error ? true : undefined}
                 aria-describedby={fieldDescribedBy(
                   helper ? helperId : undefined,
-                  fieldState.error ? errorId : undefined,
+                  error ? errorId : undefined,
                 )}
                 className="mt-0.5 h-4 w-4 shrink-0 accent-[#92C1C9]"
               />

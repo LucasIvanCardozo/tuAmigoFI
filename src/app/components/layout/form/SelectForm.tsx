@@ -48,7 +48,7 @@ export function SelectForm<T extends FieldValues>({
               aria-invalid={fieldState.error ? true : undefined}
               aria-describedby={fieldDescribedBy(
                 helper ? helperId : undefined,
-                fieldState.error ? errorId : undefined,
+                error ? errorId : undefined,
               )}
               className={inputClass}
             >
