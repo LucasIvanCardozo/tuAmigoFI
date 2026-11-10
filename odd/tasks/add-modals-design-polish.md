@@ -343,7 +343,9 @@ tienen helper, nombre accesible único, error que pasa AA y ids que nunca cuelga
 `approved` (`review-cbf6a16f0669f86b`). El candidato de código final (1.638 líneas) pasó el
 preflight pero su consent fue **declinado por la UI del host**
 (`consent-declined-this-candidate`), sin lineage y sin mutación; un decline es por candidato y
-no se reintenta. La evidencia de la entrega es, entonces, el verificador independiente.
+no se reintenta. El candidato del worktree completo, que arrastra los ~3.000 de HTML de los
+artboards, se cortó con `lens_context_budget_exceeded` — terminal, sin autoridad, y nada que
+abandonar. La evidencia de la entrega es, entonces, el verificador independiente.
 
 **Pendientes anotados** (fuera del alcance aprobado, que eran los tres modales de alta):
 
