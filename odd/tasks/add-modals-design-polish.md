@@ -226,6 +226,42 @@ mismo color escrito de tres formas". Es **parcialmente falso**:
 2. El contraste del texto de error **entra al alcance** (S14), porque vive dentro de
    los tres modales. El contraste del cuerpo de la app se reporta aparte.
 
+### L11 — La revisión nativa no es completable en este host (2026-11-06)
+
+Dos intentos, dos bloqueos distintos, ambos con diagnóstico del provider.
+
+**Intento 1 — candidato de la unidad de validación (2.510 líneas).** Lineage
+`review-c8874c3d0e4adb2e`: tier medium, lente `review-reliability` elegida por el native,
+presupuesto de corrección 200. El `collect` rechazó el binding dos veces con
+`collectBinding is missing or stale for current STATUS`. Los bindings enviados eran
+**byte-idénticos** a la autoridad en disco
+(`.git/gentle-ai/review-transactions/v2/review-c8874c3d0e4adb2e/review-state.json`): es un
+mismatch de forma camelCase/snake_case entre la facade de Pi y la de Go, ya documentado en
+este host.
+
+**Intento 2 — candidato de la feature completa (5.208 líneas).** Lineage
+`review-0c9dfbf116d02ff5`: el preflight falló con `lens_context_budget_exceeded`, que es
+**terminal**. La prescripción del propio native es dividir en candidatos más chicos. La causa
+es medible: ~3.000 de esas líneas son el HTML de los tres artboards.
+
+**Intento 2a — selección de lentes.** `native-start-input-invalid` / `lenses-invalid`, y es
+reproducible: falla igual con `baseRef` inválido y con `baseRef` válido. Este host rechaza la
+selección de lentes del agente y deja que el native elija la suya.
+
+**Conclusión**: la vista externa nativa no se puede completar en este host para candidatos
+ejecutables. La evidencia real de esta unidad es el sustituto documentado,
+`gentle-ai-verify` sobre el rango `3354258..8c822c1`.
+
+**Consecuencia para la entrega**: el presupuesto de contexto del native obliga a que un
+candidato no arrastre los ~3.000 líneas de HTML de los artboards. La forma de entrega que lo
+permite es que los artefactos de diseño aterricen en `main` antes que las unidades de
+código, o que cada unidad de código se revise con base en el boundary anterior. Ambas son
+decisiones de merge del usuario.
+
+**Estado de las lineages**: `review-0c9dfbf116d02ff5` no creó autoridad (nada que abandonar
+ni reparar). `review-c8874c3d0e4adb2e` queda **abierta en estado collect**; abandonarla
+requiere autorización explícita del usuario.
+
 ### L10 — Correcciones del canvas aplicadas (2026-11-06)
 
 Los cinco comentarios del usuario se aplicaron a los **tres** artboards, porque los tres
