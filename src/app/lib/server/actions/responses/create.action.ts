@@ -1,73 +1,22 @@
 'use server';
 
 import { updateTag } from 'next/cache';
-import z, { cuid, file, number, string } from 'zod';
 import { slugify } from '../../../../utils/slugify';
 import {
-  getResponseFileTypeError,
+  addResponseActionSchema,
   getResponseNumberError,
 } from '../../../shared/schemas/response.schema';
 import db from '../../db/db';
-import { TypeResponse } from '../../db/prisma/prismaClient/enums';
+import type { TypeResponse } from '../../db/prisma/prismaClient/enums';
 import { buildUploadMeta } from '../../uploadthing/meta';
 import { userUseCases } from '../../usecases/user.usecases';
 import { withUploadRollback } from '../../utils/uploadthing';
 import createAction from '../createActions';
 
-const schema = z
-  .object({
-    idTp: cuid().nullable().optional(),
-    idMidterm: cuid().nullable().optional(),
-    number: number({ message: 'Debe ser un número' }).optional(),
-    allProblems: z.boolean().optional(),
-    type: z.enum(Object.values(TypeResponse) as [string, ...string[]]),
-    text: string().min(1).nullable().optional(),
-    file: file()
-      .refine((file) => file.size < 5_000_000, 'Max 5MB')
-      .refine(
-        (file) =>
-          file.type === 'application/pdf' ||
-          file.type === 'image/jpeg' ||
-          file.type === 'image/png',
-        'Solo PDF, JPEG o PNG',
-      )
-      .nullable()
-      .optional(),
-  })
-  .superRefine((data, ctx) => {
-    const hasTp = Boolean(data.idTp);
-    const hasMid = Boolean(data.idMidterm);
-
-    if (hasTp === hasMid) {
-      ctx.addIssue({
-        code: 'custom',
-        message: 'Debe existir idTp o idMidterm, pero no ambos',
-      });
-    }
-
-    const numberError = getResponseNumberError(data.number, data.allProblems === true);
-    if (numberError) {
-      ctx.addIssue({
-        code: 'custom',
-        path: ['number'],
-        message: numberError,
-      });
-    }
-
-    const fileTypeError = getResponseFileTypeError(data.type, data.file);
-    if (fileTypeError) {
-      ctx.addIssue({
-        code: 'custom',
-        path: ['file'],
-        message: fileTypeError,
-      });
-    }
-  });
-
 export const createResponse = createAction(
-  schema,
+  addResponseActionSchema,
   async ({ idTp, idMidterm, number, allProblems, type, text, file }) => {
-    if (idMidterm && idTp) throw new Error('No puedes tener un parcial y un tp');
+    if (idMidterm && idTp) throw new Error('No puedes tener un parcial y un TP');
     const session = await userUseCases.getSession();
     if (!session) throw new Error('Necesitas iniciar sesion!');
     const idUser = session.user.id;
@@ -100,7 +49,7 @@ export const createResponse = createAction(
       throw new Error(
         isAllProblems
           ? 'Ya subiste la respuesta completa de este examen!'
-          : 'No puedes tener mas de una respueste a un problema!',
+          : 'No puedes tener mas de una respuesta a un problema!',
       );
     }
 

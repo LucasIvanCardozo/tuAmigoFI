@@ -52,7 +52,8 @@ Reglas de copy aprobadas:
 - Formatos y límites **junto al campo**, nunca en el pie.
 - El select de parcial nunca dice "El título es obligatorio" → "Elegí el tipo de parcial".
 - El check de parcial se formula como confirmación: "Confirmo que este PDF es sólo el
-  examen, sin respuestas".
+  parcial y no tiene las respuestas". (Corrección en L8: la primera versión decía "sólo el
+  examen, sin respuestas", que contradecía la regla de vocabulario de esta misma spec.)
 - "Todas las respuestas" → "Subir un archivo con todas las respuestas" + una línea debajo.
 - Vocabulario único: **parcial**, **Agregar**, **TP N°**, **Número de problema**.
 - "Aceptar" → el verbo real: "Agregar TP" / "Agregar parcial" / "Enviar respuesta".
@@ -135,7 +136,7 @@ botón vivo está inline en `src/app/components/feature/materias/moduleContainer
 | T3 | S1 | parent | Abrir el canvas y que el usuario elija una dirección | — |
 | T4 | S6, S7, S8, S12, S13, S14 | worker | Shell (`UI/Modal.tsx`) + primitives de formulario | `fix(modals): ...` |
 | T5 | S2, S4, S5, S15 | worker | Los tres modales de alta + los openers | `feat(modals): ...` |
-| T6 | S9, S10, S11 | worker | Server Actions + schemas compartidos | `fix(upload): ...` |
+| T6 | S9, S10, S11, S5 | worker | Server Actions + schemas compartidos | `fix(upload): ...` (rama `feat/add-modals-validacion`) |
 | T7 | S1 | parent | Verificación (lint, tsc, build) y cierre | — |
 
 T5 depende de T4 (los primitives son su insumo). T6 es independiente de T4 y T5: se puede
@@ -224,6 +225,75 @@ mismo color escrito de tres formas". Es **parcialmente falso**:
    artboards se usa `#92C1C9` como acento único.
 2. El contraste del texto de error **entra al alcance** (S14), porque vive dentro de
    los tres modales. El contraste del cuerpo de la app se reporta aparte.
+
+### L9 — Feedback del canvas y decisiones (2026-11-06)
+
+El usuario revisó los tres artboards en el canvas y dejó **cinco comentarios** en lugar de
+elegir una dirección:
+
+| id | Artboard | Corrección |
+| --- | --- | --- |
+| `dlm5mjer` | 01 | La línea vertical de la izquierda en el título de sección es innecesaria |
+| `mwp0xpu1` | 01 | El borde izquierdo del bloque de ayuda tampoco |
+| `fuxql9aj` | 01 | Quitar la aclaración "El modal sigue hacia abajo: scroll interno" — se debe intuir |
+| `og1s3xce` | 02 | La línea izquierda del aviso "No dupliques" |
+| `kn6ur621` | 02 | Los botones del móvil siempre en una línea |
+
+**Decisión del padre**: los tres devices (`border-left` de acento, `border-left` de plata y el
+scroll-cue) son **idénticos en los tres artboards**, así que las correcciones se aplican a
+los tres, no sólo a los comentados. Una corrección a un device es una corrección al device.
+
+**Estrategia de entrega (decidida por el usuario)**: `chain_strategy=feature-branch-chain`.
+Los artefactos de diseño quedan en `feat/add-modals-design-polish` y las unidades de código
+se encadenan encima, una por commit, para que el diff de código quede revisable y la
+superficie de revisión del diseño sea el canvas.
+
+**Copy de S5 resuelto**: "Confirmo que este PDF es sólo el parcial y no tiene las
+respuestas". Aplicado en los tres artboards.
+
+**Slice boundary**: este commit es la unidad de validación (T6). 7 archivos de código +
+este documento.
+
+### L8 — Artboards (T2, 2026-11-06)
+
+Tres direcciones en `design/add-modals/`, con su `design.json`:
+
+| Archivo | Dirección | Alto medido |
+| --- | --- | --- |
+| `01-formulario-guiado.html` | Guided form | 1440 × 1740 |
+| `02-ayuda-contextual.html` | Contextual help | 1440 × 1855 |
+| `03-tarjetas-de-tipo.html` | Type cards | 1440 × 1861 |
+
+Los altos son **medidos** (Firefox headless), no estimados: con los tres modales de
+escritorio, la vista de 360 px, el estado de error y la leyenda de tokens, 1200 px obligaba
+a recortar los pies de los modales.
+
+Cada artboard lleva: cabecera con la dirección y su tradeoff, franja de leyenda de tokens,
+los tres modales en fila, el modal de respuestas a 360 px con pie apilado fijo, un estado de
+error del modal de TP y un panel de notas.
+
+**Auditoría de tokens**: hex usados = `#1e293b` (slate-800), `#334155` (slate-700),
+`#cbd5e1` (slate-300), `#4b5563` (gray-600), `#fff`, `#92c1c9`, `#f87171`. Todos están
+registrados en `design/system.md` salvo `red-400`, que queda etiquetado en la leyenda como
+"No registrado en system.md" — mismo criterio que usa `design/system.html` con sus swatches
+stock.
+
+**Contraste medido**: blanco/slate-800 14.63:1, silver/slate-800 6.38:1, acento/slate-800
+7.45:1, **red-400/slate-800 5.29:1** (cumple S14; `red-600` queda sólo como referencia
+etiquetada), black/acento 9.31:1.
+
+**Corrección de S5 (decidida por el padre)**: la spec se contradecía a sí misma en el check
+del parcial — la cadena literal decía "examen" y la misma spec prohíbe "examen". Se aplica
+la regla de vocabulario, que es lo aprobado: **"Confirmo que este PDF es sólo el parcial y no
+tiene las respuestas"**. Queda alineado con el mensaje de error existente
+("Tenés que confirmar que el parcial no tiene las respuestas"), así que la etiqueta y el
+error dicen lo mismo.
+
+**Slice boundary**: commit `3354258` (`docs(design)`), 2073 líneas de autor en la rama
+`feat/add-modals-design-polish`. Casi todas son artefactos de diseño (`design/system.html`
+y `design/system.md`), cuya superficie de revisión es el **canvas**, no el diff. La unidad de
+código (T6) va en su propio commit aparte. La estrategia de entrega para el Oversized la
+decide el usuario.
 
 ### L7 — Decisión de diseño pendiente
 

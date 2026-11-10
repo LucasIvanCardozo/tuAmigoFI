@@ -4,3 +4,4 @@ export * from './link.schema';
 export * from './midterm.schema';
 export * from './response.schema';
 export * from './tp.schema';
+export * from './upload.schema';
