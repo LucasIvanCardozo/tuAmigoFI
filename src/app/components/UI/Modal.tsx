@@ -12,11 +12,28 @@ interface ModalProps {
   context?: ModalContextPart[];
 }
 
+const buildContextKeys = (parts: ModalContextPart[] | undefined) => {
+  const used = new Set<string>();
+  const keys: string[] = [];
+  for (const part of parts ?? []) {
+    let attempt = 0;
+    let key = part.text;
+    while (used.has(key)) {
+      attempt += 1;
+      key = `${part.text} ${attempt}`;
+    }
+    used.add(key);
+    keys.push(key);
+  }
+  return keys;
+};
+
 export const Modal = ({ children, title, context }: ModalProps) => {
   const { closeModal } = useModal();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const headingId = useId();
   const hasContext = Boolean(context && context.length > 0);
+  const contextKeys = buildContextKeys(context);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -55,13 +72,13 @@ export const Modal = ({ children, title, context }: ModalProps) => {
               )}
               {hasContext && (
                 <p className="text-sm text-(--silver)">
-                  {context?.map((part) =>
+                  {context?.map((part, index) =>
                     part.strong ? (
-                      <strong key={part.text} className="font-semibold text-white">
+                      <strong key={contextKeys[index]} className="font-semibold text-white">
                         {part.text}
                       </strong>
                     ) : (
-                      <span key={part.text}>{part.text}</span>
+                      <span key={contextKeys[index]}>{part.text}</span>
                     ),
                   )}
                 </p>

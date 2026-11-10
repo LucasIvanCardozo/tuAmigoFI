@@ -9,7 +9,7 @@ import { createTp } from '@/app/lib/server/actions/tps/create.action';
 import type { Course } from '@/app/lib/server/db/prisma/prismaClient/client';
 import { type AddTpInput, addTpSchema } from '@/app/lib/shared/schemas';
 import { FileForm, Form, InputForm, SectionForm } from '../form';
-import { ModalContactLine, ModalFileTools, ModalNotice } from './modalParts';
+import { ModalContactLine, ModalFileTools, ModalNotice } from './modal-parts';
 
 export const ModalAddTpContent = ({ course }: { course: Course }) => {
   const { data: session } = useSession();

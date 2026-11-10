@@ -60,6 +60,7 @@ const ResponseFileField = ({
   const [localError, setLocalError] = useState<string | null>(null);
   const latestType = useRef(type);
   const isImage = type === 'IMAGE';
+  const labelId = `${id}-label`;
   const helperId = `${id}-helper`;
   const errorId = `${id}-error`;
 
@@ -110,7 +111,7 @@ const ResponseFileField = ({
 
   return (
     <div className="flex flex-col gap-1">
-      <FieldLabel id={id} label={label} required={required} />
+      <FieldLabel id={id} elementId={labelId} label={label} required={required} />
       <FileRow
         id={id}
         inputRef={inputRef}
@@ -119,6 +120,7 @@ const ResponseFileField = ({
         invalid={Boolean(localError ?? errorMessage)}
         required={required}
         state={state}
+        labelledBy={label ? labelId : undefined}
         describedBy={fieldDescribedBy(
           helper ? helperId : undefined,
           (localError ?? errorMessage) ? errorId : undefined,
@@ -171,7 +173,7 @@ export function ResponseTypeField<T extends FieldValues>({
                 aria-invalid={fieldState.error ? true : undefined}
                 aria-describedby={fieldDescribedBy(
                   typeHelper ? typeHelperId : undefined,
-                  fieldState.error ? typeErrorId : undefined,
+                  error ? typeErrorId : undefined,
                 )}
                 className={inputClass}
               >
@@ -244,7 +246,7 @@ export function ResponseContentField<T extends FieldValues>({
                   aria-invalid={fieldState.error ? true : undefined}
                   aria-describedby={fieldDescribedBy(
                     textHelper ? textHelperId : undefined,
-                    fieldState.error ? textErrorId : undefined,
+                    error ? textErrorId : undefined,
                   )}
                   className={inputClass}
                 />

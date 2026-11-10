@@ -33,6 +33,7 @@ export function FileForm<T extends FieldValues>({
   helper,
 }: FileFormProps<T>) {
   const id = useId();
+  const labelId = `${id}-label`;
   const helperId = `${id}-helper`;
   const errorId = `${id}-error`;
 
@@ -55,7 +56,7 @@ export function FileForm<T extends FieldValues>({
 
         return (
           <div className="flex flex-col gap-1">
-            <FieldLabel id={id} label={label} required={required} />
+            <FieldLabel id={id} elementId={labelId} label={label} required={required} />
             <FileRow
               id={id}
               inputRef={ref}
@@ -64,6 +65,7 @@ export function FileForm<T extends FieldValues>({
               disabled={disabled}
               invalid={Boolean(error)}
               state={state}
+              labelledBy={label ? labelId : undefined}
               describedBy={fieldDescribedBy(
                 helper ? helperId : undefined,
                 error ? errorId : undefined,

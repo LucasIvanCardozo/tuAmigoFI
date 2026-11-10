@@ -17,7 +17,7 @@ import {
   type ResponseTypeOption,
   SectionForm,
 } from '../form';
-import { ModalContactLine, ModalFileTools, ModalNotice } from './modalParts';
+import { ModalContactLine, ModalFileTools, ModalNotice } from './modal-parts';
 
 const RESPONSE_TYPE_OPTIONS: ResponseTypeOption[] = [
   { value: 'TEXT', label: 'Texto — se escribe en el modal' },

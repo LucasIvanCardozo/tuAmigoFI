@@ -9,7 +9,7 @@ import { createMidterm } from '@/app/lib/server/actions/midterms/create.action';
 import type { Course } from '@/app/lib/server/db/prisma/prismaClient/client';
 import { type AddMidtermInput, addMidtermSchema } from '@/app/lib/shared/schemas';
 import { CheckboxForm, FileForm, Form, InputForm, SectionForm, SelectForm } from '../form';
-import { ModalContactLine, ModalFileTools, ModalNotice } from './modalParts';
+import { ModalContactLine, ModalFileTools, ModalNotice } from './modal-parts';
 
 export const ModalAddMidtermContent = ({ course }: { course: Course }) => {
   const { data: session } = useSession();

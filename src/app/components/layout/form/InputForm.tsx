@@ -62,7 +62,7 @@ export function InputForm<T extends FieldValues>(props: InputFormProps<T>) {
           'aria-invalid': fieldState.error ? true : undefined,
           'aria-describedby': fieldDescribedBy(
             helper ? helperId : undefined,
-            fieldState.error ? errorId : undefined,
+            error ? errorId : undefined,
           ),
         };
 

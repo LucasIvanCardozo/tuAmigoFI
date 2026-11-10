@@ -30,12 +30,13 @@ interface FieldLabelProps {
   id: string;
   label?: string;
   required?: boolean;
+  elementId?: string;
 }
 
-export function FieldLabel({ id, label, required }: FieldLabelProps) {
+export function FieldLabel({ id, label, required, elementId }: FieldLabelProps) {
   if (!label) return null;
   return (
-    <label htmlFor={id} className="text-sm font-medium text-white">
+    <label id={elementId} htmlFor={id} className="text-sm font-medium text-white">
       {label}
       {required && (
         <>
@@ -53,9 +54,9 @@ export function FieldLabel({ id, label, required }: FieldLabelProps) {
 export function FieldHelper({ id, children }: { id?: string; children?: ReactNode }) {
   if (!children) return null;
   return (
-    <p id={id} className="text-xs text-(--silver)">
+    <div id={id} className="text-xs text-(--silver)">
       {children}
-    </p>
+    </div>
   );
 }
 
@@ -78,6 +79,7 @@ interface FileRowProps {
   disabled?: boolean;
   buttonLabel?: string;
   describedBy?: string;
+  labelledBy?: string;
   inputRef?: Ref<HTMLInputElement>;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: () => void;
@@ -92,6 +94,7 @@ export function FileRow({
   disabled,
   buttonLabel = 'Elegir archivo',
   describedBy: ariaDescribedBy,
+  labelledBy: ariaLabelledBy,
   inputRef,
   onChange,
   onBlur,
@@ -109,6 +112,7 @@ export function FileRow({
         required={required}
         aria-invalid={invalid || undefined}
         aria-describedby={ariaDescribedBy}
+        aria-labelledby={ariaLabelledBy}
         className="peer sr-only"
       />
       <span
@@ -128,9 +132,16 @@ export function FileRow({
   );
 }
 
+const formatDecimal = (value: number, digits: number) => {
+  const trimmed = value.toFixed(digits).replace(/0+$/, '');
+  const normalized = trimmed.endsWith('.') ? `${trimmed}0` : trimmed;
+  return normalized.replace('.', ',');
+};
+
 export function formatFileSize(bytes: number) {
-  if (bytes < 1024) return `${bytes} B`;
-  const kilobytes = bytes / 1024;
-  if (kilobytes < 1024) return `${kilobytes.toFixed(1).replace('.', ',')} KB`;
-  return `${(kilobytes / 1024).toFixed(1).replace('.', ',')} MB`;
+  const size = Math.max(0, bytes);
+  if (size < 1024) return `${size} B`;
+  const kilobytes = size / 1024;
+  if (kilobytes < 1023.95) return `${formatDecimal(kilobytes, 1)} KB`;
+  return `${formatDecimal(kilobytes / 1024, 2)} MB`;
 }
