@@ -134,8 +134,8 @@ botón vivo está inline en `src/app/components/feature/materias/moduleContainer
 | T1 | S1 | worker | Design system sync: `design/system.md` + `design/system.html` | (docs, decide at commit time) |
 | T2 | S1, S2, S4, S5 | worker | 3 artboards + `design.json` en `design/add-modals/` | `docs(design): ...` (rama `feat/add-modals-design-polish`) |
 | T3 | S1 | parent | Abrir el canvas y que el usuario elija una dirección | — |
-| T4 | S6, S7, S8, S12, S13, S14 | worker | Shell (`UI/Modal.tsx`) + primitives de formulario | `fix(modals): ...` |
-| T5 | S2, S4, S5, S15 | worker | Los tres modales de alta + los openers | `feat(modals): ...` |
+| T4 | S2, S4, S6, S7, S8, S12, S13, S14 | worker | Shell (`UI/Modal.tsx`) + primitives de formulario | `feat(modals): ...` (rama `feat/add-modals-ui`) |
+| T5 | S2, S4, S5, S15 | worker | Los tres modales de alta + los openers | `feat(modals): ...` (rama `feat/add-modals-ui`) |
 | T6 | S9, S10, S11, S5 | worker | Server Actions + schemas compartidos | `fix(upload): ...` (rama `feat/add-modals-validacion`) |
 | T7 | S1 | parent | Verificación (lint, tsc, build) y cierre | — |
 
@@ -225,6 +225,55 @@ mismo color escrito de tres formas". Es **parcialmente falso**:
    artboards se usa `#92C1C9` como acento único.
 2. El contraste del texto de error **entra al alcance** (S14), porque vive dentro de
    los tres modales. El contraste del cuerpo de la app se reporta aparte.
+
+### L12 — Dirección elegida: 02 · Ayuda contextual (2026-11-06)
+
+El usuario eligió la dirección **02 — Contextual help** (`design/add-modals/02-ayuda-contextual.html`)
+sobre las tres del canvas. Handoff registrado en el canvas: `status: in_progress`, target
+`add-modals/02-ayuda-contextual.html`.
+
+**T4 y T5 se reabren** y se implementan contra este artboard, no contra los otros dos.
+
+Lo que el artboard define y hay que llevar al stack real:
+
+| Parte del artboard | A dónde va en el código |
+| --- | --- |
+| `.modal-head` (h2 + `.context-line`) | Cabecera del panel del modal, en `UI/Modal.tsx` |
+| `.notice` (icono + texto, bajo el header) | Aviso "No dupliques el archivo" / "Revisá antes de subir" |
+| `.section` + `.section-title` con `.sec-num` | `SectionForm` con número de sección |
+| `.field` (label + input + `.helper`) | `InputForm` / `SelectForm` con una línea de ayuda |
+| `.check-row` + `.helper` | `CheckboxForm` con línea de ayuda |
+| `.file-row` (input oculto + `.file-btn` + `.file-state`) | `FileForm` y el campo de archivo de `ResponseForm` |
+| `.tool-row` (Eliminar páginas / Convertir a PDF) | Acciones chicas junto al campo de archivo |
+| `.actions` (`.btn-secondary` + `.btn-primary`) | Pie con Cancelar y el verbo real |
+| `.error` (icono + texto, `red-400`) | Mensajes de error de los primitives |
+
+Los tokens salen de `design/system.md`: `--midnight-green` para la superficie del aviso,
+`--white`/`--black` para los campos, `slate-800`/`slate-700`/`slate-300` para el panel, los
+bordes y el botón secundario, `#92C1C9` como acento, y **`red-400` (`#f87171`) para el texto
+de error** porque `red-600` da 3.03:1 y falla AA (S14).
+
+### L13 — Hallazgo del verificador independiente y su fix (2026-11-06)
+
+`gentle-ai-verify` sobre `3354258..8c822c1` dio **PASS con 1 MAJOR + 1 MINOR**. El MAJOR es
+preexistente pero cae dentro de la regla de S10:
+
+> El schema de la action de respuestas **no tiene** la regla "IMAGE/PDF exige archivo" que sí
+> tiene el cliente. Una llamada directa con `type:'IMAGE', file:null` creaba una fila con
+> `fileUrl=null`, y `moduleResponse.tsx:96` renderiza `<img src="">`: una card rota para todos
+> los que abrieran la materia.
+
+Fix: extraer la regla a un helper compartido (patrón `getResponseFileTypeError` /
+`getResponseNumberError` del propio repo) y usarlo en los dos schemas, para que no puedan
+divergir. De paso cierra el MINOR (`text:''`).
+
+**No se commitearon tests**: el verificador propuso un script de probes en `scripts/` y se
+rechazó, porque `AGENTS.md` dice *"No tests. No test framework configured"* salvo pedido
+explícito del usuario. La verificación sigue con harnesses descartables fuera del repo.
+
+Observación: hay **dos `MAX_UPLOAD_SIZE`** con valores distintos (`5_000_000` en
+`schemas/upload.schema.ts` y `5*1024*1024` en `shared/constants/upload.ts`). Hoy no colisionan
+—ningún módulo importa ambos— pero el mismo nombre significa dos cosas. Anotado, sin tocar.
 
 ### L11 — La revisión nativa no es completable en este host (2026-11-06)
 
