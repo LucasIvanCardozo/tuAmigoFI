@@ -1,8 +1,10 @@
 'use client';
 
+import type { ReactNode } from 'react';
 import { useId } from 'react';
 import type { Control, FieldValues, Path } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
+import { FieldError, FieldHelper, FieldLabel, fieldDescribedBy, inputClass } from './form';
 
 interface BaseProps<T extends FieldValues> {
   name: Path<T>;
@@ -11,6 +13,7 @@ interface BaseProps<T extends FieldValues> {
   placeholder?: string;
   required?: boolean;
   disabled?: boolean;
+  helper?: ReactNode;
 }
 
 interface TextLikeProps<T extends FieldValues> extends BaseProps<T> {
@@ -33,7 +36,6 @@ interface DateProps<T extends FieldValues> extends BaseProps<T> {
 interface TextareaProps<T extends FieldValues> extends BaseProps<T> {
   type: 'textarea';
   rows?: number;
-  cols?: number;
   minLength?: number;
   maxLength?: number;
 }
@@ -44,26 +46,11 @@ export type InputFormProps<T extends FieldValues> =
   | DateProps<T>
   | TextareaProps<T>;
 
-const inputClass = 'text-black px-2 py-1 rounded border border-slate-700 w-full';
-
-function ErrorMessage({ message }: { message?: string }) {
-  if (!message) return null;
-  return <p className="text-red-600 text-sm mt-1">{message}</p>;
-}
-
 export function InputForm<T extends FieldValues>(props: InputFormProps<T>) {
-  const { name, control, label, required, disabled } = props;
+  const { name, control, label, required, disabled, helper } = props;
   const id = useId();
-
-  const renderLabel = () => {
-    if (!label) return null;
-    return (
-      <label htmlFor={id} className="text-white">
-        {label}
-        {required ? ' *' : ''}
-      </label>
-    );
-  };
+  const helperId = `${id}-helper`;
+  const errorId = `${id}-error`;
 
   return (
     <Controller
@@ -71,22 +58,37 @@ export function InputForm<T extends FieldValues>(props: InputFormProps<T>) {
       control={control}
       render={({ field, fieldState }) => {
         const error = fieldState.error?.message;
+        const aria = {
+          'aria-invalid': fieldState.error ? true : undefined,
+          'aria-describedby': fieldDescribedBy(
+            helper ? helperId : undefined,
+            fieldState.error ? errorId : undefined,
+          ),
+        };
+
+        const labelNode = <FieldLabel id={id} label={label} required={required} />;
+        const helperNode = <FieldHelper id={helperId}>{helper}</FieldHelper>;
+        const errorNode = <FieldError id={errorId} message={error} />;
+
         if (props.type === 'textarea') {
           return (
             <div className="flex flex-col gap-1">
-              {renderLabel()}
+              {labelNode}
               <textarea
                 {...field}
+                {...aria}
                 id={id}
                 value={(field.value as string | undefined) ?? ''}
                 placeholder={props.placeholder}
                 rows={props.rows}
-                cols={props.cols}
+                minLength={props.minLength}
+                maxLength={props.maxLength}
                 disabled={disabled}
                 required={required}
                 className={inputClass}
               />
-              <ErrorMessage message={error} />
+              {helperNode}
+              {errorNode}
             </div>
           );
         }
@@ -94,9 +96,10 @@ export function InputForm<T extends FieldValues>(props: InputFormProps<T>) {
         if (props.type === 'number') {
           return (
             <div className="flex flex-col gap-1">
-              {renderLabel()}
+              {labelNode}
               <input
                 {...field}
+                {...aria}
                 id={id}
                 type="number"
                 value={(field.value as number | string | undefined) ?? ''}
@@ -112,16 +115,18 @@ export function InputForm<T extends FieldValues>(props: InputFormProps<T>) {
                 required={required}
                 className={inputClass}
               />
-              <ErrorMessage message={error} />
+              {helperNode}
+              {errorNode}
             </div>
           );
         }
 
         return (
           <div className="flex flex-col gap-1">
-            {renderLabel()}
+            {labelNode}
             <input
               {...field}
+              {...aria}
               id={id}
               type={props.type ?? 'text'}
               value={(field.value as string | undefined) ?? ''}
@@ -132,7 +137,8 @@ export function InputForm<T extends FieldValues>(props: InputFormProps<T>) {
               required={required}
               className={inputClass}
             />
-            <ErrorMessage message={error} />
+            {helperNode}
+            {errorNode}
           </div>
         );
       }}
