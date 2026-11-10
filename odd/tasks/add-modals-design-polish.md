@@ -132,7 +132,7 @@ botón vivo está inline en `src/app/components/feature/materias/moduleContainer
 | ID | Specs | Route | Work unit | Commit |
 | --- | --- | --- | --- | --- |
 | T1 | S1 | worker | Design system sync: `design/system.md` + `design/system.html` | (docs, decide at commit time) |
-| T2 | S1, S2, S4, S5 | worker | 3 artboards + `design.json` en `design/add-modals/` | (docs, decide at commit time) |
+| T2 | S1, S2, S4, S5 | worker | 3 artboards + `design.json` en `design/add-modals/` | `docs(design): ...` (rama `feat/add-modals-design-polish`) |
 | T3 | S1 | parent | Abrir el canvas y que el usuario elija una dirección | — |
 | T4 | S6, S7, S8, S12, S13, S14 | worker | Shell (`UI/Modal.tsx`) + primitives de formulario | `fix(modals): ...` |
 | T5 | S2, S4, S5, S15 | worker | Los tres modales de alta + los openers | `feat(modals): ...` |
@@ -225,6 +225,45 @@ mismo color escrito de tres formas". Es **parcialmente falso**:
    artboards se usa `#92C1C9` como acento único.
 2. El contraste del texto de error **entra al alcance** (S14), porque vive dentro de
    los tres modales. El contraste del cuerpo de la app se reporta aparte.
+
+### L10 — Correcciones del canvas aplicadas (2026-11-06)
+
+Los cinco comentarios del usuario se aplicaron a los **tres** artboards, porque los tres
+devices rechazados son idénticos en los tres archivos. Verificado por el padre sobre el
+árbol final: `border-left` 0/0/0, `scroll interno` 0/0/0, referencias externas 0/0/0.
+
+Qué cambió:
+
+- **Se fueron los dos `border-left`** (el de acento `var(--accent-92c1c9)` de los títulos de
+  sección y el de plata `var(--silver)` del bloque de ayuda/aviso) y también el
+  `.section-title::before`. La jerarquía se sostiene ahora con peso 700 en el título, el
+  badge de número y 20 px medidos entre secciones (`.section + .section { margin-top: 8px }`
+  más el gap de 12 px del modal). El bloque de ayuda y el aviso conservan su superficie
+  `--midnight-green` con más padding (14 px / 10 px verticales).
+- **Se fue el cue de scroll** ("El modal sigue hacia abajo: scroll interno (max-h-90dvh)") y
+  su CSS. En las notas de 02 la referencia técnica se conservó sin la frase, porque ese panel
+  es documentación para quien revisa, no copy que ve el alumno.
+- **Los botones del móvil quedan en una sola fila.** `.phone-foot` es `display: flex` con
+  `flex-direction: row`, y `.phone .btn` lleva `flex: 1 1 auto; padding: 12px 8px;
+  white-space: nowrap`. Medido en Firefox headless a 360 px: "Cancelar" y "Enviar respuesta"
+  comparten banda vertical, 0 px de overflow, una línea de texto cada uno.
+- **"Elegir archivo" no se parte** a 360 px: `.phone .file-btn { flex: 0 0 auto;
+  white-space: nowrap }`.
+
+**Defecto encontrado por el writer y no pedido**: el teléfono que el artboard rotula "360 px"
+**renderizaba a 420 px** — `flex: 0 0 360px` se ignora en un bloque hijo de una columna flex.
+La escena "360 px" no era de 360 px y la medición de "una línea" se hacía al ancho
+equivocado. Corregido con `.crop.phone-crop { flex: 0 0 360px }` + `.phone { width: 360px }`,
+y re-verificado.
+
+Altos re-medidos y sincronizados con `design.json`: **1713 / 1827 / 1869** (antes
+1740 / 1855 / 1861). La métrica es el borde inferior del último elemento del artboard en
+Firefox headless, y reproduce los valores previos sobre los archivos sin corregir, así que
+los números nuevos son comparables con los viejos.
+
+**Slice boundary**: los artboards van en `feat/add-modals-design-polish` (junto a
+`design/system.*`) y esa rama se mergea con `--no-ff` en `feat/add-modals-validacion`, que
+mantiene su commit `8c822c1` intacto para que el rango revisado siga resolviendo.
 
 ### L9 — Feedback del canvas y decisiones (2026-11-06)
 
