@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "comments": [
+    {
+      "id": "dlm5mjer",
+      "file": "01-formulario-guiado.html",
+      "selector": "body > main > div:nth-of-type(1) > section:nth-of-type(1) > form > section:nth-of-type(2) > h3",
+      "excerpt": "2 El archivo",
+      "comment": "la linea de la izquierda visual es innecesaria, no me gusta",
+      "createdAt": "2026-11-10T17:56:25.742Z",
+      "status": "resolved",
+      "sentAt": "2026-11-10T17:58:54.518Z",
+      "resolvedAt": "2026-11-10T18:07:35.112Z"
+    },
+    {
+      "id": "mwp0xpu1",
+      "file": "01-formulario-guiado.html",
+      "selector": "body > main > div:nth-of-type(1) > section:nth-of-type(1) > form > details > div > div",
+      "excerpt": "Ayuda para preparar el archivo Eliminar páginas de tu PDF (iLovePDF) Convertir a PDF (PDF24) Las dos herramientas se abren en otra pestaña. No dupliques el archivo: revisá la lista de la materia antes de subir. ¿Algún problema? Escribinos por WhatsApp: 2235319564",
+      "comment": "el borde izquierdo no me gusta, quitalo",
+      "createdAt": "2026-11-10T17:56:42.816Z",
+      "status": "resolved",
+      "sentAt": "2026-11-10T17:58:54.518Z",
+      "resolvedAt": "2026-11-10T18:07:35.112Z"
+    },
+    {
+      "id": "fuxql9aj",
+      "file": "01-formulario-guiado.html",
+      "selector": "body > main > div:nth-of-type(2) > div:nth-of-type(2) > div > div:nth-of-type(1) > div:nth-of-type(2)",
+      "excerpt": "El modal sigue hacia abajo: scroll interno (max-h-90dvh)",
+      "comment": "no hace falta aclarar esto, se debe iuntuir por el alumno",
+      "createdAt": "2026-11-10T17:57:32.618Z",
+      "status": "resolved",
+      "sentAt": "2026-11-10T17:58:54.518Z",
+      "resolvedAt": "2026-11-10T18:07:35.112Z"
+    },
+    {
+      "id": "og1s3xce",
+      "file": "02-ayuda-contextual.html",
+      "selector": "body > main > div:nth-of-type(1) > section:nth-of-type(1) > form > div:nth-of-type(1)",
+      "excerpt": "No dupliques el archivo: revisá la lista de la materia antes de subir.",
+      "comment": "la linea izquierda no me gusta",
+      "createdAt": "2026-11-10T17:58:09.988Z",
+      "status": "resolved",
+      "sentAt": "2026-11-10T17:58:54.518Z",
+      "resolvedAt": "2026-11-10T18:07:35.112Z"
+    },
+    {
+      "id": "kn6ur621",
+      "file": "02-ayuda-contextual.html",
+      "selector": "body > main > div:nth-of-type(2) > div:nth-of-type(2) > div > div:nth-of-type(2)",
+      "excerpt": "Cancelar Enviar respuesta",
+      "comment": "los botones siempre deben estar en una linea",
+      "createdAt": "2026-11-10T17:58:45.014Z",
+      "status": "resolved",
+      "sentAt": "2026-11-10T17:58:54.518Z",
+      "resolvedAt": "2026-11-10T18:07:35.112Z"
+    }
+  ]
+}
