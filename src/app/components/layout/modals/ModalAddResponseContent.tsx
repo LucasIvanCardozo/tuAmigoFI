@@ -2,13 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { Session } from 'next-auth';
-import type { ReactNode } from 'react';
 import { type SubmitHandler, useForm, useWatch } from 'react-hook-form';
-import {
-  HiOutlineDocumentArrowUp,
-  HiOutlineInformationCircle,
-  HiOutlineScissors,
-} from 'react-icons/hi2';
 import { useModal } from '@/app/contexts/ModalContext';
 import { useFormSubmit } from '@/app/hooks/useFormSubmit';
 import { createResponse } from '@/app/lib/server/actions/responses/create.action';
@@ -23,6 +17,7 @@ import {
   type ResponseTypeOption,
   SectionForm,
 } from '../form';
+import { ModalContactLine, ModalFileTools, ModalNotice } from './modalParts';
 
 const RESPONSE_TYPE_OPTIONS: ResponseTypeOption[] = [
   { value: 'TEXT', label: 'Texto — se escribe en el modal' },
@@ -30,53 +25,6 @@ const RESPONSE_TYPE_OPTIONS: ResponseTypeOption[] = [
   { value: 'IMAGE', label: 'Imagen — JPG o PNG (se comprime sola)' },
   { value: 'PDF', label: 'PDF — sólo PDF' },
 ];
-
-const Notice = ({ children }: { children: ReactNode }) => (
-  <div className="flex items-start gap-2 rounded-lg bg-(--midnight-green) p-3">
-    <HiOutlineInformationCircle aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-white" />
-    <p className="text-xs font-medium text-(--silver)">{children}</p>
-  </div>
-);
-
-const FileTools = () => (
-  <div className="flex flex-col gap-1">
-    <div className="flex flex-wrap gap-2">
-      <a
-        href="https://www.ilovepdf.com/es/eliminar-paginas"
-        target="_blank"
-        rel="noopener"
-        className="inline-flex items-center gap-2 rounded-md border border-slate-300 px-3 py-2 text-sm text-white transition-colors hover:bg-slate-700"
-      >
-        <HiOutlineScissors aria-hidden="true" className="h-4 w-4" />
-        Eliminar páginas
-      </a>
-      <a
-        href="https://tools.pdf24.org/es/convertidor-pdf"
-        target="_blank"
-        rel="noopener"
-        className="inline-flex items-center gap-2 rounded-md border border-slate-300 px-3 py-2 text-sm text-white transition-colors hover:bg-slate-700"
-      >
-        <HiOutlineDocumentArrowUp aria-hidden="true" className="h-4 w-4" />
-        Convertir a PDF
-      </a>
-    </div>
-    <p className="text-xs text-(--silver)">iLovePDF y PDF24: se abren en otra pestaña.</p>
-  </div>
-);
-
-const ContactLine = () => (
-  <p className="text-xs text-(--silver)">
-    ¿Algún problema con la carga? Escribinos por WhatsApp:{' '}
-    <a
-      href="https://wa.me/+5492235319564"
-      target="_blank"
-      rel="noopener"
-      className="font-semibold text-white underline"
-    >
-      2235319564
-    </a>
-  </p>
-);
 
 export const ModalAddResponseContent = ({
   module,
@@ -120,7 +68,7 @@ export const ModalAddResponseContent = ({
 
   return (
     <Form onSubmit={handleSubmit(submit)} noValidate>
-      <Notice>
+      <ModalNotice>
         {isTp ? (
           <>
             <strong className="font-bold text-white">Revisá antes de subir:</strong> que la
@@ -132,7 +80,7 @@ export const ModalAddResponseContent = ({
             respuesta se lea bien y sea de este parcial.
           </>
         )}
-      </Notice>
+      </ModalNotice>
       <SectionForm number={1} title="Datos de la respuesta">
         {!isTp && (
           <CheckboxForm<AddResponseInput>
@@ -168,9 +116,9 @@ export const ModalAddResponseContent = ({
           fileHelper="Sólo PDF, hasta 5 MB."
           fileRequired
         />
-        {allProblems && !isTp && <FileTools />}
+        {allProblems && !isTp && <ModalFileTools />}
       </SectionForm>
-      <ContactLine />
+      <ModalContactLine />
       <div className="flex items-center justify-end gap-3 border-t border-slate-700 pt-4">
         <button
           type="button"
