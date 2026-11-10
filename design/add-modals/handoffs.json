@@ -3,13 +3,14 @@
   "chosen": "02-ayuda-contextual.html",
   "handoffs": {
     "02-ayuda-contextual.html": {
-      "status": "in_progress",
+      "status": "implemented",
       "queued": false,
       "sentAt": "2026-11-10T18:13:36.236Z",
       "startedAt": "2026-11-10T18:13:54.416Z",
-      "implementedAt": null,
+      "implementedAt": "2026-11-10T23:11:03.096Z",
       "feature": "odd/tasks/add-modals-design-polish.md",
-      "note": "Implementando la dirección 02 (ayuda contextual) en el stack real: shell del modal, primitives de formulario y los tres modales de alta."
+      "note": "Dirección 02 (ayuda contextual) implementada en el stack real: shell del modal con cabecera y nombre accesible, primitives con helper y nombre único, los tres modales de alta con aviso, secciones numeradas, herramientas junto al archivo y pie con Cancelar + verbo real. 112 aserciones de render y verificador independiente con Chromium real, ambos en verde.",
+      "previewUrl": "http://localhost:3000/"
     }
   }
 }

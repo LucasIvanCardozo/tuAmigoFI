@@ -317,6 +317,47 @@ candidato de ~390 líneas que pasa el preflight.
 (el schema de la action de respuestas sin la regla "IMAGE/PDF exige archivo"). El native
 aprobó el candidato. Las dos vistas se complementan.
 
+### L18 — Cierre de la feature (2026-11-10)
+
+**Rama**: `feat/add-modals-ui`, 16 commits sobre `main`. El diseño va en `feat/add-modals-design-polish`, que se mergeó con `--no-ff` dentro de la cadena.
+
+**Lo que quedó implementado**: la dirección **02 · Ayuda contextual** de
+`design/add-modals/02-ayuda-contextual.html`, en el stack real. Los tres modales de alta
+(Agregar TP, Agregar parcial, Añadir respuesta) tienen cabecera con título y línea de
+contexto, aviso, dos secciones numeradas, una línea de ayuda por campo, las dos herramientas
+externas junto al archivo, la línea de WhatsApp y un pie con Cancelar y el verbo real. El
+shell del modal pinta la cabecera y el `<dialog>` tiene nombre accesible. Los primitives
+tienen helper, nombre accesible único, error que pasa AA y ids que nunca cuelgan.
+
+**Verificación**:
+- harness de render de los tres modales: 112 aserciones, 0 fallos.
+- verificador independiente sobre el shell y los primitives (Chromium real + control del
+  commit base): PASS sin bloqueantes; encontró 1 MAJOR latente (el `<h2>` duplicado, ya
+  resuelto por T5) y 6 menores, todos corregidos en `4fd83d6` y `9ce4068` y re-verificados.
+- `pnpm exec tsc --noEmit`, `pnpm lint` (0 errores, 14 warnings: 13 de `design/` y uno
+  preexistente en `globals.css`) y `pnpm build` (rutas prerenderizadas) en verde.
+- la extracción de las tres piezas compartidas se probó con cinco escenarios de render
+  antes y después: **HTML byte-idéntico**, SHA-256 incluido.
+
+**Revisión nativa**: la unidad de validación (387 líneas) se revisó y se quemó con
+`approved` (`review-cbf6a16f0669f86b`). El candidato de código final (1.638 líneas) pasó el
+preflight pero su consent fue **declinado por la UI del host**
+(`consent-declined-this-candidate`), sin lineage y sin mutación; un decline es por candidato y
+no se reintenta. La evidencia de la entrega es, entonces, el verificador independiente.
+
+**Pendientes anotados** (fuera del alcance aprobado, que eran los tres modales de alta):
+
+1. Los modales que no son de alta (link, borrar, reportar) siguen con el nombre accesible
+   genérico "Modal" y con su propio `<h2>`. Con un título propio cada uno, el shell les
+   daría nombre y habría que borrar su `<h2>`.
+2. El vocabulario "Examen" en los modales de borrado y de reporte, y en el botón "Eliminar
+   Examen" de la card.
+3. El nombre de la materia en la línea de contexto del modal de respuesta: `DataModule` no
+   lleva la relación con la materia, así que hay que pasarlo por `problemsTable.tsx` y
+   `mainModule.tsx`.
+4. El input de archivo sigue con dos `<label for>` en el DOM; sólo uno contribute al nombre
+   accesible, que es el criterio de WCAG.
+
 ### L17 — Verificación independiente de T4 y los fixes que salieron (2026-11-10)
 
 `gentle-ai-verify` sobre `005b96a..83780e6`: **PASS, sin bloqueantes**. Probó con Chromium
