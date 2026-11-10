@@ -145,14 +145,20 @@ const ModuleContainerImpl = ({ module, typeModule }: Props) => {
           <button
             type="button"
             className="flex text-base h-6 pr-1 items-center border-2 border-gray-600 rounded-md hover:bg-[#92C1C9] transition-colors hover:border-[#92C1C9]"
-            title="Añadir una respuesta"
-            aria-label="Añadir una respuesta"
+            title="Agregar respuesta"
+            aria-label="Agregar respuesta"
             onClick={() =>
-              openModal(<ModalAddResponseContent module={moduleInd} session={session} />)
+              openModal(<ModalAddResponseContent module={moduleInd} session={session} />, {
+                title: 'Agregar respuesta',
+                context: [
+                  { text: 'Subís una respuesta al ' },
+                  { text: moduleInd.name, strong: true },
+                ],
+              })
             }
           >
             <CgMathPlus />
-            <span>Respuesta</span>
+            <span className="hidden sm:inline">Agregar respuesta</span>
           </button>
         </div>
       </div>

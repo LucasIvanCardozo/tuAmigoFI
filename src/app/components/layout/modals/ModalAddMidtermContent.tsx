@@ -2,13 +2,66 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
+import type { ReactNode } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
+import {
+  HiOutlineDocumentArrowUp,
+  HiOutlineInformationCircle,
+  HiOutlineScissors,
+} from 'react-icons/hi2';
 import { useModal } from '@/app/contexts/ModalContext';
 import { useFormSubmit } from '@/app/hooks/useFormSubmit';
 import { createMidterm } from '@/app/lib/server/actions/midterms/create.action';
 import type { Course } from '@/app/lib/server/db/prisma/prismaClient/client';
 import { type AddMidtermInput, addMidtermSchema } from '@/app/lib/shared/schemas';
 import { CheckboxForm, FileForm, Form, InputForm, SectionForm, SelectForm } from '../form';
+
+const Notice = ({ children }: { children: ReactNode }) => (
+  <div className="flex items-start gap-2 rounded-lg bg-(--midnight-green) p-3">
+    <HiOutlineInformationCircle aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-white" />
+    <p className="text-xs font-medium text-(--silver)">{children}</p>
+  </div>
+);
+
+const FileTools = () => (
+  <div className="flex flex-col gap-1">
+    <div className="flex flex-wrap gap-2">
+      <a
+        href="https://www.ilovepdf.com/es/eliminar-paginas"
+        target="_blank"
+        rel="noopener"
+        className="inline-flex items-center gap-2 rounded-md border border-slate-300 px-3 py-2 text-sm text-white transition-colors hover:bg-slate-700"
+      >
+        <HiOutlineScissors aria-hidden="true" className="h-4 w-4" />
+        Eliminar páginas
+      </a>
+      <a
+        href="https://tools.pdf24.org/es/convertidor-pdf"
+        target="_blank"
+        rel="noopener"
+        className="inline-flex items-center gap-2 rounded-md border border-slate-300 px-3 py-2 text-sm text-white transition-colors hover:bg-slate-700"
+      >
+        <HiOutlineDocumentArrowUp aria-hidden="true" className="h-4 w-4" />
+        Convertir a PDF
+      </a>
+    </div>
+    <p className="text-xs text-(--silver)">iLovePDF y PDF24: se abren en otra pestaña.</p>
+  </div>
+);
+
+const ContactLine = () => (
+  <p className="text-xs text-(--silver)">
+    ¿Algún problema con la carga? Escribinos por WhatsApp:{' '}
+    <a
+      href="https://wa.me/+5492235319564"
+      target="_blank"
+      rel="noopener"
+      className="font-semibold text-white underline"
+    >
+      2235319564
+    </a>
+  </p>
+);
 
 export const ModalAddMidtermContent = ({ course }: { course: Course }) => {
   const { data: session } = useSession();
@@ -39,93 +92,70 @@ export const ModalAddMidtermContent = ({ course }: { course: Course }) => {
   });
 
   return (
-    <>
-      <h2 className="text-lg">Agregar Examen</h2>
-      <Form onSubmit={handleSubmit(submit)} noValidate>
-        <SectionForm title="Datos del examen">
-          <SelectForm<AddMidtermInput>
-            name="name"
-            control={control}
-            label="Tipo de parcial"
-            placeholder="Selecciona el tipo de parcial"
-            required
-          >
-            <option value="Primer parcial">Primer parcial</option>
-            <option value="Segundo parcial">Segundo parcial</option>
-            <option value="Tercer parcial">Tercer parcial</option>
-            <option value="Final">Final</option>
-            <option value="Otros">Otros</option>
-          </SelectForm>
-          <InputForm<AddMidtermInput>
-            name="date"
-            type="date"
-            control={control}
-            label="Fecha"
-            required
-          />
-        </SectionForm>
+    <Form onSubmit={handleSubmit(submit)} noValidate>
+      <Notice>
+        <strong className="font-bold text-white">No dupliques el archivo:</strong> revisá la lista
+        de la materia antes de subir.
+      </Notice>
+      <SectionForm number={1} title="Datos del parcial">
+        <SelectForm<AddMidtermInput>
+          name="name"
+          control={control}
+          label="Tipo de parcial"
+          placeholder="Selecciona el tipo de parcial"
+          helper="Elegí el tipo de parcial."
+          required
+        >
+          <option value="Primer parcial">Primer parcial</option>
+          <option value="Segundo parcial">Segundo parcial</option>
+          <option value="Tercer parcial">Tercer parcial</option>
+          <option value="Final">Final</option>
+          <option value="Otros">Otros</option>
+        </SelectForm>
+        <InputForm<AddMidtermInput>
+          name="date"
+          type="date"
+          control={control}
+          label="Fecha"
+          helper="El día en que se tomó el parcial."
+          required
+        />
+      </SectionForm>
+      <SectionForm number={2} title="El archivo">
         <FileForm<AddMidtermInput>
           name="file"
           control={control}
-          label="Archivo (PDF)"
+          label="Archivo del parcial"
           accept="application/pdf"
+          helper="Sólo PDF, hasta 5 MB."
           required
         />
+        <FileTools />
         <CheckboxForm<AddMidtermInput>
           name="withoutAnswers"
           control={control}
-          label="Mi parcial no tiene las respuestas"
+          label="Confirmo que este PDF es sólo el parcial y no tiene las respuestas"
+          helper="Si tu PDF tiene las respuestas unidas, podés subirlas después en la sección de respuestas del parcial."
           required
         />
-        <p className="text-xs">
-          *Si tu PDF tiene las respuestas unidas, podés subirlas después en la sección de respuestas
-          del parcial. Y si querés sacarle páginas, usá el link de más abajo.
-        </p>
-        <div>
-          <a
-            href="https://www.ilovepdf.com/es/eliminar-paginas"
-            target="_blank"
-            className="underline"
-            rel="noopener"
-          >
-            <h3 className="text-sm">Click aquí para eliminar páginas de tu PDF</h3>
-          </a>
-        </div>
-        <div>
-          <a
-            href="https://tools.pdf24.org/es/convertidor-pdf"
-            target="_blank"
-            className="underline"
-            rel="noopener"
-          >
-            <h3 className="text-sm">Click aquí para convertir a PDF</h3>
-          </a>
-        </div>
-        <div>
-          <h3 className="text-sm">Recuerda!</h3>
-          <p className="text-xs">
-            Solo se admite formato PDF. Por favor asegurate de que el modulo que quieres agregar no
-            se encuentre ya disponible en la lista. En caso de cualquier problema podes contactarme:{' '}
-            <a
-              className="underline"
-              target="_blank"
-              href="https://wa.me/+5492235319564"
-              rel="noopener"
-            >
-              2235319564
-            </a>
-          </p>
-        </div>
-        <div className="flex gap-4 justify-center mt-4">
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Aceptar
-          </button>
-        </div>
-      </Form>
-    </>
+      </SectionForm>
+      <ContactLine />
+      <div className="flex items-center justify-end gap-3 border-t border-slate-700 pt-4">
+        <button
+          type="button"
+          onClick={closeModal}
+          className="inline-flex items-center justify-center rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-slate-700"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="inline-flex items-center justify-center rounded-md border-2 border-[#92C1C9] bg-[#92C1C9] px-4 py-2 text-sm font-semibold text-(--black) transition-colors hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Agregar parcial
+        </button>
+      </div>
+    </Form>
   );
 };

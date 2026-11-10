@@ -17,17 +17,17 @@ import {
 
 type ResponseType = 'TEXT' | 'CODE' | 'IMAGE' | 'PDF';
 
-interface ResponseFormProps<T extends FieldValues> {
-  control: Control<T>;
-  typeName?: Path<T>;
-  textName?: Path<T>;
-  fileName?: Path<T>;
-  typeLabel?: string;
-  typeHelper?: ReactNode;
-  textHelper?: ReactNode;
-  fileLabel?: string;
-  fileHelper?: ReactNode;
+export interface ResponseTypeOption {
+  value: ResponseType;
+  label: string;
 }
+
+export const DEFAULT_RESPONSE_TYPE_OPTIONS: ResponseTypeOption[] = [
+  { value: 'TEXT', label: 'Texto' },
+  { value: 'IMAGE', label: 'Imagen' },
+  { value: 'PDF', label: 'Pdf' },
+  { value: 'CODE', label: 'Código' },
+];
 
 interface ResponseFileFieldProps {
   id: string;
@@ -36,6 +36,7 @@ interface ResponseFileFieldProps {
   errorMessage?: string;
   label?: string;
   helper?: ReactNode;
+  required?: boolean;
   inputRef: Ref<HTMLInputElement>;
   onBlur: () => void;
   onChange: (value: File | undefined) => void;
@@ -50,6 +51,7 @@ const ResponseFileField = ({
   errorMessage,
   label,
   helper,
+  required,
   inputRef,
   onBlur,
   onChange,
@@ -108,13 +110,14 @@ const ResponseFileField = ({
 
   return (
     <div className="flex flex-col gap-1">
-      <FieldLabel id={id} label={label} />
+      <FieldLabel id={id} label={label} required={required} />
       <FileRow
         id={id}
         inputRef={inputRef}
         accept={isImage ? 'image/*' : 'application/pdf'}
         disabled={isCompressing}
         invalid={Boolean(localError ?? errorMessage)}
+        required={required}
         state={state}
         describedBy={fieldDescribedBy(
           helper ? helperId : undefined,
@@ -129,28 +132,30 @@ const ResponseFileField = ({
   );
 };
 
-export function ResponseForm<T extends FieldValues>({
+interface ResponseTypeFieldProps<T extends FieldValues> {
+  control: Control<T>;
+  typeName?: Path<T>;
+  typeLabel?: string;
+  typeHelper?: ReactNode;
+  typeOptions?: ResponseTypeOption[];
+  required?: boolean;
+}
+
+export function ResponseTypeField<T extends FieldValues>({
   control,
   typeName = 'type' as Path<T>,
-  textName = 'text' as Path<T>,
-  fileName = 'file' as Path<T>,
   typeLabel = 'Tipo de respuesta',
   typeHelper,
-  textHelper,
-  fileLabel,
-  fileHelper,
-}: ResponseFormProps<T>) {
-  const currentType = useWatch({ control, name: typeName }) as ResponseType | undefined;
+  typeOptions = DEFAULT_RESPONSE_TYPE_OPTIONS,
+  required,
+}: ResponseTypeFieldProps<T>) {
   const typeId = useId();
-  const textId = useId();
-  const fileId = useId();
   const typeHelperId = `${typeId}-helper`;
   const typeErrorId = `${typeId}-error`;
-  const textHelperId = `${textId}-helper`;
-  const textErrorId = `${textId}-error`;
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-1">
+      <FieldLabel id={typeId} label={typeLabel} required={required} />
       <Controller
         name={typeName}
         control={control}
@@ -158,11 +163,11 @@ export function ResponseForm<T extends FieldValues>({
           const error = fieldState.error?.message;
           return (
             <div className="flex flex-col gap-1">
-              <FieldLabel id={typeId} label={typeLabel} />
               <select
                 {...field}
                 id={typeId}
                 value={(field.value as string | undefined) ?? ''}
+                required={required}
                 aria-invalid={fieldState.error ? true : undefined}
                 aria-describedby={fieldDescribedBy(
                   typeHelper ? typeHelperId : undefined,
@@ -173,10 +178,11 @@ export function ResponseForm<T extends FieldValues>({
                 <option value="" hidden>
                   Selecciona el tipo respuesta
                 </option>
-                <option value="TEXT">Texto</option>
-                <option value="IMAGE">Imagen</option>
-                <option value="PDF">Pdf</option>
-                <option value="CODE">Código</option>
+                {typeOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
               </select>
               <FieldHelper id={typeHelperId}>{typeHelper}</FieldHelper>
               <FieldError id={typeErrorId} message={error} />
@@ -184,7 +190,39 @@ export function ResponseForm<T extends FieldValues>({
           );
         }}
       />
+    </div>
+  );
+}
 
+interface ResponseContentFieldProps<T extends FieldValues> {
+  control: Control<T>;
+  typeName?: Path<T>;
+  textName?: Path<T>;
+  fileName?: Path<T>;
+  textHelper?: ReactNode;
+  fileLabel?: string;
+  fileHelper?: ReactNode;
+  fileRequired?: boolean;
+}
+
+export function ResponseContentField<T extends FieldValues>({
+  control,
+  typeName = 'type' as Path<T>,
+  textName = 'text' as Path<T>,
+  fileName = 'file' as Path<T>,
+  textHelper,
+  fileLabel,
+  fileHelper,
+  fileRequired,
+}: ResponseContentFieldProps<T>) {
+  const currentType = useWatch({ control, name: typeName }) as ResponseType | undefined;
+  const textId = useId();
+  const fileId = useId();
+  const textHelperId = `${textId}-helper`;
+  const textErrorId = `${textId}-error`;
+
+  return (
+    <>
       {currentType && TEXT_LIKE.includes(currentType) && (
         <Controller
           name={textName}
@@ -238,6 +276,7 @@ export function ResponseForm<T extends FieldValues>({
                 errorMessage={fieldState.error?.message}
                 label={fileLabel}
                 helper={fileHelper}
+                required={fileRequired}
                 inputRef={ref}
                 onBlur={onBlur}
                 onChange={onChange}
@@ -246,6 +285,56 @@ export function ResponseForm<T extends FieldValues>({
           }}
         />
       )}
+    </>
+  );
+}
+
+interface ResponseFormProps<T extends FieldValues> {
+  control: Control<T>;
+  typeName?: Path<T>;
+  textName?: Path<T>;
+  fileName?: Path<T>;
+  typeLabel?: string;
+  typeHelper?: ReactNode;
+  textHelper?: ReactNode;
+  fileLabel?: string;
+  fileHelper?: ReactNode;
+  fileRequired?: boolean;
+  typeOptions?: ResponseTypeOption[];
+}
+
+export function ResponseForm<T extends FieldValues>({
+  control,
+  typeName = 'type' as Path<T>,
+  textName = 'text' as Path<T>,
+  fileName = 'file' as Path<T>,
+  typeLabel = 'Tipo de respuesta',
+  typeHelper,
+  textHelper,
+  fileLabel,
+  fileHelper,
+  fileRequired,
+  typeOptions = DEFAULT_RESPONSE_TYPE_OPTIONS,
+}: ResponseFormProps<T>) {
+  return (
+    <div className="flex flex-col gap-2">
+      <ResponseTypeField<T>
+        control={control}
+        typeName={typeName}
+        typeLabel={typeLabel}
+        typeHelper={typeHelper}
+        typeOptions={typeOptions}
+      />
+      <ResponseContentField<T>
+        control={control}
+        typeName={typeName}
+        textName={textName}
+        fileName={fileName}
+        textHelper={textHelper}
+        fileLabel={fileLabel}
+        fileHelper={fileHelper}
+        fileRequired={fileRequired}
+      />
     </div>
   );
 }

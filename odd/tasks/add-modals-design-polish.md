@@ -317,6 +317,36 @@ candidato de ~390 líneas que pasa el preflight.
 (el schema de la action de respuestas sin la regla "IMAGE/PDF exige archivo"). El native
 aprobó el candidato. Las dos vistas se complementan.
 
+### L16 — T5: los tres modales de alta con la dirección 02 (2026-11-10)
+
+Implementado sobre `design/add-modals/02-ayuda-contextual.html`. Cada modal: la cabecera la
+pinta el shell (los tres componentes dejaron de emitir su propio `<h2>`), el aviso
+"--midnight-green", dos secciones numeradas, una línea de ayuda bajo cada campo, las dos
+herramientas externas como anchors al lado del campo de archivo, la línea de WhatsApp y un pie
+con "Cancelar" y el botón primario que nombra la acción real.
+
+**Decisiones de copy que quedan registradas**:
+
+1. **La sección 2 del modal de respuesta cambia de título según el tipo**: "El archivo" para
+   IMAGE/PDF (el estado que dibuja el artboard) y "La respuesta" para Texto/Código. Sin ese
+   cambio, una sección llamada "El archivo" contenía el área de texto en el estado por defecto
+   (`type: 'TEXT'`), que es un rótulo incorrecto.
+2. **La línea de contexto de respuesta nombra sólo el módulo**: "Subís una respuesta al
+   **Primer parcial**". El nombre de la materia no es alcanzable desde `moduleContainer`
+   (`DataModule` no lleva la relación con la materia) y chegarlo exige tocar
+   `problemsTable.tsx` y `mainModule.tsx`, fuera de la superficie de la unidad.
+3. **El botón "Eliminar Examen" de la card se deja como está**: el vocabulario de S5 pide
+   "parcial", pero ese rótulo corresponde a un modal de borrado que dice "Eliminar Examen" y
+   "Examen eliminado.". Cambiar sólo el label de la card dejaría una inconsistencia nueva.
+
+**Pendientes anotados para un follow-up** (fuera del alcance aprobado, que era los tres
+modales de alta):
+
+- El vocabulary "Examen" en los modales de borrado y de reporte, y en el botón de la card.
+- El nombre de la materia en la línea de contexto del modal de respuesta.
+- `Notice`, `FileTools` y `ContactLine` quedaron como tres copias byte-idénticas en los tres
+  modales, porque extraerlos a un módulo compartido exige un archivo nuevo.
+
 ### L15 — Las 12 lineages viejas de la revisión nativa (2026-11-10)
 
 En el store de la revisión nativa quedaban **doce lineages de sesiones anteriores** (del 23/10 al02/11), todas en estado `reviewing`, `correction_required` o `escalated`, ninguna cerrada. Seis de ellas tenían **hallazgos del reviewer nativo admitidos y nunca aplicados**: su `fix_delta_hash` era el hash de la string vacía, o sea que no se había registrado ninguna corrección.
