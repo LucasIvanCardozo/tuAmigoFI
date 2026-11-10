@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1440" />
+    <title>tuAmigoFI — Sistema de diseño (tokens reales del proyecto)</title>
+    <style>
+      :root {
+        /* Project tokens — src/app/globals.css :root */
+        --black-olive: rgb(38, 44, 30);
+        --dark-cyan: rgb(39, 120, 124);
+        --silver: rgb(169, 172, 169);
+        --platinum: rgb(212, 215, 222);
+        --midnight-green: rgb(28, 50, 53);
+        --white: rgb(246, 247, 248);
+        --black: rgb(19, 21, 24);
+
+        /* Stock Tailwind (tailwindcss 4.3.3) — NOT project tokens */
+        --tw-slate-800: #1e293b;
+        --tw-slate-700: #334155;
+        --tw-slate-300: #cbd5e1;
+        --tw-slate-600: #475569;
+        --tw-gray-600: #4b5563;
+        --tw-gray-900: #111827;
+        --tw-red-600: #dc2626;
+        --tw-white: #fff;
+        --tw-black: #000;
+
+        /* Hardcoded accents */
+        --accent-92c1c9: #92c1c9;
+        --accent-96cad3: #96cad3;
+        --accent-9fc8cf: #9fc8cf;
+        --accent-c8e0e4: #c8e0e4;
+        --accent-3d4731: #3d4731;
+        --accent-31969b: #31969b;
+        --accent-babdba: #babdba;
+        --accent-f3f4f6: #f3f4f6;
+
+        /* Tailwind v4 default scale values used by the app */
+        --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+          'Noto Sans', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+          'Noto Color Emoji';
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background: #fff;
+        color: var(--black);
+        font-family: var(--font-sans);
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      .artboard {
+        width: 1440px;
+        margin: 0 auto;
+        padding: 48px 56px 96px;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        margin: 0;
+        line-height: 1.25;
+      }
+
+      p {
+        margin: 0;
+      }
+
+      code,
+      .mono {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+          'Courier New', monospace;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      :focus-visible {
+        outline: 3px solid var(--accent-92c1c9);
+        outline-offset: 2px;
+        border-radius: 2px;
+      }
+
+      /* ---------- header ---------- */
+      .page-header {
+        border-bottom: 2px solid var(--black);
+        padding-bottom: 24px;
+        margin-bottom: 40px;
+      }
+
+      .page-header h1 {
+        font-size: 34px;
+        font-weight: 700;
+      }
+
+      .page-header .lead {
+        font-size: 17px;
+        max-width: 900px;
+        margin-top: 10px;
+        color: #33383f;
+      }
+
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .badge {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1;
+        padding: 5px 9px;
+        border-radius: 999px;
+        border: 1px solid var(--tw-slate-700);
+        color: var(--tw-slate-700);
+        background: #fff;
+      }
+
+      .badge.stock {
+        border-style: dashed;
+        border-color: #92400e;
+        color: #92400e;
+        background: #fffbeb;
+      }
+
+      .badge.candidate {
+        border-style: dashed;
+        border-color: #1d4ed8;
+        color: #1d4ed8;
+        background: #eff6ff;
+      }
+
+      .badge.warn {
+        border-color: #b91c1c;
+        color: #b91c1c;
+        background: #fef2f2;
+      }
+
+      .badge.ok {
+        border-color: #15803d;
+        color: #15803d;
+        background: #f0fdf4;
+      }
+
+      /* ---------- sections ---------- */
+      section {
+        margin-bottom: 56px;
+      }
+
+      section > h2 {
+        font-size: 24px;
+        font-weight: 700;
+        border-left: 6px solid var(--accent-92c1c9);
+        padding-left: 14px;
+        margin-bottom: 6px;
+      }
+
+      .section-note {
+        font-size: 14px;
+        color: #44494f;
+        max-width: 980px;
+        margin-bottom: 22px;
+      }
+
+      h3.group {
+        font-size: 17px;
+        font-weight: 600;
+        margin: 26px 0 12px;
+      }
+
+      /* ---------- swatches ---------- */
+      .swatch-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+      }
+
+      .swatch {
+        border: 1px solid #d3d7de;
+        border-radius: 6px;
+        background: #fff;
+        overflow: hidden;
+      }
+
+      .swatch .chip {
+        height: 76px;
+        border-bottom: 1px solid #d3d7de;
+      }
+
+      .swatch .body {
+        padding: 12px 14px 14px;
+      }
+
+      .swatch .name {
+        font-weight: 700;
+        font-size: 15px;
+      }
+
+      .swatch .value {
+        font-size: 13px;
+        margin-top: 3px;
+      }
+
+      .swatch .usage {
+        font-size: 13px;
+        color: #3d4249;
+        margin-top: 8px;
+      }
+
+      .swatch .src {
+        display: block;
+        font-size: 11px;
+        color: #555b63;
+        margin-top: 8px;
+        word-break: break-all;
+      }
+
+      .swatch .flags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 10px;
+      }
+
+      /* ---------- type scale ---------- */
+      .type-row {
+        display: flex;
+        align-items: baseline;
+        gap: 20px;
+        border-bottom: 1px solid #e3e6eb;
+        padding: 12px 0;
+      }
+
+      .type-row .spec {
+        width: 190px;
+        flex: 0 0 190px;
+        font-size: 12px;
+        color: #4a5058;
+      }
+
+      .type-row .sample {
+        color: var(--black);
+      }
+
+      /* ---------- spacing ---------- */
+      .space-row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 6px 0;
+      }
+
+      .space-row .spec {
+        width: 190px;
+        flex: 0 0 190px;
+        font-size: 12px;
+        color: #4a5058;
+      }
+
+      .space-bar {
+        height: 18px;
+        background: var(--accent-c8e0e4);
+        border: 1px solid #a9c8ce;
+        border-radius: 3px;
+      }
+
+      .space-bar.extra {
+        background: var(--accent-9fc8cf);
+      }
+
+      /* ---------- radius / shadow ---------- */
+      .split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+      }
+
+      .panel {
+        border: 1px solid #d3d7de;
+        border-radius: 6px;
+        padding: 18px;
+        background: #fff;
+      }
+
+      .radius-row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 8px 0;
+      }
+
+      .radius-row .spec {
+        width: 190px;
+        flex: 0 0 190px;
+        font-size: 12px;
+        color: #4a5058;
+      }
+
+      .radius-box {
+        width: 120px;
+        height: 56px;
+        background: var(--accent-c8e0e4);
+        border: 1px solid #a9c8ce;
+      }
+
+      .shadow-row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 14px 0;
+      }
+
+      .shadow-row .spec {
+        width: 230px;
+        flex: 0 0 230px;
+        font-size: 12px;
+        color: #4a5058;
+      }
+
+      .shadow-box {
+        width: 150px;
+        height: 64px;
+        background: #fff;
+        border-radius: 6px;
+      }
+
+      /* ---------- live components ---------- */
+      .component-cols {
+        display: grid;
+        grid-template-columns: 470px 1fr;
+        gap: 28px;
+        align-items: start;
+      }
+
+      .surface-light {
+        background: var(--white);
+        border: 1px solid #d3d7de;
+        border-radius: 6px;
+        padding: 22px;
+      }
+
+      .surface-light h4 {
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+
+      .surface-light .caption {
+        font-size: 12px;
+        color: #4a5058;
+        margin-bottom: 16px;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-bottom: 16px;
+      }
+
+      .field label {
+        color: var(--tw-white);
+        font-size: 16px;
+      }
+
+      .surface-light .field label {
+        color: var(--black);
+      }
+
+      .input {
+        font-family: inherit;
+        font-size: 16px;
+        color: var(--tw-black);
+        background: var(--white);
+        padding: 4px 8px;
+        border-radius: 4px;
+        border: 1px solid var(--tw-slate-700);
+        width: 100%;
+      }
+
+      .input.narrow {
+        width: auto;
+        min-width: 240px;
+      }
+
+      .error {
+        color: var(--tw-red-600);
+        font-size: 14px;
+        margin-top: 4px;
+      }
+
+      .checkbox-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .checkbox-row label {
+        color: var(--black);
+        font-size: 16px;
+      }
+
+      /* modal reproduction — src/app/components/UI/Modal.tsx */
+      .modal-stage {
+        background: var(--tw-slate-800);
+        border-radius: 8px;
+        color: var(--tw-white);
+        padding: 20px;
+        position: relative;
+      }
+
+      .modal-overlay-note {
+        font-size: 12px;
+        color: #4a5058;
+        margin-bottom: 12px;
+      }
+
+      .modal-panel {
+        position: relative;
+        background: var(--tw-slate-800);
+        color: var(--tw-white);
+        border-radius: 8px;
+        box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        padding: 20px;
+        max-height: 620px;
+        overflow-y: auto;
+      }
+
+      .modal-panel .body {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .modal-panel h2 {
+        font-size: 18px;
+        font-weight: 400;
+        margin: 0;
+      }
+
+      .modal-panel h4 {
+        font-size: 16px;
+        font-weight: 500;
+        margin: 0;
+      }
+
+      .modal-panel .section {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .modal-panel .section > header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .modal-panel .helper {
+        font-size: 14px;
+      }
+
+      .modal-panel .helper-small {
+        font-size: 12px;
+      }
+
+      .modal-panel .ext-link {
+        text-decoration: underline;
+      }
+
+      .modal-panel .file-row {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .modal-panel input[type='file'] {
+        font-family: inherit;
+        font-size: 13px;
+        color: var(--tw-white);
+        background: var(--white);
+        padding: 4px 8px;
+        border-radius: 4px;
+        border: 1px solid var(--tw-slate-700);
+        width: 100%;
+      }
+
+      .modal-panel .file-note {
+        font-size: 12px;
+        color: #ffd9d9;
+      }
+
+      .modal-panel .actions {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        margin-top: 16px;
+      }
+
+      .btn-primary {
+        font-family: inherit;
+        font-size: 16px;
+        color: var(--tw-white);
+        background: transparent;
+        padding: 4px 8px;
+        border: 2px solid var(--tw-slate-700);
+        border-radius: 6px;
+        transition: background-color 150ms ease, color 150ms ease;
+      }
+
+      .btn-primary:hover {
+        background: var(--tw-slate-700);
+      }
+
+      .btn-primary:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .btn-close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: 0;
+        border-top-right-radius: 8px;
+        color: var(--tw-white);
+        cursor: pointer;
+        transition: background-color 150ms ease;
+      }
+
+      .btn-close:hover {
+        background: var(--tw-slate-700);
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      /* ---------- source list ---------- */
+      .sources {
+        columns: 3;
+        column-gap: 32px;
+        font-size: 12px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .sources li {
+        break-inside: avoid;
+        padding: 4px 0;
+        color: #3d4249;
+      }
+
+      .footer {
+        margin-top: 48px;
+        padding-top: 20px;
+        border-top: 1px solid #d3d7de;
+        font-size: 12px;
+        color: #4a5058;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="artboard">
+      <header class="page-header">
+        <h1>tuAmigoFI — Sistema de diseño</h1>
+        <p class="lead">
+          Captura de los tokens que el proyecto <strong>ya usa</strong>, leídos del código fuente.
+          No es un sistema propuesto: cada valor de esta placa tiene una ruta de origen. La placa
+          renderiza los colores, la tipografía, el espaciado, los radios, las sombras y los
+          componentes tal como están implementados hoy.
+        </p>
+        <div class="legend">
+          <span class="badge">Token del proyecto (:root)</span>
+          <span class="badge candidate">Candidato a token único</span>
+          <span class="badge stock">Stock Tailwind, not a project token</span>
+          <span class="badge warn">Observación de accesibilidad</span>
+          <span class="badge ok">Contraste AA</span>
+        </div>
+      </header>
+
+      <main>
+        <!-- ============ COLORES ============ -->
+        <section id="colores" aria-labelledby="h-colores">
+          <h2 id="h-colores">1. Colores</h2>
+          <p class="section-note">
+            Siete variables CSS declaradas en <code>src/app/globals.css</code>. En el JSX se usan
+            como utilidades arbitrarias de Tailwind (<code>bg-(--platinum)</code>,
+            <code>text-(--silver)</code>). El bloque <code>prefers-color-scheme: dark</code> del
+            mismo archivo está comentado: no aplica.
+          </p>
+
+          <h3 class="group">1.1 Tokens del proyecto (7)</h3>
+          <div class="swatch-grid">
+            <article class="swatch">
+              <div class="chip" style="background: var(--black-olive)"></div>
+              <div class="body">
+                <p class="name mono">--black-olive</p>
+                <p class="value mono">rgb(38, 44, 30)</p>
+                <p class="usage">
+                  Superficie oscura del panel lateral de módulos y del toggle lateral en mobile.
+                  También es el color de texto del botón “Agregar TP” de ese panel.
+                </p>
+                <code class="src">src/app/globals.css · asideModules.tsx:61,135</code>
+              </div>
+            </article>
+
+            <article class="swatch">
+              <div class="chip" style="background: var(--dark-cyan)"></div>
+              <div class="body">
+                <p class="name mono">--dark-cyan</p>
+                <p class="value mono">rgb(39, 120, 124)</p>
+                <p class="usage">
+                  Chip de la materia en el encabezado (<code>bg-(--dark-cyan)</code> con
+                  <code>text-(--white)</code>) y tinte del ícono del home
+                  (<code>bg-(--dark-cyan)/10</code>).
+                </p>
+                <code class="src">src/app/globals.css · course.tsx:31 · page.tsx:86</code>
+              </div>
+            </article>
+
+            <article class="swatch">
+              <div class="chip" style="background: var(--silver)"></div>
+              <div class="body">
+                <p class="name mono">--silver</p>
+                <p class="value mono">rgb(169, 172, 169)</p>
+                <p class="usage">
+                  Texto secundario dentro de la lista lateral (“Del año 2024”, “Del 3/2024”).
+                </p>
+                <code class="src">src/app/globals.css · asideModules.tsx:86,119</code>
+              </div>
+            </article>
+
+            <article class="swatch">
+              <div class="chip" style="background: var(--platinum)"></div>
+              <div class="body">
+                <p class="name mono">--platinum</p>
+                <p class="value mono">rgb(212, 215, 222)</p>
+                <p class="usage">
+                  Fondo de la página (<code>body { background: var(--platinum) }</code>), banda fija
+                  del encabezado de cada módulo y superficies de los skeletons.
+                </p>
+                <code class="src">src/app/globals.css · moduleContainer.tsx:91</code>
+              </div>
+            </article>
+
+            <article class="swatch">
+              <div class="chip" style="background: var(--midnight-green)"></div>
+              <div class="body">
+                <p class="name mono">--midnight-green</p>
+                <p class="value mono">rgb(28, 50, 53)</p>
+                <p class="usage">
+                  Superficie del botón “Compartir link”, de los botones de preguntas y del ítem
+                  activo de la navegación.
+                </p>
+                <code class="src">src/app/globals.css · buttonUrl.tsx:15 · nav.tsx:109</code>
+              </div>
+            </article>
+
+            <article class="swatch">
+              <div class="chip" style="background: var(--white)"></div>
+              <div class="body">
+                <p class="name mono">--white</p>
+                <p class="value mono">rgb(246, 247, 248)</p>
+                <p class="usage">
+                  Color de texto del <code>body</code>, fondo de cada
+                  <code>input</code>/<code>select</code>/<code>textarea</code>, superficie de la
+                  tarjeta de módulo y de los chips de reacciones.
+                </p>
+                <code class="src">src/app/globals.css · moduleContainer.tsx:159,161,171</code>
+              </div>
+            </article>
+
+            <article class="swatch">
+              <div class="chip" style="background: var(--black)"></div>
+              <div class="body">
+                <p class="name mono">--black</p>
+                <p class="value mono">rgb(19, 21, 24)</p>
+                <p class="usage">
+                  Color de texto de todos los campos de formulario
+                  (<code>color: var(--black)</code> en la regla global).
+                </p>
+                <code class="src">src/app/globals.css (regla input, select, textarea)</code>
+              </div>
+            </article>
+
+            <article class="swatch">
+              <div class="chip" style="background: var(--platinum)"></div>
+              <div class="body">
+                <p class="name">Regla <code>body</code> en uso</p>
+                <p class="value mono">color: var(--white) · background: var(--platinum)</p>
+                <p class="usage">
+                  El texto del sitio se lee sobre el fondo de página.
+                </p>
+                <div class="flags">
+                  <span class="badge warn">Contraste ≈ 1.34:1 — no cumple AA</span>
+                </div>
+                <code class="src">src/app/globals.css (regla body)</code>
+              </div>
+            </article>
+          </div>
+
+          <h3 class="group">1.2 Acentos hex escritos a mano (8, no son tokens)</h3>
+          <p class="section-note">
+            Cuatro de ellos comparten el mismo tono cian (≈ 188,7°–188,9° de matiz) y están escritos
+            de cuatro formas distintas. Un quinto es un oliva (87,3°) del mismo tono que
+            <code>--black-olive</code>, no del cian. Ninguno está declarado en
+            <code>:root</code>.
+          </p>
+          <div class="swatch-grid">
+            <article class="swatch">
+              <div class="chip" style="background: var(--accent-92c1c9)"></div>
+              <div class="body">
+                <p class="name mono">#92C1C9</p>
+                <p class="value mono">rgb(146, 193, 201) · hsl(188.7, 33.7%, 68%)</p>
+                <p class="usage">Fondo y borde en hover del botón “Respuesta”.</p>
+                <div class="flags">
+                  <span class="badge candidate">Candidato a token único</span>
+                </div>
+                <code class="src">moduleContainer.tsx:147 · ModalAddResponseOpener.tsx:40</code>
+              </div>
+            </article>
+
+            <article class="swatch">
+              <div class="chip" style="background: var(--accent-96cad3)"></div>
+              <div class="body">
+                <p class="name mono">#96cad3</p>
+                <p class="value mono">rgb(150, 202, 211) · hsl(188.9, 40.9%, 70.8%)</p>
+                <p class="usage">Fondo del área de PDF dentro de la tarjeta de módulo.</p>
+                <div class="flags">
+                  <span class="badge candidate">Candidato a token único</span>
+                </div>
+                <code class="src">moduleContainer.tsx:160</code>
+              </div>
+            </article>
+
+            <article class="swatch">
+              <div class="chip" style="background: var(--accent-9fc8cf)"></div>
+              <div class="body">
+                <p class="name mono">#9fc8cf</p>
+                <p class="value mono">rgb(159, 200, 207) · hsl(188.8, 33.3%, 71.8%)</p>
+                <p class="usage">Chip detrás del título de una respuesta (“Ejercicio 3:”).</p>
+                <div class="flags">
+                  <span class="badge candidate">Candidato a token único</span>
+                </div>
+                <code class="src">moduleResponse.tsx:50</code>
+              </div>
+            </article>
+
+            <article class="swatch">
+              <div class="chip" style="background: var(--accent-c8e0e4)"></div>
+              <div class="body">
+                <p class="name mono">#C8E0E4</p>
+                <p class="value mono">rgb(200, 224, 228) · hsl(188.6, 34.1%, 83.9%)</p>
+                <p class="usage">
+                  Fondo del visor de PDF y del área de PDF de una respuesta.
+                </p>
+                <div class="flags">
+                  <span class="badge candidate">Candidato a token único</span>
+                </div>
+                <code class="src">pdfView.tsx:9,18 · moduleResponse.tsx:104,130</code>
+              </div>
+            </article>
+
+            <article class="swatch">
+              <div class="chip" style="background: var(--accent-3d4731)"></div>
+              <div class="body">
+                <p class="name mono">#3D4731</p>
+                <p class="value mono">rgb(61, 71, 49) · hsl(87.3, 18.3%, 23.5%)</p>
+                <p class="usage">
+                  Fondo del ítem seleccionado en la lista lateral (“Mostrar todos”, TP activo).
+                </p>
+                <div class="flags">
+                  <span class="badge candidate">Candidato a token único</span>
+                  <span class="badge">Familia oliva (como --black-olive)</span>
+                </div>
+                <code class="src">asideModules.tsx:73,93</code>
+              </div>
+            </article>
+
+            <article class="swatch">
+              <div class="chip" style="background: var(--accent-31969b)"></div>
+              <div class="body">
+                <p class="name mono">#31969B</p>
+                <p class="value mono">rgb(49, 150, 155) · hsl(182.8, 52%, 40%)</p>
+                <p class="usage">Marca del ítem activo de la navegación.</p>
+                <div class="flags">
+                  <span class="badge candidate">Candidato a token único</span>
+                  <span class="badge">Mismo matiz que --dark-cyan</span>
+                </div>
+                <code class="src">nav.tsx:109</code>
+              </div>
+            </article>
+
+            <article class="swatch">
+              <div class="chip" style="background: var(--accent-babdba)"></div>
+              <div class="body">
+                <p class="name mono">#BABDBA</p>
+                <p class="value mono">rgb(186, 189, 186)</p>
+                <p class="usage">Tipografía decorativa de fondo detrás de la página.</p>
+                <code class="src">IconBackground.tsx:14</code>
+              </div>
+            </article>
+
+            <article class="swatch">
+              <div class="chip" style="background: var(--accent-f3f4f6)"></div>
+              <div class="body">
+                <p class="name mono">#F3F4F6</p>
+                <p class="value mono">rgb(243, 244, 246)</p>
+                <p class="usage">
+                  Fondo del chip que acompaña al título de las páginas públicas.
+                </p>
+                <code class="src">page.tsx:33 · (pages)/materias/page.tsx:37</code>
+              </div>
+            </article>
+          </div>
+
+          <h3 class="group">1.3 Colores de categoría del calendario (5, no son acentos de interfaz)</h3>
+          <div class="swatch-grid">
+            <article class="swatch">
+              <div class="chip" style="background: #ffd700"></div>
+              <div class="body">
+                <p class="name mono">#FFD700</p>
+                <p class="value">Hoy</p>
+                <code class="src">calendar.tsx:194,236,263</code>
+              </div>
+            </article>
+            <article class="swatch">
+              <div class="chip" style="background: #4682b4"></div>
+              <div class="body">
+                <p class="name mono">#4682B4</p>
+                <p class="value">Receso</p>
+                <code class="src">calendar.tsx:201,247</code>
+              </div>
+            </article>
+            <article class="swatch">
+              <div class="chip" style="background: #663399"></div>
+              <div class="body">
+                <p class="name mono">#663399</p>
+                <p class="value">Totalizadores</p>
+                <code class="src">calendar.tsx:210,251</code>
+              </div>
+            </article>
+            <article class="swatch">
+              <div class="chip" style="background: #dc143c"></div>
+              <div class="body">
+                <p class="name mono">#DC143C</p>
+                <p class="value">Feriado</p>
+                <code class="src">calendar.tsx:219,255</code>
+              </div>
+            </article>
+            <article class="swatch">
+              <div class="chip" style="background: #228b22"></div>
+              <div class="body">
+                <p class="name mono">#228B22</p>
+                <p class="value">Inicio/Fin de cuatrimestre</p>
+                <code class="src">calendar.tsx:228,259</code>
+              </div>
+            </article>
+          </div>
+
+          <h3 class="group">1.4 Paleta stock de Tailwind usada dentro de la UI</h3>
+          <p class="section-note">
+            Los modales y los primitivos de formulario están construidos con la paleta por defecto de
+            Tailwind v4 (<code>tailwindcss@4.3.3</code>). <strong>No son tokens del proyecto</strong>:
+            <code>slate-800</code> no existe en <code>:root</code>.
+          </p>
+          <div class="swatch-grid">
+            <article class="swatch">
+              <div class="chip" style="background: var(--tw-slate-800)"></div>
+              <div class="body">
+                <p class="name mono">slate-800</p>
+                <p class="value mono">#1e293b · rgb(30, 41, 59)</p>
+                <p class="usage">Superficie del panel del modal y fondo del overlay (50%).</p>
+                <div class="flags"><span class="badge stock">Stock Tailwind, not a project token</span></div>
+                <code class="src">UI/Modal.tsx:26,36</code>
+              </div>
+            </article>
+            <article class="swatch">
+              <div class="chip" style="background: var(--tw-slate-700)"></div>
+              <div class="body">
+                <p class="name mono">slate-700</p>
+                <p class="value mono">#334155 · rgb(51, 65, 85)</p>
+                <p class="usage">Borde de los campos, borde del botón primario, hover del cerrar.</p>
+                <div class="flags"><span class="badge stock">Stock Tailwind, not a project token</span></div>
+                <code class="src">InputForm.tsx:47 · ModalAddTpContent.tsx:120</code>
+              </div>
+            </article>
+            <article class="swatch">
+              <div class="chip" style="background: var(--tw-slate-300)"></div>
+              <div class="body">
+                <p class="name mono">slate-300</p>
+                <p class="value mono">#cbd5e1</p>
+                <p class="usage">Nombre del archivo cargado y texto “Procesando imagen…”.</p>
+                <div class="flags"><span class="badge stock">Stock Tailwind, not a project token</span></div>
+                <code class="src">FileForm.tsx:60 · ResponseForm.tsx:93,95</code>
+              </div>
+            </article>
+            <article class="swatch">
+              <div class="chip" style="background: var(--tw-gray-600)"></div>
+              <div class="body">
+                <p class="name mono">gray-600</p>
+                <p class="value mono">#4b5563</p>
+                <p class="usage">Borde del botón “Respuesta”.</p>
+                <div class="flags"><span class="badge stock">Stock Tailwind, not a project token</span></div>
+                <code class="src">moduleContainer.tsx:147</code>
+              </div>
+            </article>
+            <article class="swatch">
+              <div class="chip" style="background: var(--tw-red-600)"></div>
+              <div class="body">
+                <p class="name mono">red-600</p>
+                <p class="value mono">#dc2626 · rgb(220, 38, 38)</p>
+                <p class="usage">Todos los mensajes de error de validación.</p>
+                <div class="flags">
+                  <span class="badge stock">Stock Tailwind, not a project token</span>
+                  <span class="badge warn">Sobre slate-800 ≈ 3.03:1 — no cumple AA</span>
+                </div>
+                <code class="src">InputForm.tsx:51 · SelectForm.tsx:56 · FileForm.tsx:62</code>
+              </div>
+            </article>
+            <article class="swatch">
+              <div class="chip" style="background: var(--tw-white)"></div>
+              <div class="body">
+                <p class="name mono">white / black</p>
+                <p class="value mono">#fff · #000</p>
+                <p class="usage">
+                  <code>text-white</code> en etiquetas y textos del modal; <code>text-black</code> en
+                  campos. No son los tokens <code>--white</code> / <code>--black</code>.
+                </p>
+                <div class="flags"><span class="badge stock">Stock Tailwind, not a project token</span></div>
+                <code class="src">InputForm.tsx:47,61 · UI/Modal.tsx:36</code>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- ============ TIPOGRAFÍA ============ -->
+        <section id="tipografia" aria-labelledby="h-tipografia">
+          <h2 id="h-tipografia">2. Tipografía</h2>
+          <p class="section-note">
+            El proyecto no declara ninguna fuente: <code>tailwind.config.ts</code> no tiene
+            <code>fontFamily</code> ni <code>src/app/globals.css</code> define
+            <code>font-family</code>. La pila en uso es la de Tailwind v4 por defecto
+            (<code>--font-sans</code>). Los tamaños son los valores por defecto de Tailwind v4.
+          </p>
+          <div class="panel" style="margin-bottom: 18px">
+            <p class="mono" style="font-size: 13px">
+              -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans',
+              Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color
+              Emoji'
+            </p>
+            <p style="font-size: 12px; color: #4a5058; margin-top: 8px">
+              Origen: <code>node_modules/tailwindcss/theme.css</code> (Tailwind v4 default
+              <code>--font-sans</code>) · <code>tailwind.config.ts</code> no declara fuentes.
+            </p>
+          </div>
+
+          <h3 class="group">2.1 Escala en uso</h3>
+          <div class="panel">
+            <div class="type-row">
+              <p class="spec mono">text-xs · 0.75rem / 1rem</p>
+              <p class="sample" style="font-size: 0.75rem; line-height: 1rem">
+                Solo se admite formato PDF. Por favor asegurate de que el módulo que quieres agregar
+                no se encuentre ya disponible en la lista.
+              </p>
+            </div>
+            <div class="type-row">
+              <p class="spec mono">text-sm · 0.875rem / 1.25rem</p>
+              <p class="sample" style="font-size: 0.875rem; line-height: 1.25rem">
+                Click aquí para eliminar páginas de tu PDF
+              </p>
+            </div>
+            <div class="type-row">
+              <p class="spec mono">text-base · 1rem / 1.5rem</p>
+              <p class="sample" style="font-size: 1rem; line-height: 1.5rem">
+                Esta respuesta se añadirá al módulo “TP 3 — Transformada de Laplace”
+              </p>
+            </div>
+            <div class="type-row">
+              <p class="spec mono">text-lg · 1.125rem / 1.75rem</p>
+              <p class="sample" style="font-size: 1.125rem; line-height: 1.75rem">Agregar TP</p>
+            </div>
+            <div class="type-row">
+              <p class="spec mono">text-xl · 1.25rem / 1.75rem</p>
+              <p class="sample" style="font-size: 1.25rem; line-height: 1.75rem">Busca tu TP</p>
+            </div>
+            <div class="type-row">
+              <p class="spec mono">text-4xl · 2.25rem / 2.5rem</p>
+              <p class="sample" style="font-size: 2.25rem; line-height: 2.5rem; font-weight: 700">
+                Facultivos
+              </p>
+            </div>
+            <div class="type-row" style="border-bottom: 0">
+              <p class="spec mono">Pesos en uso</p>
+              <p class="sample">
+                <strong style="font-weight: 500">font-medium</strong> en el título de sección dentro
+                del modal · <strong style="font-weight: 700">font-bold</strong> en los títulos de las
+                páginas públicas
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ ESPACIADO ============ -->
+        <section id="espaciado" aria-labelledby="h-espaciado">
+          <h2 id="h-espaciado">3. Espaciado</h2>
+          <p class="section-note">
+            Unidad base de Tailwind v4: <code>--spacing: 0.25rem</code>. El proyecto agrega tres
+            valores propios en el bloque <code>@theme</code> de
+            <code>src/app/globals.css</code> (y espejados en <code>tailwind.config.ts</code>).
+          </p>
+          <div class="panel">
+            <div class="space-row">
+              <p class="spec mono">p-1 · 0.25rem</p>
+              <span class="space-bar" style="width: 4px"></span>
+              <span style="font-size: 12px; color: #4a5058">m-1 · gap-1 · px-1</span>
+            </div>
+            <div class="space-row">
+              <p class="spec mono">p-2 · 0.5rem</p>
+              <span class="space-bar" style="width: 8px"></span>
+              <span style="font-size: 12px; color: #4a5058">px-2 · py-1 · gap-2 · m-2</span>
+            </div>
+            <div class="space-row">
+              <p class="spec mono">p-3 · 0.75rem</p>
+              <span class="space-bar" style="width: 12px"></span>
+            </div>
+            <div class="space-row">
+              <p class="spec mono">p-4 · 1rem</p>
+              <span class="space-bar" style="width: 16px"></span>
+              <span style="font-size: 12px; color: #4a5058">gap-4 · mt-4</span>
+            </div>
+            <div class="space-row">
+              <p class="spec mono">p-5 · 1.25rem</p>
+              <span class="space-bar" style="width: 20px"></span>
+              <span style="font-size: 12px; color: #4a5058">padding del cuerpo del modal</span>
+            </div>
+            <div class="space-row">
+              <p class="spec mono">p-6 · 1.5rem</p>
+              <span class="space-bar" style="width: 24px"></span>
+              <span style="font-size: 12px; color: #4a5058">h-6 en la fila de acciones del módulo</span>
+            </div>
+            <div class="space-row">
+              <p class="spec mono">p-8 · 2rem</p>
+              <span class="space-bar" style="width: 32px"></span>
+            </div>
+            <div class="space-row">
+              <p class="spec mono">p-10 · 2.5rem</p>
+              <span class="space-bar" style="width: 40px"></span>
+              <span style="font-size: 12px; color: #4a5058">w-10 h-10 del botón cerrar</span>
+            </div>
+            <div class="space-row">
+              <p class="spec mono">p-12 · 3rem</p>
+              <span class="space-bar" style="width: 48px"></span>
+            </div>
+            <div class="space-row">
+              <p class="spec mono">--spacing-18 · 4.5rem</p>
+              <span class="space-bar extra" style="width: 72px"></span>
+              <span class="badge candidate">@theme · globals.css</span>
+            </div>
+            <div class="space-row">
+              <p class="spec mono">--spacing-19 · 4.75rem</p>
+              <span class="space-bar extra" style="width: 76px"></span>
+              <span class="badge candidate">@theme · globals.css</span>
+            </div>
+            <div class="space-row">
+              <p class="spec mono">--spacing-250 · 62.5rem</p>
+              <span class="space-bar extra" style="width: 240px"></span>
+              <span class="badge candidate">@theme · globals.css (h-250)</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ RADIOS Y SOMBRAS ============ -->
+        <section id="radios-sombras" aria-labelledby="h-radios">
+          <h2 id="h-radios">4. Radios y sombras</h2>
+          <div class="split">
+            <div class="panel">
+              <h3 class="group" style="margin-top: 0">4.1 Radios</h3>
+              <div class="radius-row">
+                <p class="spec mono">rounded-sm · 0.25rem</p>
+                <span class="radius-box" style="border-radius: 0.25rem"></span>
+              </div>
+              <div class="radius-row">
+                <p class="spec mono">rounded-md · 0.375rem</p>
+                <span class="radius-box" style="border-radius: 0.375rem"></span>
+              </div>
+              <div class="radius-row">
+                <p class="spec mono">rounded-lg · 0.5rem</p>
+                <span class="radius-box" style="border-radius: 0.5rem"></span>
+              </div>
+              <div class="radius-row">
+                <p class="spec mono">rounded-2xl · 1rem</p>
+                <span class="radius-box" style="border-radius: 1rem"></span>
+              </div>
+              <p style="font-size: 12px; color: #4a5058; margin-top: 12px">
+                En el modal y los formularios sólo aparecen <code>rounded-md</code> (campos y botón
+                primario) y <code>rounded-lg</code> (panel del diálogo).
+              </p>
+            </div>
+            <div class="panel">
+              <h3 class="group" style="margin-top: 0">4.2 Sombras</h3>
+              <div class="shadow-row">
+                <p class="spec mono">shadow-xl (panel del modal)</p>
+                <span
+                  class="shadow-box"
+                  style="box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)"
+                ></span>
+              </div>
+              <div class="shadow-row">
+                <p class="spec mono">shadow-md (títulos públicos)</p>
+                <span
+                  class="shadow-box"
+                  style="box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)"
+                ></span>
+              </div>
+              <div class="shadow-row">
+                <p class="spec mono">drop-shadow-md (tarjeta)</p>
+                <span
+                  class="shadow-box"
+                  style="filter: drop-shadow(0 4px 6px rgb(0 0 0 / 0.1))"
+                ></span>
+              </div>
+              <div class="shadow-row">
+                <p class="spec mono">shadow-sm (comentarios)</p>
+                <span
+                  class="shadow-box"
+                  style="box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)"
+                ></span>
+              </div>
+              <div class="shadow-row">
+                <p class="spec mono">shadow-[0 0 5px rgba(0,0,0,.5)]</p>
+                <span class="shadow-box" style="box-shadow: 0 0 5px 0 rgb(0 0 0 / 0.5)"></span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ COMPONENTES ============ -->
+        <section id="componentes" aria-labelledby="h-componentes">
+          <h2 id="h-componentes">5. Componentes en uso</h2>
+          <p class="section-note">
+            Reproducción fiel de los componentes actuales. La columna izquierda usa la regla global
+            de <code>src/app/globals.css</code>; la derecha reproduce el modal
+            <code>src/app/components/UI/Modal.tsx</code> con el cuerpo de
+            <code>ModalAddTpContent.tsx</code>.
+          </p>
+
+          <div class="component-cols">
+            <div class="surface-light">
+              <h4>Campos de formulario</h4>
+              <p class="caption">
+                Regla global: <code>background: var(--white)</code> · <code>color: var(--black)</code>.
+                Utilidades: <code>text-black px-2 py-1 rounded border border-slate-700 w-full</code>.
+              </p>
+
+              <div class="field">
+                <label for="sys-title">Título</label>
+                <input id="sys-title" class="input" type="text" placeholder="Título del TP" />
+              </div>
+
+              <div class="field">
+                <label for="sys-number">Número</label>
+                <input id="sys-number" class="input" type="number" value="3" min="1" max="30" />
+                <p class="error">El número debe ser mayor o igual a 1</p>
+              </div>
+
+              <div class="field">
+                <label for="sys-year">Año</label>
+                <input id="sys-year" class="input" type="number" value="2024" min="2000" max="2026" />
+              </div>
+
+              <div class="field">
+                <label for="sys-type">Tipo de parcial</label>
+                <select id="sys-type" class="input narrow">
+                  <option value="" selected>Selecciona el tipo de parcial</option>
+                  <option>Primer parcial</option>
+                  <option>Segundo parcial</option>
+                  <option>Final</option>
+                </select>
+                <p style="font-size: 12px; color: #4a5058">
+                  El <code>select</code> usa la misma regla <strong>sin</strong> <code>w-full</code>.
+                </p>
+              </div>
+
+              <div class="field">
+                <span class="mono" style="font-size: 12px; color: #4a5058">Archivo (PDF) *</span>
+                <input type="file" accept="application/pdf" aria-label="Archivo (PDF)" />
+                <p style="font-size: 12px; color: #4a5058">
+                  Único control sin <code>px-2 py-1 rounded border border-slate-700</code>; sólo lleva
+                  <code>text-white</code>.
+                </p>
+              </div>
+
+              <div class="field">
+                <span class="mono" style="font-size: 12px; color: #4a5058">Respuesta</span>
+                <textarea
+                  id="sys-answer"
+                  class="input"
+                  rows="3"
+                  cols="50"
+                  placeholder="Ingresá tu respuesta aquí..."
+                ></textarea>
+                <p style="font-size: 12px; color: #4a5058">
+                  El <code>textarea</code> usa <code>cols={50}</code> (caracteres, no porcentaje).
+                </p>
+              </div>
+
+              <div class="field">
+                <div class="checkbox-row">
+                  <input id="sys-confirm" type="checkbox" />
+                  <label for="sys-confirm">Mi parcial no tiene las respuestas</label>
+                </div>
+                <p class="error">Tenés que confirmar que el parcial no tiene las respuestas</p>
+              </div>
+
+              <div class="field">
+                <span class="mono" style="font-size: 12px; color: #4a5058">Tipo de respuesta</span>
+                <select id="sys-response-type" class="input narrow">
+                  <option value="" selected>Selecciona el tipo respuesta</option>
+                  <option>Texto</option>
+                  <option>Imagen</option>
+                  <option>Pdf</option>
+                  <option>Código</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <p class="modal-overlay-note">
+                Overlay real: <code>fixed inset-0 flex items-center justify-center p-4 bg-slate-800/50
+                backdrop-blur-sm</code>. Debajo, el panel <code>&lt;dialog&gt;</code>:
+                <code>w-full max-w-lg m-0 p-0 bg-slate-800 text-white border-0 rounded-lg shadow-xl</code>,
+                con cuerpo <code>flex flex-col gap-4 p-5 max-h-[90dvh] overflow-y-auto</code>.
+              </p>
+
+              <div class="modal-stage">
+                <div class="modal-panel" role="group" aria-label="Ejemplo del modal Agregar TP">
+                  <button class="btn-close" type="button" aria-label="Cerrar">
+                    <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+                      <path
+                        d="M6 6 L18 18 M18 6 L6 18"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        fill="none"
+                      />
+                    </svg>
+                  </button>
+
+                  <div class="body">
+                    <h2>Agregar TP</h2>
+
+                    <div class="section">
+                      <header>
+                        <h4>Datos del TP</h4>
+                      </header>
+
+                      <div class="field">
+                        <label for="m-title">Título</label>
+                        <input id="m-title" type="text" placeholder="Título del TP" />
+                      </div>
+
+                      <div class="field">
+                        <label for="m-number">Número</label>
+                        <input id="m-number" type="number" placeholder="Número del TP" min="1" max="30" />
+                        <p class="error">El número debe ser menor o igual a 30</p>
+                      </div>
+
+                      <div class="field">
+                        <label for="m-year">Año</label>
+                        <input id="m-year" type="number" placeholder="Año del TP" min="2000" max="2026" />
+                      </div>
+                    </div>
+
+                    <div class="section">
+                      <header>
+                        <h4>El archivo</h4>
+                      </header>
+                      <div class="file-row">
+                        <label for="m-file">Archivo (PDF) *</label>
+                        <input id="m-file" type="file" accept="application/pdf" />
+                        <p class="file-note">
+                          S6 — el <code>text-white</code> de este control queda sobre el fondo
+                          <code>var(--white)</code> global: el texto del archivo es ilegible.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div class="section">
+                      <p class="helper">
+                        <span class="ext-link">Click aquí para eliminar páginas de tu PDF</span>
+                      </p>
+                      <p class="helper">
+                        <span class="ext-link">Click aquí para convertir a PDF</span>
+                      </p>
+                    </div>
+
+                    <div class="section">
+                      <h4>¡Recuerda!</h4>
+                      <p class="helper-small">
+                        Solo se admite formato PDF. Por favor asegurate de que el modulo que quieres
+                        agregar no se encuentre ya disponible en la lista. En caso de cualquier
+                        problema podes contactarme: 2235319564
+                      </p>
+                    </div>
+
+                    <div class="actions">
+                      <button class="btn-primary" type="button">Aceptar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="split" style="margin-top: 22px">
+                <div class="panel">
+                  <h3 class="group" style="margin-top: 0">Botón primario</h3>
+                  <p class="mono" style="font-size: 12px; color: #4a5058; margin-bottom: 12px">
+                    px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700
+                    transition-colors disabled:opacity-50 disabled:cursor-not-allowed
+                  </p>
+                  <div style="display: flex; gap: 16px; align-items: center">
+                    <button class="btn-primary" type="button">Aceptar</button>
+                    <button class="btn-primary" type="button" disabled>Agregando…</button>
+                  </div>
+                </div>
+                <div class="panel">
+                  <h3 class="group" style="margin-top: 0">Botón cerrar</h3>
+                  <p class="mono" style="font-size: 12px; color: #4a5058; margin-bottom: 12px">
+                    absolute top-0 right-0 w-10 h-10 p-2 hover:bg-slate-700 rounded-tr-lg
+                  </p>
+                  <div
+                    class="modal-stage"
+                    style="position: relative; border-radius: 8px; padding: 20px; min-height: 74px"
+                  >
+                    <button class="btn-close" type="button" aria-label="Cerrar">
+                      <svg
+                        viewBox="0 0 24 24"
+                        width="24"
+                        height="24"
+                        aria-hidden="true"
+                        focusable="false"
+                      >
+                        <path
+                          d="M6 6 L18 18 M18 6 L6 18"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          fill="none"
+                        />
+                      </svg>
+                    </button>
+                    <p style="font-size: 13px">Cerrar (aria-label="Cerrar")</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ FUENTES ============ -->
+        <section id="fuentes" aria-labelledby="h-fuentes">
+          <h2 id="h-fuentes">6. Fuentes leídas</h2>
+          <ul class="sources mono">
+            <li>src/app/globals.css</li>
+            <li>tailwind.config.ts</li>
+            <li>src/app/components/UI/Modal.tsx</li>
+            <li>src/app/components/layout/modals/ModalAddTpContent.tsx</li>
+            <li>src/app/components/layout/modals/ModalAddMidtermContent.tsx</li>
+            <li>src/app/components/layout/modals/ModalAddResponseContent.tsx</li>
+            <li>src/app/components/layout/modals/ModalDeleteTpContent.tsx</li>
+            <li>src/app/components/layout/form/InputForm.tsx</li>
+            <li>src/app/components/layout/form/SelectForm.tsx</li>
+            <li>src/app/components/layout/form/CheckboxForm.tsx</li>
+            <li>src/app/components/layout/form/FileForm.tsx</li>
+            <li>src/app/components/layout/form/ResponseForm.tsx</li>
+            <li>src/app/components/layout/form/SectionForm.tsx</li>
+            <li>src/app/components/layout/form/form.tsx</li>
+            <li>src/app/hooks/useDialogA11y.ts</li>
+            <li>src/app/components/feature/materias/moduleContainer.tsx</li>
+            <li>src/app/components/feature/materias/asideModules.tsx</li>
+            <li>src/app/components/feature/materias/moduleResponse.tsx</li>
+            <li>src/app/components/feature/materias/course.tsx</li>
+            <li>src/app/components/layout/nav.tsx</li>
+            <li>src/app/components/layout/IconBackground.tsx</li>
+            <li>src/app/components/pdfView.tsx</li>
+            <li>src/app/components/pdf-viewer-impl.tsx</li>
+            <li>src/app/components/calendar.tsx</li>
+            <li>src/app/page.tsx</li>
+            <li>src/app/(pages)/materias/page.tsx</li>
+            <li>src/app/(pages)/contactame/page.tsx</li>
+            <li>src/app/(pages)/acceso-baneado/page.tsx</li>
+            <li>node_modules/tailwindcss/theme.css</li>
+          </ul>
+        </section>
+      </main>
+
+      <footer class="footer">
+        Captura de tokens reales del proyecto tuAmigoFI (Next.js 16, Tailwind CSS v4). Ningún valor
+        de esta placa fue inventado: todos provienen de los archivos listados arriba. Los valores
+        marcados como “Stock Tailwind, not a project token” no forman parte del sistema del proyecto.
+      </footer>
+    </div>
+  </body>
+</html>
