@@ -34,7 +34,6 @@ interface ResponseFileFieldProps {
   type: 'IMAGE' | 'PDF';
   value: File | undefined;
   errorMessage?: string;
-  label?: string;
   helper?: ReactNode;
   required?: boolean;
   inputRef: Ref<HTMLInputElement>;
@@ -49,7 +48,6 @@ const ResponseFileField = ({
   type,
   value,
   errorMessage,
-  label,
   helper,
   required,
   inputRef,
@@ -60,7 +58,6 @@ const ResponseFileField = ({
   const [localError, setLocalError] = useState<string | null>(null);
   const latestType = useRef(type);
   const isImage = type === 'IMAGE';
-  const labelId = `${id}-label`;
   const helperId = `${id}-helper`;
   const errorId = `${id}-error`;
 
@@ -111,7 +108,6 @@ const ResponseFileField = ({
 
   return (
     <div className="flex flex-col gap-1">
-      <FieldLabel id={id} elementId={labelId} label={label} required={required} />
       <FileRow
         id={id}
         inputRef={inputRef}
@@ -120,7 +116,6 @@ const ResponseFileField = ({
         invalid={Boolean(localError ?? errorMessage)}
         required={required}
         state={state}
-        labelledBy={label ? labelId : undefined}
         describedBy={fieldDescribedBy(
           helper ? helperId : undefined,
           (localError ?? errorMessage) ? errorId : undefined,
@@ -202,7 +197,6 @@ interface ResponseContentFieldProps<T extends FieldValues> {
   textName?: Path<T>;
   fileName?: Path<T>;
   textHelper?: ReactNode;
-  fileLabel?: string;
   fileHelper?: ReactNode;
   fileRequired?: boolean;
 }
@@ -213,7 +207,6 @@ export function ResponseContentField<T extends FieldValues>({
   textName = 'text' as Path<T>,
   fileName = 'file' as Path<T>,
   textHelper,
-  fileLabel,
   fileHelper,
   fileRequired,
 }: ResponseContentFieldProps<T>) {
@@ -276,7 +269,6 @@ export function ResponseContentField<T extends FieldValues>({
                 type={currentType}
                 value={value}
                 errorMessage={fieldState.error?.message}
-                label={fileLabel}
                 helper={fileHelper}
                 required={fileRequired}
                 inputRef={ref}
@@ -299,7 +291,6 @@ interface ResponseFormProps<T extends FieldValues> {
   typeLabel?: string;
   typeHelper?: ReactNode;
   textHelper?: ReactNode;
-  fileLabel?: string;
   fileHelper?: ReactNode;
   fileRequired?: boolean;
   typeOptions?: ResponseTypeOption[];
@@ -313,7 +304,6 @@ export function ResponseForm<T extends FieldValues>({
   typeLabel = 'Tipo de respuesta',
   typeHelper,
   textHelper,
-  fileLabel,
   fileHelper,
   fileRequired,
   typeOptions = DEFAULT_RESPONSE_TYPE_OPTIONS,
@@ -333,7 +323,6 @@ export function ResponseForm<T extends FieldValues>({
         textName={textName}
         fileName={fileName}
         textHelper={textHelper}
-        fileLabel={fileLabel}
         fileHelper={fileHelper}
         fileRequired={fileRequired}
       />

@@ -55,6 +55,72 @@
       "status": "resolved",
       "sentAt": "2026-11-10T17:58:54.518Z",
       "resolvedAt": "2026-11-10T18:07:35.112Z"
+    },
+    {
+      "id": "qm00g9ef",
+      "file": "02-ayuda-contextual.html",
+      "selector": "body > main > div:nth-of-type(1) > section:nth-of-type(2) > form > div:nth-of-type(2)",
+      "excerpt": "Cancelar Agregar parcial",
+      "comment": "linea superior no quiero que se vea, y la altura debe ser la de lo botones nada mas",
+      "createdAt": "2026-11-11T00:48:52.234Z",
+      "status": "open",
+      "sentAt": "2026-11-11T00:50:59.695Z",
+      "resolvedAt": null
+    },
+    {
+      "id": "6n4nrqhf",
+      "file": "02-ayuda-contextual.html",
+      "selector": "body > main > div:nth-of-type(1) > section:nth-of-type(2) > form > section:nth-of-type(2) > div:nth-of-type(1) > span",
+      "excerpt": "Elegir archivo Ningún archivo seleccionado",
+      "comment": "el fondo no quiero que tenga color, por ende el boton debe rotar el color con su texto",
+      "createdAt": "2026-11-11T00:49:19.084Z",
+      "status": "open",
+      "sentAt": "2026-11-11T00:50:59.695Z",
+      "resolvedAt": null
+    },
+    {
+      "id": "fsq7oyi1",
+      "file": "02-ayuda-contextual.html",
+      "selector": "body > main > div:nth-of-type(1) > section:nth-of-type(2) > form > section:nth-of-type(2) > h3",
+      "excerpt": "2 El archivo",
+      "comment": "El archivo no, debe decir simplemente Archivo",
+      "createdAt": "2026-11-11T00:49:31.584Z",
+      "status": "open",
+      "sentAt": "2026-11-11T00:50:59.695Z",
+      "resolvedAt": null
+    },
+    {
+      "id": "fvpgj624",
+      "file": "02-ayuda-contextual.html",
+      "selector": "body > main > div:nth-of-type(1) > section:nth-of-type(2) > form > section:nth-of-type(2) > div:nth-of-type(1) > label",
+      "excerpt": "Archivo del parcial * (obligatorio)",
+      "comment": "no es necesario esto ya que literal arriba dice \"archivo\"",
+      "createdAt": "2026-11-11T00:49:45.429Z",
+      "status": "open",
+      "sentAt": "2026-11-11T00:50:59.695Z",
+      "resolvedAt": null
+    },
+    {
+      "id": "ye2bzgus",
+      "file": "02-ayuda-contextual.html",
+      "selector": "body > main > div:nth-of-type(1) > section:nth-of-type(2) > form > section:nth-of-type(1) > div:nth-of-type(1) > p",
+      "excerpt": "Elegí el tipo de parcial.",
+      "comment": "innnecesario, ya se entiende lo que se debe hacer",
+      "createdAt": "2026-11-11T00:50:20.282Z",
+      "status": "open",
+      "sentAt": "2026-11-11T00:50:59.695Z",
+      "resolvedAt": null
+    },
+    {
+      "id": "bki7e364",
+      "file": "02-ayuda-contextual.html",
+      "selector": "body > main > div:nth-of-type(1) > section:nth-of-type(1) > form > section:nth-of-type(1) > div:nth-of-type(2) > p",
+      "excerpt": "De 1 a 30.",
+      "comment": "innecesario",
+      "createdAt": "2026-11-11T00:50:33.662Z",
+      "status": "open",
+      "sentAt": "2026-11-11T00:50:59.695Z",
+      "resolvedAt": null
     }
   ]
 }

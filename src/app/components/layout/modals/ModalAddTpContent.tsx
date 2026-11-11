@@ -61,7 +61,6 @@ export const ModalAddTpContent = ({ course }: { course: Course }) => {
           label="TP N°"
           min={1}
           max={30}
-          helper="De 1 a 30."
           required
         />
         <InputForm<AddTpInput>
@@ -75,11 +74,10 @@ export const ModalAddTpContent = ({ course }: { course: Course }) => {
           required
         />
       </SectionForm>
-      <SectionForm number={2} title="El archivo">
+      <SectionForm number={2} title="Archivo">
         <FileForm<AddTpInput>
           name="file"
           control={control}
-          label="Archivo del TP"
           accept="application/pdf"
           helper="Sólo PDF, hasta 5 MB."
           required
@@ -87,7 +85,7 @@ export const ModalAddTpContent = ({ course }: { course: Course }) => {
         <ModalFileTools />
       </SectionForm>
       <ModalContactLine />
-      <div className="flex items-center justify-end gap-3 border-t border-slate-700 pt-4">
+      <div className="flex items-center justify-end gap-3">
         <button
           type="button"
           onClick={closeModal}

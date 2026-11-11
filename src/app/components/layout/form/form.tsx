@@ -30,13 +30,12 @@ interface FieldLabelProps {
   id: string;
   label?: string;
   required?: boolean;
-  elementId?: string;
 }
 
-export function FieldLabel({ id, label, required, elementId }: FieldLabelProps) {
+export function FieldLabel({ id, label, required }: FieldLabelProps) {
   if (!label) return null;
   return (
-    <label id={elementId} htmlFor={id} className="text-sm font-medium text-white">
+    <label htmlFor={id} className="text-sm font-medium text-white">
       {label}
       {required && (
         <>
@@ -79,7 +78,6 @@ interface FileRowProps {
   disabled?: boolean;
   buttonLabel?: string;
   describedBy?: string;
-  labelledBy?: string;
   inputRef?: Ref<HTMLInputElement>;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: () => void;
@@ -94,7 +92,6 @@ export function FileRow({
   disabled,
   buttonLabel = 'Elegir archivo',
   describedBy: ariaDescribedBy,
-  labelledBy: ariaLabelledBy,
   inputRef,
   onChange,
   onBlur,
@@ -112,21 +109,20 @@ export function FileRow({
         required={required}
         aria-invalid={invalid || undefined}
         aria-describedby={ariaDescribedBy}
-        aria-labelledby={ariaLabelledBy}
         className="peer sr-only"
       />
       <span
-        className={`flex items-center gap-2 rounded-md border bg-(--white) p-2 ${
+        className={`flex items-center gap-2 rounded-md border p-2 ${
           invalid ? 'border-red-400' : 'border-slate-700'
         } peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[#92C1C9]`}
       >
         <label
           htmlFor={id}
-          className="inline-flex shrink-0 cursor-pointer items-center rounded-md bg-slate-700 px-3 py-2 text-sm font-semibold text-white"
+          className="inline-flex shrink-0 cursor-pointer items-center rounded-md bg-(--white) px-3 py-2 text-sm font-semibold text-(--black)"
         >
           {buttonLabel}
         </label>
-        <span className="min-w-0 flex-1 truncate text-sm text-(--black)">{state}</span>
+        <span className="min-w-0 flex-1 truncate text-sm text-(--silver)">{state}</span>
       </span>
     </>
   );

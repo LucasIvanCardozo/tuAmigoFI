@@ -4,19 +4,11 @@ import type { ReactNode, Ref } from 'react';
 import { useId } from 'react';
 import type { Control, FieldValues, Path } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
-import {
-  FieldError,
-  FieldHelper,
-  FieldLabel,
-  FileRow,
-  fieldDescribedBy,
-  formatFileSize,
-} from './form';
+import { FieldError, FieldHelper, FileRow, fieldDescribedBy, formatFileSize } from './form';
 
 interface FileFormProps<T extends FieldValues> {
   name: Path<T>;
   control: Control<T>;
-  label?: string;
   accept?: string;
   required?: boolean;
   disabled?: boolean;
@@ -26,14 +18,12 @@ interface FileFormProps<T extends FieldValues> {
 export function FileForm<T extends FieldValues>({
   name,
   control,
-  label,
   accept,
   required,
   disabled,
   helper,
 }: FileFormProps<T>) {
   const id = useId();
-  const labelId = `${id}-label`;
   const helperId = `${id}-helper`;
   const errorId = `${id}-error`;
 
@@ -56,7 +46,6 @@ export function FileForm<T extends FieldValues>({
 
         return (
           <div className="flex flex-col gap-1">
-            <FieldLabel id={id} elementId={labelId} label={label} required={required} />
             <FileRow
               id={id}
               inputRef={ref}
@@ -65,7 +54,6 @@ export function FileForm<T extends FieldValues>({
               disabled={disabled}
               invalid={Boolean(error)}
               state={state}
-              labelledBy={label ? labelId : undefined}
               describedBy={fieldDescribedBy(
                 helper ? helperId : undefined,
                 error ? errorId : undefined,

@@ -51,7 +51,6 @@ export const ModalAddMidtermContent = ({ course }: { course: Course }) => {
           control={control}
           label="Tipo de parcial"
           placeholder="Selecciona el tipo de parcial"
-          helper="Elegí el tipo de parcial."
           required
         >
           <option value="Primer parcial">Primer parcial</option>
@@ -69,11 +68,10 @@ export const ModalAddMidtermContent = ({ course }: { course: Course }) => {
           required
         />
       </SectionForm>
-      <SectionForm number={2} title="El archivo">
+      <SectionForm number={2} title="Archivo">
         <FileForm<AddMidtermInput>
           name="file"
           control={control}
-          label="Archivo del parcial"
           accept="application/pdf"
           helper="Sólo PDF, hasta 5 MB."
           required
@@ -88,7 +86,7 @@ export const ModalAddMidtermContent = ({ course }: { course: Course }) => {
         />
       </SectionForm>
       <ModalContactLine />
-      <div className="flex items-center justify-end gap-3 border-t border-slate-700 pt-4">
+      <div className="flex items-center justify-end gap-3">
         <button
           type="button"
           onClick={closeModal}
