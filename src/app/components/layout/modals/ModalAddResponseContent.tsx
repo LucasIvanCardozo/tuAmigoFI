@@ -20,10 +20,10 @@ import {
 import { ModalContactLine, ModalFileTools, ModalNotice } from './modal-parts';
 
 const RESPONSE_TYPE_OPTIONS: ResponseTypeOption[] = [
-  { value: 'TEXT', label: 'Texto — se escribe en el modal' },
-  { value: 'CODE', label: 'Código — se pega en el modal' },
-  { value: 'IMAGE', label: 'Imagen — JPG o PNG (se comprime sola)' },
-  { value: 'PDF', label: 'PDF — sólo PDF' },
+  { value: 'TEXT', label: 'Texto' },
+  { value: 'CODE', label: 'Código' },
+  { value: 'IMAGE', label: 'Imagen' },
+  { value: 'PDF', label: 'PDF' },
 ];
 
 export const ModalAddResponseContent = ({
