@@ -121,6 +121,28 @@
       "status": "resolved",
       "sentAt": "2026-11-11T00:50:59.695Z",
       "resolvedAt": "2026-11-11T01:42:59.635Z"
+    },
+    {
+      "id": "rcl6vwlb",
+      "file": "02-ayuda-contextual.html",
+      "selector": "body > main > div:nth-of-type(1) > section:nth-of-type(2) > form > section:nth-of-type(2) > div:nth-of-type(1) > span > label",
+      "excerpt": "Elegir archivo",
+      "comment": "no se ve el texto del boton",
+      "createdAt": "2026-11-11T04:08:50.958Z",
+      "status": "open",
+      "sentAt": "2026-11-11T04:09:14.142Z",
+      "resolvedAt": null
+    },
+    {
+      "id": "yl2i5j1f",
+      "file": "02-ayuda-contextual.html",
+      "selector": "body > main > div:nth-of-type(1) > section:nth-of-type(2) > form > section:nth-of-type(2) > div:nth-of-type(1) > span",
+      "excerpt": "Elegir archivo Ningún archivo seleccionado",
+      "comment": "sin borde",
+      "createdAt": "2026-11-11T04:10:19.729Z",
+      "status": "open",
+      "sentAt": "2026-11-11T04:10:21.667Z",
+      "resolvedAt": null
     }
   ]
 }

@@ -382,17 +382,15 @@ ul {
   display: flex;
   align-items: center;
   gap: 8px;
-  border: 1px solid var(--tw-slate-700);
   border-radius: 6px;
   padding: 8px;
 }
 
 .file-row.invalid {
-  border-color: var(--tw-red-400);
-  border-width: 2px;
+  border: 2px solid var(--tw-red-400);
 }
 
-.file-btn {
+.field .file-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -821,9 +819,8 @@ ul {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * {
-    transition: none !important;
-    animation: none !important;
+  .disclosure > .summary .chevron {
+    transition: none;
   }
 }
 </style>

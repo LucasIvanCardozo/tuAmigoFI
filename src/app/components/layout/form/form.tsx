@@ -112,8 +112,8 @@ export function FileRow({
         className="peer sr-only"
       />
       <span
-        className={`flex items-center gap-2 rounded-md border p-2 ${
-          invalid ? 'border-red-400' : 'border-slate-700'
+        className={`flex items-center gap-2 rounded-md p-2 ${
+          invalid ? 'border-2 border-solid border-red-400' : ''
         } peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[#92C1C9]`}
       >
         <label
