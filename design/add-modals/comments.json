@@ -63,9 +63,9 @@
       "excerpt": "Cancelar Agregar parcial",
       "comment": "linea superior no quiero que se vea, y la altura debe ser la de lo botones nada mas",
       "createdAt": "2026-11-11T00:48:52.234Z",
-      "status": "open",
+      "status": "resolved",
       "sentAt": "2026-11-11T00:50:59.695Z",
-      "resolvedAt": null
+      "resolvedAt": "2026-11-11T01:42:59.635Z"
     },
     {
       "id": "6n4nrqhf",
@@ -74,9 +74,9 @@
       "excerpt": "Elegir archivo Ningún archivo seleccionado",
       "comment": "el fondo no quiero que tenga color, por ende el boton debe rotar el color con su texto",
       "createdAt": "2026-11-11T00:49:19.084Z",
-      "status": "open",
+      "status": "resolved",
       "sentAt": "2026-11-11T00:50:59.695Z",
-      "resolvedAt": null
+      "resolvedAt": "2026-11-11T01:42:59.635Z"
     },
     {
       "id": "fsq7oyi1",
@@ -85,9 +85,9 @@
       "excerpt": "2 El archivo",
       "comment": "El archivo no, debe decir simplemente Archivo",
       "createdAt": "2026-11-11T00:49:31.584Z",
-      "status": "open",
+      "status": "resolved",
       "sentAt": "2026-11-11T00:50:59.695Z",
-      "resolvedAt": null
+      "resolvedAt": "2026-11-11T01:42:59.635Z"
     },
     {
       "id": "fvpgj624",
@@ -96,9 +96,9 @@
       "excerpt": "Archivo del parcial * (obligatorio)",
       "comment": "no es necesario esto ya que literal arriba dice \"archivo\"",
       "createdAt": "2026-11-11T00:49:45.429Z",
-      "status": "open",
+      "status": "resolved",
       "sentAt": "2026-11-11T00:50:59.695Z",
-      "resolvedAt": null
+      "resolvedAt": "2026-11-11T01:42:59.635Z"
     },
     {
       "id": "ye2bzgus",
@@ -107,9 +107,9 @@
       "excerpt": "Elegí el tipo de parcial.",
       "comment": "innnecesario, ya se entiende lo que se debe hacer",
       "createdAt": "2026-11-11T00:50:20.282Z",
-      "status": "open",
+      "status": "resolved",
       "sentAt": "2026-11-11T00:50:59.695Z",
-      "resolvedAt": null
+      "resolvedAt": "2026-11-11T01:42:59.635Z"
     },
     {
       "id": "bki7e364",
@@ -118,9 +118,9 @@
       "excerpt": "De 1 a 30.",
       "comment": "innecesario",
       "createdAt": "2026-11-11T00:50:33.662Z",
-      "status": "open",
+      "status": "resolved",
       "sentAt": "2026-11-11T00:50:59.695Z",
-      "resolvedAt": null
+      "resolvedAt": "2026-11-11T01:42:59.635Z"
     }
   ]
 }
