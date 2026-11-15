@@ -9,7 +9,7 @@ import { createMidterm } from '@/app/lib/server/actions/midterms/create.action';
 import type { Course } from '@/app/lib/server/db/prisma/prismaClient/client';
 import { type AddMidtermInput, addMidtermSchema } from '@/app/lib/shared/schemas';
 import { CheckboxForm, FileForm, Form, InputForm, SectionForm, SelectForm } from '../form';
-import { ModalContactLine, ModalFileTools, ModalNotice } from './modal-parts';
+import { ModalActions, ModalContactLine, ModalFileTools, ModalNotice } from './modal-parts';
 
 export const ModalAddMidtermContent = ({ course }: { course: Course }) => {
   const { data: session } = useSession();
@@ -86,22 +86,7 @@ export const ModalAddMidtermContent = ({ course }: { course: Course }) => {
         />
       </SectionForm>
       <ModalContactLine />
-      <div className="flex items-center justify-end gap-3">
-        <button
-          type="button"
-          onClick={closeModal}
-          className="inline-flex items-center justify-center rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-slate-700"
-        >
-          Cancelar
-        </button>
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="inline-flex items-center justify-center rounded-md border-2 border-[#92C1C9] bg-[#92C1C9] px-4 py-2 text-sm font-semibold text-(--black) transition-colors hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          Agregar parcial
-        </button>
-      </div>
+      <ModalActions primaryLabel="Agregar parcial" isLoading={isLoading} />
     </Form>
   );
 };

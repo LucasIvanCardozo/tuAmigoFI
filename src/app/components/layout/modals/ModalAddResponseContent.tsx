@@ -17,7 +17,7 @@ import {
   type ResponseTypeOption,
   SectionForm,
 } from '../form';
-import { ModalContactLine, ModalFileTools, ModalNotice } from './modal-parts';
+import { ModalActions, ModalContactLine, ModalFileTools, ModalNotice } from './modal-parts';
 
 const RESPONSE_TYPE_OPTIONS: ResponseTypeOption[] = [
   { value: 'TEXT', label: 'Texto' },
@@ -118,22 +118,7 @@ export const ModalAddResponseContent = ({
         {allProblems && !isTp && <ModalFileTools />}
       </SectionForm>
       <ModalContactLine />
-      <div className="flex items-center justify-end gap-3">
-        <button
-          type="button"
-          onClick={closeModal}
-          className="inline-flex items-center justify-center rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-slate-700"
-        >
-          Cancelar
-        </button>
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="inline-flex items-center justify-center rounded-md border-2 border-[#92C1C9] bg-[#92C1C9] px-4 py-2 text-sm font-semibold text-(--black) transition-colors hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          Enviar respuesta
-        </button>
-      </div>
+      <ModalActions primaryLabel="Enviar respuesta" isLoading={isLoading} />
     </Form>
   );
 };

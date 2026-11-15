@@ -1,9 +1,12 @@
+'use client';
+
 import type { ReactNode } from 'react';
 import {
   HiOutlineDocumentArrowUp,
   HiOutlineInformationCircle,
   HiOutlineScissors,
 } from 'react-icons/hi2';
+import { useModal } from '@/app/contexts/ModalContext';
 
 export const ModalNotice = ({ children }: { children: ReactNode }) => (
   <div className="flex items-start gap-2 rounded-lg bg-(--midnight-green) p-3">
@@ -51,3 +54,32 @@ export const ModalContactLine = () => (
     </a>
   </p>
 );
+
+export const ModalActions = ({
+  primaryLabel,
+  isLoading,
+}: {
+  primaryLabel: string;
+  isLoading: boolean;
+}) => {
+  const { closeModal } = useModal();
+
+  return (
+    <div className="flex items-center justify-end gap-3">
+      <button
+        type="button"
+        onClick={closeModal}
+        className="inline-flex items-center justify-center rounded-md border border-slate-300 px-3 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-slate-700"
+      >
+        Cancelar
+      </button>
+      <button
+        type="submit"
+        disabled={isLoading}
+        className="inline-flex items-center justify-center rounded-md border-2 border-[#92C1C9] bg-[#92C1C9] px-3 py-1.5 text-sm font-semibold text-(--black) transition-colors hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        {primaryLabel}
+      </button>
+    </div>
+  );
+};

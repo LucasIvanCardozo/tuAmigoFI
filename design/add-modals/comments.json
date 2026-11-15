@@ -129,9 +129,9 @@
       "excerpt": "Elegir archivo",
       "comment": "no se ve el texto del boton",
       "createdAt": "2026-11-11T04:08:50.958Z",
-      "status": "open",
+      "status": "resolved",
       "sentAt": "2026-11-11T04:09:14.142Z",
-      "resolvedAt": null
+      "resolvedAt": "2026-11-11T04:18:52.947Z"
     },
     {
       "id": "yl2i5j1f",
@@ -140,8 +140,19 @@
       "excerpt": "Elegir archivo Ningún archivo seleccionado",
       "comment": "sin borde",
       "createdAt": "2026-11-11T04:10:19.729Z",
-      "status": "open",
+      "status": "resolved",
       "sentAt": "2026-11-11T04:10:21.667Z",
+      "resolvedAt": "2026-11-11T04:18:52.948Z"
+    },
+    {
+      "id": "slagrtsr",
+      "file": "02-ayuda-contextual.html",
+      "selector": "body > main > div:nth-of-type(1) > section:nth-of-type(2) > form > div:nth-of-type(2) > button:nth-of-type(2)",
+      "excerpt": "Agregar parcial",
+      "comment": "mucho padding en los botones de accion",
+      "createdAt": "2026-11-15T14:07:40.728Z",
+      "status": "open",
+      "sentAt": "2026-11-15T14:07:50.348Z",
       "resolvedAt": null
     }
   ]

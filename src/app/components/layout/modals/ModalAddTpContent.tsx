@@ -9,7 +9,7 @@ import { createTp } from '@/app/lib/server/actions/tps/create.action';
 import type { Course } from '@/app/lib/server/db/prisma/prismaClient/client';
 import { type AddTpInput, addTpSchema } from '@/app/lib/shared/schemas';
 import { FileForm, Form, InputForm, SectionForm } from '../form';
-import { ModalContactLine, ModalFileTools, ModalNotice } from './modal-parts';
+import { ModalActions, ModalContactLine, ModalFileTools, ModalNotice } from './modal-parts';
 
 export const ModalAddTpContent = ({ course }: { course: Course }) => {
   const { data: session } = useSession();
@@ -85,22 +85,7 @@ export const ModalAddTpContent = ({ course }: { course: Course }) => {
         <ModalFileTools />
       </SectionForm>
       <ModalContactLine />
-      <div className="flex items-center justify-end gap-3">
-        <button
-          type="button"
-          onClick={closeModal}
-          className="inline-flex items-center justify-center rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-slate-700"
-        >
-          Cancelar
-        </button>
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="inline-flex items-center justify-center rounded-md border-2 border-[#92C1C9] bg-[#92C1C9] px-4 py-2 text-sm font-semibold text-(--black) transition-colors hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          Agregar TP
-        </button>
-      </div>
+      <ModalActions primaryLabel="Agregar TP" isLoading={isLoading} />
     </Form>
   );
 };
