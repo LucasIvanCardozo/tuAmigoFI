@@ -258,9 +258,10 @@
       "excerpt": "¿Algún problema con la carga? Escribime por WhatsApp: 2235319564",
       "comment": "deberia ser ¿Algún problema?, no ¿Algun problema con la carga?",
       "createdAt": "2026-11-15T15:13:54.232Z",
-      "status": "open",
+      "status": "resolved",
       "sentAt": "2026-11-15T15:13:55.174Z",
-      "resolvedAt": null
+      "resolvedAt": "2026-11-15T15:31:41.002Z",
+      "resolution": "La línea de contacto ahora dice \"¿Algún problema? Escribime por WhatsApp: 2235319564\", en el artboard y en la app."
     }
   ]
 }

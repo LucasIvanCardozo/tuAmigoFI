@@ -391,6 +391,13 @@ artboard **y** a la app para que no se descuadren.
    declare `border-color` y `border-width` deja de pintarse. Hace falta el shorthand completo.
 
 
+**Cierre de la sesión de edicion**: la copia de trabajo `design/_snapshot-2026-11-10/` se
+borró al terminar (el tag `design/add-modals-before-edits` queda como punto de restore), con
+lo que `pnpm lint` vuelve a 12 warnings, todos preexistentes y fuera del diff de esta
+feature. La linea de contacto final quedó como "¿Algún problema? Escribime por WhatsApp:
+2235319564".
+
+
 ### L17 — Verificación independiente de T4 y los fixes que salieron (2026-11-10)
 
 `gentle-ai-verify` sobre `005b96a..83780e6`: **PASS, sin bloqueantes**. Probó con Chromium
