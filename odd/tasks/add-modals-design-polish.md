@@ -47,15 +47,15 @@ Modelo estructural aprobado (el brief que se lleva a los artboards):
 
 Reglas de copy aprobadas:
 
-- Cada campo con **una** linea de ayuda que diga el formato, el rango o el contexto,
-  **solo cuando el alumno no puede deducirlo**. En la version final quedan cinco: "El nombre
-  que ven tus companeros en la lista." (Titulo del TP), "El dia en que se tomo el parcial."
-  (Fecha), "Numero del problema (1 a 100).", "Un solo archivo que cubre todos los puntos del
-  parcial. Solo existe en parciales." y "Si tu PDF tiene las respuestas unidas, podes subirlas
-  despues en la seccion de respuestas del parcial.". Los formatos y los limites que el schema
+- Cada campo con **una** línea de ayuda que diga el formato, el rango o el contexto,
+  **sólo cuando el alumno no puede deducirlo**. En la versión final quedan cinco: "El nombre
+  que ven tus companeros en la lista." (Título del TP), "El día en que se tomó el parcial."
+  (Fecha), "Número del problema (1 a 100).", "Un sólo archivo que cubre todos los puntos del
+  parcial. Sólo existe en parciales." y "Si tu PDF tiene las respuestas unidas, podés subirlas
+  después en la sección de respuestas del parcial.". Los formatos y los límites que el schema
   ya informa al rechazar un valor no se repiten en un helper: el error los dice en el momento
   en que importan.
-- Formatos y límites **junto al campo**, nunca en el pie. En la version final el campo de archivo no lleva helper: el schema dice "El archivo debe pesar menos de 5 MB" y "Solo se admite formato PDF" cuando corresponde.
+- Formatos y límites **junto al campo**, nunca en el pie. En la versión final el campo de archivo no lleva helper: el schema dice "El archivo debe pesar menos de 5 MB" y "Sólo se admite formato PDF" cuando corresponde.
 - El select de parcial nunca dice "El título es obligatorio" → "Elegí el tipo de parcial".
 - El check de parcial se formula como confirmación: "Confirmo que este PDF es sólo el
   parcial y no tiene las respuestas". (Corrección en L8: la primera versión decía "sólo el
@@ -94,7 +94,7 @@ servidor, el toast muestra el texto por defecto de Zod en inglés.
 ### S10 — El servidor acepta más que el cliente
 
 Cliente de TP: `src/app/lib/shared/schemas/tp.schema.ts:13` → "Solo se admite formato PDF".
-Servidor de TP: → "Solo PDF, JPEG o PNG". Mismo desfasaje en parciales. Hoy la UI bloquea
+Servidor de TP: → "Sólo PDF, JPEG o PNG". Mismo desfasaje en parciales. Hoy la UI bloquea
 lo que el servidor dejaría pasar: un JPEG puede entrar como TP por llamada directa y
 romper el visor, que sólo renderiza PDF.
 
@@ -301,7 +301,7 @@ completable en este host". **Era falso**, y también lo era la memoria que lo af
 6. `capture` **con** `reviewerRunAcknowledged: true` → corre el reviewer.
 7. `acknowledge-approved` → `authority: burned`.
 
-**Evidencia**: lineage `review-cbf7f16f0669f86b`, 8 archivos / 387 líneas de autor,
+**Evidencia**: líneage `review-cbf7f16f0669f86b`, 8 archivos / 387 líneas de autor,
 `state: approved` y después `outcome: native-approved-acknowledgement-completed`,
 `authority: burned`, `burn_evidence: gentle-ai.review-acknowledged/v1`,
 `delivery: ordinary-repository-policy`. Reviewer `minimax/MiniMax-M3.1-Flash`, 22,7 s,
@@ -348,7 +348,7 @@ tienen helper, nombre accesible único, error que pasa AA y ids que nunca cuelga
 **Revisión nativa**: la unidad de validación (387 líneas) se revisó y se quemó con
 `approved` (`review-cbf6a16f0669f86b`). El candidato de código final (1.638 líneas) pasó el
 preflight pero su consent fue **declinado por la UI del host**
-(`consent-declined-this-candidate`), sin lineage y sin mutación; un decline es por candidato y
+(`consent-declined-this-candidate`), sin líneage y sin mutación; un decline es por candidato y
 no se reintenta. El candidato del worktree completo, que arrastra los ~3.000 de HTML de los
 artboards, se cortó con `lens_context_budget_exceeded` — terminal, sin autoridad, y nada que
 abandonar. La evidencia de la entrega es, entonces, el verificador independiente.
@@ -366,28 +366,28 @@ abandonar. La evidencia de la entrega es, entonces, el verificador independiente
 4. El input de archivo sigue con dos `<label for>` en el DOM; sólo uno contribute al nombre
    accesible, que es el criterio de WCAG.
 
-### L19 — Sesion de edicion del diseno (2026-11-10)
+### L19 — Sesión de edición del diseño (2026-11-10)
 
-El usuario edito la direccion 02 sobre el canvas, en varias rondas, y cada ronda se aplico al
+El usuario editó la dirección 02 sobre el canvas, en varias rondas, y cada ronda se aplicó al
 artboard **y** a la app para que no se descuadren.
 
-| Ronda | Correccion | Commit |
+| Ronda | Corrección | Commit |
 | --- | --- | --- |
-| 1 | pie sin borde superior y con la altura de los botones; fila del archivo sin fondo y con el boton en color invertido; seccion 2 titulada "Archivo"; fuera la etiqueta redundante del archivo; fuera los helpers "Elegi el tipo de parcial." y "De 1 a 30." | `053eaa7` |
-| 2 | el texto del boton "Elegir archivo" era invisible (`.field label`, 0,1,1, le ganaba a `.file-btn`, 0,1,0: texto blanco sobre chip blanco) y la fila perdio su contorno | `00d986f` |
-| 3 | botones de accion mas compactos (6px/12px: 36 px el primario, 34 px el secundario) y fila de acciones extraida a `ModalActions` | `661ad62` |
+| 1 | pie sin borde superior y con la altura de los botones; fila del archivo sin fondo y con el botón en color invertido; sección 2 titulada "Archivo"; fuera la etiqueta redundante del archivo; fuera los helpers "Elegí el tipo de parcial." y "De 1 a 30." | `053eaa7` |
+| 2 | el texto del botón "Elegir archivo" era invisible (`.field label`, 0,1,1, le ganaba a `.file-btn`, 0,1,0: texto blanco sobre chip blanco) y la fila perdió su contorno | `00d986f` |
+| 3 | botones de acción más compactos (6px/12px: 36 px el primario, 34 px el secundario) y fila de acciones extraída a `ModalActions` | `661ad62` |
 | 4 | los artboards 01 y 03 pierden el contorno de la fila para que el set no quedara incoherente | `57006e0` |
-| 5 | botones de herramientas mas compactos (4px/10px: 30 px) y el primario del movil sin el `outline` inline de la demo del foco, que lo hacia ver mas grande que "Cancelar" | `d5506d7` |
-| 6 | fuera los helpers "iLovePDF y PDF24: se abren en otra pestana.", "De 2000 a 2026." e "Imagen: JPG o PNG (se comprime sola). PDF: solo PDF." | `120ca1a` |
-| 7 | fuera el helper "Solo PDF, hasta 5 MB." y "Escribinos" -> "Escribime" | `6d804ac` |
+| 5 | botones de herramientas más compactos (4px/10px: 30 px) y el primario del móvil sin el `outline` inline de la demo del foco, que lo hacía ver más grande que "Cancelar" | `d5506d7` |
+| 6 | fuera los helpers "iLovePDF y PDF24: se abren en otra pestaña.", "De 2000 a 2026." e "Imagen: JPG o PNG (se comprime sola). PDF: sólo PDF." | `120ca1a` |
+| 7 | fuera el helper "Sólo PDF, hasta 5 MB." y "Escribinos" → "Escribime" | `6d804ac` |
 
-**Dos aprendizajes de metodo que quedan como regla para el repo**:
+**Dos aprendizajes de método que quedan como regla para el repo**:
 
 1. Verificar el color de una superficie mirando **clases** no sirve: hay que leer el `color` y
-   el `background-color` **computados** por el navegador. El bug del boton invisible paso el
-   chequeo de clases. Desde ahi, toda verificacion de contraste en los artboards renderiza
+   el `background-color` **computados** por el navegador. El bug del botón invisible paso el
+   chequeo de clases. Desde ahí, toda verificación de contraste en los artboards renderiza
    headless y mide los estilos computados.
-2. Sacar un `border` en CSS se lleva tambien el `border-style`: un estado de error que solo
+2. Sacar un `border` en CSS se lleva también el `border-style`: un estado de error que sólo
    declare `border-color` y `border-width` deja de pintarse. Hace falta el shorthand completo.
 
 
