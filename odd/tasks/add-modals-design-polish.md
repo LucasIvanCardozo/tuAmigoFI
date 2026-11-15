@@ -47,9 +47,15 @@ Modelo estructural aprobado (el brief que se lleva a los artboards):
 
 Reglas de copy aprobadas:
 
-- Cada campo con **una** línea de ayuda que diga el formato, el rango o el contexto
-  ("TP N° (1 a 30)", "Número del problema (1 a 100)", "Sólo PDF, hasta 5 MB").
-- Formatos y límites **junto al campo**, nunca en el pie.
+- Cada campo con **una** linea de ayuda que diga el formato, el rango o el contexto,
+  **solo cuando el alumno no puede deducirlo**. En la version final quedan cinco: "El nombre
+  que ven tus companeros en la lista." (Titulo del TP), "El dia en que se tomo el parcial."
+  (Fecha), "Numero del problema (1 a 100).", "Un solo archivo que cubre todos los puntos del
+  parcial. Solo existe en parciales." y "Si tu PDF tiene las respuestas unidas, podes subirlas
+  despues en la seccion de respuestas del parcial.". Los formatos y los limites que el schema
+  ya informa al rechazar un valor no se repiten en un helper: el error los dice en el momento
+  en que importan.
+- Formatos y límites **junto al campo**, nunca en el pie. En la version final el campo de archivo no lleva helper: el schema dice "El archivo debe pesar menos de 5 MB" y "Solo se admite formato PDF" cuando corresponde.
 - El select de parcial nunca dice "El título es obligatorio" → "Elegí el tipo de parcial".
 - El check de parcial se formula como confirmación: "Confirmo que este PDF es sólo el
   parcial y no tiene las respuestas". (Corrección en L8: la primera versión decía "sólo el
@@ -359,6 +365,31 @@ abandonar. La evidencia de la entrega es, entonces, el verificador independiente
    `mainModule.tsx`.
 4. El input de archivo sigue con dos `<label for>` en el DOM; sólo uno contribute al nombre
    accesible, que es el criterio de WCAG.
+
+### L19 — Sesion de edicion del diseno (2026-11-10)
+
+El usuario edito la direccion 02 sobre el canvas, en varias rondas, y cada ronda se aplico al
+artboard **y** a la app para que no se descuadren.
+
+| Ronda | Correccion | Commit |
+| --- | --- | --- |
+| 1 | pie sin borde superior y con la altura de los botones; fila del archivo sin fondo y con el boton en color invertido; seccion 2 titulada "Archivo"; fuera la etiqueta redundante del archivo; fuera los helpers "Elegi el tipo de parcial." y "De 1 a 30." | `053eaa7` |
+| 2 | el texto del boton "Elegir archivo" era invisible (`.field label`, 0,1,1, le ganaba a `.file-btn`, 0,1,0: texto blanco sobre chip blanco) y la fila perdio su contorno | `00d986f` |
+| 3 | botones de accion mas compactos (6px/12px: 36 px el primario, 34 px el secundario) y fila de acciones extraida a `ModalActions` | `661ad62` |
+| 4 | los artboards 01 y 03 pierden el contorno de la fila para que el set no quedara incoherente | `57006e0` |
+| 5 | botones de herramientas mas compactos (4px/10px: 30 px) y el primario del movil sin el `outline` inline de la demo del foco, que lo hacia ver mas grande que "Cancelar" | `d5506d7` |
+| 6 | fuera los helpers "iLovePDF y PDF24: se abren en otra pestana.", "De 2000 a 2026." e "Imagen: JPG o PNG (se comprime sola). PDF: solo PDF." | `120ca1a` |
+| 7 | fuera el helper "Solo PDF, hasta 5 MB." y "Escribinos" -> "Escribime" | `6d804ac` |
+
+**Dos aprendizajes de metodo que quedan como regla para el repo**:
+
+1. Verificar el color de una superficie mirando **clases** no sirve: hay que leer el `color` y
+   el `background-color` **computados** por el navegador. El bug del boton invisible paso el
+   chequeo de clases. Desde ahi, toda verificacion de contraste en los artboards renderiza
+   headless y mide los estilos computados.
+2. Sacar un `border` en CSS se lleva tambien el `border-style`: un estado de error que solo
+   declare `border-color` y `border-width` deja de pintarse. Hace falta el shorthand completo.
+
 
 ### L17 — Verificación independiente de T4 y los fixes que salieron (2026-11-10)
 
