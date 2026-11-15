@@ -9,12 +9,14 @@ import { createTp } from '@/app/lib/server/actions/tps/create.action';
 import type { Course } from '@/app/lib/server/db/prisma/prismaClient/client';
 import { type AddTpInput, addTpSchema } from '@/app/lib/shared/schemas';
 import { FileForm, Form, InputForm, SectionForm } from '../form';
+import { ModalActions, ModalContactLine, ModalFileTools, ModalNotice } from './modal-parts';
 
 export const ModalAddTpContent = ({ course }: { course: Course }) => {
   const { data: session } = useSession();
+  const currentYear = new Date().getFullYear();
   const { control, handleSubmit } = useForm<AddTpInput>({
     resolver: zodResolver(addTpSchema),
-    defaultValues: { name: '', number: 1, year: new Date().getFullYear() },
+    defaultValues: { name: '', number: 1, year: currentYear },
   });
 
   const action: SubmitHandler<AddTpInput> = async (data) => {
@@ -39,90 +41,44 @@ export const ModalAddTpContent = ({ course }: { course: Course }) => {
   });
 
   return (
-    <>
-      <h2 className="text-lg">Agregar TP</h2>
-      <Form onSubmit={handleSubmit(submit)} noValidate>
-        <SectionForm title="Datos del TP">
-          <InputForm<AddTpInput>
-            name="name"
-            control={control}
-            label="Título"
-            placeholder="Título del TP"
-            required
-          />
-          <InputForm<AddTpInput>
-            name="number"
-            type="number"
-            control={control}
-            label="Número"
-            placeholder="Número del TP"
-            min={1}
-            max={30}
-            required
-          />
-          <InputForm<AddTpInput>
-            name="year"
-            type="number"
-            control={control}
-            label="Año"
-            placeholder="Año del TP"
-            min={2000}
-            max={new Date().getFullYear()}
-            required
-          />
-        </SectionForm>
-        <FileForm<AddTpInput>
-          name="file"
+    <Form onSubmit={handleSubmit(submit)} noValidate>
+      <ModalNotice>
+        <strong className="font-bold text-white">No dupliques el archivo:</strong> revisá la lista
+        de la materia antes de subir.
+      </ModalNotice>
+      <SectionForm number={1} title="Datos del TP">
+        <InputForm<AddTpInput>
+          name="name"
           control={control}
-          label="Archivo (PDF)"
-          accept="application/pdf"
+          label="Título del TP"
+          helper="El nombre que ven tus compañeros en la lista."
           required
         />
-        <div>
-          <a
-            href="https://www.ilovepdf.com/es/eliminar-paginas"
-            target="_blank"
-            className="underline"
-            rel="noopener"
-          >
-            <h3 className="text-sm">Click aquí para eliminar páginas de tu PDF</h3>
-          </a>
-        </div>
-        <div>
-          <a
-            href="https://tools.pdf24.org/es/convertidor-pdf"
-            target="_blank"
-            className="underline"
-            rel="noopener"
-          >
-            <h3 className="text-sm">Click aquí para convertir a PDF</h3>
-          </a>
-        </div>
-        <div>
-          <h3 className="text-sm">Recuerda!</h3>
-          <p className="text-xs">
-            Solo se admite formato PDF. Por favor asegurate de que el modulo que quieres agregar no
-            se encuentre ya disponible en la lista. En caso de cualquier problema podes contactarme:{' '}
-            <a
-              className="underline"
-              target="_blank"
-              href="https://wa.me/+5492235319564"
-              rel="noopener"
-            >
-              2235319564
-            </a>
-          </p>
-        </div>
-        <div className="flex gap-4 justify-center mt-4">
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Aceptar
-          </button>
-        </div>
-      </Form>
-    </>
+        <InputForm<AddTpInput>
+          name="number"
+          type="number"
+          control={control}
+          label="TP N°"
+          min={1}
+          max={30}
+          required
+        />
+        <InputForm<AddTpInput>
+          name="year"
+          type="number"
+          control={control}
+          label="Año"
+          min={2000}
+          max={currentYear}
+          required
+        />
+      </SectionForm>
+      <SectionForm number={2} title="Archivo">
+        <FileForm<AddTpInput> name="file" control={control} accept="application/pdf" required />
+        <ModalFileTools />
+      </SectionForm>
+      <ModalContactLine />
+      <ModalActions primaryLabel="Agregar TP" isLoading={isLoading} />
+    </Form>
   );
 };

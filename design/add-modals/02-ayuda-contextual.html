@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1440" />
+    <title>Ayuda contextual — tuAmigoFI · modales de alta</title>
+    <style>
+:root {
+  --black-olive: rgb(38, 44, 30);
+  --dark-cyan: rgb(39, 120, 124);
+  --silver: rgb(169, 172, 169);
+  --platinum: rgb(212, 215, 222);
+  --midnight-green: rgb(28, 50, 53);
+  --white: rgb(246, 247, 248);
+  --black: rgb(19, 21, 24);
+
+  --tw-slate-800: #1e293b;
+  --tw-slate-700: #334155;
+  --tw-slate-300: #cbd5e1;
+  --tw-gray-600: #4b5563;
+  --tw-red-400: #f87171;
+  --tw-white: #fff;
+
+  --accent-92c1c9: #92c1c9;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    'Noto Sans', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--tw-white);
+  color: var(--black);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+li,
+figure {
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.artboard {
+  width: 1440px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- board chrome ---------- */
+
+.board-header {
+  display: flex;
+  gap: 32px;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.board-header h1 {
+  font-size: 30px;
+  line-height: 36px;
+  font-weight: 700;
+}
+
+.kicker {
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tw-gray-600);
+  margin-bottom: 4px;
+}
+
+.board-sub {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--tw-gray-600);
+  margin-top: 8px;
+  max-width: 760px;
+}
+
+.board-note {
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.board-note .note-label {
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tw-gray-600);
+}
+
+.board-note .note-text {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.chip {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--tw-gray-600);
+  color: var(--black);
+  background: var(--tw-white);
+}
+
+.chip.stock {
+  border-style: dashed;
+}
+
+.chip.accent {
+  border-color: var(--accent-92c1c9);
+}
+
+.chip.error {
+  border-color: var(--tw-red-400);
+  color: var(--black);
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ---------- scenes ---------- */
+
+.scenarios {
+  display: flex;
+  gap: 24px;
+  min-height: 690px;
+}
+
+.scene {
+  flex: 1 1 0;
+  min-width: 0;
+  background: var(--silver);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.scene-caption {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--black);
+}
+
+.scene-caption strong {
+  font-weight: 600;
+}
+
+/* ---------- modal panel ---------- */
+
+.modal {
+  position: relative;
+  background: var(--tw-slate-800);
+  color: var(--tw-white);
+  border-radius: 8px;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  border-top-right-radius: 8px;
+  color: var(--tw-white);
+  cursor: pointer;
+}
+
+.close:hover {
+  background: var(--tw-slate-700);
+}
+
+.close:focus-visible,
+.btn:focus-visible,
+.input:focus-visible,
+.check-row input:focus-visible,
+.tool:focus-visible,
+.help-link:focus-visible,
+.summary:focus-visible,
+.card:focus-visible {
+  outline: 2px solid var(--accent-92c1c9);
+  outline-offset: 2px;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+}
+
+.modal-head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-right: 40px;
+}
+
+.modal-head h2 {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 700;
+}
+
+.context-line {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--silver);
+}
+
+.context-line strong {
+  color: var(--tw-white);
+  font-weight: 600;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section + .section {
+  margin-top: 8px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  color: var(--tw-white);
+}
+
+.sec-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: var(--accent-92c1c9);
+  color: var(--black);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field label,
+.field .label-like {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--tw-white);
+}
+
+.req {
+  color: var(--accent-92c1c9);
+  font-weight: 700;
+}
+
+.input {
+  background: var(--white);
+  color: var(--black);
+  border: 1px solid var(--tw-slate-700);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 20px;
+  width: 100%;
+}
+
+.input[aria-invalid='true'] {
+  border-color: var(--tw-red-400);
+  border-width: 2px;
+}
+
+.helper {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--silver);
+}
+
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--tw-red-400);
+  font-weight: 500;
+}
+
+.check-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.check-row input {
+  width: 16px;
+  height: 16px;
+  margin: 2px 0 0;
+  accent-color: var(--accent-92c1c9);
+  flex: 0 0 auto;
+}
+
+.check-row label {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--tw-white);
+}
+
+.file-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 6px;
+  padding: 8px;
+}
+
+.file-row.invalid {
+  border: 2px solid var(--tw-red-400);
+}
+
+.field .file-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--white);
+  color: var(--black);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.file-state {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--silver);
+}
+
+.sr-only:focus-visible + .file-row {
+  outline: 2px solid var(--accent-92c1c9);
+  outline-offset: 2px;
+}
+
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 16px;
+  border: 1px dashed var(--tw-slate-300);
+  border-radius: 6px;
+  background: var(--tw-slate-700);
+  color: var(--tw-white);
+  cursor: pointer;
+}
+
+.drop-title {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+}
+
+.drop-meta {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--silver);
+}
+
+/* ---------- type cards (direction 03) ---------- */
+
+.type-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.type-grid.stacked {
+  grid-template-columns: 1fr;
+}
+
+.sr-only:focus-visible + .dropzone {
+  outline: 2px solid var(--accent-92c1c9);
+  outline-offset: 2px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  border: 1px solid var(--tw-slate-700);
+  border-radius: 8px;
+  background: var(--tw-slate-800);
+  color: var(--tw-white);
+  text-align: left;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.card .card-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+}
+
+.card .card-desc {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--silver);
+}
+
+.card[aria-pressed='true'] {
+  border-color: var(--accent-92c1c9);
+  outline: 2px solid var(--accent-92c1c9);
+  outline-offset: -2px;
+  background: var(--midnight-green);
+}
+
+.card[aria-pressed='true'] .card-name {
+  color: var(--accent-92c1c9);
+}
+
+/* ---------- help ---------- */
+
+.help {
+  background: var(--midnight-green);
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.help-title {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+}
+
+.help-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: var(--tw-white);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.help-meta {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--silver);
+}
+
+.tool-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid var(--tw-slate-300);
+  border-radius: 6px;
+  color: var(--tw-white);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 4px 10px;
+  cursor: pointer;
+}
+
+.notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: var(--midnight-green);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--silver);
+}
+
+.notice strong {
+  color: var(--tw-white);
+  font-weight: 700;
+}
+
+.disclosure > .summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  list-style: none;
+  background: var(--tw-slate-700);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--tw-white);
+}
+
+.disclosure > .summary::-webkit-details-marker {
+  display: none;
+}
+
+.disclosure > .summary .chevron {
+  margin-left: auto;
+  transition: transform 150ms ease;
+}
+
+.disclosure[open] > .summary .chevron {
+  transform: rotate(180deg);
+}
+
+.disclosure .disclosure-body {
+  margin-top: 8px;
+}
+
+/* ---------- footer actions ---------- */
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--accent-92c1c9);
+  color: var(--black);
+  border: 2px solid var(--accent-92c1c9);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--tw-white);
+  border: 1px solid var(--tw-slate-300);
+}
+
+/* ---------- bottom band ---------- */
+
+.bottom-band {
+  display: flex;
+  gap: 24px;
+  margin-top: 16px;
+  align-items: flex-start;
+}
+
+.crop {
+  flex: 0 0 420px;
+}
+
+.crop .modal {
+  gap: 12px;
+}
+
+.crop.phone-crop {
+  flex: 0 0 360px;
+}
+
+.phone {
+  width: 360px;
+  border: 1px solid var(--tw-slate-700);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--tw-slate-800);
+  color: var(--tw-white);
+}
+
+.phone .phone-screen {
+  height: 360px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.phone .phone-content {
+  flex: 1 1 auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.phone .phone-foot {
+  border-top: 1px solid var(--tw-slate-700);
+  padding: 12px 16px 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  background: var(--tw-slate-800);
+}
+
+.phone .btn {
+  flex: 1 1 auto;
+  padding: 6px 12px;
+  white-space: nowrap;
+}
+
+.phone .file-btn {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.phone .file-state {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.notes {
+  flex: 1 1 0;
+  border: 1px solid var(--tw-slate-300);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.notes h3 {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+}
+
+.notes p,
+.notes li {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--tw-gray-600);
+}
+
+.notes strong {
+  color: var(--black);
+  font-weight: 600;
+}
+
+.notes ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.legend-strip {
+  border: 1px solid var(--tw-slate-300);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+.legend-foot {
+  margin-top: 12px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--tw-gray-600);
+}
+
+.legend-strip h3 {
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tw-gray-600);
+  margin-bottom: 8px;
+}
+
+.legend-grid {
+  flex: 1 1 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px 16px;
+}
+
+.legend-row {
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  gap: 4px 8px;
+  align-items: start;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.legend-row .sw-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  align-items: center;
+}
+
+.legend-row .sw {
+  width: 16px;
+  height: 16px;
+  border-radius: 6px;
+  border: 1px solid rgb(19 21 24 / 0.2);
+  margin-top: 2px;
+}
+
+.legend-row .sw-name {
+  color: var(--black);
+  font-weight: 600;
+}
+
+.legend-row .sw-use {
+  grid-column: 2;
+  color: var(--tw-gray-600);
+}
+
+.legend-row .chip {
+  grid-column: 2;
+  justify-self: start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .disclosure > .summary .chevron {
+    transition: none;
+  }
+}
+</style>
+  </head>
+  <body>
+    <main class="artboard">
+      <header class="board-header">
+        <div>
+          <p class="kicker">Dirección 2 de 3 · Rediseño evolutivo de los modales de alta</p>
+          <h1>Ayuda contextual</h1>
+          <p class="board-sub">Tradeoff: nada queda escondido ni al pie — cada campo tiene su línea de ayuda y las herramientas externas están al lado del archivo —, pero el modal crece y la ayuda compite con los campos por la atención.</p>
+        </div>
+        <div class="board-note">
+          <p class="note-label">Cambia más</p>
+          <p class="note-text">Sobre todo el modal de parcial, que hoy tiene el bloque de ayuda más largo, y el de TP; el de respuesta cambia menos porque hoy casi no tiene ayuda.</p>
+          <div class="chip-row">
+            <span class="chip">Token del proyecto (:root)</span>
+            <span class="chip stock">Stock Tailwind, no es un token del proyecto</span>
+            <span class="chip accent">Acento #92C1C9</span>
+          </div>
+        </div>
+      </header>
+      <section class="legend-strip" aria-label="Tokens y valores no registrados"><h3>Tokens usados</h3><ul class="legend-grid"><li class="legend-row"><span class="sw" style="background: #a9aca9"></span><span class="sw-name">--silver</span><span class="chip token">Token del proyecto (:root)</span><span class="sw-use">Texto secundario y avisos</span></li><li class="legend-row"><span class="sw" style="background: #1c3235"></span><span class="sw-name">--midnight-green</span><span class="chip token">Token del proyecto (:root)</span><span class="sw-use">Superficie del bloque de ayuda</span></li><li class="legend-row"><span class="sw" style="background: #f6f7f8"></span><span class="sw-name">--white</span><span class="chip token">Token del proyecto (:root)</span><span class="sw-use">Fondo de los campos</span></li><li class="legend-row"><span class="sw" style="background: #131518"></span><span class="sw-name">--black</span><span class="chip token">Token del proyecto (:root)</span><span class="sw-use">Texto de los campos y del botón primario</span></li><li class="legend-row"><span class="sw" style="background: #1e293b"></span><span class="sw-name">slate-800</span><span class="chip stock">Stock Tailwind, no es un token del proyecto</span><span class="sw-use">Panel del modal (superficie real)</span></li><li class="legend-row"><span class="sw" style="background: #334155"></span><span class="sw-name">slate-700</span><span class="chip stock">Stock Tailwind, no es un token del proyecto</span><span class="sw-use">Borde de los campos</span></li><li class="legend-row"><span class="sw" style="background: #cbd5e1"></span><span class="sw-name">slate-300</span><span class="chip stock">Stock Tailwind, no es un token del proyecto</span><span class="sw-use">Borde del botón secundario</span></li><li class="legend-row"><span class="sw" style="background: #ffffff"></span><span class="sw-name">white</span><span class="chip stock">Stock Tailwind, no es un token del proyecto</span><span class="sw-use">Texto del modal (no es --white)</span></li><li class="legend-row"><span class="sw" style="background: #92c1c9"></span><span class="sw-name">#92C1C9</span><span class="chip accent">Acento hardcodeado (#92C1C9)</span><span class="sw-use">Acento: botón primario y foco visible</span></li><li class="legend-row"><span class="sw" style="background: #f87171"></span><span class="sw-name">red-400</span><span class="chip error">No registrado en system.md</span><span class="sw-use">Texto de error: 5.29:1 (red-600 da 3.03:1 y falla AA)</span></li></ul><p class="legend-foot">El fondo de las escenas es un <strong>sustituto neutro</strong> (--silver): el fondo real de la app (--platinum) con su texto de bajo contraste no se reproduce. Radios: 6 px (rounded-md) en campos y botones, 8 px (rounded-lg) en el panel, el bloque de ayuda y las zonas de carga. Sombra: shadow-xl en el panel. Tipografía: escala Tailwind v4 (12/14/16/18/30 px). Foco visible: anillo de 2 px en #92C1C9 con 2 px de separación.</p></section>
+      <div class="scenarios"><section class="scene" aria-label="Escena: agregar TP"><form class="modal" onsubmit="return false" aria-labelledby="tp-title"><button type="button" class="close" aria-label="Cerrar"><svg class="icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M5.5 5.5l9 9M14.5 5.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button><header class="modal-head"><h2 id="tp-title">Agregar TP</h2><p class="context-line">Subís un TP a <strong>Análisis Matemático I</strong></p></header><div class="notice"><svg class="icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 9.2v4.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M10 6.1v.9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><p><strong>No dupliques el archivo:</strong> revisá la lista de la materia antes de subir.</p></div><section class="section" aria-label="Datos del TP"><h3 class="section-title"><span class="sec-num" aria-hidden="true">1</span>Datos del TP</h3><div class="field"><label for="tp-nombre">Título del TP <span class="req" aria-hidden="true">*</span><span class="sr-only">(obligatorio)</span></label><input class="input" id="tp-nombre" name="tp-nombre" type="text" value="TP 3 — Teorema de Taylor"  /><p class="helper">El nombre que ven tus compañeros en la lista.</p></div><div class="field"><label for="tp-numero">TP N° <span class="req" aria-hidden="true">*</span><span class="sr-only">(obligatorio)</span></label><input class="input" id="tp-numero" name="tp-numero" type="number" value="3" min="1" max="30" /></div><div class="field"><label for="tp-anio">Año <span class="req" aria-hidden="true">*</span><span class="sr-only">(obligatorio)</span></label><input class="input" id="tp-anio" name="tp-anio" type="number" value="2026" min="2000" max="2026" /></div></section><section class="section" aria-label="Archivo"><h3 class="section-title"><span class="sec-num" aria-hidden="true">2</span>Archivo</h3><div class="field"><input class="sr-only" type="file" id="tp-archivo" accept="application/pdf" /><span class="file-row"><label class="file-btn" for="tp-archivo">Elegir archivo</label><span class="file-state">Ningún archivo seleccionado</span></span></div><div class="tool-row"><button type="button" class="tool"><svg class="icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M11.5 3H17v5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 3l-7.5 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M15 12.5V16a1.5 1.5 0 0 1-1.5 1.5H4A1.5 1.5 0 0 1 2.5 16V6.5A1.5 1.5 0 0 1 4 5h3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Eliminar páginas</span></button><button type="button" class="tool"><svg class="icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M11.5 3H17v5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 3l-7.5 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M15 12.5V16a1.5 1.5 0 0 1-1.5 1.5H4A1.5 1.5 0 0 1 2.5 16V6.5A1.5 1.5 0 0 1 4 5h3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Convertir a PDF</span></button></div></section><p class="helper">¿Algún problema? Escribime por WhatsApp: 2235319564</p><div class="actions"><button type="button" class="btn btn-secondary">Cancelar</button><button type="button" class="btn btn-primary">Agregar TP</button></div></form><p class="scene-caption"><strong>Agregar TP</strong> · fondo de la app: sustituto neutro</p></section><section class="scene" aria-label="Escena: agregar parcial"><form class="modal" onsubmit="return false" aria-labelledby="mid-title"><button type="button" class="close" aria-label="Cerrar"><svg class="icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M5.5 5.5l9 9M14.5 5.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button><header class="modal-head"><h2 id="mid-title">Agregar parcial</h2><p class="context-line">Subís un parcial a <strong>Física A</strong></p></header><div class="notice"><svg class="icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 9.2v4.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M10 6.1v.9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><p><strong>No dupliques el archivo:</strong> revisá la lista de la materia antes de subir.</p></div><section class="section" aria-label="Datos del parcial"><h3 class="section-title"><span class="sec-num" aria-hidden="true">1</span>Datos del parcial</h3><div class="field"><label for="mid-tipo">Tipo de parcial <span class="req" aria-hidden="true">*</span><span class="sr-only">(obligatorio)</span></label><select class="input" id="mid-tipo" name="mid-tipo"><option value="Primer parcial" selected>Primer parcial</option><option value="Segundo parcial">Segundo parcial</option><option value="Tercer parcial">Tercer parcial</option><option value="Final">Final</option><option value="Otros">Otros</option></select></div><div class="field"><label for="mid-fecha">Fecha <span class="req" aria-hidden="true">*</span><span class="sr-only">(obligatorio)</span></label><input class="input" id="mid-fecha" name="mid-fecha" type="date" value="2026-11-12"  /><p class="helper">El día en que se tomó el parcial.</p></div></section><section class="section" aria-label="Archivo"><h3 class="section-title"><span class="sec-num" aria-hidden="true">2</span>Archivo</h3><div class="field"><input class="sr-only" type="file" id="mid-archivo" accept="application/pdf" /><span class="file-row"><label class="file-btn" for="mid-archivo">Elegir archivo</label><span class="file-state">Ningún archivo seleccionado</span></span></div><div class="tool-row"><button type="button" class="tool"><svg class="icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M11.5 3H17v5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 3l-7.5 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M15 12.5V16a1.5 1.5 0 0 1-1.5 1.5H4A1.5 1.5 0 0 1 2.5 16V6.5A1.5 1.5 0 0 1 4 5h3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Eliminar páginas</span></button><button type="button" class="tool"><svg class="icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M11.5 3H17v5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 3l-7.5 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M15 12.5V16a1.5 1.5 0 0 1-1.5 1.5H4A1.5 1.5 0 0 1 2.5 16V6.5A1.5 1.5 0 0 1 4 5h3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Convertir a PDF</span></button></div><div class="field"><div class="check-row"><input type="checkbox" id="mid-confirmacion" name="mid-confirmacion" /><label for="mid-confirmacion">Confirmo que este PDF es sólo el parcial y no tiene las respuestas</label></div><p class="helper">Si tu PDF tiene las respuestas unidas, podés subirlas después en la sección de respuestas del parcial.</p></div></section><p class="helper">¿Algún problema? Escribime por WhatsApp: 2235319564</p><div class="actions"><button type="button" class="btn btn-secondary">Cancelar</button><button type="button" class="btn btn-primary">Agregar parcial</button></div></form><p class="scene-caption"><strong>Agregar parcial</strong> · fondo de la app: sustituto neutro</p></section><section class="scene" aria-label="Escena: agregar respuesta"><form class="modal" onsubmit="return false" aria-labelledby="resp-title"><button type="button" class="close" aria-label="Cerrar"><svg class="icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M5.5 5.5l9 9M14.5 5.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button><header class="modal-head"><h2 id="resp-title">Agregar respuesta</h2><p class="context-line">Subís una respuesta al <strong>Final</strong> de <strong>Física A</strong></p></header><div class="notice"><svg class="icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 9.2v4.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M10 6.1v.9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><p><strong>Revisá antes de subir:</strong> que la respuesta se lea bien y sea de este parcial.</p></div><section class="section" aria-label="Datos de la respuesta"><h3 class="section-title"><span class="sec-num" aria-hidden="true">1</span>Datos de la respuesta</h3><div class="field"><div class="check-row"><input type="checkbox" id="resp-todas" name="resp-todas" /><label for="resp-todas">Subir un archivo con todas las respuestas</label></div><p class="helper">Un solo archivo que cubre todos los puntos del parcial. Sólo existe en parciales.</p></div><div class="field"><label for="resp-tipo">Tipo de respuesta <span class="req" aria-hidden="true">*</span><span class="sr-only">(obligatorio)</span></label><select class="input" id="resp-tipo" name="resp-tipo"><option value="Texto">Texto</option><option value="Código">Código</option><option value="Imagen">Imagen</option><option value="PDF" selected>PDF</option></select></div><div class="field"><label for="resp-numero">Número de problema <span class="req" aria-hidden="true">*</span><span class="sr-only">(obligatorio)</span></label><input class="input" id="resp-numero" name="resp-numero" type="number" value="3" min="1" max="100" /><p class="helper">Número del problema (1 a 100).</p></div></section><section class="section" aria-label="Archivo"><h3 class="section-title"><span class="sec-num" aria-hidden="true">2</span>Archivo</h3><div class="field"><input class="sr-only" type="file" id="resp-archivo" accept="application/pdf" /><span class="file-row"><label class="file-btn" for="resp-archivo">Elegir archivo</label><span class="file-state">Ningún archivo seleccionado</span></span></div></section><p class="helper">¿Algún problema? Escribime por WhatsApp: 2235319564</p><div class="actions"><button type="button" class="btn btn-secondary">Cancelar</button><button type="button" class="btn btn-primary">Enviar respuesta</button></div></form><p class="scene-caption"><strong>Agregar respuesta</strong> · fondo de la app: sustituto neutro</p></section></div>
+      <div class="bottom-band"><div class="crop"><form class="modal" onsubmit="return false" aria-labelledby="err-title"><button type="button" class="close" aria-label="Cerrar"><svg class="icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M5.5 5.5l9 9M14.5 5.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button><header class="modal-head"><h2 id="err-title">Agregar TP</h2><p class="context-line">Subís un TP a <strong>Análisis Matemático I</strong></p></header><section class="section" aria-label="Datos del TP"><h3 class="section-title"><span class="sec-num" aria-hidden="true">1</span>Datos del TP</h3><div class="field"><label for="err-numero">TP N° <span class="req" aria-hidden="true">*</span><span class="sr-only">(obligatorio)</span></label><input class="input" id="err-numero" name="err-numero" type="number" value="45" aria-invalid="true" min="1" max="30" /><p class="error"><svg class="icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 3.2 18 16.8H2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 8.2v3.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M10 14.2v.9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>El número debe ser menor o igual a 30</span></p></div><div class="field"><input class="sr-only" type="file" id="err-archivo" accept="application/pdf" aria-invalid="true" /><span class="file-row invalid"><label class="file-btn" for="err-archivo">Elegir archivo</label><span class="file-state">tp-45-taylor.pdf · 6,2 MB</span></span><p class="error"><svg class="icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 3.2 18 16.8H2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 8.2v3.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M10 14.2v.9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>El archivo debe pesar menos de 5 MB</span></p></div></section><div class="actions"><button type="button" class="btn btn-secondary">Cancelar</button><button type="button" class="btn btn-primary">Agregar TP</button></div></form><p class="scene-caption"><strong>Estado de error</strong> — el modal de TP con dos campos fallados; el resto del modal es idéntico al de la escena 1.</p></div><div class="crop phone-crop"><div class="phone"><div class="phone-screen"><div class="phone-content"><header class="modal-head"><h2>Agregar respuesta</h2><p class="context-line">Subís una respuesta al <strong>Final</strong> de <strong>Física A</strong></p></header><section class="section" aria-label="Datos de la respuesta"><h3 class="section-title">Datos de la respuesta</h3><div class="field"><label for="m-resp-tipo">Tipo de respuesta <span class="req" aria-hidden="true">*</span><span class="sr-only">(obligatorio)</span></label><select class="input" id="m-resp-tipo" name="m-resp-tipo" style="outline: 2px solid #92C1C9; outline-offset: 2px;"><option value="Texto">Texto</option><option value="Código">Código</option><option value="Imagen">Imagen</option><option value="PDF" selected>PDF</option></select></div><div class="field"><label for="m-resp-numero">Número de problema <span class="req" aria-hidden="true">*</span><span class="sr-only">(obligatorio)</span></label><input class="input" id="m-resp-numero" name="m-resp-numero" type="number" value="3" min="1" max="100" /><p class="helper">Número del problema (1 a 100).</p></div><div class="field"><input class="sr-only" type="file" id="m-resp-archivo" accept="application/pdf" /><span class="file-row"><label class="file-btn" for="m-resp-archivo">Elegir archivo</label><span class="file-state">Ningún archivo seleccionado</span></span></div></section></div></div><div class="phone-foot"><button type="button" class="btn btn-secondary">Cancelar</button><button type="button" class="btn btn-primary">Enviar respuesta</button></div></div><p class="scene-caption"><strong>360 px</strong> — el modal de respuesta en un teléfono: los botones quedan en una línea y el pie queda fijo. El anillo de foco se muestra en el select «Tipo de respuesta», como en la app.</p></div><div class="notes"><h3>Qué cambia y a costa de qué</h3><p>Cambia sobre todo el modal de parcial, que hoy tiene el bloque de ayuda más largo, y el de TP.</p><ul><li>La ayuda sale del pie y va a donde ocurre el problema: el aviso de duplicados bajo el título y las dos herramientas al lado del campo de archivo.</li><li>El WhatsApp queda como una línea sobre el pie y el bloque plegado desaparece.</li><li>El modal crece ~80 px: en 360 px manda el alto máximo (max-h-90dvh) y el pie queda siempre a la vista.</li><li>En el modal de respuesta las herramientas aparecen al tildar «todas las respuestas», como hoy.</li></ul><h3>Decisión resuelta (S5)</h3><p><strong>«Confirmo que este PDF es sólo el parcial y no tiene las respuestas»</strong>: el rótulo del check y el error del schema («Tenés que confirmar que el parcial no tiene las respuestas») dicen lo mismo.</p><h3>Estados representados</h3><p>Campo con error (icono + texto + borde), foco visible (anillo de 2 px, representado en la escena de 360 px sobre el select «Tipo de respuesta») y tipo de respuesta elegido (aro de acento). Durante el envío, el botón primario queda deshabilitado y muestra «Subiendo…».</p></div></div>
+    </main>
+  </body>
+</html>

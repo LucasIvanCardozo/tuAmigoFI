@@ -1,14 +1,39 @@
 'use client';
 
-import { type ReactNode, useEffect, useRef } from 'react';
+import { type ReactNode, useEffect, useId, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { CgClose } from 'react-icons/cg';
-import { useModal } from '@/app/contexts/ModalContext';
+import { type ModalContextPart, useModal } from '@/app/contexts/ModalContext';
 import { useDialogA11y } from '@/app/hooks/useDialogA11y';
 
-export const Modal = ({ children, title }: { children: ReactNode; title?: string }) => {
+interface ModalProps {
+  children: ReactNode;
+  title?: string;
+  context?: ModalContextPart[];
+}
+
+const buildContextKeys = (parts: ModalContextPart[] | undefined) => {
+  const used = new Set<string>();
+  const keys: string[] = [];
+  for (const part of parts ?? []) {
+    let attempt = 0;
+    let key = part.text;
+    while (used.has(key)) {
+      attempt += 1;
+      key = `${part.text} ${attempt}`;
+    }
+    used.add(key);
+    keys.push(key);
+  }
+  return keys;
+};
+
+export const Modal = ({ children, title, context }: ModalProps) => {
   const { closeModal } = useModal();
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const headingId = useId();
+  const hasContext = Boolean(context && context.length > 0);
+  const contextKeys = buildContextKeys(context);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -34,9 +59,33 @@ export const Modal = ({ children, title }: { children: ReactNode; title?: string
       <dialog
         ref={dialogRef}
         className="relative w-full max-w-lg m-0 p-0 bg-slate-800 text-white border-0 rounded-lg shadow-xl"
-        aria-label={title}
+        aria-labelledby={title ? headingId : undefined}
+        aria-label={title ? undefined : 'Modal'}
       >
-        <div className="relative flex flex-col gap-4 p-5 max-h-[90dvh] overflow-y-auto">
+        <div className="relative flex flex-col gap-3 p-5 max-h-[90dvh] overflow-y-auto">
+          {(title || hasContext) && (
+            <header className="flex flex-col gap-1 pr-10">
+              {title && (
+                <h2 id={headingId} className="text-lg font-bold text-white">
+                  {title}
+                </h2>
+              )}
+              {hasContext && (
+                <p className="text-sm text-(--silver)">
+                  {context?.map((part, index) =>
+                    part.strong ? (
+                      <strong key={contextKeys[index]} className="font-semibold text-white">
+                        {part.text}
+                      </strong>
+                    ) : (
+                      <span key={contextKeys[index]}>{part.text}</span>
+                    ),
+                  )}
+                </p>
+              )}
+            </header>
+          )}
+          {children}
           <button
             type="button"
             className="absolute top-0 right-0 flex items-center justify-center w-10 h-10 p-2 cursor-pointer hover:bg-slate-700 rounded-tr-lg z-10"
@@ -45,7 +94,6 @@ export const Modal = ({ children, title }: { children: ReactNode; title?: string
           >
             <CgClose className="h-full w-full" />
           </button>
-          {children}
         </div>
       </dialog>
     </div>,

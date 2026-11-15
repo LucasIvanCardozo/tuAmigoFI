@@ -25,8 +25,17 @@ const AsideModulesImpl = ({ modules, course, typeModule }: Props) => {
 
   const handleOpenAddModal = () => {
     setViewAside(false);
-    if (isTp) openModal(<ModalAddTpContent course={course} />);
-    else openModal(<ModalAddMidtermContent course={course} />);
+    if (isTp) {
+      openModal(<ModalAddTpContent course={course} />, {
+        title: 'Agregar TP',
+        context: [{ text: 'Subís un TP a ' }, { text: course.name, strong: true }],
+      });
+    } else {
+      openModal(<ModalAddMidtermContent course={course} />, {
+        title: 'Agregar parcial',
+        context: [{ text: 'Subís un parcial a ' }, { text: course.name, strong: true }],
+      });
+    }
   };
 
   const handleViewModules = (module: string | null) => {
@@ -138,7 +147,7 @@ const AsideModulesImpl = ({ modules, course, typeModule }: Props) => {
               {isTp ? (
                 <p className="text-base leading-4">Agregar TP</p>
               ) : (
-                <p className="text-base leading-4">Agregar Examen</p>
+                <p className="text-base leading-4">Agregar parcial</p>
               )}
             </button>
           </li>

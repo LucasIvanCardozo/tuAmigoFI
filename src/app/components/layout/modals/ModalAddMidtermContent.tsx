@@ -9,6 +9,7 @@ import { createMidterm } from '@/app/lib/server/actions/midterms/create.action';
 import type { Course } from '@/app/lib/server/db/prisma/prismaClient/client';
 import { type AddMidtermInput, addMidtermSchema } from '@/app/lib/shared/schemas';
 import { CheckboxForm, FileForm, Form, InputForm, SectionForm, SelectForm } from '../form';
+import { ModalActions, ModalContactLine, ModalFileTools, ModalNotice } from './modal-parts';
 
 export const ModalAddMidtermContent = ({ course }: { course: Course }) => {
   const { data: session } = useSession();
@@ -39,93 +40,52 @@ export const ModalAddMidtermContent = ({ course }: { course: Course }) => {
   });
 
   return (
-    <>
-      <h2 className="text-lg">Agregar Examen</h2>
-      <Form onSubmit={handleSubmit(submit)} noValidate>
-        <SectionForm title="Datos del examen">
-          <SelectForm<AddMidtermInput>
-            name="name"
-            control={control}
-            label="Tipo de parcial"
-            placeholder="Selecciona el tipo de parcial"
-            required
-          >
-            <option value="Primer parcial">Primer parcial</option>
-            <option value="Segundo parcial">Segundo parcial</option>
-            <option value="Tercer parcial">Tercer parcial</option>
-            <option value="Final">Final</option>
-            <option value="Otros">Otros</option>
-          </SelectForm>
-          <InputForm<AddMidtermInput>
-            name="date"
-            type="date"
-            control={control}
-            label="Fecha"
-            required
-          />
-        </SectionForm>
+    <Form onSubmit={handleSubmit(submit)} noValidate>
+      <ModalNotice>
+        <strong className="font-bold text-white">No dupliques el archivo:</strong> revisá la lista
+        de la materia antes de subir.
+      </ModalNotice>
+      <SectionForm number={1} title="Datos del parcial">
+        <SelectForm<AddMidtermInput>
+          name="name"
+          control={control}
+          label="Tipo de parcial"
+          placeholder="Selecciona el tipo de parcial"
+          required
+        >
+          <option value="Primer parcial">Primer parcial</option>
+          <option value="Segundo parcial">Segundo parcial</option>
+          <option value="Tercer parcial">Tercer parcial</option>
+          <option value="Final">Final</option>
+          <option value="Otros">Otros</option>
+        </SelectForm>
+        <InputForm<AddMidtermInput>
+          name="date"
+          type="date"
+          control={control}
+          label="Fecha"
+          helper="El día en que se tomó el parcial."
+          required
+        />
+      </SectionForm>
+      <SectionForm number={2} title="Archivo">
         <FileForm<AddMidtermInput>
           name="file"
           control={control}
-          label="Archivo (PDF)"
           accept="application/pdf"
           required
         />
+        <ModalFileTools />
         <CheckboxForm<AddMidtermInput>
           name="withoutAnswers"
           control={control}
-          label="Mi parcial no tiene las respuestas"
+          label="Confirmo que este PDF es sólo el parcial y no tiene las respuestas"
+          helper="Si tu PDF tiene las respuestas unidas, podés subirlas después en la sección de respuestas del parcial."
           required
         />
-        <p className="text-xs">
-          *Si tu PDF tiene las respuestas unidas, podés subirlas después en la sección de respuestas
-          del parcial. Y si querés sacarle páginas, usá el link de más abajo.
-        </p>
-        <div>
-          <a
-            href="https://www.ilovepdf.com/es/eliminar-paginas"
-            target="_blank"
-            className="underline"
-            rel="noopener"
-          >
-            <h3 className="text-sm">Click aquí para eliminar páginas de tu PDF</h3>
-          </a>
-        </div>
-        <div>
-          <a
-            href="https://tools.pdf24.org/es/convertidor-pdf"
-            target="_blank"
-            className="underline"
-            rel="noopener"
-          >
-            <h3 className="text-sm">Click aquí para convertir a PDF</h3>
-          </a>
-        </div>
-        <div>
-          <h3 className="text-sm">Recuerda!</h3>
-          <p className="text-xs">
-            Solo se admite formato PDF. Por favor asegurate de que el modulo que quieres agregar no
-            se encuentre ya disponible en la lista. En caso de cualquier problema podes contactarme:{' '}
-            <a
-              className="underline"
-              target="_blank"
-              href="https://wa.me/+5492235319564"
-              rel="noopener"
-            >
-              2235319564
-            </a>
-          </p>
-        </div>
-        <div className="flex gap-4 justify-center mt-4">
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="px-2 py-1 border-slate-700 border-2 rounded-md hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Aceptar
-          </button>
-        </div>
-      </Form>
-    </>
+      </SectionForm>
+      <ModalContactLine />
+      <ModalActions primaryLabel="Agregar parcial" isLoading={isLoading} />
+    </Form>
   );
 };

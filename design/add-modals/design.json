@@ -1,0 +1,28 @@
+{
+  "title": "Add-content modals",
+  "brief": "Redesign of the three add-content modals (TP, midterm, response) for tuAmigoFI, so every field explains its format, range and purpose.",
+  "feature": "odd/tasks/add-modals-design-polish.md",
+  "artboards": [
+    {
+      "file": "01-formulario-guiado.html",
+      "title": "Guided form",
+      "tradeoff": "Tradeoff: máxima familiaridad y el menor costo de implementación — el formulario sigue siendo de una columna y con los mismos campos —, pero la ayuda queda a un clic de distancia, debajo del pliegue.",
+      "width": 1440,
+      "height": 1713
+    },
+    {
+      "file": "02-ayuda-contextual.html",
+      "title": "Contextual help",
+      "tradeoff": "Tradeoff: nada queda escondido ni al pie — cada campo tiene su línea de ayuda y las herramientas externas están al lado del archivo —, pero el modal crece y la ayuda compite con los campos por la atención.",
+      "width": 1440,
+      "height": 1827
+    },
+    {
+      "file": "03-tarjetas-de-tipo.html",
+      "title": "Type cards",
+      "tradeoff": "Tradeoff: la elección se explica sola de un vistazo y el paso del archivo deja de ser ambiguo —, pero es el cambio más caro de implementar y el único que rinde pleno en el modal de respuesta.",
+      "width": 1440,
+      "height": 1869
+    }
+  ]
+}
