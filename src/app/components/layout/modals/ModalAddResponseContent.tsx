@@ -109,11 +109,7 @@ export const ModalAddResponseContent = ({
         )}
       </SectionForm>
       <SectionForm number={2} title={hasFile ? 'Archivo' : 'La respuesta'}>
-        <ResponseContentField<AddResponseInput>
-          control={control}
-          fileHelper="Sólo PDF, hasta 5 MB."
-          fileRequired
-        />
+        <ResponseContentField<AddResponseInput> control={control} fileRequired />
         {allProblems && !isTp && <ModalFileTools />}
       </SectionForm>
       <ModalContactLine />

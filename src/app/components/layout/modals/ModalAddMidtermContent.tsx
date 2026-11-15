@@ -73,7 +73,6 @@ export const ModalAddMidtermContent = ({ course }: { course: Course }) => {
           name="file"
           control={control}
           accept="application/pdf"
-          helper="Sólo PDF, hasta 5 MB."
           required
         />
         <ModalFileTools />

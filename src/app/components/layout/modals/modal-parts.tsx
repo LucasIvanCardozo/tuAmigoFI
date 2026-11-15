@@ -42,7 +42,7 @@ export const ModalFileTools = () => (
 
 export const ModalContactLine = () => (
   <p className="text-xs text-(--silver)">
-    ¿Algún problema con la carga? Escribinos por WhatsApp:{' '}
+    ¿Algún problema con la carga? Escribime por WhatsApp:{' '}
     <a
       href="https://wa.me/+5492235319564"
       target="_blank"

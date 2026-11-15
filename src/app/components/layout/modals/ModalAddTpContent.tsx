@@ -74,13 +74,7 @@ export const ModalAddTpContent = ({ course }: { course: Course }) => {
         />
       </SectionForm>
       <SectionForm number={2} title="Archivo">
-        <FileForm<AddTpInput>
-          name="file"
-          control={control}
-          accept="application/pdf"
-          helper="Sólo PDF, hasta 5 MB."
-          required
-        />
+        <FileForm<AddTpInput> name="file" control={control} accept="application/pdf" required />
         <ModalFileTools />
       </SectionForm>
       <ModalContactLine />

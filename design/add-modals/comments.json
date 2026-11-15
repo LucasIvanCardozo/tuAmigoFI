@@ -198,9 +198,10 @@
       "excerpt": "iLovePDF y PDF24: se abren en otra pestaña.",
       "comment": "este texto no es necesario",
       "createdAt": "2026-11-15T14:37:24.142Z",
-      "status": "open",
+      "status": "resolved",
       "sentAt": "2026-11-15T14:38:08.728Z",
-      "resolvedAt": null
+      "resolvedAt": "2026-11-15T14:45:17.243Z",
+      "resolution": "Se sacaron los tres helpers (nota de las herramientas, rango del año, formatos por tipo) en el artboard y en la app; ningún control quedó apuntando al id eliminado."
     },
     {
       "id": "thndu7fd",
@@ -209,9 +210,10 @@
       "excerpt": "De 2000 a 2026.",
       "comment": "texto innecesario",
       "createdAt": "2026-11-15T14:37:43.312Z",
-      "status": "open",
+      "status": "resolved",
       "sentAt": "2026-11-15T14:38:08.728Z",
-      "resolvedAt": null
+      "resolvedAt": "2026-11-15T14:45:17.243Z",
+      "resolution": "Se sacaron los tres helpers (nota de las herramientas, rango del año, formatos por tipo) en el artboard y en la app; ningún control quedó apuntando al id eliminado."
     },
     {
       "id": "5lny7ex0",
@@ -220,9 +222,34 @@
       "excerpt": "Imagen: JPG o PNG (se comprime sola). PDF: sólo PDF.",
       "comment": "innecesario",
       "createdAt": "2026-11-15T14:38:01.124Z",
-      "status": "open",
+      "status": "resolved",
       "sentAt": "2026-11-15T14:38:08.728Z",
-      "resolvedAt": null
+      "resolvedAt": "2026-11-15T14:45:17.243Z",
+      "resolution": "Se sacaron los tres helpers (nota de las herramientas, rango del año, formatos por tipo) en el artboard y en la app; ningún control quedó apuntando al id eliminado."
+    },
+    {
+      "id": "n17dnh0s",
+      "file": "02-ayuda-contextual.html",
+      "selector": "body > main > div:nth-of-type(1) > section:nth-of-type(1) > form > section:nth-of-type(2) > div:nth-of-type(1) > p",
+      "excerpt": "Sólo PDF, hasta 5 MB.",
+      "comment": "innecesario, ya que el error saltara solo si pesa mas de 5",
+      "createdAt": "2026-11-15T15:04:38.732Z",
+      "status": "resolved",
+      "sentAt": "2026-11-15T15:05:08.971Z",
+      "resolvedAt": "2026-11-15T15:09:59.826Z",
+      "resolution": "Fuera el helper \"Sólo PDF, hasta 5 MB.\" (el error del schema ya lo dice) y \"Escribinos\" → \"Escribime\", en el artboard y en la app."
+    },
+    {
+      "id": "7bc82smy",
+      "file": "02-ayuda-contextual.html",
+      "selector": "body > main > div:nth-of-type(1) > section:nth-of-type(3) > form > p",
+      "excerpt": "¿Algún problema con la carga? Escribinos por WhatsApp: 2235319564",
+      "comment": "\"Escribinos\" no queda bien, osea porque el que la hizo soy yo y es personal. Escribime seria jajaja menos fomral",
+      "createdAt": "2026-11-15T15:05:07.761Z",
+      "status": "resolved",
+      "sentAt": "2026-11-15T15:05:08.971Z",
+      "resolvedAt": "2026-11-15T15:09:59.826Z",
+      "resolution": "Fuera el helper \"Sólo PDF, hasta 5 MB.\" (el error del schema ya lo dice) y \"Escribinos\" → \"Escribime\", en el artboard y en la app."
     }
   ]
 }
