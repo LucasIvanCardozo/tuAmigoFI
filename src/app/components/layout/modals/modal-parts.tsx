@@ -22,7 +22,7 @@ export const ModalFileTools = () => (
         href="https://www.ilovepdf.com/es/eliminar-paginas"
         target="_blank"
         rel="noopener"
-        className="inline-flex items-center gap-2 rounded-md border border-slate-300 px-3 py-2 text-sm text-white transition-colors hover:bg-slate-700"
+        className="inline-flex items-center gap-2 rounded-md border border-slate-300 px-2.5 py-1 text-sm text-white transition-colors hover:bg-slate-700"
       >
         <HiOutlineScissors aria-hidden="true" className="h-4 w-4" />
         Eliminar páginas
@@ -31,7 +31,7 @@ export const ModalFileTools = () => (
         href="https://tools.pdf24.org/es/convertidor-pdf"
         target="_blank"
         rel="noopener"
-        className="inline-flex items-center gap-2 rounded-md border border-slate-300 px-3 py-2 text-sm text-white transition-colors hover:bg-slate-700"
+        className="inline-flex items-center gap-2 rounded-md border border-slate-300 px-2.5 py-1 text-sm text-white transition-colors hover:bg-slate-700"
       >
         <HiOutlineDocumentArrowUp aria-hidden="true" className="h-4 w-4" />
         Convertir a PDF

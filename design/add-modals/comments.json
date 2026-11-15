@@ -155,6 +155,39 @@
       "sentAt": "2026-11-15T14:07:50.348Z",
       "resolvedAt": "2026-11-15T14:18:47.936Z",
       "resolution": "Padding de los botones de acción reducido a 6px/12px (36px el primario, 34px el secundario) en el artboard y en la app; la fila de acciones quedó extraída a un componente compartido."
+    },
+    {
+      "id": "kwjrteh3",
+      "file": "02-ayuda-contextual.html",
+      "selector": "body > main > div:nth-of-type(1) > section:nth-of-type(2) > form > section:nth-of-type(2) > div:nth-of-type(2) > button:nth-of-type(1)",
+      "excerpt": "Eliminar páginas",
+      "comment": "menor padding en estos botones",
+      "createdAt": "2026-11-15T14:29:48.422Z",
+      "status": "open",
+      "sentAt": "2026-11-15T14:31:00.074Z",
+      "resolvedAt": null
+    },
+    {
+      "id": "0v924c6c",
+      "file": "02-ayuda-contextual.html",
+      "selector": "body > main > div:nth-of-type(1) > section:nth-of-type(2) > form > section:nth-of-type(2) > div:nth-of-type(1) > span > label",
+      "excerpt": "Elegir archivo",
+      "comment": "menor padding en este boton",
+      "createdAt": "2026-11-15T14:29:55.932Z",
+      "status": "resolved",
+      "sentAt": null,
+      "resolvedAt": "2026-11-15T14:30:15.284Z"
+    },
+    {
+      "id": "9bmeeaqe",
+      "file": "02-ayuda-contextual.html",
+      "selector": "body > main > div:nth-of-type(2) > div:nth-of-type(2) > div > div:nth-of-type(2) > button:nth-of-type(2)",
+      "excerpt": "Enviar respuesta",
+      "comment": "porque tiene ese borde raro este voton ademas de porque es mas grande que el de cancelar? este debe ser igual a los demas modales",
+      "createdAt": "2026-11-15T14:30:59.137Z",
+      "status": "open",
+      "sentAt": "2026-11-15T14:31:00.074Z",
+      "resolvedAt": null
     }
   ]
 }
