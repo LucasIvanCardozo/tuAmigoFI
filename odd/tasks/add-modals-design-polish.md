@@ -49,8 +49,8 @@ Reglas de copy aprobadas:
 
 - Cada campo con **una** línea de ayuda que diga el formato, el rango o el contexto,
   **sólo cuando el alumno no puede deducirlo**. En la versión final quedan cinco: "El nombre
-  que ven tus companeros en la lista." (Título del TP), "El día en que se tomó el parcial."
-  (Fecha), "Número del problema (1 a 100).", "Un sólo archivo que cubre todos los puntos del
+  que ven tus compañeros en la lista." (Título del TP), "El día en que se tomó el parcial."
+  (Fecha), "Número del problema (1 a 100).", "Un solo archivo que cubre todos los puntos del
   parcial. Sólo existe en parciales." y "Si tu PDF tiene las respuestas unidas, podés subirlas
   después en la sección de respuestas del parcial.". Los formatos y los límites que el schema
   ya informa al rechazar un valor no se repiten en un helper: el error los dice en el momento
