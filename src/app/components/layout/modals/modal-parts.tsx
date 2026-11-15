@@ -37,7 +37,6 @@ export const ModalFileTools = () => (
         Convertir a PDF
       </a>
     </div>
-    <p className="text-xs text-(--silver)">iLovePDF y PDF24: se abren en otra pestaña.</p>
   </div>
 );
 

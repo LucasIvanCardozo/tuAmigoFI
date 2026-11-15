@@ -92,7 +92,6 @@ export const ModalAddResponseContent = ({
         )}
         <ResponseTypeField<AddResponseInput>
           control={control}
-          typeHelper="Imagen: JPG o PNG (se comprime sola). PDF: sólo PDF."
           typeOptions={RESPONSE_TYPE_OPTIONS}
           required
         />

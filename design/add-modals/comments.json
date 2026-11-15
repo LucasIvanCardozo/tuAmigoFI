@@ -163,9 +163,10 @@
       "excerpt": "Eliminar páginas",
       "comment": "menor padding en estos botones",
       "createdAt": "2026-11-15T14:29:48.422Z",
-      "status": "open",
+      "status": "resolved",
       "sentAt": "2026-11-15T14:31:00.074Z",
-      "resolvedAt": null
+      "resolvedAt": "2026-11-15T14:35:44.778Z",
+      "resolution": "Herramientas a 4px/10px (30px de alto) en artboard y app; el primario del móvil perdió el outline inline y ahora calcula igual que el de escritorio, con la demo del anillo de foco movida al select."
     },
     {
       "id": "0v924c6c",
@@ -185,8 +186,42 @@
       "excerpt": "Enviar respuesta",
       "comment": "porque tiene ese borde raro este voton ademas de porque es mas grande que el de cancelar? este debe ser igual a los demas modales",
       "createdAt": "2026-11-15T14:30:59.137Z",
-      "status": "open",
+      "status": "resolved",
       "sentAt": "2026-11-15T14:31:00.074Z",
+      "resolvedAt": "2026-11-15T14:35:44.778Z",
+      "resolution": "Herramientas a 4px/10px (30px de alto) en artboard y app; el primario del móvil perdió el outline inline y ahora calcula igual que el de escritorio, con la demo del anillo de foco movida al select."
+    },
+    {
+      "id": "rm2v18g3",
+      "file": "02-ayuda-contextual.html",
+      "selector": "body > main > div:nth-of-type(1) > section:nth-of-type(2) > form > section:nth-of-type(2) > p",
+      "excerpt": "iLovePDF y PDF24: se abren en otra pestaña.",
+      "comment": "este texto no es necesario",
+      "createdAt": "2026-11-15T14:37:24.142Z",
+      "status": "open",
+      "sentAt": "2026-11-15T14:38:08.728Z",
+      "resolvedAt": null
+    },
+    {
+      "id": "thndu7fd",
+      "file": "02-ayuda-contextual.html",
+      "selector": "body > main > div:nth-of-type(1) > section:nth-of-type(1) > form > section:nth-of-type(1) > div:nth-of-type(3) > p",
+      "excerpt": "De 2000 a 2026.",
+      "comment": "texto innecesario",
+      "createdAt": "2026-11-15T14:37:43.312Z",
+      "status": "open",
+      "sentAt": "2026-11-15T14:38:08.728Z",
+      "resolvedAt": null
+    },
+    {
+      "id": "5lny7ex0",
+      "file": "02-ayuda-contextual.html",
+      "selector": "body > main > div:nth-of-type(1) > section:nth-of-type(3) > form > section:nth-of-type(1) > div:nth-of-type(2) > p",
+      "excerpt": "Imagen: JPG o PNG (se comprime sola). PDF: sólo PDF.",
+      "comment": "innecesario",
+      "createdAt": "2026-11-15T14:38:01.124Z",
+      "status": "open",
+      "sentAt": "2026-11-15T14:38:08.728Z",
       "resolvedAt": null
     }
   ]

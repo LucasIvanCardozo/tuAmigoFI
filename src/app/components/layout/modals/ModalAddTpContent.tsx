@@ -70,7 +70,6 @@ export const ModalAddTpContent = ({ course }: { course: Course }) => {
           label="Año"
           min={2000}
           max={currentYear}
-          helper={`De 2000 a ${currentYear}.`}
           required
         />
       </SectionForm>
